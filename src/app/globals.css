@@ -1,39 +1,19 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   Color palette (PRD §7.3) — three options.
-   Default: A (Muted Terracotta). Swap `data-theme="sage"` or
-   `data-theme="navy"` on <html> to preview the others.
+   Color palette — Tokyo Transit
+   Reference: Muji / Japanese subway wayfinding.
+   Cool off-white, deep ink navy text, vermillion signal-red accent.
    ------------------------------------------------------------------ */
 
 :root {
-  /* Option A — Muted Terracotta (default) */
-  --background: #fbf8f4;
-  --foreground: #1c1917;
-  --muted: #6b6156;
-  --accent: #c65d3a;
-  --accent-soft: #f4e4db;
-  --border: rgba(28, 25, 23, 0.08);
-}
-
-html[data-theme="sage"] {
-  /* Option B — Forest / Sage */
-  --background: #f7f7f2;
-  --foreground: #1a1f1b;
-  --muted: #5a6a5c;
-  --accent: #4a6b4a;
-  --accent-soft: #e5ebe3;
-  --border: rgba(26, 31, 27, 0.08);
-}
-
-html[data-theme="navy"] {
-  /* Option C — Navy + Warm Gold */
-  --background: #fdfbf7;
-  --foreground: #1e293b;
-  --muted: #64748b;
-  --accent: #b88a3d;
-  --accent-soft: #f5ecd8;
-  --border: rgba(30, 41, 59, 0.08);
+  --background: #fafaf7;       /* soft cool off-white */
+  --foreground: #0f1e3d;       /* deep ink navy */
+  --muted: #5f6b85;            /* slate gray */
+  --accent: #e63b1e;           /* vermillion signal-red */
+  --accent-fg: #ffffff;        /* text color on accent */
+  --surface: #ffffff;          /* cards, elevated */
+  --border: #d9dde3;           /* cool hairline */
 }
 
 @theme inline {
@@ -41,7 +21,9 @@ html[data-theme="navy"] {
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
 }

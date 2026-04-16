@@ -38,13 +38,18 @@ src/
 
 Section order in `src/app/page.tsx` matches PRD §6: Hero → Career → Entrepreneurship → Side Projects → Beyond Work → Education → Contact.
 
-## Swapping color palettes (PRD §7.3)
+## Color palette
 
-Three palettes are baked into `src/app/globals.css`. Default is terracotta. To preview the others, add a `data-theme` attribute on `<html>` in `layout.tsx`:
+Locked to **Tokyo Transit** — cool off-white background, deep ink navy text, vermillion signal-red accent. Reference: Muji / Japanese wayfinding / Tokyo subway. All tokens live as CSS variables in `src/app/globals.css`.
 
-- `data-theme="sage"` — Option B (forest/sage)
-- `data-theme="navy"` — Option C (navy + warm gold)
-- Omit attribute — Option A (terracotta, default)
+| Token | Hex | Purpose |
+|---|---|---|
+| `--background` | `#FAFAF7` | Page background |
+| `--foreground` | `#0F1E3D` | Primary text |
+| `--muted` | `#5F6B85` | Secondary text |
+| `--accent` | `#E63B1E` | CTAs, highlights |
+| `--surface` | `#FFFFFF` | Cards, elevated surfaces |
+| `--border` | `#D9DDE3` | Hairlines |
 
 ## Deploy
 
