@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Website — Hussain Alam
 
-## Getting Started
+Single-page Next.js site built as a professional showcase for Hussain Alam's job search and investor/co-founder conversations. See PRD for full context and scope.
 
-First, run the development server:
+## Stack
+
+- Next.js 14+ (App Router)
+- TypeScript + Tailwind CSS
+- Framer Motion (animations)
+- Radix UI (accessible primitives)
+- React Hook Form + Zod (forms + validation)
+- Resend (contact form delivery)
+- Vercel (hosting)
+
+## Getting started
 
 ```bash
+npm install
+cp .env.local.example .env.local   # fill in Resend keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/            — routes, layout, global CSS, /api/contact
+  components/
+    layout/       — Header, Footer
+    sections/     — Hero, CareerTimeline, Entrepreneurship, SideProjects, BeyondWork, Education, Contact
+    ui/           — shared primitives (Button, Card, Drawer, Badge)
+  data/           — content (career, ventures, side projects, books, etc.)
+  lib/            — utils, resend client
+  types/          — shared TypeScript types
+```
 
-## Learn More
+Section order in `src/app/page.tsx` matches PRD §6: Hero → Career → Entrepreneurship → Side Projects → Beyond Work → Education → Contact.
 
-To learn more about Next.js, take a look at the following resources:
+## Swapping color palettes (PRD §7.3)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Three palettes are baked into `src/app/globals.css`. Default is terracotta. To preview the others, add a `data-theme` attribute on `<html>` in `layout.tsx`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `data-theme="sage"` — Option B (forest/sage)
+- `data-theme="navy"` — Option C (navy + warm gold)
+- Omit attribute — Option A (terracotta, default)
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Push to GitHub, then import the repo at vercel.com/new
+# Add env vars (RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL) in Vercel project settings.
+```
