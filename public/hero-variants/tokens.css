@@ -1,0 +1,195 @@
+/* Brand tokens — shared across all 4 hero mockups.
+   Matches the site's "Tokyo Transit" palette but with Notion-style sans-only type. */
+@import url('https://rsms.me/inter/inter.css');
+
+:root {
+  --bg: #FAFAF7;         /* cream canvas */
+  --fg: #0F1E3D;         /* navy text */
+  --muted: #5A6275;      /* secondary text */
+  --surface: #F3F1EA;    /* soft callout block */
+  --accent: #E63B1E;     /* vermillion */
+  --accent-soft: #F6E2DC;/* vermillion tint for pill backgrounds */
+  --border: #E8E5DD;     /* hairline rules */
+  --max: 1120px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.5;
+}
+@supports (font-variation-settings: normal) {
+  html, body { font-family: 'Inter var', sans-serif; }
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+
+/* Cover photo */
+.cover {
+  position: relative;
+  height: 320px;
+  background-image: url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1920&q=85&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 60%;
+}
+.cover::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(15,30,61,0.08), rgba(250,250,247,0) 60%);
+}
+
+/* Headshot overlapping cover */
+.headshot {
+  width: 128px; height: 128px;
+  border-radius: 999px;
+  background: #0F1E3D;
+  color: #FAFAF7;
+  display: grid; place-items: center;
+  font-weight: 600; font-size: 40px; letter-spacing: -0.02em;
+  border: 4px solid var(--bg);
+  box-shadow: 0 6px 22px rgba(15,30,61,0.14);
+  flex-shrink: 0;
+}
+.headshot.sm { width: 56px; height: 56px; font-size: 18px; border-width: 3px; }
+.headshot.md { width: 88px; height: 88px; font-size: 28px; }
+
+/* Type scale */
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.display {
+  font-size: clamp(40px, 5.6vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+}
+.subline {
+  font-size: 20px;
+  color: var(--muted);
+  font-weight: 400;
+  margin: 8px 0 0;
+}
+.body {
+  font-size: 16px;
+  color: var(--fg);
+  max-width: 620px;
+  line-height: 1.6;
+}
+.body.muted { color: var(--muted); }
+
+/* Pullquote */
+.pullquote {
+  border-left: 3px solid var(--accent);
+  padding: 2px 0 2px 16px;
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 620px;
+  margin: 0;
+}
+.pullquote cite { color: var(--fg); font-style: normal; font-weight: 500; }
+
+/* Callout */
+.callout {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: flex; gap: 14px; align-items: flex-start;
+  max-width: 680px;
+}
+.callout .ico { font-size: 20px; line-height: 1.5; }
+
+/* Pills & links */
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: all 0.15s ease;
+}
+.pill:hover { border-color: var(--accent); color: var(--accent); }
+.pill.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.pill.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.pill .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); }
+
+.avail {
+  position: absolute; top: 20px; right: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 500;
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(15,30,61,0.08);
+  z-index: 2;
+}
+.avail .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 3px rgba(230,59,30,0.18); }
+
+/* Section heading */
+.h-section {
+  font-size: 20px; font-weight: 600; letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+
+/* Contact sidebar */
+.contact { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.contact .row { display: flex; align-items: baseline; gap: 10px; }
+.contact .label { font-weight: 600; color: var(--fg); min-width: 72px; }
+.contact .val { color: var(--muted); }
+.contact a:hover .val { color: var(--accent); }
+
+/* Receipts cards */
+.receipts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px 0; }
+.receipt {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 22px 22px 20px;
+  border: 1px solid var(--border);
+}
+.receipt .num {
+  font-size: 40px; font-weight: 600; letter-spacing: -0.03em;
+  color: var(--accent); line-height: 1;
+}
+.receipt .lbl { font-size: 14px; font-weight: 500; margin-top: 10px; }
+.receipt .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* Now grid */
+.now-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+.now-item {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.now-item .cat { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.now-item .txt { font-size: 14px; color: var(--fg); margin-top: 8px; line-height: 1.55; }
+
+/* Utility */
+.stack > * + * { margin-top: 20px; }
+.stack-tight > * + * { margin-top: 12px; }
+.row-inline { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.hair { height: 1px; background: var(--border); border: 0; margin: 32px 0; }
+
+/* Header & footer on each variant page */
+.variant-frame { padding: 0 0 120px; }
+.variant-tag {
+  position: fixed; top: 14px; left: 14px;
+  background: var(--fg); color: var(--bg);
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.04em;
+  z-index: 100;
+  font-family: 'Inter', sans-serif;
+}

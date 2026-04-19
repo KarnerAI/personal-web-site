@@ -44,3 +44,9 @@ next-env.d.ts
 
 # Claude Code project config (local memory, plans)
 .claude/
+
+# Design artifacts served via public/ for preview (source of truth lives in ~/.gstack/)
+/public/hero-comparison.html
+/public/palette-comparison.html
+/public/*-comparison.html
+.gstack/

@@ -70,3 +70,13 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Global zoom — makes 100% browser zoom render at ~90% default scale.
+   Mirrors Cmd+Minus once on every visit. Native zoom (not transform: scale),
+   so hit-testing, scrolling, and fixed positioning all behave normally.
+   Mobile stays at 100% so text doesn't get too small on small screens. */
+@media (min-width: 768px) {
+  html {
+    zoom: 0.9;
+  }
+}
