@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Career Timeline — 5 Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAFAF7;
+      --fg: #0F1E3D;
+      --muted: #5F6B85;
+      --accent: #E63B1E;
+      --surface: #FFFFFF;
+      --border: #D9DDE3;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; }
+    body { padding: 48px 32px 96px; }
+
+    header {
+      max-width: 1400px;
+      margin: 0 auto 40px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 12px;
+    }
+    .sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 0 20px;
+      line-height: 1.55;
+    }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--fg);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .chip:hover { border-color: var(--fg); }
+    .chip[data-active="true"] { border-color: var(--accent); color: var(--accent); }
+    .chip .letter {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .view-toggle {
+      margin-left: auto;
+      display: inline-flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .view-toggle button {
+      border: 0;
+      background: transparent;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .view-toggle button[data-active="true"] {
+      background: var(--fg);
+      color: #fff;
+    }
+
+    main { max-width: 1760px; margin: 0 auto; }
+
+    /* GRID VIEW — all 5 side by side scaled down */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card header {
+      margin: 0;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .card h2 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .card h2 .letter {
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    .card h2 .name {
+      color: var(--muted);
+      font-weight: 500;
+      margin-left: 6px;
+    }
+    .card .open-btn {
+      font-size: 11px;
+      text-decoration: none;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .card .open-btn:hover { color: var(--accent); }
+    .frame-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1440 / 900;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .frame-wrap iframe {
+      /* Render iframe at 1440px wide then scale down to fit */
+      width: 1440px;
+      height: 900px;
+      border: 0;
+      transform-origin: top left;
+      /* scale is set per-card via JS for exact pixel fit */
+    }
+
+    /* FULL VIEW — one variant at a time, full width */
+    .full {
+      display: none;
+    }
+    body[data-view="full"] .grid { display: none; }
+    body[data-view="full"] .full { display: block; }
+    .full iframe {
+      width: 100%;
+      height: 1100px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg);
+    }
+    .full .caption {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .legend {
+      max-width: 1400px;
+      margin: 40px auto 0;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .legend strong { color: var(--fg); font-weight: 600; }
+    .legend ul { padding-left: 18px; margin: 8px 0 0; }
+    .legend li { margin: 4px 0; }
+  </style>
+</head>
+<body data-view="grid">
+  <header>
+    <p class="eyebrow">Design Shotgun · Career Timeline · 5 Variants</p>
+    <h1>Pick a direction.</h1>
+    <p class="sub">Five takes on the career timeline, all in the Tokyo Transit palette. Click a variant chip to focus it full-size, or use the grid to compare at a glance.</p>
+    <div class="toolbar">
+      <a class="chip" href="career-timeline-A.html" target="_blank" data-letter="A"><span class="letter">A</span> Subway Stations</a>
+      <a class="chip" href="career-timeline-B.html" target="_blank" data-letter="B"><span class="letter">B</span> Precision Hairline</a>
+      <a class="chip" href="career-timeline-C.html" target="_blank" data-letter="C"><span class="letter">C</span> Alternating Cards</a>
+      <a class="chip" href="career-timeline-D.html" target="_blank" data-letter="D"><span class="letter">D</span> Progress Rail</a>
+      <a class="chip" href="career-timeline-E.html" target="_blank" data-letter="E"><span class="letter">E</span> Editorial Numbered</a>
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button type="button" data-view="grid" data-active="true">Grid</button>
+        <button type="button" data-view="full">Full</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid" id="grid">
+      <!-- cards injected by JS so we can control iframe scaling -->
+    </div>
+
+    <section class="full" id="full">
+      <p class="caption" id="full-caption">Variant A · Subway Stations</p>
+      <iframe id="full-frame" src="career-timeline-A.html" title="Variant A"></iframe>
+    </section>
+
+    <section class="legend">
+      <strong>How these differ</strong>
+      <ul>
+        <li><strong>A · Subway Stations</strong> — Tokyo-style station dots on a hairline rail. Quiet, wayfinding-first.</li>
+        <li><strong>B · Precision Hairline</strong> — The thinnest possible line. Typography-first, editorial minimal.</li>
+        <li><strong>C · Alternating Cards</strong> — Closest to the PPT reference. Numbered stations + cards above/below.</li>
+        <li><strong>D · Progress Rail</strong> — Hybrid. Gantt-bars for tenure length + milestone dots for clicking. Most info-dense.</li>
+        <li><strong>E · Editorial Numbered</strong> — No rail. Giant serif numerals, magazine feature spread vibe.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const variants = [
+      { letter: "A", name: "Subway Stations" },
+      { letter: "B", name: "Precision Hairline" },
+      { letter: "C", name: "Alternating Cards" },
+      { letter: "D", name: "Progress Rail" },
+      { letter: "E", name: "Editorial Numbered" },
+    ];
+
+    const grid = document.getElementById("grid");
+    variants.forEach(v => {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <header>
+          <h2><span class="letter">${v.letter}</span>·<span class="name">${v.name}</span></h2>
+          <a class="open-btn" href="career-timeline-${v.letter}.html" target="_blank">Open ↗</a>
+        </header>
+        <div class="frame-wrap">
+          <iframe src="career-timeline-${v.letter}.html" title="Variant ${v.letter} — ${v.name}" loading="lazy"></iframe>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Scale iframes to fit their wrapper width
+    function scaleIframes() {
+      document.querySelectorAll(".frame-wrap").forEach(wrap => {
+        const iframe = wrap.querySelector("iframe");
+        if (!iframe) return;
+        const scale = wrap.clientWidth / 1440;
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.width = `1440px`;
+        iframe.style.height = `${wrap.clientHeight / scale}px`;
+      });
+    }
+    window.addEventListener("load", scaleIframes);
+    window.addEventListener("resize", scaleIframes);
+
+    // View toggle
+    const body = document.body;
+    document.querySelectorAll(".view-toggle button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const view = btn.dataset.view;
+        body.dataset.view = view;
+        document.querySelectorAll(".view-toggle button").forEach(b => b.dataset.active = (b.dataset.view === view));
+        if (view === "grid") setTimeout(scaleIframes, 50);
+      });
+    });
+
+    // Chip click → focus variant in full view
+    document.querySelectorAll(".toolbar .chip").forEach(chip => {
+      chip.addEventListener("click", (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return; // allow new-tab
+        e.preventDefault();
+        const letter = chip.dataset.letter;
+        const variant = variants.find(v => v.letter === letter);
+        document.getElementById("full-frame").src = `career-timeline-${letter}.html`;
+        document.getElementById("full-caption").textContent = `Variant ${letter} · ${variant.name}`;
+        body.dataset.view = "full";
+        document.querySelectorAll(".view-toggle button").forEach(b => b.dataset.active = (b.dataset.view === "full"));
+        document.querySelectorAll(".toolbar .chip").forEach(c => c.dataset.active = (c === chip));
+      });
+    });
+  </script>
+</body>
+</html>

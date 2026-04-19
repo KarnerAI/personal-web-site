@@ -3,9 +3,7 @@
 const NAV = [
   { href: "#career", label: "Career" },
   { href: "#entrepreneurship", label: "Entrepreneurship" },
-  { href: "#side-projects", label: "Projects" },
   { href: "#beyond-work", label: "Beyond Work" },
-  { href: "#contact", label: "Contact" },
 ];
 
 export function Header() {

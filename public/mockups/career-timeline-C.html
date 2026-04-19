@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Career Timeline — C · Alternating Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --fg: #0F1E3D;
+    --muted: #5F6B85;
+    --accent: #E63B1E;
+    --accent-fg: #FFFFFF;
+    --surface: #FFFFFF;
+    --border: #D9DDE3;
+  }
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .variant-label {
+    position: fixed;
+    top: 16px;
+    left: 20px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    z-index: 20;
+  }
+
+  main {
+    padding: 96px 32px;
+    max-width: 1264px;
+    margin: 0 auto;
+  }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* --- Section header --- */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .h2 {
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    font-size: 44px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 16px 0 20px 0;
+    max-width: 820px;
+  }
+
+  .subhead {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 42rem; /* max-w-2xl */
+    margin: 0;
+  }
+
+  /* --- Timeline --- */
+  .timeline {
+    margin-top: 80px;
+    position: relative;
+    height: 460px;
+  }
+
+  .rail-wrap {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 0;
+    transform: translateY(-1px);
+    display: flex;
+    align-items: center;
+  }
+
+  .rail {
+    flex: 0 0 auto;
+    height: 2px;
+    background: var(--border);
+  }
+
+  .rail.dashed {
+    background: none;
+    border-top: 2px dashed var(--border);
+    height: 0;
+  }
+
+  /* Equal spacing: stations at 12.5%, 37.5%, 62.5%, 87.5%.
+     Single full-width rail — each company gets equal visual weight.
+  */
+  .rail-full { width: 100%; }
+
+  /* Stations */
+  .station {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--fg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    z-index: 2;
+  }
+
+  .station.current {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-fg);
+  }
+
+  /* Connector line from station up/down to card */
+  .connector {
+    position: absolute;
+    left: 50%;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .connector.up {
+    bottom: 100%;
+    height: 40px;
+    margin-bottom: 2px; /* clear the station border */
+  }
+
+  .connector.down {
+    top: 100%;
+    height: 40px;
+    margin-top: 2px;
+  }
+
+  /* Cards */
+  .card {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    max-width: 280px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: none;
+    z-index: 1;
+  }
+
+  /* card above rail: sits above the station by 40px connector */
+  .card.above {
+    bottom: calc(50% + 40px + 16px + 18px); /* station half (18) + connector (40) + small buffer (16) */
+  }
+
+  .card.below {
+    top: calc(50% + 40px + 16px + 18px);
+  }
+
+  .card .eye {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 10px;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .card-head .eye {
+    margin-bottom: 0;
+  }
+
+  .logo-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--surface, #FFFFFF);
+    border: 1px solid var(--border, #D9DDE3);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .logo-chip img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+  .logo-chip .logo-initials {
+    display: none;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--fg, #0F1E3D);
+    letter-spacing: -0.02em;
+    font-family: system-ui, sans-serif;
+  }
+  .logo-chip.fallback { background: var(--fg, #0F1E3D); border-color: var(--fg, #0F1E3D); }
+  .logo-chip.fallback .logo-initials { display: inline-flex; color: #fff; }
+
+  .card .company {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+
+  .card .role {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .card .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 14px 0 12px 0;
+  }
+
+  .card .bullet {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--fg);
+  }
+
+  /* WeWork current card */
+  .card.current {
+    border-left: 3px solid var(--accent);
+    padding-left: 22px; /* compensate for thicker left border */
+  }
+
+  .card .current-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  /* Station + card columns — position by left % along the timeline */
+  .stop {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+  }
+
+  /* Equidistant station positions — each company gets equal visual weight.
+     Positions:
+       AB: 12.5%
+       KB: 37.5%
+       ZM: 62.5%
+       WW: 87.5%
+  */
+
+  .stop-ab { left: 12.5%; }
+  .stop-kb { left: 37.5%; }
+  .stop-zm { left: 62.5%; }
+  .stop-ww { left: 87.5%; }
+
+  /* responsive-ish: shrink cards slightly on narrower */
+  @media (max-width: 1100px) {
+    .card { width: 240px; padding: 20px; }
+    .h2 { font-size: 36px; }
+  }
+
+  @media (max-width: 900px) {
+    main { padding: 64px 24px; }
+    .timeline { height: auto; }
+    /* fallback stacked view */
+    .rail-wrap { display: none; }
+    .stop { position: relative; top: auto; left: auto !important; transform: none; margin-bottom: 48px; }
+    .card { position: relative; left: auto; top: auto !important; bottom: auto !important; transform: none; width: 100%; max-width: 520px; margin: 16px 0; }
+    .connector { display: none; }
+    .station { position: relative; margin: 0 auto; top: auto; transform: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="variant-label">Variant C · Alternating Cards</div>
+
+  <main>
+    <div class="wrap">
+
+      <!-- Section header -->
+      <header>
+        <div class="eyebrow">Career · 4 companies · 13 years</div>
+        <h2 class="h2">More than a decade of compounding outcomes.</h2>
+        <p class="subhead">Four companies across CPG, consulting, mobility, and workplace — from Fortune 100 operations to co-founding a product consultancy. The through-line: operating at scale plus zero-to-one muscle.</p>
+      </header>
+
+      <!-- Timeline -->
+      <section class="timeline" aria-label="Career timeline">
+
+        <!-- Rail -->
+        <div class="rail-wrap" aria-hidden="true">
+          <div class="rail rail-full"></div>
+        </div>
+
+        <!-- Stop 1: AB InBev (card BELOW) -->
+        <div class="stop stop-ab">
+          <div class="station" aria-label="Station 1 AB InBev">01</div>
+          <div class="card below">
+            <div class="connector up" aria-hidden="true"></div>
+            <div class="card-head">
+              <span class="logo-chip" aria-label="AB InBev logo">
+                <img src="https://www.google.com/s2/favicons?domain=ab-inbev.com&sz=128" alt="" onerror="this.parentElement.classList.add('fallback'); this.remove();" />
+                <span class="logo-initials">AB</span>
+              </span>
+              <div class="eye">2012 — 2018 · 6 YRS</div>
+            </div>
+            <div class="company">AB InBev</div>
+            <div class="role">Operations → Operational Excellence</div>
+            <div class="divider"></div>
+            <div class="bullet">Reduced people-data error rates 7% → 1% across 20,000 employees via a re-engineered master-data platform used by 125+ HR partners.</div>
+          </div>
+        </div>
+
+        <!-- Stop 2: KarnerBlu (card ABOVE) -->
+        <div class="stop stop-kb">
+          <div class="station" aria-label="Station 2 KarnerBlu">02</div>
+          <div class="card above">
+            <div class="connector down" aria-hidden="true"></div>
+            <div class="card-head">
+              <span class="logo-chip" aria-label="KarnerBlu logo">
+                <img src="/logos/karnerblu.png" alt="" onerror="this.parentElement.classList.add('fallback'); this.remove();" />
+                <span class="logo-initials">KB</span>
+              </span>
+              <div class="eye">2018 — 2020 · 2 YRS</div>
+            </div>
+            <div class="company">KarnerBlu</div>
+            <div class="role">Product Consultant · Co-Founder</div>
+            <div class="divider"></div>
+            <div class="bullet">+30% resource-allocation efficiency at Fortune 500 clients (Staples, Unilever) via a value-based prioritization framework.</div>
+          </div>
+        </div>
+
+        <!-- Stop 3: Zoomo (card BELOW) -->
+        <div class="stop stop-zm">
+          <div class="station" aria-label="Station 3 Zoomo">03</div>
+          <div class="card below">
+            <div class="connector up" aria-hidden="true"></div>
+            <div class="card-head">
+              <span class="logo-chip" aria-label="Zoomo logo">
+                <img src="https://www.google.com/s2/favicons?domain=ridezoomo.com&sz=128" alt="" onerror="this.parentElement.classList.add('fallback'); this.remove();" />
+                <span class="logo-initials">ZM</span>
+              </span>
+              <div class="eye">2020 — 2022 · 2 YRS</div>
+            </div>
+            <div class="company">Zoomo</div>
+            <div class="role">Sr. Manager, Product Strategy &amp; Ops</div>
+            <div class="divider"></div>
+            <div class="bullet">Scaled B2C subscription ARR 10× ($500K → $5M) across 8 markets via pricing, lifecycle, and full P&amp;L ownership.</div>
+          </div>
+        </div>
+
+        <!-- Stop 4: WeWork (card ABOVE, current) -->
+        <div class="stop stop-ww">
+          <div class="station current" aria-label="Station 4 WeWork, current role">04</div>
+          <div class="card above current">
+            <div class="connector down" aria-hidden="true"></div>
+            <div class="current-tag">Current</div>
+            <div class="card-head">
+              <span class="logo-chip" aria-label="WeWork logo">
+                <img src="https://www.google.com/s2/favicons?domain=wework.com&sz=128" alt="" onerror="this.parentElement.classList.add('fallback'); this.remove();" />
+                <span class="logo-initials">WW</span>
+              </span>
+              <div class="eye">2023 — PRESENT · ONGOING</div>
+            </div>
+            <div class="company">WeWork</div>
+            <div class="role">Manager, Product Management, Global</div>
+            <div class="divider"></div>
+            <div class="bullet">$14M revenue (+60% YoY) across 13 countries owning the global parking vertical — helped deliver WeWork's first profitable quarter.</div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+</body>
+</html>

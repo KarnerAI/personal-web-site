@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { EditModeProvider } from "@/components/edit-mode/EditModeContext";
+import { EditModeToggle } from "@/components/edit-mode/EditModeToggle";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -31,7 +33,12 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <EditModeProvider>
+          <EditModeToggle />
+          {children}
+        </EditModeProvider>
+      </body>
     </html>
   );
 }

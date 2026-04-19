@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hero variants — comparison board</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { background: #F0EEE7; }
+    .board { padding: 40px 28px 80px; max-width: 1600px; margin: 0 auto; }
+    .board-head { margin-bottom: 28px; }
+    .board-head h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 6px; }
+    .board-head p { color: var(--muted); margin: 0; font-size: 15px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .tile {
+      background: var(--bg);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(15,30,61,0.06);
+      display: flex; flex-direction: column;
+    }
+    .tile header {
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .tile header .tag {
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 600; color: var(--accent);
+    }
+    .tile header .name { font-size: 15px; font-weight: 600; }
+    .tile header .open { font-size: 12px; color: var(--muted); }
+    .tile header .open:hover { color: var(--accent); }
+    .tile .frame-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1440 / 900;
+      overflow: hidden;
+    }
+    .tile iframe {
+      position: absolute; top: 0; left: 0;
+      width: 1440px; height: 900px;
+      transform-origin: top left;
+      transform: scale(calc(100% / 1440 * var(--tile-width, 760)));
+      border: 0;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .legend {
+      margin-top: 36px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .legend strong { color: var(--fg); }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <div class="board-head">
+      <h1>Hero · 4 directions</h1>
+      <p>Same top treatment (cover + headshot + greeting). They diverge on what lives below. Click any tile to open full-size.</p>
+    </div>
+
+    <div class="grid">
+      <div class="tile">
+        <header>
+          <div><span class="tag">A</span> <span class="name">Notion, faithful</span></div>
+          <a href="a.html" target="_blank" class="open">Open full →</a>
+        </header>
+        <div class="frame-wrap"><iframe src="a.html" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+      <div class="tile">
+        <header>
+          <div><span class="tag">B</span> <span class="name">Cover + Now sidebar</span></div>
+          <a href="b.html" target="_blank" class="open">Open full →</a>
+        </header>
+        <div class="frame-wrap"><iframe src="b.html" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+      <div class="tile">
+        <header>
+          <div><span class="tag">C</span> <span class="name">Receipts first</span></div>
+          <a href="c.html" target="_blank" class="open">Open full →</a>
+        </header>
+        <div class="frame-wrap"><iframe src="c.html" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+      <div class="tile">
+        <header>
+          <div><span class="tag">D</span> <span class="name">Now page</span></div>
+          <a href="d.html" target="_blank" class="open">Open full →</a>
+        </header>
+        <div class="frame-wrap"><iframe src="d.html" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <p style="margin:0 0 10px;"><strong>How they differ:</strong></p>
+      <p style="margin:0 0 6px;"><strong>A · Notion faithful</strong> — closest to your current Notion page. Quote + callout bio + right-side contact column. Safe, warm, recognizable.</p>
+      <p style="margin:0 0 6px;"><strong>B · Cover + Now sidebar</strong> — quote/bio on the left, a compact "Now" card stack on the right. Feels alive, current.</p>
+      <p style="margin:0 0 6px;"><strong>C · Receipts first</strong> — outcome cards ($14M / 10× / 4) above the bio. Anti-resume. Numbers lead, prose follows.</p>
+      <p style="margin:0;"><strong>D · Now page</strong> — greeting is small, the "Now" grid is the hero. Derek Sivers energy. Most differentiated.</p>
+    </div>
+  </div>
+
+  <script>
+    // Fit iframes responsively: scale based on actual tile width
+    function fit() {
+      document.querySelectorAll('.tile .frame-wrap').forEach(w => {
+        const width = w.clientWidth;
+        const iframe = w.querySelector('iframe');
+        iframe.style.transform = `scale(${width / 1440})`;
+        w.style.height = (900 * width / 1440) + 'px';
+      });
+    }
+    window.addEventListener('load', fit);
+    window.addEventListener('resize', fit);
+  </script>
+</body>
+</html>
