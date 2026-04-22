@@ -4,7 +4,7 @@ Single-page Next.js site built as a professional showcase for Hussain Alam's job
 
 ## Stack
 
-- Next.js 14+ (App Router)
+- Next.js 16 (App Router, Turbopack)
 - TypeScript + Tailwind CSS
 - Framer Motion (animations)
 - Radix UI (accessible primitives)
@@ -29,14 +29,14 @@ src/
   app/            — routes, layout, global CSS, /api/contact
   components/
     layout/       — Header, Footer
-    sections/     — Hero, CareerTimeline, Entrepreneurship, SideProjects, BeyondWork, Education, Contact
+    sections/     — Hero, CareerTimeline, Entrepreneurship, BeyondWork, Education
     ui/           — shared primitives (Button, Card, Drawer, Badge)
   data/           — content (career, ventures, side projects, books, etc.)
   lib/            — utils, resend client
   types/          — shared TypeScript types
 ```
 
-Section order in `src/app/page.tsx` matches PRD §6: Hero → Career → Entrepreneurship → Side Projects → Beyond Work → Education → Contact.
+Section order in `src/app/page.tsx`: Hero → Career → Entrepreneurship → Beyond Work → Education. Contact lives inside Hero as a right-column sidebar; the separate Contact + Side Projects sections in the original PRD were folded in during the design-review pass (see CHANGELOG v0.1.1.0).
 
 ## Color palette
 
@@ -46,7 +46,7 @@ Locked to **Tokyo Transit** — cool off-white background, deep ink navy text, v
 |---|---|---|
 | `--background` | `#FAFAF7` | Page background |
 | `--foreground` | `#0F1E3D` | Primary text |
-| `--muted` | `#5F6B85` | Secondary text |
+| `--muted` | `#4B5670` | Secondary text (darkened from `#5F6B85` in v0.1.1.0 for WCAG AA) |
 | `--accent` | `#E63B1E` | CTAs, highlights |
 | `--surface` | `#FFFFFF` | Cards, elevated surfaces |
 | `--border` | `#D9DDE3` | Hairlines |
