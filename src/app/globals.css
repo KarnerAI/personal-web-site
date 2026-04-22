@@ -35,6 +35,16 @@ body {
   line-height: 1.65;
 }
 
+/* Headings: let the browser balance line breaks so long titles don't
+   leave a single word on the last line ("widows"). Supported in Chrome
+   114+ / Safari 17.5+ / Firefox 121+. Non-supporting browsers get the
+   default `wrap` behavior — no visual regression. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
 /* Reusable layout helpers (PRD §7.4) */
 .content-width {
   width: 100%;
