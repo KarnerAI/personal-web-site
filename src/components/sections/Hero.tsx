@@ -88,7 +88,7 @@ export function Hero() {
         <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_260px] gap-12 md:gap-20">
           {/* About */}
           <div>
-            <h2 className="text-lg font-semibold tracking-tight mb-5">About</h2>
+            <h3 className="text-lg font-semibold tracking-tight mb-5">About</h3>
             <blockquote className="border-l-[3px] border-[var(--accent)] pl-4 max-w-2xl text-[15px] text-muted leading-relaxed">
               &ldquo;{QUOTE}&rdquo;{" "}
               <cite className="not-italic font-medium text-[var(--foreground)]">
@@ -108,7 +108,7 @@ export function Hero() {
 
           {/* Contact sidebar */}
           <aside>
-            <h2 className="text-lg font-semibold tracking-tight mb-5">Contact</h2>
+            <h3 className="text-lg font-semibold tracking-tight mb-5">Contact</h3>
             <ul className="flex flex-col gap-3 text-sm">
               <li>
                 <a
