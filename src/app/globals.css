@@ -83,11 +83,13 @@ h2 {
    define its own. Uses --accent (vermillion) for strong contrast on both
    cream body and white surfaces. 2px ring + 2px offset keeps the glyph
    legible without drowning in the halo. Only applies for keyboard focus
-   (focus-visible), so mouse clicks don't get the ring. */
+   (focus-visible), so mouse clicks don't get the ring. Outline naturally
+   follows each element's own border-radius in modern browsers — don't
+   force-override it here or pills/rounded buttons snap to square corners
+   while focused. */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 /* Respect reduced motion (PRD §10 accessibility) */
