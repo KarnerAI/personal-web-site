@@ -147,7 +147,7 @@ export function Entrepreneurship() {
           Things I&rsquo;ve started.
         </h2>
         <p className="text-muted text-[17px] max-w-[680px] mb-12">
-          I&apos;ve been a founder since before it was called &quot;building in public.&quot; Some worked,
+          I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some worked,
           some taught me more than any growth role. Click any card to read the full story.
         </p>
 

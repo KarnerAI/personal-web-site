@@ -79,7 +79,7 @@ export function Hero() {
             <span aria-hidden className="inline-block -translate-y-1">
               👋🏽
             </span>{" "}
-            I&apos;m {NAME}.
+            I&rsquo;m {NAME}.
           </h1>
           <p className="mt-4 text-lg md:text-xl text-muted">{SUBLINE}</p>
         </div>

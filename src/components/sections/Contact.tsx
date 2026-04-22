@@ -130,7 +130,7 @@ export function Contact() {
               <label htmlFor="contact-msg" className={labelCls}>Message</label>
               <textarea
                 id="contact-msg"
-                placeholder="What's on your mind?"
+                placeholder="What’s on your mind?"
                 className={[inputCls, "min-h-[120px] resize-y"].join(" ")}
                 aria-invalid={!!errors.message}
                 {...register("message")}
@@ -150,7 +150,7 @@ export function Contact() {
 
             {state.kind === "ok" && (
               <p className="mt-3 text-sm text-emerald-700">
-                Thanks — message sent. I&apos;ll reply within 48 hours.
+                Thanks — message sent. I&rsquo;ll reply within 48 hours.
               </p>
             )}
             {state.kind === "err" && (
@@ -166,7 +166,7 @@ export function Contact() {
             </Card>
             <Card title="Response time">
               <p className="font-serif text-[26px] leading-tight">~48 hours</p>
-              <p className="text-sm text-muted">Faster if it&apos;s product-related.</p>
+              <p className="text-sm text-muted">Faster if it&rsquo;s product-related.</p>
             </Card>
             <Card title="Elsewhere">
               <div className="flex flex-col gap-2.5">
