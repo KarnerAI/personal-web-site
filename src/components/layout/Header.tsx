@@ -73,6 +73,10 @@ export function Header() {
               aria-label="Site navigation"
               className="fixed inset-y-0 right-0 z-50 w-[min(320px,85vw)] bg-[var(--background)] border-l border-[var(--border)] shadow-xl p-6 flex flex-col focus:outline-none"
             >
+              <Dialog.Description className="sr-only">
+                Site navigation menu. Use the links below to jump to sections of
+                the page. Press Escape to close.
+              </Dialog.Description>
               <div className="flex items-center justify-between mb-8">
                 <Dialog.Title className="font-medium tracking-tight text-sm text-muted">
                   Menu
