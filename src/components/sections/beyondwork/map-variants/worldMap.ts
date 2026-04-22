@@ -14,7 +14,7 @@ type CountryProps = { name: string };
 
 // Build GeoJSON once at module load (pure data, not server/client-specific).
 const topology = countriesTopo as unknown as Parameters<typeof feature>[0];
-const countriesObject = (topology as { objects: { countries: unknown } }).objects.countries as Parameters<typeof feature>[1];
+const countriesObject = (topology as unknown as { objects: { countries: unknown } }).objects.countries as Parameters<typeof feature>[1];
 const countriesFC = feature(topology, countriesObject) as unknown as FeatureCollection<
   Geometry,
   CountryProps
