@@ -79,7 +79,7 @@ export const books: Book[] = [
   {
     title: "The Art of Doing Science",
     author: "Richard Hamming",
-    why: 'For the chapter on "You and Your Research."',
+    why: "For the chapter on “You and Your Research.”",
   },
   {
     title: "Crossing the Chasm",
@@ -90,7 +90,7 @@ export const books: Book[] = [
 
 export const podcasts: Podcast[] = [
   { name: "Acquired", host: "Ben & David", art: "ACQ" },
-  { name: "Invest Like the Best", host: "Patrick O'Shaughnessy", art: "ILB" },
-  { name: "Lenny's Podcast", host: "Lenny Rachitsky", art: "LNY" },
+  { name: "Invest Like the Best", host: "Patrick O’Shaughnessy", art: "ILB" },
+  { name: "Lenny’s Podcast", host: "Lenny Rachitsky", art: "LNY" },
   { name: "Dwarkesh Patel", host: "Dwarkesh Patel", art: "DWK" },
 ];

@@ -48,7 +48,23 @@ function VentureCover({ venture: v }: { venture: Venture }) {
           className="absolute inset-0 h-full w-full object-cover"
         />
       )}
-      {!showImage && v.coverEmoji && (
+      {/* FINDING-012 — initial-as-glyph instead of emoji. Falls back to coverEmoji
+          only if no initials and no image (non-breaking for future entries).
+          Serif display face (Instrument Serif, inherited via h1/h2 font stack)
+          keeps this feeling editorial, not decorative. */}
+      {!showImage && v.logoInitials && (
+        <span
+          aria-hidden
+          className="absolute inset-0 flex items-center justify-center font-[family-name:var(--font-serif)] text-[72px] leading-none tracking-tight text-white/95"
+          style={{
+            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.22))",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {v.logoInitials}
+        </span>
+      )}
+      {!showImage && !v.logoInitials && v.coverEmoji && (
         <span
           aria-hidden
           className="absolute inset-0 flex items-center justify-center text-[54px] opacity-85"
@@ -58,10 +74,12 @@ function VentureCover({ venture: v }: { venture: Venture }) {
         </span>
       )}
 
-      {/* Status pill overlaid top-right, frosted cream bg */}
+      {/* FINDING-013 — status pill promoted to top-left so it reads first
+          (western eye-path lands top-left before content). Color coding
+          lives in STATUS_PILL and STATUS_DOT; no palette change. */}
       <span
         className={[
-          "absolute top-3 right-3 inline-flex items-center gap-1.5",
+          "absolute top-3 left-3 inline-flex items-center gap-1.5",
           "px-2.5 py-1 rounded-full",
           "font-mono text-[10px] font-medium uppercase tracking-[0.08em]",
           "border border-[rgba(217,221,227,0.7)]",
@@ -143,11 +161,11 @@ export function Entrepreneurship() {
   return (
     <section id="entrepreneurship" className="section">
       <div className="content-width max-w-[1200px]">
-        <h2 className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.02] mb-6">
-          Things I&apos;ve started.
+        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] mb-6">
+          Things I&rsquo;ve started.
         </h2>
         <p className="text-muted text-[17px] max-w-[680px] mb-12">
-          I&apos;ve been a founder since before it was called &quot;building in public.&quot; Some worked,
+          I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some worked,
           some taught me more than any growth role. Click any card to read the full story.
         </p>
 

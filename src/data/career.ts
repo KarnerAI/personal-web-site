@@ -91,7 +91,7 @@ export const careerRoles: CareerRole[] = [
     whyIWasThere:
       "Global product ownership at scale — 13 countries, multi-market pricing, and payments infrastructure. Biggest surface area of my career.",
     heroBullet:
-      "$14M revenue (+60% YoY) owning the global parking vertical across 13 countries — helped deliver WeWork's first profitable quarter.",
+      "$14M revenue (+60% YoY) owning the global parking vertical across 13 countries — helped deliver WeWork’s first profitable quarter.",
     subBullets: [
       "Global Stripe payments: $800K MRR across 13 countries. Defined billing architecture for a scalable, compliant payments system.",
       "$12M annual revenue + 10% utilization lift across 315 locations via Gemini-powered pricing & inventory benchmarking.",

@@ -9,7 +9,7 @@
 :root {
   --background: #fafaf7;       /* soft cool off-white */
   --foreground: #0f1e3d;       /* deep ink navy */
-  --muted: #5f6b85;            /* slate gray */
+  --muted: #4b5670;            /* slate gray — darkened from #5f6b85 to pass WCAG AA (≥4.5:1 on cream #fafaf7) */
   --accent: #e63b1e;           /* vermillion signal-red */
   --accent-fg: #ffffff;        /* text color on accent */
   --surface: #ffffff;          /* cards, elevated */
@@ -35,6 +35,30 @@ body {
   line-height: 1.65;
 }
 
+/* Headings: let the browser balance line breaks so long titles don't
+   leave a single word on the last line ("widows"). Supported in Chrome
+   114+ / Safari 17.5+ / Firefox 121+. Non-supporting browsers get the
+   default `wrap` behavior — no visual regression. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Display type: Instrument Serif on H1 + H2 — the editorial counterweight
+   to Inter for body. --font-serif is wired in app/layout.tsx via
+   next/font/google. Breaks the site out of Inter-only "tech-template"
+   territory without touching body copy or running into tracking/leading
+   retuning on paragraphs. Weight 400 is intentional — Instrument Serif
+   ships only in regular; bolding it would look forced. Italic is
+   available if we want it later. */
+h1,
+h2 {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
 /* Reusable layout helpers (PRD §7.4) */
 .content-width {
   width: 100%;
@@ -53,6 +77,19 @@ body {
 
 .text-muted {
   color: var(--muted);
+}
+
+/* Global focus-visible ring — covers every interactive element that doesn't
+   define its own. Uses --accent (vermillion) for strong contrast on both
+   cream body and white surfaces. 2px ring + 2px offset keeps the glyph
+   legible without drowning in the halo. Only applies for keyboard focus
+   (focus-visible), so mouse clicks don't get the ring. Outline naturally
+   follows each element's own border-radius in modern browsers — don't
+   force-override it here or pills/rounded buttons snap to square corners
+   while focused. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Respect reduced motion (PRD §10 accessibility) */
