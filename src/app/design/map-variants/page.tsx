@@ -17,7 +17,7 @@ type VariantMeta = {
   label: string;
   name: string;
   description: string;
-  Component: () => React.ReactElement;
+  Component: React.ComponentType;
 };
 
 const variants: VariantMeta[] = [
