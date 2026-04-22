@@ -69,9 +69,9 @@ export function BeyondWork() {
         {/* Hobbies + Reading/Listening */}
         <div className="grid gap-12 md:gap-16 md:grid-cols-2 items-start">
           <div>
-            <h3 className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
+            <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
               Hobbies
-            </h3>
+            </p>
             <div className="grid grid-cols-2 gap-3">
               {hobbies.map((h) => (
                 <div
@@ -89,9 +89,9 @@ export function BeyondWork() {
           </div>
 
           <div>
-            <h3 className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
+            <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
               Reading &amp; listening
-            </h3>
+            </p>
             <h4 className="text-lg font-semibold tracking-tight mb-2">On the shelf</h4>
             <ul className="list-disc pl-5 text-sm text-muted leading-[1.8] mb-6">
               {books.map((b) => (

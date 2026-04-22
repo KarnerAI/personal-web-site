@@ -20,9 +20,9 @@ export function Education() {
         <div className="grid gap-12 md:gap-16 md:grid-cols-2 items-start">
           {/* Degree column */}
           <div>
-            <h3 className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
+            <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
               Degree
-            </h3>
+            </p>
             <div className="grid grid-cols-[80px_1fr] gap-5 items-start">
               <EducationLogo
                 logoSrc={degree.logoSrc}
@@ -48,9 +48,9 @@ export function Education() {
 
           {/* Certifications column */}
           <div>
-            <h3 className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
+            <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
               Certifications
-            </h3>
+            </p>
             <div className="flex flex-col gap-3">
               {certifications.map((c) => (
                 <div
