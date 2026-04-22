@@ -45,6 +45,20 @@ h3 {
   text-wrap: balance;
 }
 
+/* Display type: Instrument Serif on H1 + H2 — the editorial counterweight
+   to Inter for body. --font-serif is wired in app/layout.tsx via
+   next/font/google. Breaks the site out of Inter-only "tech-template"
+   territory without touching body copy or running into tracking/leading
+   retuning on paragraphs. Weight 400 is intentional — Instrument Serif
+   ships only in regular; bolding it would look forced. Italic is
+   available if we want it later. */
+h1,
+h2 {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
 /* Reusable layout helpers (PRD §7.4) */
 .content-width {
   width: 100%;
