@@ -46,6 +46,11 @@ export type Venture = {
   logoSrc?: string;
   logoDomain?: string;
   logoInitials?: string;
+  // Cover image for the card banner (variant A — 150px full-bleed).
+  // Resolution: coverSrc (real asset) > coverGradient (CSS fallback, with optional coverEmoji).
+  coverSrc?: string;
+  coverGradient?: string; // full CSS `background` value
+  coverEmoji?: string;
   hook: string;
   status: VentureStatus;
   tags?: string[];
