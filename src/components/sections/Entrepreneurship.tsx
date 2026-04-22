@@ -48,7 +48,23 @@ function VentureCover({ venture: v }: { venture: Venture }) {
           className="absolute inset-0 h-full w-full object-cover"
         />
       )}
-      {!showImage && v.coverEmoji && (
+      {/* FINDING-012 — initial-as-glyph instead of emoji. Falls back to coverEmoji
+          only if no initials and no image (non-breaking for future entries).
+          Serif display face (Instrument Serif, inherited via h1/h2 font stack)
+          keeps this feeling editorial, not decorative. */}
+      {!showImage && v.logoInitials && (
+        <span
+          aria-hidden
+          className="absolute inset-0 flex items-center justify-center font-[family-name:var(--font-serif)] text-[72px] leading-none tracking-tight text-white/95"
+          style={{
+            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.22))",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {v.logoInitials}
+        </span>
+      )}
+      {!showImage && !v.logoInitials && v.coverEmoji && (
         <span
           aria-hidden
           className="absolute inset-0 flex items-center justify-center text-[54px] opacity-85"
