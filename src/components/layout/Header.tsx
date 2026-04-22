@@ -16,7 +16,10 @@ export function Header() {
         <ul className="hidden md:flex gap-6 text-sm text-muted">
           {NAV.map((item) => (
             <li key={item.href}>
-              <a href={item.href} className="hover:text-foreground transition-colors">
+              <a
+                href={item.href}
+                className="inline-flex items-center min-h-[44px] px-1 hover:text-foreground transition-colors"
+              >
                 {item.label}
               </a>
             </li>
