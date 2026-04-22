@@ -9,7 +9,7 @@
 :root {
   --background: #fafaf7;       /* soft cool off-white */
   --foreground: #0f1e3d;       /* deep ink navy */
-  --muted: #5f6b85;            /* slate gray */
+  --muted: #4b5670;            /* slate gray — darkened from #5f6b85 to pass WCAG AA (≥4.5:1 on cream #fafaf7) */
   --accent: #e63b1e;           /* vermillion signal-red */
   --accent-fg: #ffffff;        /* text color on accent */
   --surface: #ffffff;          /* cards, elevated */
