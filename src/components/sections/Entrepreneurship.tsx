@@ -19,6 +19,64 @@ const STATUS_DOT: Record<VentureStatus, string> = {
   Experimental: "bg-amber-500",
 };
 
+// Status pill styling for the cover overlay — colored bg + dot, frosted against image.
+const STATUS_PILL: Record<VentureStatus, string> = {
+  Active: "bg-[#E3F5EB] text-[#0F7A45]",
+  Shipped: "bg-[#E6EEFF] text-[#1E4BB8]",
+  Live: "bg-[#E3F5EB] text-[#0F7A45]",
+  Acquired: "bg-[rgba(230,59,30,0.12)] text-[var(--accent)]",
+  Paused: "bg-[#F0EFE9] text-[var(--muted)]",
+  Experimental: "bg-[#F9EFD9] text-[#7A5610]",
+};
+
+// Cover banner for the card top (variant A — 150px full-bleed with status pill overlay).
+function VentureCover({ venture: v }: { venture: Venture }) {
+  const [errored, setErrored] = useState(false);
+  const showImage = Boolean(v.coverSrc) && !errored;
+
+  return (
+    <div
+      className="relative h-[150px] w-full overflow-hidden"
+      style={showImage ? undefined : { background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" }}
+    >
+      {showImage && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={v.coverSrc}
+          alt=""
+          onError={() => setErrored(true)}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+      {!showImage && v.coverEmoji && (
+        <span
+          aria-hidden
+          className="absolute inset-0 flex items-center justify-center text-[54px] opacity-85"
+          style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))" }}
+        >
+          {v.coverEmoji}
+        </span>
+      )}
+
+      {/* Status pill overlaid top-right, frosted cream bg */}
+      <span
+        className={[
+          "absolute top-3 right-3 inline-flex items-center gap-1.5",
+          "px-2.5 py-1 rounded-full",
+          "font-mono text-[10px] font-medium uppercase tracking-[0.08em]",
+          "border border-[rgba(217,221,227,0.7)]",
+          "backdrop-blur-[6px]",
+          STATUS_PILL[v.status],
+        ].join(" ")}
+        style={{ backgroundColor: "rgba(250,250,247,0.92)" }}
+      >
+        <span className={["w-[6px] h-[6px] rounded-full", STATUS_DOT[v.status]].join(" ")} aria-hidden />
+        {v.status}
+      </span>
+    </div>
+  );
+}
+
 // Venture logo resolver.
 // Priority: explicit src (local asset or URL) > Google's s2 favicon API > initials badge.
 function VentureLogo({
@@ -114,37 +172,32 @@ function VentureCard({ venture: v, onOpen }: { venture: Venture; onOpen: () => v
     <button
       type="button"
       onClick={onOpen}
-      className="group text-left border border-[var(--border)] bg-[var(--surface)] rounded-xl p-6 flex flex-col min-h-[280px] hover:border-[var(--accent)] hover:shadow-sm transition-all"
+      className="group text-left border border-[var(--border)] bg-[var(--surface)] rounded-xl overflow-hidden flex flex-col min-h-[360px] hover:border-[var(--accent)] hover:shadow-sm transition-all"
     >
-      <VentureLogo venture={v} size="card" />
+      <VentureCover venture={v} />
 
-      <div className="flex items-center gap-2 mt-5 mb-3">
-        <span className={["w-2 h-2 rounded-full", STATUS_DOT[v.status]].join(" ")} aria-hidden />
-        <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
-          {v.status}
-        </span>
-      </div>
+      <div className="flex flex-col flex-1 p-6">
+        <h3 className="text-2xl font-semibold tracking-tight mb-2 leading-tight">{v.name}</h3>
+        <p className="text-muted text-[15px] leading-[1.55] mb-auto">{v.hook}</p>
 
-      <h3 className="text-2xl font-semibold tracking-tight mb-3 leading-tight">{v.name}</h3>
-      <p className="text-muted text-[15px] leading-[1.55] mb-auto">{v.hook}</p>
+        {v.tags && v.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {v.tags.map((t) => (
+              <span
+                key={t}
+                className="font-mono text-[11px] text-muted bg-[var(--bg)] border border-[var(--border)] px-2 py-[3px] rounded"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
 
-      {v.tags && v.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-5">
-          {v.tags.map((t) => (
-            <span
-              key={t}
-              className="font-mono text-[11px] text-muted bg-[var(--bg)] border border-[var(--border)] px-2 py-[3px] rounded"
-            >
-              {t}
-            </span>
-          ))}
+        <div className="border-t border-[var(--border)] mt-5 pt-4">
+          <span className="text-sm font-medium text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
+            Read story →
+          </span>
         </div>
-      )}
-
-      <div className="border-t border-[var(--border)] mt-5 pt-4">
-        <span className="text-sm font-medium text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
-          Read story →
-        </span>
       </div>
     </button>
   );
