@@ -143,8 +143,8 @@ export function Entrepreneurship() {
   return (
     <section id="entrepreneurship" className="section">
       <div className="content-width max-w-[1200px]">
-        <h2 className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.02] mb-6">
-          Things I&apos;ve started.
+        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] mb-6">
+          Things I&rsquo;ve started.
         </h2>
         <p className="text-muted text-[17px] max-w-[680px] mb-12">
           I&apos;ve been a founder since before it was called &quot;building in public.&quot; Some worked,
