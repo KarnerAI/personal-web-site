@@ -74,10 +74,12 @@ function VentureCover({ venture: v }: { venture: Venture }) {
         </span>
       )}
 
-      {/* Status pill overlaid top-right, frosted cream bg */}
+      {/* FINDING-013 — status pill promoted to top-left so it reads first
+          (western eye-path lands top-left before content). Color coding
+          lives in STATUS_PILL and STATUS_DOT; no palette change. */}
       <span
         className={[
-          "absolute top-3 right-3 inline-flex items-center gap-1.5",
+          "absolute top-3 left-3 inline-flex items-center gap-1.5",
           "px-2.5 py-1 rounded-full",
           "font-mono text-[10px] font-medium uppercase tracking-[0.08em]",
           "border border-[rgba(217,221,227,0.7)]",
