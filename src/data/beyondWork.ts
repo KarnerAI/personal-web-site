@@ -5,11 +5,91 @@ import type { Book, Hobby, Podcast, TravelData, VisitedCountry } from "@/types";
 // (per Hussain's profile memory). Books & podcasts below are PLACEHOLDER —
 // flagged in DevBanner until Hussain provides a confirmed list.
 
+// Hobbies — Magazine Mosaic (design-shotgun approved 2026-04-22).
+// First entry renders as the 2×2 hero tile; remaining four fill the mosaic.
+// Reorder to promote a different hobby to hero. When real photos land, point
+// each `hero.src` at `/images/hobbies/{slug}-hero.jpg` and drop gallery images
+// into the same folder.
+//
+// `story` and `meta` are seeded with honest placeholders Hussain can swap for
+// his own copy — they're plausible but not load-bearing claims.
 export const hobbies: Hobby[] = [
-  { emoji: "🥋", label: "Martial arts", note: "BJJ, 4x/week" },
-  { emoji: "🤝", label: "Youth mentor", note: "8 years, NYC" },
-  { emoji: "🏍️", label: "Riding & driving", note: "Manual only" },
-  { emoji: "💃", label: "Festivals & salsa", note: "Coachella, Afropunk" },
+  {
+    slug: "riding",
+    label: "Riding & driving",
+    tagline: "Three days disconnected through the hills of Colombia.",
+    story: [
+      "Three days on a motorcycle through the mountains outside Medellín. Went with a friend I've known since I was fourteen — the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.",
+      "No cell service for most of it. You don't realize how much of your attention the phone quietly costs you until you spend three days without one — I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I've found.",
+      "The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft — fermentation, aging, a thousand small choices — mapped onto coffee instead. Different product, same instinct. Our host was also a chef and cooked every meal, which doesn't fit neatly in a motorcycle story but was somehow the best part.",
+    ],
+    meta: [
+      { label: "Route", value: "Medellín → Jericó → Fredonia" },
+      { label: "Days", value: "3" },
+      { label: "Rode with", value: "Friend since age 14" },
+    ],
+    embed: {
+      src: "https://www.google.com/maps/d/embed?mid=1OyXj6bPJXS677fD6peBqAic3mLXtM-E&ehbc=2E312F",
+      title: "Colombia motorcycle route: Medellín → Salgar → Jericó → Fredonia",
+      caption: "The actual route — 2-Day Colonial Cruisin' with Adrenaline Addicts.",
+      aspectRatio: "4 / 3",
+    },
+  },
+  {
+    slug: "building-ai",
+    label: "Building with AI",
+    tagline: "Products, agents, automation. Always shipping.",
+    story: [
+      "I use AI to collapse the distance between \u201CI wonder if...\u201D and \u201Chere's a working thing.\u201D Most of what I build now starts in a CLI session with Claude and ends as a prototype I can show a real user the same week.",
+      "This site is one of them. Built live with Claude Code. The mosaic you're looking at right now? AI wrote the scaffolding. I wrote the taglines.",
+    ],
+    meta: [
+      { label: "Stack", value: "Claude, Cursor, v0" },
+      { label: "Cadence", value: "Weekly shipping" },
+      { label: "Latest", value: "This site" },
+    ],
+  },
+  {
+    slug: "martial-arts",
+    label: "Martial arts",
+    tagline: "BJJ, 4x/week. Purple belt.",
+    story: [
+      "BJJ teaches you that composure is a muscle. Four nights a week I go get outclassed by blue belts half my age, and every time I leave the mat sharper than I arrived.",
+      "Currently drilling leg entanglements. Next stripe is the long game.",
+    ],
+    meta: [
+      { label: "Belt", value: "Purple" },
+      { label: "Frequency", value: "4x / week" },
+      { label: "Focus", value: "Leg entanglements" },
+    ],
+  },
+  {
+    slug: "mentor",
+    label: "Youth mentor",
+    tagline: "8 years in NYC. Mentee just graduated college.",
+    story: [
+      "Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running.",
+      "If you're early-career and on the fence about mentoring a kid — do it. The return on one good afternoon a month is absurd.",
+    ],
+    meta: [
+      { label: "Years", value: "8" },
+      { label: "City", value: "New York" },
+      { label: "Cadence", value: "Bi-weekly" },
+    ],
+  },
+  {
+    slug: "festivals",
+    label: "Festivals & salsa",
+    tagline: "Coachella, Afropunk. Salsa Saturdays in Bushwick.",
+    story: [
+      "Live music is how I reset. Coachella and Afropunk every year, smaller festivals whenever the lineup earns the flight.",
+      "Saturday nights I'm at salsa socials in Bushwick. You don't need to be good. You need to show up.",
+    ],
+    meta: [
+      { label: "Regular", value: "Coachella · Afropunk" },
+      { label: "Weekly", value: "Bushwick salsa" },
+    ],
+  },
 ];
 
 // Positioned visited countries on the 480×240 stylized world SVG.
@@ -48,7 +128,7 @@ export const travel: TravelData = {
   visitedCountryCodes: visitedCountries.map((c) => c.code),
   visited: visitedCountries,
   base: "New York, NY",
-  nextUp: "Lisbon, May 2026",
+  nextUp: "Turkey, September 2026",
 };
 
 // Stylized continent dot-matrix background for the map.

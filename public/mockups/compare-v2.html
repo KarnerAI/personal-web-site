@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Timeline · Variants v2 (A–F)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --fg: #0F1E3D;
+    --muted: #5F6B85;
+    --accent: #E63B1E;
+    --bar: #2A3749;
+    --border: #D9DDE3;
+    --surface: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.55;
+  }
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .toolbar h1 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .toolbar .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+  .toolbar .spacer { flex: 1; }
+  .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+  .chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .chip.active {
+    background: var(--bar);
+    color: white;
+    border-color: var(--bar);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 24px;
+  }
+  .grid.full-view {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .card-header .letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+  .card-header .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .card-header .desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .card iframe {
+    width: 100%;
+    border: 0;
+    background: var(--bg);
+  }
+  .grid:not(.full-view) iframe {
+    height: 580px;
+    /* visually scale to half-width preview */
+    transform: scale(0.62);
+    transform-origin: top left;
+    width: 161.3%;
+    height: 935px;
+  }
+  .grid.full-view iframe {
+    height: 700px;
+  }
+  /* Hide all but selected when single chip is active */
+  .grid.single-A > .card:not([data-variant="A"]),
+  .grid.single-B > .card:not([data-variant="B"]),
+  .grid.single-C > .card:not([data-variant="C"]),
+  .grid.single-D > .card:not([data-variant="D"]),
+  .grid.single-E > .card:not([data-variant="E"]),
+  .grid.single-F > .card:not([data-variant="F"]) {
+    display: none;
+  }
+  .grid.single-A,
+  .grid.single-B,
+  .grid.single-C,
+  .grid.single-D,
+  .grid.single-E,
+  .grid.single-F {
+    grid-template-columns: 1fr;
+  }
+  .grid.single-A iframe,
+  .grid.single-B iframe,
+  .grid.single-C iframe,
+  .grid.single-D iframe,
+  .grid.single-E iframe,
+  .grid.single-F iframe {
+    transform: none;
+    width: 100%;
+    height: 800px;
+  }
+</style>
+</head>
+<body>
+<header class="toolbar">
+  <span class="eyebrow">CAREER TIMELINE</span>
+  <h1>Variants v2 · A through F</h1>
+  <div class="spacer"></div>
+  <div class="chips">
+    <a class="chip active" href="#" data-view="grid">All 6</a>
+    <a class="chip" href="#" data-view="A">A · PPT Faithful</a>
+    <a class="chip" href="#" data-view="B">B · Subway</a>
+    <a class="chip" href="#" data-view="C">C · Editorial</a>
+    <a class="chip" href="#" data-view="D">D · Tape + Pins</a>
+    <a class="chip" href="#" data-view="E">E · Storyboard</a>
+    <a class="chip" href="#" data-view="F">F · Compass</a>
+  </div>
+</header>
+
+<main class="grid" id="grid">
+  <div class="card" data-variant="A">
+    <div class="card-header">
+      <span class="letter">A</span>
+      <span class="name">PPT Faithful</span>
+      <span class="desc">Year-segmented bar · alternating circles + connectors</span>
+    </div>
+    <iframe src="career-timeline-v2-A.html" loading="eager" title="Variant A"></iframe>
+  </div>
+  <div class="card" data-variant="B">
+    <div class="card-header">
+      <span class="letter">B</span>
+      <span class="name">Subway Line</span>
+      <span class="desc">Tokyo Transit · station signs alternating</span>
+    </div>
+    <iframe src="career-timeline-v2-B.html" loading="eager" title="Variant B"></iframe>
+  </div>
+  <div class="card" data-variant="C">
+    <div class="card-header">
+      <span class="letter">C</span>
+      <span class="name">Editorial Magazine</span>
+      <span class="desc">NYT-quiet · giant serif year display</span>
+    </div>
+    <iframe src="career-timeline-v2-C.html" loading="eager" title="Variant C"></iframe>
+  </div>
+  <div class="card" data-variant="D">
+    <div class="card-header">
+      <span class="letter">D</span>
+      <span class="name">Tape + Push Pins</span>
+      <span class="desc">Tactile · proportional tape with pinned cards</span>
+    </div>
+    <iframe src="career-timeline-v2-D.html" loading="eager" title="Variant D"></iframe>
+  </div>
+  <div class="card" data-variant="E">
+    <div class="card-header">
+      <span class="letter">E</span>
+      <span class="name">Storyboard Cards</span>
+      <span class="desc">Narrative · rich cards with "why I was there" lines</span>
+    </div>
+    <iframe src="career-timeline-v2-E.html" loading="eager" title="Variant E"></iframe>
+  </div>
+  <div class="card" data-variant="F">
+    <div class="card-header">
+      <span class="letter">F</span>
+      <span class="name">Compass Marks</span>
+      <span class="desc">Vignelli · giant year numerals + hairline risers</span>
+    </div>
+    <iframe src="career-timeline-v2-F.html" loading="eager" title="Variant F"></iframe>
+  </div>
+</main>
+
+<script>
+  const grid = document.getElementById('grid');
+  const chips = document.querySelectorAll('.chip');
+  chips.forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      e.preventDefault();
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const view = chip.dataset.view;
+      grid.className = 'grid';
+      if (view === 'grid') {
+        // already cleared
+      } else {
+        grid.classList.add('single-' + view);
+      }
+    });
+  });
+</script>
+</body>
+</html>

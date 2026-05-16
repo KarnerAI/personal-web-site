@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Variant A — Editorial Pullquote · Beyond Work / Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --fg: #0F1E3D;
+    --muted: #5F6B85;
+    --accent: #E63B1E;
+    --surface: #FFFFFF;
+    --border: #D9DDE3;
+    --land: #F4EEDC;
+    --water: #B8D8E8;
+    --max: 1160px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .variant-label { position: fixed; top: 16px; left: 16px; background: var(--fg); color: #fff; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 10px; border-radius: 4px; z-index: 10; font-weight: 600; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 80px 32px 120px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 20px; }
+  .headline { font-family: 'Fraunces', Georgia, serif; font-size: 56px; line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin: 0 0 72px; max-width: 860px; }
+  .map-wrap { border-radius: 12px; border: 1px solid var(--border); overflow: hidden; background: var(--water); margin-bottom: 56px; position: relative; aspect-ratio: 2.2 / 1; }
+  .map-wrap::before { content: ""; position: absolute; inset: 0; background:
+    radial-gradient(ellipse 22% 30% at 18% 38%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 10% 24% at 22% 68%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 12% 26% at 50% 50%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 20% 24% at 72% 42%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 6% 12% at 85% 82%, var(--land) 60%, transparent 62%);
+  }
+  .pin { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 1.5px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transform: translate(-50%, -50%); }
+  .legend { position: absolute; bottom: 14px; left: 14px; background: rgba(255,255,255,.92); padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(4px); }
+  .legend-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; border: 1px solid #fff; }
+
+  /* Editorial pullquote block */
+  .editorial { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 780px; margin: 0 auto; text-align: center; }
+  .pullquote { font-family: 'Fraunces', Georgia, serif; font-size: 40px; line-height: 1.25; font-weight: 400; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
+  .pullquote::before { content: "\201C"; color: var(--accent); font-size: 72px; line-height: 0.1; display: block; margin-bottom: 32px; }
+  .attr { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; }
+  .attr em { font-style: normal; color: var(--fg); }
+  .philosophy { font-size: 17px; line-height: 1.65; color: var(--fg); max-width: 680px; margin: 0 auto; }
+  .philosophy strong { color: var(--accent); font-weight: 600; }
+
+  /* Fact chips */
+  .chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 72px; max-width: 860px; margin-left: auto; margin-right: auto; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; display: flex; align-items: center; gap: 14px; font-size: 14px; }
+  .chip .emoji { font-size: 22px; }
+  .chip .label { font-weight: 600; color: var(--fg); }
+  .chip .val { color: var(--muted); margin-left: 6px; }
+
+  /* Page footer / note */
+  .note { margin-top: 96px; padding-top: 40px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); max-width: 780px; margin-left: auto; margin-right: auto; }
+  .note b { color: var(--fg); font-weight: 600; }
+
+  @media (max-width: 720px) {
+    .headline { font-size: 38px; }
+    .pullquote { font-size: 28px; }
+    .chips { grid-template-columns: 1fr; }
+    .wrap { padding: 56px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+<span class="variant-label">Variant A · Editorial Pullquote</span>
+<div class="wrap">
+  <div class="eyebrow">Beyond Work</div>
+  <h1 class="headline">Get to know me outside of work.</h1>
+
+  <div class="map-wrap" aria-label="World map placeholder">
+    <!-- pin positions approximated to match real map -->
+    <span class="pin" style="left: 18%; top: 38%"></span>
+    <span class="pin" style="left: 16%; top: 28%"></span>
+    <span class="pin" style="left: 19%; top: 50%"></span>
+    <span class="pin" style="left: 22%; top: 65%"></span>
+    <span class="pin" style="left: 26%; top: 82%"></span>
+    <span class="pin" style="left: 47%; top: 32%"></span>
+    <span class="pin" style="left: 48%; top: 38%"></span>
+    <span class="pin" style="left: 46%; top: 44%"></span>
+    <span class="pin" style="left: 51%; top: 43%"></span>
+    <span class="pin" style="left: 49%; top: 32%"></span>
+    <span class="pin" style="left: 50%; top: 36%"></span>
+    <span class="pin" style="left: 68%; top: 54%"></span>
+    <span class="pin" style="left: 65%; top: 54%"></span>
+    <span class="pin" style="left: 82%; top: 44%"></span>
+    <span class="pin" style="left: 70%; top: 60%"></span>
+    <span class="pin" style="left: 61%; top: 52%"></span>
+    <div class="legend"><span class="legend-dot"></span>Visited</div>
+  </div>
+
+  <div class="editorial">
+    <p class="pullquote">
+      One's destination is never a place, but a new way of seeing things.
+    </p>
+    <p class="attr">— <em>Henry Miller</em></p>
+    <p class="philosophy">
+      Travel is how I build <strong>empathy for users</strong>, calibrate my sense of what "great" looks like, and find ideas I couldn't have reached at a desk. Tokyo's 7-Elevens raised my bar for operational excellence. Two months living in Mexico City showed me the default 9-to-5 isn't the only way to live. A solo trip through Colombia taught me empathy compounds when you put yourself somewhere you don't belong. Every trip feeds the work.
+    </p>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><span class="emoji">🇲🇽</span><span><span class="label">Favorite city</span><span class="val">· Mexico City</span></span></div>
+    <div class="chip"><span class="emoji">🗽</span><span><span class="label">Current base</span><span class="val">· New York, NY</span></span></div>
+    <div class="chip"><span class="emoji">✈️</span><span><span class="label">Next up</span><span class="val">· Turkey, September 2026</span></span></div>
+  </div>
+
+  <div class="note">
+    <b>Copy version:</b> A (restrained, PM-voice). <b>Quote:</b> Henry Miller — life-design / "new way of seeing." <b>Layout mood:</b> quiet, centered editorial. <b>Best when:</b> you want the map to stay the hero and the words to be few and precise.
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440, initial-scale=1">
+<title>Career Timeline — Variant D — Tape & Push Pins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --text: #0F1E3D;
+    --muted: #5F6B85;
+    --accent: #E63B1E;
+    --tape: #2A3749;
+    --border: #D9DDE3;
+    --logo-bg: #F0EFE9;
+    --card-bg: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-width: 1440px;
+  }
+
+  .section {
+    width: 100%;
+    padding: 96px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .subhead {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 672px;
+    margin-bottom: 96px;
+  }
+
+  /* Timeline */
+  .timeline-wrap {
+    position: relative;
+    width: 100%;
+    /* Reserve space above the tape for cards + pin stems */
+    padding-top: 180px;
+    padding-bottom: 56px;
+  }
+
+  /* The tape */
+  .tape {
+    position: relative;
+    width: 100%;
+    height: 36px;
+    background: var(--tape);
+    border-radius: 3px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(15, 30, 61, 0.04);
+  }
+
+  .tape-segment {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .tape-segment:last-child {
+    border-right: none;
+  }
+
+  .tape-segment .tenure {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* Year ranges below tape */
+  .year-row {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    margin-top: 16px;
+    display: flex;
+  }
+
+  .year-cell {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 4px;
+  }
+
+  .year-cell .year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Pinned cards above the tape */
+  .pin {
+    position: absolute;
+    bottom: 56px; /* leave room for stem (24-30) + pinhead + small gap */
+    transform: translateX(-50%);
+    width: 220px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 1px 2px rgba(15, 30, 61, 0.03), 0 4px 12px rgba(15, 30, 61, 0.04);
+  }
+
+  .logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--logo-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  .company {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+
+  .role {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .years {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+  }
+
+  /* Pin stem + head */
+  .pin-stem {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 28px;
+    background: var(--muted);
+  }
+
+  .pin-head {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 24px);
+    transform: translateX(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 1px 2px rgba(230, 59, 30, 0.35);
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="eyebrow">CAREER</div>
+      <h2>My career, in four chapters.</h2>
+      <p class="subhead">
+        Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a Series-A startup — joined WeWork three months before bankruptcy and led products to profitability.
+      </p>
+
+      <div class="timeline-wrap">
+        <!-- Pinned cards (positioned at center of each segment) -->
+        <!-- Segment centers (cumulative width up to start + half segment width):
+             AB: 0%   + 25%    = 25%
+             KB: 50%  + 8.335% = 58.335%
+             ZM: 66.67% + 8.335% = 75.005%
+             WE: 83.33% + 8.335% = 91.665% -->
+
+        <div class="pin" style="left: 25%;">
+          <div class="card">
+            <div class="logo">AB</div>
+            <div class="company">Anheuser-Busch InBev</div>
+            <div class="role">Operational Excellence</div>
+            <div class="years">2012—2018</div>
+          </div>
+          <div class="pin-stem"></div>
+          <div class="pin-head"></div>
+        </div>
+
+        <div class="pin" style="left: 58.335%;">
+          <div class="card">
+            <div class="logo">KB</div>
+            <div class="company">KarnerBlu</div>
+            <div class="role">Product Consultant · Co-Founder</div>
+            <div class="years">2018—2020</div>
+          </div>
+          <div class="pin-stem"></div>
+          <div class="pin-head"></div>
+        </div>
+
+        <div class="pin" style="left: 75.005%;">
+          <div class="card">
+            <div class="logo">ZM</div>
+            <div class="company">Zoomo</div>
+            <div class="role">Sr. Manager, Product Strategy</div>
+            <div class="years">2020—2022</div>
+          </div>
+          <div class="pin-stem"></div>
+          <div class="pin-head"></div>
+        </div>
+
+        <div class="pin" style="left: 91.665%;">
+          <div class="card">
+            <div class="logo">WE</div>
+            <div class="company">WeWork</div>
+            <div class="role">Manager, Product Management</div>
+            <div class="years">2023—Present</div>
+          </div>
+          <div class="pin-stem"></div>
+          <div class="pin-head"></div>
+        </div>
+
+        <!-- The tape -->
+        <div class="tape">
+          <div class="tape-segment" style="width: 50%;">
+            <span class="tenure">6Y</span>
+          </div>
+          <div class="tape-segment" style="width: 16.67%;">
+            <span class="tenure">2Y</span>
+          </div>
+          <div class="tape-segment" style="width: 16.67%;">
+            <span class="tenure">2Y</span>
+          </div>
+          <div class="tape-segment" style="width: 16.66%;">
+            <span class="tenure">2Y</span>
+          </div>
+        </div>
+
+        <!-- Year ranges below tape -->
+        <div class="year-row">
+          <div class="year-cell" style="width: 50%;">
+            <span class="year">2012—2018</span>
+          </div>
+          <div class="year-cell" style="width: 16.67%;">
+            <span class="year">2018—2020</span>
+          </div>
+          <div class="year-cell" style="width: 16.67%;">
+            <span class="year">2020—2022</span>
+          </div>
+          <div class="year-cell" style="width: 16.66%;">
+            <span class="year">2023—Present</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

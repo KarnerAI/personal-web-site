@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1440" />
+  <title>Career Timeline — Variant C — Editorial Magazine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+Pro:wght@200;300;400&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #FAFAF7;
+      --text: #0F1E3D;
+      --muted: #5F6B85;
+      --accent: #E63B1E;
+      --hairline: #D9DDE3;
+      --white: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      width: 1440px;
+      margin: 0 auto;
+      background: var(--bg);
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 24px;
+    }
+
+    /* ---------- Header ---------- */
+    .eyebrow {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 24px 0;
+    }
+
+    h2.title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin: 0 0 24px 0;
+    }
+
+    .subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 672px;
+      margin: 0 0 96px 0;
+    }
+
+    /* ---------- Timeline ---------- */
+    .timeline {
+      position: relative;
+      width: 100%;
+      height: 360px;
+      margin: 0 auto;
+    }
+
+    .hairline {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--hairline);
+      transform: translateY(-0.5px);
+    }
+
+    .stops {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+    }
+
+    .stop {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Logo circle sitting on the line */
+    .logo {
+      position: relative;
+      z-index: 2;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+
+    /* Floating callouts (no cards) */
+    .callout {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      text-align: center;
+    }
+
+    .callout.above {
+      bottom: calc(50% + 64px); /* sit above the circle */
+    }
+
+    .callout.below {
+      top: calc(50% + 64px); /* sit below the circle */
+    }
+
+    /* Big display year — Source Serif Pro */
+    .year {
+      font-family: 'Source Serif Pro', 'Source Serif 4', Georgia, serif;
+      font-weight: 200;
+      font-size: 88px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin: 0;
+    }
+
+    /* Small mono caption */
+    .caption {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      line-height: 1.7;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .caption .role {
+      display: block;
+      color: var(--muted);
+    }
+
+    /* Vertical rhythm between year + caption */
+    .callout .year + .caption {
+      margin-top: 16px;
+    }
+
+    .callout .caption + .year {
+      margin-top: 16px;
+    }
+
+    /* Subtle padding above/below the section */
+    .footer-rule {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-rule .line {
+      height: 1px;
+      background: var(--hairline);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="section" aria-labelledby="career-title">
+      <p class="eyebrow">Career</p>
+      <h2 class="title" id="career-title">My career, in four chapters.</h2>
+      <p class="subhead">
+        Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a
+        Series-A startup — joined WeWork three months before bankruptcy and led products
+        to profitability.
+      </p>
+
+      <div class="timeline" role="list" aria-label="Career timeline">
+        <div class="hairline" aria-hidden="true"></div>
+
+        <div class="stops">
+          <!-- Stop 1: 2012 — ABInBev — YEAR ABOVE -->
+          <div class="stop" role="listitem">
+            <div class="callout above">
+              <p class="year">2012</p>
+              <p class="caption">
+                Anheuser-Busch InBev — 6 Years
+                <span class="role">Operational Excellence</span>
+              </p>
+            </div>
+            <div class="logo" aria-label="Anheuser-Busch InBev">AB</div>
+          </div>
+
+          <!-- Stop 2: 2018 — KarnerBlu — YEAR BELOW -->
+          <div class="stop" role="listitem">
+            <div class="callout above">
+              <p class="caption">
+                KarnerBlu — 2 Years
+                <span class="role">Product Consultant · Co-Founder</span>
+              </p>
+            </div>
+            <div class="logo" aria-label="KarnerBlu">KB</div>
+            <div class="callout below">
+              <p class="year">2018</p>
+            </div>
+          </div>
+
+          <!-- Stop 3: 2020 — Zoomo — YEAR ABOVE -->
+          <div class="stop" role="listitem">
+            <div class="callout above">
+              <p class="year">2020</p>
+              <p class="caption">
+                Zoomo — 2 Years
+                <span class="role">Sr. Manager, Product Strategy</span>
+              </p>
+            </div>
+            <div class="logo" aria-label="Zoomo">ZM</div>
+          </div>
+
+          <!-- Stop 4: 2023 — WeWork — YEAR BELOW -->
+          <div class="stop" role="listitem">
+            <div class="callout above">
+              <p class="caption">
+                WeWork — 2 Years
+                <span class="role">Manager, Product Management</span>
+              </p>
+            </div>
+            <div class="logo" aria-label="WeWork">WE</div>
+            <div class="callout below">
+              <p class="year">2023</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

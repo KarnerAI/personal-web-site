@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Variant D — Numbered Pin Stories · Beyond Work / Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --fg: #0F1E3D;
+    --muted: #5F6B85;
+    --accent: #E63B1E;
+    --surface: #FFFFFF;
+    --border: #D9DDE3;
+    --land: #F4EEDC;
+    --water: #B8D8E8;
+    --max: 1200px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .variant-label { position: fixed; top: 16px; left: 16px; background: var(--fg); color: #fff; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 10px; border-radius: 4px; z-index: 10; font-weight: 600; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 80px 32px 120px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 20px; }
+  .headline { font-family: 'Fraunces', Georgia, serif; font-size: 56px; line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin: 0 0 24px; max-width: 900px; }
+  .lede { font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 720px; margin: 0 0 48px; }
+  .lede b { color: var(--fg); font-weight: 600; }
+
+  .quote-row { display: flex; align-items: baseline; gap: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+  .quote-row::before { content: ""; width: 40px; height: 1px; background: var(--accent); position: relative; top: -4px; }
+  .quote-row i { font-style: normal; color: var(--fg); }
+
+  .big-quote { font-family: 'Fraunces', Georgia, serif; font-size: 32px; line-height: 1.25; font-weight: 400; letter-spacing: -0.01em; margin: 0 0 64px; max-width: 820px; }
+  .big-quote b { font-weight: 500; display: block; font-size: 13px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-top: 16px; font-family: 'Inter', sans-serif; }
+
+  /* Map with numbered pins */
+  .map-wrap { border-radius: 12px; border: 1px solid var(--border); overflow: hidden; background: var(--water); position: relative; aspect-ratio: 2.3 / 1; margin-bottom: 72px; }
+  .map-wrap::before { content: ""; position: absolute; inset: 0; background:
+    radial-gradient(ellipse 22% 30% at 18% 38%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 10% 24% at 22% 68%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 12% 26% at 50% 50%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 20% 24% at 72% 42%, var(--land) 60%, transparent 62%),
+    radial-gradient(ellipse 6% 12% at 85% 82%, var(--land) 60%, transparent 62%);
+  }
+  .pin { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 1.5px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transform: translate(-50%, -50%); }
+  .pin-num { position: absolute; width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 14px; border: 2.5px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.25); transform: translate(-50%, -50%); z-index: 2; }
+  .legend { position: absolute; bottom: 14px; left: 14px; background: rgba(255,255,255,.94); padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+  .legend-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; border: 1px solid #fff; }
+
+  /* Numbered stories */
+  .stories { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--border); }
+  .story { display: grid; grid-template-columns: 100px 1.2fr 2fr; gap: 32px; padding: 40px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .story-num { font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 500; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+  .story-num small { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 8px; font-weight: 500; }
+  .story-meta { display: flex; flex-direction: column; gap: 6px; }
+  .story-place { font-family: 'Fraunces', Georgia, serif; font-size: 28px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg); margin: 0; display: flex; align-items: center; gap: 10px; }
+  .story-flag { font-size: 30px; }
+  .story-tag { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .story-body { font-size: 16px; line-height: 1.65; color: var(--fg); }
+  .story-body p { margin: 0 0 12px; }
+  .story-body p:last-child { margin: 0; }
+  .story-body b { color: var(--fg); font-weight: 600; }
+
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 56px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 10px 16px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+  .chip .label { font-weight: 600; color: var(--fg); }
+  .chip .val { color: var(--muted); }
+
+  .note { margin-top: 96px; padding-top: 40px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); max-width: 820px; }
+  .note b { color: var(--fg); font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .story { grid-template-columns: 60px 1fr; }
+    .story-body { grid-column: 1 / -1; }
+    .headline { font-size: 40px; }
+    .big-quote { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<span class="variant-label">Variant D · Numbered Pin Stories</span>
+<div class="wrap">
+  <div class="eyebrow">Beyond Work</div>
+  <h1 class="headline">Get to know me outside of work.</h1>
+  <p class="lede">
+    <b>I travel because it keeps showing me what's possible</b> — in work, in people, in me. 16 countries, 32 cities, and a handful of trips that actually changed how I build things.
+  </p>
+
+  <p class="big-quote">
+    Travel is fatal to prejudice, bigotry, and narrow-mindedness.
+    <b>— Mark Twain</b>
+  </p>
+
+  <div class="map-wrap" aria-label="World map placeholder with numbered pins">
+    <!-- unnumbered context pins -->
+    <span class="pin" style="left: 18%; top: 38%"></span>
+    <span class="pin" style="left: 16%; top: 28%"></span>
+    <span class="pin" style="left: 26%; top: 82%"></span>
+    <span class="pin" style="left: 47%; top: 32%"></span>
+    <span class="pin" style="left: 48%; top: 38%"></span>
+    <span class="pin" style="left: 46%; top: 44%"></span>
+    <span class="pin" style="left: 51%; top: 43%"></span>
+    <span class="pin" style="left: 49%; top: 32%"></span>
+    <span class="pin" style="left: 50%; top: 36%"></span>
+    <span class="pin" style="left: 65%; top: 54%"></span>
+    <span class="pin" style="left: 70%; top: 60%"></span>
+    <span class="pin" style="left: 61%; top: 52%"></span>
+    <span class="pin" style="left: 68%; top: 54%"></span>
+    <!-- numbered story pins -->
+    <span class="pin-num" style="left: 19%; top: 50%">01</span>
+    <span class="pin-num" style="left: 22%; top: 65%">02</span>
+    <span class="pin-num" style="left: 82%; top: 44%">03</span>
+    <div class="legend"><span class="legend-dot"></span>Visited &nbsp;·&nbsp; Numbered = a story below</div>
+  </div>
+
+  <div class="stories">
+
+    <article class="story">
+      <div class="story-num">01<small>Mexico City · 2025</small></div>
+      <div class="story-meta">
+        <h3 class="story-place"><span class="story-flag">🇲🇽</span> CDMX</h3>
+        <span class="story-tag">Life design</span>
+      </div>
+      <div class="story-body">
+        <p>I lived in Mexico City for two months. On the first week I met a friend from Tennessee who'd already been there a year — seeing him <b>live</b> there, not tour it, reframed what a life could look like.</p>
+        <p>The default 9-to-5 isn't the only way. I knew that in theory. Living it for sixty days rewrote it into instinct.</p>
+      </div>
+    </article>
+
+    <article class="story">
+      <div class="story-num">02<small>Colombia · first solo trip</small></div>
+      <div class="story-meta">
+        <h3 class="story-place"><span class="story-flag">🇨🇴</span> Colombia</h3>
+        <span class="story-tag">Empathy as input</span>
+      </div>
+      <div class="story-body">
+        <p>My first real solo trip. Met people from every continent; learned what they were each running toward.</p>
+        <p>The best ideas in product often come from watching an adjacent world. <b>Empathy — the PM skill I care about most — compounds when you put yourself somewhere you don't belong.</b></p>
+      </div>
+    </article>
+
+    <article class="story">
+      <div class="story-num">03<small>Japan · 2024</small></div>
+      <div class="story-meta">
+        <h3 class="story-place"><span class="story-flag">🇯🇵</span> Tokyo, Kyoto, Osaka</h3>
+        <span class="story-tag">Operational excellence</span>
+      </div>
+      <div class="story-body">
+        <p>A 7-Eleven in Tokyo is better-run than most US restaurants. Once you see that, you can't un-see it — it becomes a new bar for what "great" can mean at an operational level.</p>
+        <p>I went with Dennis, a friend since I was five. He introduced me to Steve on that trip. Steve and I meet every month now. <b>Trips give you more than ideas.</b></p>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="chips">
+    <span class="chip">🇲🇽 <span class="label">Favorite city</span> <span class="val">Mexico City</span></span>
+    <span class="chip">🗽 <span class="label">Current base</span> <span class="val">New York, NY</span></span>
+    <span class="chip">✈️ <span class="label">Next up</span> <span class="val">Turkey, September 2026</span></span>
+  </div>
+
+  <div class="note">
+    <b>Copy version:</b> B (vulnerable, first-person, named people). <b>Quote:</b> Mark Twain — bigotry/narrow-mindedness. <b>Layout mood:</b> indexed, numbered, editor's-cut. Map becomes a table of contents. <b>Best when:</b> you want the vignettes to do the heavy lifting and the map to explicitly tee them up rather than stand alone.
+  </div>
+</div>
+</body>
+</html>

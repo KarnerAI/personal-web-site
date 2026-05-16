@@ -4,6 +4,33 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.1.2.0] - 2026-05-16
+
+Redesign pass on the Beyond Work section and a Career Timeline design
+exploration. Introduces a reusable hobby tile system with a modal detail
+view, lays down the design-variants archive convention, and captures a
+shotgun of timeline mockups for a follow-up pick.
+
+### Added
+- Hobby tile system on the Beyond Work section — `HobbyTile`,
+  `HobbyPhoto`, and `HobbyModal` components. Tiles open a Radix dialog
+  with photo, description, and metadata; keyboard-navigable and
+  screen-reader friendly.
+- `DESIGN-VARIANTS.md` convention doc — codifies where TSX variants
+  (`src/components/sections/{section}/variants/`) and standalone HTML
+  mockups (`design-variants/`) live, plus the "never delete a variant"
+  rule.
+- Career Timeline v2 + v3 mockup shotgun (12 standalone HTML variants
+  under `public/mockups/`) plus side-by-side compare pages, so the next
+  pass can pick a direction from real layouts instead of from a brief.
+- Geo-projection TravelMap variant cleanup pass (`TravelMapGeo.tsx`).
+
+### Changed
+- Beyond Work section refactored to use the new hobby tile system.
+- Career Timeline component refreshed in line with the upcoming v2/v3
+  direction.
+- `beyondWork` data model + types extended to feed the tile/modal flow.
+
 ## [0.1.1.0] - 2026-04-22
 
 Design-review pass ahead of the 2026-05-03 public launch. Fifteen audit findings

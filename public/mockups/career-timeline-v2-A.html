@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Timeline — Variant A (PPT Faithful)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #fafaf7;
+    color: #0f1e3d;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  .section {
+    background: #fafaf7;
+    width: 100%;
+    padding: 96px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header block */
+  .eyebrow {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: #e63b1e;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    margin: 0 0 20px 0;
+  }
+
+  .headline {
+    font-family: "Inter", sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #0f1e3d;
+    margin: 0 0 20px 0;
+  }
+
+  .subhead {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #5f6b85;
+    max-width: 672px;
+    margin: 0 0 80px 0;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 96px 0; /* space above & below the bar for circles + captions */
+  }
+
+  .timeline-bar {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 52px;
+    background: #2a3749;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .timeline-segment {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Internal hairline dividers (between segments only, not on outer edges) */
+  .timeline-segment + .timeline-segment::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Logo + caption pillars positioned absolutely above/below the bar */
+  .pillars {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    pointer-events: none;
+  }
+
+  .pillar {
+    position: relative;
+  }
+
+  .node {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .node--above {
+    bottom: calc(50% + 26px + 28px); /* bar half-height + connector length */
+    flex-direction: column-reverse;
+  }
+
+  .node--below {
+    top: calc(50% + 26px + 28px);
+  }
+
+  .connector {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 28px;
+    background: #d9dde3;
+  }
+
+  .connector--above {
+    bottom: calc(50% + 26px); /* from top of bar upward */
+  }
+
+  .connector--below {
+    top: calc(50% + 26px); /* from bottom of bar downward */
+  }
+
+  .circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #d9dde3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #0f1e3d;
+    letter-spacing: 0.02em;
+  }
+
+  .caption {
+    text-align: center;
+    line-height: 1.4;
+    max-width: 220px;
+  }
+
+  .caption-company {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f1e3d;
+    margin: 0 0 2px 0;
+  }
+
+  .caption-role {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #5f6b85;
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <section class="section" aria-labelledby="career-heading">
+    <div class="container">
+      <p class="eyebrow">Career</p>
+      <h2 id="career-heading" class="headline">My career, in four chapters.</h2>
+      <p class="subhead">
+        Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a
+        Series-A startup — joined WeWork three months before bankruptcy and led
+        products to profitability.
+      </p>
+
+      <div class="timeline" role="group" aria-label="Career timeline">
+        <div class="timeline-bar">
+          <div class="timeline-segment">2012 — 2018</div>
+          <div class="timeline-segment">2018 — 2020</div>
+          <div class="timeline-segment">2020 — 2022</div>
+          <div class="timeline-segment">2023 — Present</div>
+        </div>
+
+        <div class="pillars" aria-hidden="false">
+          <!-- Position 1: ABOVE — Anheuser-Busch InBev -->
+          <div class="pillar">
+            <div class="connector connector--above"></div>
+            <div class="node node--above">
+              <div class="caption">
+                <p class="caption-company">Anheuser-Busch InBev</p>
+                <p class="caption-role">Operational Excellence</p>
+              </div>
+              <div class="circle" aria-label="Anheuser-Busch InBev">AB</div>
+            </div>
+          </div>
+
+          <!-- Position 2: BELOW — KarnerBlu -->
+          <div class="pillar">
+            <div class="connector connector--below"></div>
+            <div class="node node--below">
+              <div class="circle" aria-label="KarnerBlu">KB</div>
+              <div class="caption">
+                <p class="caption-company">KarnerBlu</p>
+                <p class="caption-role">Product Consultant · Co-Founder</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Position 3: ABOVE — Zoomo -->
+          <div class="pillar">
+            <div class="connector connector--above"></div>
+            <div class="node node--above">
+              <div class="caption">
+                <p class="caption-company">Zoomo</p>
+                <p class="caption-role">Sr. Manager, Product Strategy</p>
+              </div>
+              <div class="circle" aria-label="Zoomo">ZM</div>
+            </div>
+          </div>
+
+          <!-- Position 4: BELOW — WeWork -->
+          <div class="pillar">
+            <div class="connector connector--below"></div>
+            <div class="node node--below">
+              <div class="circle" aria-label="WeWork">WE</div>
+              <div class="caption">
+                <p class="caption-company">WeWork</p>
+                <p class="caption-role">Manager, Product Management, Global</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

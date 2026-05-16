@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Timeline v3 — Variant D (Lettermark Spine)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #FAFAF7;
+    color: #0F1E3D;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .section {
+    width: 100%;
+    background: #FAFAF7;
+    padding: 96px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #E63B1E;
+    margin: 0 0 20px 0;
+  }
+
+  h2.title {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: #0F1E3D;
+    margin: 0 0 24px 0;
+    max-width: 820px;
+  }
+
+  .subhead {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #5F6B85;
+    margin: 0 0 80px 0;
+    max-width: 700px;
+  }
+
+  /* ---------- Timeline ---------- */
+  /* Layout: bar in the middle, cards alternate above/below.
+     Lettermark sits ON the TOP edge of the bar (half above, half on bar).
+     - Pos 1 (AB): card BELOW
+     - Pos 2 (KB): card ABOVE
+     - Pos 3 (ZM): card BELOW
+     - Pos 4 (WE): card ABOVE
+  */
+
+  :root {
+    --bar-h: 46px;
+    --lm-size: 54px;
+    --conn: 28px;
+    --card-w: 272px;
+  }
+
+  .timeline {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 360px 0 360px 0; /* room above/below bar for cards + lettermark overhang */
+  }
+
+  .bar {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: var(--bar-h);
+    background: #2A3749;
+    border-radius: 6px;
+    z-index: 1;
+  }
+
+  .segment {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Internal hairline dividers between segments only */
+  .segment + .segment::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    bottom: 9px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  /* Pillars overlay — one per segment, each centered in its column */
+  .pillars {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    pointer-events: none;
+  }
+
+  .pillar {
+    position: relative;
+  }
+
+  /* Lettermark — sits ON the top edge of the bar (half above, half on the bar) */
+  .lettermark {
+    position: absolute;
+    left: 50%;
+    top: 0;                                /* top edge of bar */
+    transform: translate(-50%, -50%);      /* center the circle on the bar's top edge */
+    width: var(--lm-size);
+    height: var(--lm-size);
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px #FAFAF7;         /* page-bg ring "punches through" the bar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #0F1E3D;
+    z-index: 3;
+  }
+
+  /* Connector hairlines extend from card toward lettermark */
+  .connector {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    background: #D9DDE3;
+    z-index: 2;
+  }
+
+  /* Above-bar connector: from top of lettermark up to bottom of card */
+  .connector--above {
+    bottom: calc(100% + var(--lm-size) / 2); /* start above the lettermark's top */
+    height: var(--conn);
+  }
+
+  /* Below-bar connector: from bottom of bar down to top of card */
+  .connector--below {
+    top: 100%;
+    height: var(--conn);
+  }
+
+  /* Cards — absolutely positioned per pillar */
+  .card {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--card-w);
+    background: #FFFFFF;
+    border: 1px solid #D9DDE3;
+    border-radius: 8px;
+    padding: 22px 24px;
+    z-index: 2;
+  }
+
+  .card--above {
+    bottom: calc(100% + var(--lm-size) / 2 + var(--conn));
+  }
+
+  .card--below {
+    top: calc(100% + var(--conn));
+  }
+
+  /* Card content */
+  .year {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #E63B1E;
+    margin: 0 0 10px 0;
+  }
+
+  .company {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    color: #0F1E3D;
+    margin: 0 0 8px 0;
+  }
+
+  .role {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #5F6B85;
+    margin: 0 0 8px 0;
+  }
+
+  .location {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5F6B85;
+    margin: 0 0 16px 0;
+  }
+
+  .why {
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #5F6B85;
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px solid #D9DDE3;
+  }
+</style>
+</head>
+<body>
+  <section class="section" aria-labelledby="career-title">
+    <div class="container">
+      <p class="eyebrow">Career</p>
+      <h2 id="career-title" class="title">My career, in four chapters.</h2>
+      <p class="subhead">
+        Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a
+        Series-A startup — joined WeWork three months before bankruptcy and led
+        products to profitability.
+      </p>
+
+      <div class="timeline" role="group" aria-label="Career timeline">
+        <!-- Bar with year-range segments -->
+        <div class="bar" aria-hidden="true">
+          <div class="segment">2012 — 2018</div>
+          <div class="segment">2018 — 2020</div>
+          <div class="segment">2020 — 2022</div>
+          <div class="segment">2023 — Present</div>
+        </div>
+
+        <!-- Pillars overlay — lettermarks sit on the bar's top edge -->
+        <div class="pillars">
+          <!-- 1 · AB · card BELOW -->
+          <div class="pillar">
+            <div class="lettermark" aria-label="Anheuser-Busch InBev">AB</div>
+            <div class="connector connector--below" aria-hidden="true"></div>
+            <article class="card card--below" role="listitem">
+              <span class="year">2012—2018</span>
+              <h3 class="company">Anheuser-Busch InBev</h3>
+              <p class="role">Operations &rarr; Operational Excellence</p>
+              <p class="location">Newark, NJ &rarr; New York, NY</p>
+              <p class="why">"First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs."</p>
+            </article>
+          </div>
+
+          <!-- 2 · KB · card ABOVE -->
+          <div class="pillar">
+            <div class="lettermark" aria-label="KarnerBlu">KB</div>
+            <article class="card card--above" role="listitem">
+              <span class="year">2018—2020</span>
+              <h3 class="company">KarnerBlu</h3>
+              <p class="role">Product Consultant &middot; Co-Founder</p>
+              <p class="location">Remote &middot; Staples, Unilever</p>
+              <p class="why">"Co-founded a consultancy to work with Fortune 500s on execution systems — faster loops, my own call sheet."</p>
+            </article>
+            <div class="connector connector--above" aria-hidden="true"></div>
+          </div>
+
+          <!-- 3 · ZM · card BELOW -->
+          <div class="pillar">
+            <div class="lettermark" aria-label="Zoomo">ZM</div>
+            <div class="connector connector--below" aria-hidden="true"></div>
+            <article class="card card--below" role="listitem">
+              <span class="year">2020—2022</span>
+              <h3 class="company">Zoomo</h3>
+              <p class="role">Sr. Manager, Product Strategy &amp; Ops</p>
+              <p class="location">New York, NY &middot; 8 Markets</p>
+              <p class="why">"Series-B micromobility. Traded consulting decks for real P&amp;L ownership."</p>
+            </article>
+          </div>
+
+          <!-- 4 · WE · card ABOVE -->
+          <div class="pillar">
+            <div class="lettermark" aria-label="WeWork">WE</div>
+            <article class="card card--above" role="listitem">
+              <span class="year">2023—Present</span>
+              <h3 class="company">WeWork</h3>
+              <p class="role">Manager, Product Management, Global</p>
+              <p class="location">New York, NY &middot; 13 Countries</p>
+              <p class="why">"Global product ownership at scale. Biggest surface area of my career."</p>
+            </article>
+            <div class="connector connector--above" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
