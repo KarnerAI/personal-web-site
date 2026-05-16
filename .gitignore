@@ -50,3 +50,6 @@ next-env.d.ts
 /public/palette-comparison.html
 /public/*-comparison.html
 .gstack/
+
+# Personal working notes
+travel-notes.md

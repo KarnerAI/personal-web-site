@@ -7,7 +7,6 @@
 // Default on first load = nothing pinned. Close via × button, Escape, or re-click.
 
 import { useCallback, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   careerRoles,
   TIMELINE_EPOCH_YEAR,
@@ -39,27 +38,27 @@ type Computed = CareerRole & {
   tenure: string;
 };
 
-// Proportional + flush: bars sit back-to-back with NO calendar gap between them.
-// Each bar's width = its tenure / total tenure of all roles combined.
-// Calendar gaps (e.g. Nov 2022 → Jul 2023) are collapsed. The axis is "share of
-// career time," not "real calendar time."
+// Equal segments — each role gets 1/N of the bar regardless of tenure length.
+// We still compute tenure (months) so the in-bar label ("6y", "2y") stays
+// honest about real time. Layout (startPct/widthPct/centerPct), however, is
+// purely categorical — four chapters, four equal columns. This matches the
+// approved v2 mockup where the bar is a structural device, not a calendar.
 const TENURES = careerRoles.map((r) => {
   const startMo = monthsFromEpoch(r.startMonth);
   const endMo = monthsFromEpoch(r.endMonth);
   return endMo - startMo;
 });
-const TOTAL_TENURE = TENURES.reduce((sum, t) => sum + t, 0);
+
+const SEGMENT_PCT = 100 / careerRoles.length;
 
 const COMPUTED: Computed[] = careerRoles.map((r, i) => {
-  const tenureMonths = TENURES[i];
-  const widthPct = (tenureMonths / TOTAL_TENURE) * 100;
-  const startPct = TENURES.slice(0, i).reduce((sum, t) => sum + t, 0) / TOTAL_TENURE * 100;
+  const startPct = i * SEGMENT_PCT;
   return {
     ...r,
     startPct,
-    widthPct,
-    centerPct: startPct + widthPct / 2,
-    tenure: tenureLabel(tenureMonths),
+    widthPct: SEGMENT_PCT,
+    centerPct: startPct + SEGMENT_PCT / 2,
+    tenure: tenureLabel(TENURES[i]),
   };
 });
 
@@ -74,7 +73,7 @@ function CompanyLogo({
   src?: string;
   domain?: string;
   initials?: string;
-  variant: "chip" | "panel";
+  variant: "chip" | "card" | "panel";
 }) {
   const [errored, setErrored] = useState(false);
   const resolvedSrc = src ?? (domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : undefined);
@@ -96,6 +95,26 @@ function CompanyLogo({
     );
   }
 
+  // card — prominent badge for timeline cards. Bigger than chip, smaller than
+  // panel. White circle with hairline so the logo pops against the card's
+  // white surface. Slight inner padding so wordmarks/favicons don't run to
+  // the edge of the badge.
+  if (variant === "card") {
+    return showImage ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={resolvedSrc}
+        alt=""
+        onError={() => setErrored(true)}
+        className="h-11 w-11 rounded-full bg-[var(--surface)] border border-[var(--border)] object-contain shrink-0 p-1"
+      />
+    ) : (
+      <span className="h-11 w-11 rounded-full bg-[#F0EFE9] flex items-center justify-center font-semibold text-sm tracking-tight shrink-0">
+        {initials}
+      </span>
+    );
+  }
+
   // panel — full-bleed logo, no grey frame
   return showImage ? (
     // eslint-disable-next-line @next/next/no-img-element
@@ -112,14 +131,68 @@ function CompanyLogo({
   );
 }
 
-// Per-company year ranges centered under each bar.
-// Flush-proportional model: no continuous calendar axis, just the range
-// each bar covers. Pulled from career.ts `yearsLabel`.
+// Timeline card — clickable card sitting above (top row) or below (bottom row)
+// the bar. Click toggles the detail panel. Cards in the top row are
+// bottom-aligned within their cell so they sit flush against the connector
+// descending into the bar; bottom-row cards are top-aligned for the same
+// reason. Each card occupies its segment's full width (25%) — flush with the
+// next card so the row reads as a single horizontal band.
+function TimelineCard({
+  role: r,
+  i,
+  pinned,
+  onToggle,
+  position,
+}: {
+  role: Computed;
+  i: number;
+  pinned: number | null;
+  onToggle: (i: number) => void;
+  position: "top" | "bottom";
+}) {
+  const isPinned = i === pinned;
+  return (
+    <button
+      type="button"
+      onClick={() => onToggle(i)}
+      aria-expanded={isPinned}
+      aria-label={`${r.company}, ${r.yearsLabel}. ${isPinned ? "Hide" : "Show"} details.`}
+      style={{ left: `${r.startPct}%`, width: `${r.widthPct}%` }}
+      className={[
+        "absolute px-2 text-left",
+        position === "top" ? "bottom-0" : "top-0",
+      ].join(" ")}
+    >
+      <div
+        className={[
+          "rounded-lg p-4 md:p-5 transition-all duration-200 bg-[var(--surface)] border h-full",
+          isPinned
+            ? "border-[var(--accent)] shadow-[0_8px_24px_rgba(230,59,30,0.18)] -translate-y-0.5"
+            : "border-[var(--border)] hover:border-[var(--accent)]/60 hover:-translate-y-0.5",
+        ].join(" ")}
+      >
+        <div className="flex items-center gap-3 mb-3">
+          <CompanyLogo
+            src={r.logoSrc}
+            domain={r.logoDomain}
+            initials={r.logo}
+            variant="card"
+          />
+          <span className="font-semibold text-[15px] md:text-base tracking-tight leading-tight">
+            {r.company}
+          </span>
+        </div>
+        <p className="text-[13px] italic text-muted leading-relaxed line-clamp-3">
+          {r.whyIWasThere}
+        </p>
+      </div>
+    </button>
+  );
+}
 
 export function CareerTimeline() {
   // null = nothing pinned (default on first load). Number = index of the open role.
   const [pinned, setPinned] = useState<number | null>(null);
-  const [peek, setPeek] = useState<number | null>(null);
   const boxRef = useRef<HTMLDivElement | null>(null);
 
   const current = pinned !== null ? COMPUTED[pinned] : null;
@@ -154,7 +227,7 @@ export function CareerTimeline() {
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2">
           My career, in four chapters.
         </h2>
-        <p className="text-muted mb-12 max-w-2xl">
+        <p className="text-muted mb-12">
           Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a Series-A startup — joined WeWork three months before bankruptcy and led products to profitability.
         </p>
 
@@ -167,101 +240,85 @@ export function CareerTimeline() {
           onKeyDown={onKeyDown}
           className="relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-xl"
         >
-          {/* Chips above the tape */}
-          <div className="relative h-[92px]">
-            {COMPUTED.map((r, i) => (
-              <button
-                key={r.company}
-                type="button"
-                onMouseEnter={() => setPeek(i)}
-                onMouseLeave={() => setPeek((p) => (p === i ? null : p))}
-                onFocus={() => setPeek(i)}
-                onBlur={() => setPeek((p) => (p === i ? null : p))}
-                onClick={() => togglePinned(i)}
-                aria-expanded={i === pinned}
-                style={{
-                  left: `${r.startPct}%`,
-                  width: `${r.widthPct}%`,
-                }}
-                className={[
-                  "absolute top-0 px-3 py-2 text-left",
-                  "rounded-md border bg-[var(--surface)]",
-                  "transition-all duration-200",
-                  i === pinned
-                    ? "border-[var(--accent)] shadow-[0_8px_24px_rgba(230,59,30,0.18)] -translate-y-0.5"
-                    : "border-[var(--border)] hover:border-[var(--accent)]/60 hover:-translate-y-0.5",
-                  "min-w-[80px]",
-                ].join(" ")}
-              >
-                <div className="flex items-center gap-2">
-                  <CompanyLogo src={r.logoSrc} domain={r.logoDomain} initials={r.logo} variant="chip" />
-                  <span className="font-semibold text-sm leading-tight truncate tracking-tight">{r.company}</span>
-                </div>
-                <span className="block text-[11px] text-muted mt-0.5 truncate">
-                  {r.role.split(" → ").slice(-1)[0]}
-                </span>
-              </button>
-            ))}
-
-            {/* Hover peek tooltip */}
-            <AnimatePresence>
-              {peek !== null && peek !== pinned && (
-                <motion.div
-                  key={peek}
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.14 }}
-                  style={{
-                    left: `${COMPUTED[peek].centerPct}%`,
-                  }}
-                  className="absolute -top-10 -translate-x-1/2 pointer-events-none bg-[var(--foreground)] text-[var(--background)] text-[11px] font-mono px-2.5 py-1.5 rounded whitespace-nowrap"
-                >
-                  {COMPUTED[peek].company} · {COMPUTED[peek].yearsLabel} · {COMPUTED[peek].tenure}
-                </motion.div>
-              )}
-            </AnimatePresence>
+          {/* Top row — cards above the bar (positions 0, 2). Card heights are
+              fixed so all cards in a row line up; line-clamp-3 keeps the
+              italic line visually tight. */}
+          <div className="relative h-[180px]">
+            {COMPUTED.map((r, i) =>
+              i % 2 === 0 ? (
+                <TimelineCard
+                  key={r.company}
+                  role={r}
+                  i={i}
+                  pinned={pinned}
+                  onToggle={togglePinned}
+                  position="top"
+                />
+              ) : null
+            )}
           </div>
 
-          {/* Gantt tape */}
-          <div className="relative h-10 mt-2">
+          {/* Top connector stems — one hairline per top card, descending to the bar */}
+          <div className="relative h-5" aria-hidden="true">
+            {COMPUTED.map((r, i) =>
+              i % 2 === 0 ? (
+                <div
+                  key={r.company}
+                  className="absolute top-0 h-full w-px bg-[var(--border)]"
+                  style={{ left: `${r.centerPct}%` }}
+                />
+              ) : null
+            )}
+          </div>
+
+          {/* Bar — 4 equal segments, year range inside each segment */}
+          <div className="relative h-12 rounded-md overflow-hidden flex">
             {COMPUTED.map((r, i) => (
               <button
                 key={r.company}
                 type="button"
                 onClick={() => togglePinned(i)}
-                onMouseEnter={() => setPeek(i)}
-                onMouseLeave={() => setPeek((p) => (p === i ? null : p))}
-                aria-label={`${r.company} — ${r.tenure}`}
+                aria-label={`${r.company} — ${r.yearsLabel}`}
                 aria-expanded={i === pinned}
-                style={{
-                  left: `${r.startPct}%`,
-                  width: `${r.widthPct}%`,
-                }}
                 className={[
-                  "absolute inset-y-0 rounded-md px-3 flex items-center",
-                  "text-[11px] font-mono uppercase tracking-wider transition-colors",
-                  i === pinned
-                    ? "bg-[#2A3749] text-white"
-                    : "bg-[#2A3749]/80 text-white hover:bg-[#2A3749]",
+                  "flex-1 flex items-center justify-center",
+                  "text-white font-mono text-[11px] uppercase tracking-[0.12em]",
+                  "transition-colors border-r border-white/10 last:border-r-0",
+                  i === pinned ? "bg-[#1F2937]" : "bg-[#2A3749] hover:bg-[#1F2937]",
                 ].join(" ")}
-              >
-                <span className="truncate">{r.tenure}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Per-company year ranges — one under each bar, left-aligned to the bar's start */}
-          <div className="relative h-6 mt-1">
-            {COMPUTED.map((r) => (
-              <span
-                key={r.company}
-                style={{ left: `${r.startPct}%` }}
-                className="absolute top-0 text-[11px] font-mono text-muted whitespace-nowrap"
               >
                 {r.yearsLabel}
-              </span>
+              </button>
             ))}
+          </div>
+
+          {/* Bottom connector stems — one hairline per bottom card, rising from the bar */}
+          <div className="relative h-5" aria-hidden="true">
+            {COMPUTED.map((r, i) =>
+              i % 2 === 1 ? (
+                <div
+                  key={r.company}
+                  className="absolute top-0 h-full w-px bg-[var(--border)]"
+                  style={{ left: `${r.centerPct}%` }}
+                />
+              ) : null
+            )}
+          </div>
+
+          {/* Bottom row — cards below the bar (positions 1, 3) */}
+          <div className="relative h-[180px]">
+            {COMPUTED.map((r, i) =>
+              i % 2 === 1 ? (
+                <TimelineCard
+                  key={r.company}
+                  role={r}
+                  i={i}
+                  pinned={pinned}
+                  onToggle={togglePinned}
+                  position="bottom"
+                />
+              ) : null
+            )}
           </div>
         </div>
 

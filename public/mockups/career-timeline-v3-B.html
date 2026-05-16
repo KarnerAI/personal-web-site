@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Career Timeline v3-B — Editorial Year</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #FAFAF7;
+    color: #0F1E3D;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .page {
+    width: 1440px;
+    margin: 0 auto;
+    background: #FAFAF7;
+  }
+
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 24px;
+  }
+
+  /* ---------- Header ---------- */
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: #E63B1E;
+    margin: 0 0 20px 0;
+  }
+
+  h2.title {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #0F1E3D;
+    margin: 0 0 24px 0;
+    max-width: 820px;
+  }
+
+  .subhead {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #5F6B85;
+    margin: 0 0 80px 0;
+    max-width: 700px;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline {
+    position: relative;
+    width: 100%;
+    height: 760px;
+    margin: 0 auto;
+  }
+
+  /* Bar at vertical center */
+  .timeline-bar {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 48px;
+    background: #2A3749;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .timeline-segment {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.65);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .timeline-segment + .timeline-segment::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  /* Connectors + dots */
+  .connector {
+    position: absolute;
+    width: 1px;
+    height: 28px;
+    background: #D9DDE3;
+  }
+
+  .dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2A3749;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ---------- Cards ---------- */
+  .card {
+    position: absolute;
+    width: 288px;
+    background: #FFFFFF;
+    border: 1px solid #D9DDE3;
+    border-radius: 8px;
+    padding: 26px 26px 24px;
+  }
+
+  /* Top-row cards: bottom edge sits 28px above bar (bar half = 24px) */
+  .card.top {
+    bottom: calc(50% + 24px + 28px);
+  }
+  /* Bottom-row cards: top edge sits 28px below bar */
+  .card.bottom {
+    top: calc(50% + 24px + 28px);
+  }
+
+  /* The big editorial year — the centerpiece */
+  .display-year {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    color: #0F1E3D;
+    margin: 0 0 18px 0;
+    white-space: nowrap;
+  }
+
+  .display-year .sep {
+    color: #5F6B85;
+    font-weight: 300;
+    margin: 0 0.12em;
+  }
+
+  .accent-rule {
+    width: 28px;
+    height: 1px;
+    background: #E63B1E;
+    margin: 0 0 18px 0;
+    border: 0;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .lettermark {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #F0EFE9;
+    color: #0F1E3D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .company {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #0F1E3D;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  .role {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #5F6B85;
+    margin: 0 0 10px 0;
+  }
+
+  .location {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5F6B85;
+    margin: 0 0 16px 0;
+  }
+
+  .why {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #5F6B85;
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px solid #F0EFE9;
+  }
+
+  /* ---------- Card / connector positions ----------
+     Container width: 1152px (max 1200 - 24*2). Four cards centered in 4 columns.
+     Card centers at: 144, 432, 720, 1008. Card width 288 → left = center - 144.
+  */
+  .card-1 { left: 0px; }
+  .conn-1 { left: 144px; bottom: 50%; }
+  .dot-1  { left: 144px; }
+
+  .card-2 { left: 288px; }
+  .conn-2 { left: 432px; top: 50%; }
+  .dot-2  { left: 432px; }
+
+  .card-3 { left: 576px; }
+  .conn-3 { left: 720px; bottom: 50%; }
+  .dot-3  { left: 720px; }
+
+  .card-4 { left: 864px; }
+  .conn-4 { left: 1008px; top: 50%; }
+  .dot-4  { left: 1008px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <section class="section" aria-labelledby="career-title">
+      <p class="eyebrow">Career</p>
+      <h2 id="career-title" class="title">My career, in four chapters.</h2>
+      <p class="subhead">
+        Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire
+        at a Series-A startup — joined WeWork three months before bankruptcy
+        and led products to profitability.
+      </p>
+
+      <div class="timeline" role="list" aria-label="Career chapters">
+        <!-- Bar with small mono segment labels -->
+        <div class="timeline-bar" aria-hidden="true">
+          <div class="timeline-segment">2012—18</div>
+          <div class="timeline-segment">2018—20</div>
+          <div class="timeline-segment">2020—22</div>
+          <div class="timeline-segment">2023→</div>
+        </div>
+
+        <!-- Connectors + dots -->
+        <div class="connector conn-1" aria-hidden="true"></div>
+        <div class="dot dot-1" aria-hidden="true"></div>
+
+        <div class="connector conn-2" aria-hidden="true"></div>
+        <div class="dot dot-2" aria-hidden="true"></div>
+
+        <div class="connector conn-3" aria-hidden="true"></div>
+        <div class="dot dot-3" aria-hidden="true"></div>
+
+        <div class="connector conn-4" aria-hidden="true"></div>
+        <div class="dot dot-4" aria-hidden="true"></div>
+
+        <!-- 1: Anheuser-Busch InBev (top) -->
+        <article class="card top card-1" role="listitem">
+          <p class="display-year">2012<span class="sep">—</span>2018</p>
+          <hr class="accent-rule" aria-hidden="true" />
+          <div class="card-head">
+            <div class="lettermark" aria-hidden="true">AB</div>
+            <h3 class="company">Anheuser-Busch InBev</h3>
+          </div>
+          <p class="role">Operations &rarr; Operational Excellence</p>
+          <p class="location">Newark, NJ &rarr; New York, NY</p>
+          <p class="why">First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs.</p>
+        </article>
+
+        <!-- 2: KarnerBlu (bottom) -->
+        <article class="card bottom card-2" role="listitem">
+          <p class="display-year">2018<span class="sep">—</span>2020</p>
+          <hr class="accent-rule" aria-hidden="true" />
+          <div class="card-head">
+            <div class="lettermark" aria-hidden="true">KB</div>
+            <h3 class="company">KarnerBlu</h3>
+          </div>
+          <p class="role">Product Consultant &middot; Co-Founder</p>
+          <p class="location">Remote &middot; Staples, Unilever</p>
+          <p class="why">Co-founded my consultancy to work with Fortune 500s on execution systems — faster loops, my own call sheet.</p>
+        </article>
+
+        <!-- 3: Zoomo (top) -->
+        <article class="card top card-3" role="listitem">
+          <p class="display-year">2020<span class="sep">—</span>2022</p>
+          <hr class="accent-rule" aria-hidden="true" />
+          <div class="card-head">
+            <div class="lettermark" aria-hidden="true">ZM</div>
+            <h3 class="company">Zoomo</h3>
+          </div>
+          <p class="role">Sr. Manager, Product Strategy &amp; Ops</p>
+          <p class="location">New York, NY &middot; 8 Markets</p>
+          <p class="why">Series-B micromobility. Traded consulting decks for real P&amp;L ownership.</p>
+        </article>
+
+        <!-- 4: WeWork (bottom) -->
+        <article class="card bottom card-4" role="listitem">
+          <p class="display-year">2023<span class="sep">—</span>Present</p>
+          <hr class="accent-rule" aria-hidden="true" />
+          <div class="card-head">
+            <div class="lettermark" aria-hidden="true">WE</div>
+            <h3 class="company">WeWork</h3>
+          </div>
+          <p class="role">Manager, Product Management, Global</p>
+          <p class="location">New York, NY &middot; 13 Countries</p>
+          <p class="why">Global product ownership at scale. Biggest surface area of my career.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
