@@ -77,10 +77,41 @@ export type SideProject = {
   size?: SideProjectSize;
 };
 
+// Hero or gallery image for a hobby. `alt` is required — every photo tells a
+// story, so let the data file speak rather than defaulting to the label.
+export type HobbyImage = {
+  src: string; // e.g. "/images/hobbies/riding-hero.jpg"
+  alt: string;
+};
+
+// A meta row rendered in the hobby modal's stat band (up to 3).
+export type HobbyMeta = {
+  label: string; // e.g. "Years"
+  value: string; // e.g. "12+"
+};
+
+// Optional third-party embed (e.g. a Google My Maps route). Rendered in the
+// modal below the story. Only loads when the modal opens, so the iframe cost
+// doesn't hit the homepage — it's gated behind the user clicking the tile.
+export type HobbyEmbed = {
+  src: string; // iframe src (e.g. Google Maps `/maps/d/embed?mid=...`)
+  title: string; // accessible label for the iframe
+  caption?: string; // small caption rendered under the embed
+  aspectRatio?: string; // CSS aspect-ratio, default "4 / 3"
+};
+
 export type Hobby = {
-  emoji: string;
-  label: string;
-  note?: string;
+  slug: string; // stable key — also used for image filename convention
+  label: string; // tile + modal title
+  tagline: string; // short tile subtitle, also prose tagline in the modal
+  // Until real photography lands, `hero` can be omitted — the tile renders a
+  // branded color block with the label so layout is stable. When the photo
+  // drops in `public/images/hobbies/{slug}-hero.jpg`, point `hero.src` at it.
+  hero?: HobbyImage;
+  gallery?: HobbyImage[]; // 0–3 thumbnails shown in the modal
+  embed?: HobbyEmbed; // optional iframe block (e.g. trip route map)
+  story: string[]; // 2–4 paragraphs rendered in the modal body
+  meta?: HobbyMeta[]; // 0–3 rows in the modal meta band
 };
 
 export type Book = {

@@ -1,10 +1,12 @@
-// Beyond Work — Option B · "Magazine spread with featured travel map"
-// Ported from public/beyondwork-comparison.html (#b).
-// Featured travel map + stats band above; hobbies + reading/listening below in two columns.
-// Server component shell that embeds the client TravelMap.
+// Beyond Work — Magazine spread with featured travel map + H-A Magazine Mosaic hobbies.
+// Featured travel map + stats band above; full-width 5-tile hobby mosaic below.
+// Reading & Listening is deferred (see notes/reading-page-v2.md) — removed for MVP.
+// `books` and `podcasts` remain exported from the data module for the future /reading page.
+// Server component shell that embeds the client TravelMap + client HobbyTile(s).
 
-import { books, hobbies, podcasts, travel } from "@/data/beyondWork";
+import { hobbies, travel } from "@/data/beyondWork";
 import { TravelMapGeo as TravelMap } from "./beyondwork/map-variants/TravelMapGeo";
+import { HobbyTile } from "./beyondwork/HobbyTile";
 
 export function BeyondWork() {
   return (
@@ -66,51 +68,28 @@ export function BeyondWork() {
           </div>
         </div>
 
-        {/* Hobbies + Reading/Listening */}
-        <div className="grid gap-12 md:gap-16 md:grid-cols-2 items-start">
-          <div>
-            <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
-              Hobbies
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              {hobbies.map((h) => (
-                <div
-                  key={h.label}
-                  className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)]"
-                >
-                  <div className="text-2xl leading-none mb-3">{h.emoji}</div>
-                  <div className="font-medium text-sm">{h.label}</div>
-                  {h.note && (
-                    <div className="text-xs font-mono text-muted mt-1">{h.note}</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
-              Reading &amp; listening
-            </p>
-            <h4 className="text-lg font-semibold tracking-tight mb-2">On the shelf</h4>
-            <ul className="list-disc pl-5 text-sm text-muted leading-[1.8] mb-6">
-              {books.map((b) => (
-                <li key={b.title}>
-                  <span className="text-[var(--foreground)] font-medium">{b.title}</span>
-                  {b.author ? ` — ${b.author}` : ""}
-                  {b.why ? `. ${b.why}` : ""}
-                </li>
-              ))}
-            </ul>
-            <h4 className="text-lg font-semibold tracking-tight mb-2">In rotation</h4>
-            <ul className="list-disc pl-5 text-sm text-muted leading-[1.8]">
-              {podcasts.map((p) => (
-                <li key={p.name}>
-                  <span className="text-[var(--foreground)] font-medium">{p.name}</span>
-                  {p.host ? ` — ${p.host}` : ""}
-                </li>
-              ))}
-            </ul>
+        {/* Hobbies — H-A Magazine Mosaic (5 tiles) */}
+        <div>
+          <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
+            Hobbies
+          </p>
+          {/* Mobile: 1-col stack. Tablet (sm): 2-col (hero spans full width).
+              Desktop (md): 4-col (hero spans 2×2, 4 smalls fill cols 3-4).
+              Row height is driven by `auto-rows` explicitly — NOT `grid-rows-2`.
+              Tailwind's `grid-rows-2` sets 1fr rows which collapse to 0 here
+              because the tiles are absolutely-positioned inside and contribute
+              no intrinsic height. `auto-rows-[Npx]` applies to every row (there
+              are no explicit rows defined), so both the implicit rows get the
+              fixed height we want. */}
+          <div className="grid grid-cols-1 gap-4 auto-rows-[260px] sm:grid-cols-2 sm:auto-rows-[240px] md:grid-cols-4 md:auto-rows-[280px]">
+            {hobbies.map((hobby, i) => (
+              <HobbyTile
+                key={hobby.slug}
+                hobby={hobby}
+                index={i}
+                isHero={i === 0}
+              />
+            ))}
           </div>
         </div>
       </div>

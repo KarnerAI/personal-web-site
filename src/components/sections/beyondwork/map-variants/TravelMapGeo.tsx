@@ -23,8 +23,16 @@ const LAND_SHADE = "#E8DFC3";      // subtle shadow on land
 const BORDER = "#C9B98A";          // muted tan country border
 const GREEN_TINT = "#CFDDB0";      // faint park/forest accent
 
+function flagEmoji(code: string) {
+  return code
+    .toUpperCase()
+    .split("")
+    .map((c) => String.fromCodePoint(127397 + c.charCodeAt(0)))
+    .join("");
+}
+
 export function TravelMapGeo() {
-  const [hover, setHover] = useState<string | null>(null);
+  const [hover, setHover] = useState<{ name: string; code: string } | null>(null);
 
   return (
     <div
@@ -129,28 +137,22 @@ export function TravelMapGeo() {
         <g>
           {countryCoords.map((c) => {
             const [x, y] = project(c.lng, c.lat);
-            const isFav = !!c.fav;
             return (
               <g
                 key={c.code}
-                onMouseEnter={() => setHover(c.name)}
-                onMouseLeave={() => setHover((h) => (h === c.name ? null : h))}
+                onMouseEnter={() => setHover({ name: c.name, code: c.code })}
+                onMouseLeave={() => setHover((h) => (h?.name === c.name ? null : h))}
                 className="cursor-pointer"
                 filter="url(#pin-drop)"
               >
-                {/* Outer halo for favorite */}
-                {isFav && (
-                  <circle cx={x} cy={y} r={13} fill="var(--accent)" opacity={0.18} />
-                )}
                 <circle
                   cx={x}
                   cy={y}
-                  r={isFav ? 8 : 5.5}
+                  r={5.5}
                   fill="var(--accent)"
                   stroke="#FFFFFF"
-                  strokeWidth={isFav ? 1.6 : 1.2}
+                  strokeWidth={1.2}
                 />
-                {isFav && <circle cx={x} cy={y} r={2.5} fill="#FFFFFF" />}
                 <title>{c.name}</title>
               </g>
             );
@@ -166,8 +168,9 @@ export function TravelMapGeo() {
           Visited
         </span>
         {hover && (
-          <span className="ml-2 border-l border-[var(--border)] pl-3 text-[var(--muted)]">
-            {hover}
+          <span className="ml-2 flex items-center gap-1.5 border-l border-[var(--border)] pl-3 text-[var(--muted)]">
+            <span aria-hidden className="text-base leading-none">{flagEmoji(hover.code)}</span>
+            {hover.name}
           </span>
         )}
       </div>
