@@ -20,7 +20,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Hussain Alam — Product Strategist & Builder",
   description:
-    "12+ years across Fortune 100 growth and early-stage startups. Based in NYC.",
+    "13+ years across Fortune 100 growth and early-stage startups. Based in NYC.",
 };
 
 // Edit mode is gated behind an env check so the pencil toggle never renders on

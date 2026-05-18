@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timeline — Variant C: Punchy Fragments Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #E63B1E;
+    --bg: #F8F7F2;
+    --surface: #FFFFFF;
+    --bar: #2A3749;
+    --bar-hover: #1F2937;
+    --border: #E5E2D8;
+    --muted: #6B6357;
+    --ink: #1A1A1A;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .label { font: 500 11px/1 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 96px 32px 64px; }
+
+  h2 { font: 600 48px/1.05 'Inter', sans-serif; letter-spacing: -0.02em; margin: 12px 0 36px; }
+
+  /* --- Fragments summary --- */
+  .fragments {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 0 0 72px;
+    max-width: 1080px;
+  }
+  .frag {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 20px 20px;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .frag:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.04); }
+  .frag-num {
+    font: 500 10px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .frag-text {
+    font: 500 15.5px/1.4 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .frag-text strong { font-weight: 700; }
+
+  /* --- Timeline --- */
+  .timeline { position: relative; }
+  .row { position: relative; height: 168px; }
+  .card { position: absolute; padding: 0 10px; text-align: left; }
+  .card.top { bottom: 0; }
+  .card.bottom { top: 0; }
+  .card-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    height: 100%;
+    transition: all .2s ease;
+  }
+  .card-inner:hover {
+    border-color: rgba(230,59,30,.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.04);
+  }
+  .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .logo {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font: 600 12px/1 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+  }
+  .logo.abi { background: #C8102E; color: #fff; font-family: 'Fraunces', serif; font-size: 18px; }
+  .logo.kb  { background: #2A3749; color: #F8F7F2; }
+  .logo.zo  { background: #000; color: #fff; font-weight: 700; }
+  .logo.we  { background: #000; color: #fff; font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; }
+  .company { font: 600 15px/1.2 'Inter', sans-serif; letter-spacing: -0.01em; }
+  .tagline {
+    font: 600 17px/1.25 'Inter', sans-serif;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+  .role {
+    font: 500 12.5px/1.4 'JetBrains Mono', monospace;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .stems { position: relative; height: 18px; }
+  .stem { position: absolute; top: 0; width: 1px; height: 100%; background: var(--border); }
+
+  .bar { display: flex; height: 48px; border-radius: 6px; overflow: hidden; }
+  .seg {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    background: var(--bar);
+    color: #fff;
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-right: 1px solid rgba(255,255,255,.08);
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .seg:last-child { border-right: 0; }
+  .seg:hover { background: var(--bar-hover); }
+
+  @media (max-width: 860px) {
+    .fragments { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="label">Career</div>
+    <h2>My career, in four chapters.</h2>
+
+    <!-- VARIANT C: PUNCHY FRAGMENTS -->
+    <div class="fragments">
+      <div class="frag">
+        <p class="frag-num">01</p>
+        <p class="frag-text">Fortune 100 ops <strong>out of college</strong>.</p>
+      </div>
+      <div class="frag">
+        <p class="frag-num">02</p>
+        <p class="frag-text"><strong>Founded</strong> a consultancy.</p>
+      </div>
+      <div class="frag">
+        <p class="frag-num">03</p>
+        <p class="frag-text"><strong>5th U.S. hire</strong> at a Series-A startup.</p>
+      </div>
+      <div class="frag">
+        <p class="frag-num">04</p>
+        <p class="frag-text">Joined WeWork 3 months before bankruptcy — led products <strong>to profitability</strong>.</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="row">
+        <div class="card top" style="left: 0%; width: 25%;">
+          <div class="card-inner">
+            <div class="card-head">
+              <div class="logo abi">AB</div>
+              <span class="company">Anheuser-Busch InBev</span>
+            </div>
+            <p class="tagline">Operational Excellence</p>
+            <p class="role">Operations · ABI Global</p>
+          </div>
+        </div>
+        <div class="card top" style="left: 50%; width: 25%;">
+          <div class="card-inner">
+            <div class="card-head">
+              <div class="logo zo">Z</div>
+              <span class="company">Zoomo</span>
+            </div>
+            <p class="tagline">Startup Operator</p>
+            <p class="role">Sr. Manager, Product Strategy</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stems">
+        <div class="stem" style="left: 12.5%;"></div>
+        <div class="stem" style="left: 62.5%;"></div>
+      </div>
+
+      <div class="bar">
+        <div class="seg">2012 — 2018</div>
+        <div class="seg">2018 — 2020</div>
+        <div class="seg">2020 — 2022</div>
+        <div class="seg">2023 — Present</div>
+      </div>
+
+      <div class="stems">
+        <div class="stem" style="left: 37.5%;"></div>
+        <div class="stem" style="left: 87.5%;"></div>
+      </div>
+
+      <div class="row">
+        <div class="card bottom" style="left: 25%; width: 25%;">
+          <div class="card-inner">
+            <div class="card-head">
+              <div class="logo kb">KB</div>
+              <span class="company">KarnerBlu</span>
+            </div>
+            <p class="tagline">Founder Mode</p>
+            <p class="role">Product Consultant · Co-Founder</p>
+          </div>
+        </div>
+        <div class="card bottom" style="left: 75%; width: 25%;">
+          <div class="card-inner">
+            <div class="card-head">
+              <div class="logo we">we</div>
+              <span class="company">WeWork</span>
+            </div>
+            <p class="tagline">Global Scale</p>
+            <p class="role">Manager, Product Management</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -171,20 +171,22 @@ function TimelineCard({
             : "border-[var(--border)] hover:border-[var(--accent)]/60 hover:-translate-y-0.5",
         ].join(" ")}
       >
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3 mb-2">
           <CompanyLogo
             src={r.logoSrc}
             domain={r.logoDomain}
             initials={r.logo}
             variant="card"
           />
-          <span className="font-semibold text-[15px] md:text-base tracking-tight leading-tight">
+          <span className="font-semibold text-[17px] md:text-[18px] tracking-tight leading-tight">
             {r.company}
           </span>
         </div>
-        <p className="text-[13px] italic text-muted leading-relaxed line-clamp-3">
-          {r.whyIWasThere}
-        </p>
+        {r.tagline && (
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)] leading-snug mt-1">
+            {r.tagline}
+          </p>
+        )}
       </div>
     </button>
   );
@@ -224,12 +226,12 @@ export function CareerTimeline() {
     <section id="career" className="section !pb-0">
       <div className="content-width">
         <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">Career</p>
-        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2">
+        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-8">
           My career, in four chapters.
         </h2>
-        <p className="text-muted mb-12">
-          Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a Series-A startup — joined WeWork three months before bankruptcy and led products to profitability.
-        </p>
+        <blockquote className="relative mb-10 border-l-[3px] border-[var(--accent)] pl-4 md:pl-5 max-w-3xl text-[17px] md:text-[18px] font-medium leading-relaxed text-[var(--foreground)]">
+          Fortune 100 ops out of college <span className="text-[var(--accent)] italic font-medium">—</span> founded a consultancy <span className="text-[var(--accent)] italic font-medium">—</span> 5th U.S. hire at a Series-A startup <span className="text-[var(--accent)] italic font-medium">—</span> joined WeWork three months before bankruptcy and led products to profitability.
+        </blockquote>
 
         {/* Timeline box */}
         <div
@@ -243,7 +245,7 @@ export function CareerTimeline() {
           {/* Top row — cards above the bar (positions 0, 2). Card heights are
               fixed so all cards in a row line up; line-clamp-3 keeps the
               italic line visually tight. */}
-          <div className="relative h-[180px]">
+          <div className="relative h-[132px]">
             {COMPUTED.map((r, i) =>
               i % 2 === 0 ? (
                 <TimelineCard
@@ -306,7 +308,7 @@ export function CareerTimeline() {
           </div>
 
           {/* Bottom row — cards below the bar (positions 1, 3) */}
-          <div className="relative h-[180px]">
+          <div className="relative h-[132px]">
             {COMPUTED.map((r, i) =>
               i % 2 === 1 ? (
                 <TimelineCard

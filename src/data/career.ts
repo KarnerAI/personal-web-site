@@ -13,6 +13,7 @@ export const careerRoles: CareerRole[] = [
     startMonth: "2012-07",
     endMonth: "2018-07",
     yearsLabel: "2012 – 2018",
+    tagline: "Operational Excellence",
     role: "Operations → Operational Excellence",
     location: "Newark, NJ → New York, NY",
     whyIWasThere:
@@ -40,6 +41,7 @@ export const careerRoles: CareerRole[] = [
     startMonth: "2018-07",
     endMonth: "2020-09",
     yearsLabel: "2018 – 2020",
+    tagline: "Founder Mode",
     role: "Product Consultant · Co-Founder",
     location: "Remote · Staples, Unilever",
     whyIWasThere:
@@ -60,6 +62,7 @@ export const careerRoles: CareerRole[] = [
     startMonth: "2020-09",
     endMonth: "2022-11",
     yearsLabel: "2020 – 2022",
+    tagline: "Startup Operator",
     role: "City Ops → Sr. Manager, Product Strategy & Ops",
     location: "New York, NY · 8 markets",
     whyIWasThere:
@@ -86,10 +89,11 @@ export const careerRoles: CareerRole[] = [
     startMonth: "2023-07",
     endMonth: "Present",
     yearsLabel: "2023 – Present",
+    tagline: "Turnaround at Scale",
     role: "Manager, Product Management, Global",
     location: "New York, NY · 13 countries",
     whyIWasThere:
-      "Global product ownership at scale — 13 countries, multi-market pricing, and payments infrastructure. Biggest surface area of my career.",
+      "Signed three months before WeWork filed for bankruptcy. Friends said don't, headlines said worse — I believed in the people, the brand, and the rare shot at being part of a real turnaround.",
     heroBullet:
       "$14M revenue (+60% YoY) owning the global parking vertical across 13 countries — helped deliver WeWork’s first profitable quarter.",
     subBullets: [

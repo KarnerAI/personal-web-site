@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timeline Variants — Comparison Board</title>
+<style>
+  :root {
+    --accent: #E63B1E;
+    --bg: #EFEDE6;
+    --ink: #1A1A1A;
+    --muted: #6B6357;
+    --border: #D9D5C8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+  header {
+    padding: 28px 40px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #FAF8F2;
+    position: sticky; top: 0; z-index: 10;
+  }
+  header h1 { margin: 0 0 4px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  header p { margin: 0; font-size: 13px; color: var(--muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 32px 40px 60px;
+  }
+  .variant {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.03);
+  }
+  .variant-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    background: #FAF8F2;
+  }
+  .variant-head .name { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .variant-head .tag {
+    font-size: 10.5px; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .variant-head .open {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    padding: 4px 10px; border: 1px solid var(--border); border-radius: 6px;
+    background: #fff;
+  }
+  .variant-head .open:hover { color: var(--accent); border-color: var(--accent); }
+  iframe {
+    width: 100%;
+    height: 820px;
+    border: 0;
+    display: block;
+    background: #F8F7F2;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Career Timeline — 3 variants</h1>
+    <p>Each variant uses the same title + thematic tagline card style. They differ in how the summary line is treated. Scroll through all three, then pick a direction.</p>
+  </header>
+  <div class="grid">
+    <section class="variant">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant A</div>
+          <div class="name">Pull-Quote — editorial serif with vermillion left-rule</div>
+        </div>
+        <a class="open" href="2026-05-16-timeline-pullquote.html" target="_blank">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-05-16-timeline-pullquote.html" loading="lazy"></iframe>
+    </section>
+
+    <section class="variant">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant B</div>
+          <div class="name">Callout Card — tinted vermillion box with eyebrow + bolded beats</div>
+        </div>
+        <a class="open" href="2026-05-16-timeline-callout.html" target="_blank">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-05-16-timeline-callout.html" loading="lazy"></iframe>
+    </section>
+
+    <section class="variant">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant C</div>
+          <div class="name">Punchy Fragments — four numbered tiles, each beat lands separately</div>
+        </div>
+        <a class="open" href="2026-05-16-timeline-fragments.html" target="_blank">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-05-16-timeline-fragments.html" loading="lazy"></iframe>
+    </section>
+  </div>
+</body>
+</html>

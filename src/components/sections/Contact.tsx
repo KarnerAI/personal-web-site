@@ -177,8 +177,8 @@ export function Contact() {
                 />
                 <SocialRow
                   label="Email"
-                  handle="hi@hussainalam.com"
-                  href="mailto:hi@hussainalam.com"
+                  handle="Hussain@KarnerBlu.com"
+                  href="mailto:hussain@karnerblu.com"
                 />
               </div>
             </Card>
