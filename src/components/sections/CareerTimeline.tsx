@@ -233,14 +233,64 @@ export function CareerTimeline() {
           Fortune 100 ops out of college <span className="text-[var(--accent)] italic font-medium">—</span> founded a consultancy <span className="text-[var(--accent)] italic font-medium">—</span> 5th U.S. hire at a Series-A startup <span className="text-[var(--accent)] italic font-medium">—</span> joined WeWork three months before bankruptcy and led products to profitability.
         </blockquote>
 
-        {/* Timeline box */}
+        {/* Mobile vertical layout — single column of chapter cards, chronological.
+            The horizontal Gantt below is desktop-only; this fallback gives mobile
+            its own design (not just stacked desktop columns). */}
+        <div className="md:hidden flex flex-col gap-3">
+          {COMPUTED.map((r, i) => {
+            const isPinned = i === pinned;
+            return (
+              <button
+                key={r.company}
+                type="button"
+                onClick={() => togglePinned(i)}
+                aria-expanded={isPinned}
+                aria-label={`${r.company}, ${r.yearsLabel}. ${isPinned ? "Hide" : "Show"} details.`}
+                className="text-left rounded-lg"
+              >
+                <div
+                  className={[
+                    "rounded-lg p-4 transition-all duration-200 bg-[var(--surface)] border",
+                    isPinned
+                      ? "border-[var(--accent)] shadow-[0_8px_24px_rgba(230,59,30,0.18)]"
+                      : "border-[var(--border)]",
+                  ].join(" ")}
+                >
+                  <div className="mb-3">
+                    <span className="inline-block font-mono text-[10px] uppercase tracking-[0.14em] text-white bg-[#2A3749] rounded px-2 py-1">
+                      {r.yearsLabel}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <CompanyLogo
+                      src={r.logoSrc}
+                      domain={r.logoDomain}
+                      initials={r.logo}
+                      variant="card"
+                    />
+                    <span className="font-semibold text-[17px] tracking-tight leading-tight">
+                      {r.company}
+                    </span>
+                  </div>
+                  {r.tagline && (
+                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)] leading-snug mt-1">
+                      {r.tagline}
+                    </p>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Timeline box — desktop Gantt (md+) */}
         <div
           ref={boxRef}
           tabIndex={0}
           role="group"
           aria-label="Career timeline"
           onKeyDown={onKeyDown}
-          className="relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-xl"
+          className="hidden md:block relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-xl"
         >
           {/* Top row — cards above the bar (positions 0, 2). Card heights are
               fixed so all cards in a row line up; line-clamp-3 keeps the
