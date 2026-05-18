@@ -107,7 +107,7 @@ export function Hero() {
                   href="https://www.linkedin.com/in/hussainalam"
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-baseline gap-3"
+                  className="group flex items-baseline gap-3 py-2 -my-2 min-h-[44px]"
                 >
                   <span className="font-semibold w-20 shrink-0">LinkedIn</span>
                   <span className="text-muted group-hover:text-[var(--accent)] transition-colors">
@@ -118,7 +118,7 @@ export function Hero() {
               <li>
                 <a
                   href="mailto:hussain@karnerblu.com"
-                  className="group flex items-baseline gap-3"
+                  className="group flex items-baseline gap-3 py-2 -my-2 min-h-[44px]"
                 >
                   <span className="font-semibold w-20 shrink-0">Email</span>
                   <span className="text-muted group-hover:text-[var(--accent)] transition-colors">
@@ -131,7 +131,7 @@ export function Hero() {
                   href="https://www.linkedin.com/in/hussainalam/recent-activity/all/"
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-baseline gap-3"
+                  className="group flex items-baseline gap-3 py-2 -my-2 min-h-[44px]"
                 >
                   <span className="font-semibold w-20 shrink-0">Writing</span>
                   <span className="text-muted group-hover:text-[var(--accent)] transition-colors">
@@ -142,7 +142,7 @@ export function Hero() {
             </ul>
             <a
               href="#contact"
-              className="mt-7 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--accent)] transition-colors"
+              className="mt-7 inline-flex items-center gap-1.5 px-5 py-3 min-h-[44px] rounded-full text-sm font-medium bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--accent)] transition-colors"
             >
               Get in touch <span aria-hidden>→</span>
             </a>

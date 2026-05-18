@@ -23,7 +23,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-[color-mix(in_srgb,var(--background)_85%,transparent)] border-b border-[var(--border)]">
       <nav className="content-width flex items-center justify-between h-14">
-        <a href="#hero" className="font-medium tracking-tight">
+        <a href="#hero" className="font-medium tracking-tight inline-flex items-center min-h-[44px]">
           Hussain Alam
         </a>
 
