@@ -178,7 +178,7 @@ function TimelineCard({
             initials={r.logo}
             variant="card"
           />
-          <span className="font-semibold text-[17px] md:text-[18px] tracking-tight leading-tight">
+          <span className="font-semibold text-[15px] md:text-base tracking-tight leading-tight">
             {r.company}
           </span>
         </div>
@@ -268,7 +268,7 @@ export function CareerTimeline() {
                       initials={r.logo}
                       variant="card"
                     />
-                    <span className="font-semibold text-[17px] tracking-tight leading-tight">
+                    <span className="font-semibold text-[15px] tracking-tight leading-tight">
                       {r.company}
                     </span>
                   </div>
