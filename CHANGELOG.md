@@ -4,6 +4,41 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.1.3.0] - 2026-05-16
+
+Career Timeline redesign with a chapter-tagline card style, a full-width
+pull-quote summary, and a new mobile layout. Hero bio + contact polish
+ride along.
+
+### Added
+- Mobile vertical layout for the Career Timeline. Each chapter renders
+  as a stacked card with a year-range chip; horizontal Gantt is desktop-only
+  (`md:block`). Fixes a 29px horizontal-scroll bug on 375px viewports.
+- `tagline` field on `CareerRole` — short editorial chapter label rendered
+  in vermillion uppercase mono inside each card (Operational Excellence,
+  Founder Mode, Startup Operator, Turnaround at Scale).
+- Four standalone HTML design variants under `design-variants/` for the
+  timeline exploration that drove this pass, plus a side-by-side board.
+
+### Changed
+- Career section summary swapped from muted body paragraph to a
+  full-content-width pull-quote (Inter 18px medium, vermillion left rule).
+  Matches the typographic family of the Einstein quote in About so the
+  two callout blocks read as the same component family.
+- Timeline cards now show company name (anchor) above the tagline
+  (chapter label). Removed the redundant role-title subtitle that was
+  duplicating the literal job title.
+- Career section padding restored to the standard `.section` rhythm
+  (was `!pb-0`, creating uneven gaps to the next section).
+- Hero bio: "12+ years" → "13+ years"; "start things on the side" →
+  "build things on the side".
+- WeWork chapter summary rewritten in personal-story voice ("Signed
+  three months before WeWork filed for bankruptcy...") to match the
+  voice of the other three chapters.
+- Touch targets bumped to 44px minimum on the header brand link,
+  contact aside links (LinkedIn / Email / Writing), and the "Get in
+  touch" CTA for mobile usability.
+
 ## [0.1.2.0] - 2026-05-16
 
 Redesign pass on the Beyond Work section and a Career Timeline design
