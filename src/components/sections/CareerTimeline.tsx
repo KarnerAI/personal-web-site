@@ -223,7 +223,7 @@ export function CareerTimeline() {
   }, [pinned]);
 
   return (
-    <section id="career" className="section !pb-0">
+    <section id="career" className="section">
       <div className="content-width">
         <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">Career</p>
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-8">
