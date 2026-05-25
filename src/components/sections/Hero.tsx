@@ -10,7 +10,7 @@ import { EditableImage } from "@/components/edit-mode/EditableImage";
 const NAME = "Hussain Alam";
 const SUBLINE = "Product Strategist & Builder · New York";
 const BIO =
-  "12+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and start things on the side. Based in New York.";
+  "13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.";
 const QUOTE = "The only source of knowledge is experience.";
 const QUOTE_CITE = "Albert Einstein";
 
@@ -41,14 +41,6 @@ export function Hero() {
         exportSize={{ w: 1920, h: 680 }}
         className="h-[280px] md:h-[340px] w-full overflow-hidden bg-[var(--foreground)]/5"
       >
-        {/* Availability pill */}
-        <div className="absolute top-5 right-5 md:top-6 md:right-8 z-10 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-sm px-3 py-1.5 text-xs font-medium pointer-events-none">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-60 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--accent)]" />
-          </span>
-          Open to select advising
-        </div>
       </EditableImage>
 
       {/* Content */}
@@ -115,7 +107,7 @@ export function Hero() {
                   href="https://www.linkedin.com/in/hussainalam"
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-baseline gap-3"
+                  className="group flex items-baseline gap-3 py-2 -my-2 min-h-[44px]"
                 >
                   <span className="font-semibold w-20 shrink-0">LinkedIn</span>
                   <span className="text-muted group-hover:text-[var(--accent)] transition-colors">
@@ -125,25 +117,32 @@ export function Hero() {
               </li>
               <li>
                 <a
-                  href="mailto:hi@hussainalam.com"
-                  className="group flex items-baseline gap-3"
+                  href="mailto:hussain@karnerblu.com"
+                  className="group flex items-baseline gap-3 py-2 -my-2 min-h-[44px]"
                 >
                   <span className="font-semibold w-20 shrink-0">Email</span>
                   <span className="text-muted group-hover:text-[var(--accent)] transition-colors">
-                    hi@hussainalam.com
+                    Hussain@KarnerBlu.com
                   </span>
                 </a>
               </li>
               <li>
-                <div className="flex items-baseline gap-3">
+                <a
+                  href="https://www.linkedin.com/in/hussainalam/recent-activity/all/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-baseline gap-3 py-2 -my-2 min-h-[44px]"
+                >
                   <span className="font-semibold w-20 shrink-0">Writing</span>
-                  <span className="text-muted">Coming soon</span>
-                </div>
+                  <span className="text-muted group-hover:text-[var(--accent)] transition-colors">
+                    LinkedIn posts
+                  </span>
+                </a>
               </li>
             </ul>
             <a
               href="#contact"
-              className="mt-7 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--accent)] transition-colors"
+              className="mt-7 inline-flex items-center gap-1.5 px-5 py-3 min-h-[44px] rounded-full text-sm font-medium bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--accent)] transition-colors"
             >
               Get in touch <span aria-hidden>→</span>
             </a>

@@ -20,6 +20,7 @@ export type CareerRole = {
   startMonth: string;
   endMonth: string | "Present";
   yearsLabel: string; // e.g. "2012 – 2018"
+  tagline?: string; // 2–4 word chapter theme rendered prominently on the timeline card
   role: string; // short headline role (one line)
   location: string;
   whyIWasThere: string;

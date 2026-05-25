@@ -171,7 +171,7 @@ function TimelineCard({
             : "border-[var(--border)] hover:border-[var(--accent)]/60 hover:-translate-y-0.5",
         ].join(" ")}
       >
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3 mb-2">
           <CompanyLogo
             src={r.logoSrc}
             domain={r.logoDomain}
@@ -182,9 +182,11 @@ function TimelineCard({
             {r.company}
           </span>
         </div>
-        <p className="text-[13px] italic text-muted leading-relaxed line-clamp-3">
-          {r.whyIWasThere}
-        </p>
+        {r.tagline && (
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)] leading-snug mt-1">
+            {r.tagline}
+          </p>
+        )}
       </div>
     </button>
   );
@@ -221,29 +223,79 @@ export function CareerTimeline() {
   }, [pinned]);
 
   return (
-    <section id="career" className="section !pb-0">
+    <section id="career" className="section">
       <div className="content-width">
         <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">Career</p>
-        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2">
+        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-8">
           My career, in four chapters.
         </h2>
-        <p className="text-muted mb-12">
-          Fortune 100 ops out of college — founded a consultancy — 5th U.S. hire at a Series-A startup — joined WeWork three months before bankruptcy and led products to profitability.
-        </p>
+        <blockquote className="relative mb-10 border-l-[3px] border-[var(--accent)] pl-4 md:pl-5 max-w-3xl text-[17px] md:text-[18px] font-medium leading-relaxed text-[var(--foreground)]">
+          Fortune 100 ops out of college <span className="text-[var(--accent)] italic font-medium">—</span> founded a consultancy <span className="text-[var(--accent)] italic font-medium">—</span> 5th U.S. hire at a Series-A startup <span className="text-[var(--accent)] italic font-medium">—</span> joined WeWork three months before bankruptcy and led products to profitability.
+        </blockquote>
 
-        {/* Timeline box */}
+        {/* Mobile vertical layout — single column of chapter cards, chronological.
+            The horizontal Gantt below is desktop-only; this fallback gives mobile
+            its own design (not just stacked desktop columns). */}
+        <div className="md:hidden flex flex-col gap-3">
+          {COMPUTED.map((r, i) => {
+            const isPinned = i === pinned;
+            return (
+              <button
+                key={r.company}
+                type="button"
+                onClick={() => togglePinned(i)}
+                aria-expanded={isPinned}
+                aria-label={`${r.company}, ${r.yearsLabel}. ${isPinned ? "Hide" : "Show"} details.`}
+                className="text-left rounded-lg"
+              >
+                <div
+                  className={[
+                    "rounded-lg p-4 transition-all duration-200 bg-[var(--surface)] border",
+                    isPinned
+                      ? "border-[var(--accent)] shadow-[0_8px_24px_rgba(230,59,30,0.18)]"
+                      : "border-[var(--border)]",
+                  ].join(" ")}
+                >
+                  <div className="mb-3">
+                    <span className="inline-block font-mono text-[10px] uppercase tracking-[0.14em] text-white bg-[#2A3749] rounded px-2 py-1">
+                      {r.yearsLabel}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <CompanyLogo
+                      src={r.logoSrc}
+                      domain={r.logoDomain}
+                      initials={r.logo}
+                      variant="card"
+                    />
+                    <span className="font-semibold text-[15px] tracking-tight leading-tight">
+                      {r.company}
+                    </span>
+                  </div>
+                  {r.tagline && (
+                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)] leading-snug mt-1">
+                      {r.tagline}
+                    </p>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Timeline box — desktop Gantt (md+) */}
         <div
           ref={boxRef}
           tabIndex={0}
           role="group"
           aria-label="Career timeline"
           onKeyDown={onKeyDown}
-          className="relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-xl"
+          className="hidden md:block relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-xl"
         >
           {/* Top row — cards above the bar (positions 0, 2). Card heights are
               fixed so all cards in a row line up; line-clamp-3 keeps the
               italic line visually tight. */}
-          <div className="relative h-[180px]">
+          <div className="relative h-[132px]">
             {COMPUTED.map((r, i) =>
               i % 2 === 0 ? (
                 <TimelineCard
@@ -306,7 +358,7 @@ export function CareerTimeline() {
           </div>
 
           {/* Bottom row — cards below the bar (positions 1, 3) */}
-          <div className="relative h-[180px]">
+          <div className="relative h-[132px]">
             {COMPUTED.map((r, i) =>
               i % 2 === 1 ? (
                 <TimelineCard
