@@ -33,19 +33,31 @@ const STATUS_PILL: Record<VentureStatus, string> = {
 function VentureCover({ venture: v }: { venture: Venture }) {
   const [errored, setErrored] = useState(false);
   const showImage = Boolean(v.coverSrc) && !errored;
+  const treatment = v.coverTreatment ?? "fill";
+  const paintBg = !showImage || treatment === "logo";
 
   return (
     <div
       className="relative h-[150px] w-full overflow-hidden"
-      style={showImage ? undefined : { background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" }}
+      style={paintBg ? { background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" } : undefined}
     >
-      {showImage && (
+      {showImage && treatment === "fill" && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={v.coverSrc}
           alt=""
           onError={() => setErrored(true)}
           className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+      {showImage && treatment === "logo" && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={v.coverSrc}
+          alt=""
+          onError={() => setErrored(true)}
+          className="absolute inset-0 m-auto max-h-[86%] max-w-[88%] object-contain"
+          style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.25))" }}
         />
       )}
       {/* FINDING-012 — initial-as-glyph instead of emoji. Falls back to coverEmoji
