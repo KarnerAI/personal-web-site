@@ -301,7 +301,7 @@ function CaseStudyModal({ venture: v, onClose }: { venture: Venture; onClose: ()
             rel="noreferrer"
             className="mt-8 inline-block text-sm font-medium text-[var(--accent)]"
           >
-            Visit ↗
+            {v.externalLabel ?? "Visit"} ↗
           </a>
         )}
       </motion.div>

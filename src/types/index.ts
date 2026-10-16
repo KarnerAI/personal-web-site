@@ -60,6 +60,7 @@ export type Venture = {
   tags?: string[];
   awards?: string[];
   externalUrl?: string;
+  externalLabel?: string; // link text in the modal; defaults to "Visit"
   caseStudy: {
     problem: string;
     whatIBuilt: string;
@@ -150,6 +151,7 @@ export type TravelData = {
   nationalityFlag?: string; // emoji flag pair, e.g. "🇧🇩🇺🇸"
   favoriteFlag?: string; // emoji flag for favoriteCountry, e.g. "🇨🇴"
   caption: string;
+  captionCite?: string; // attribution shown on its own line under the caption
   // Either an ISO list (for future real map lib) or the plotted coordinates used today.
   visitedCountryCodes: string[];
   visited?: VisitedCountry[];

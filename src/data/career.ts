@@ -17,7 +17,7 @@ export const careerRoles: CareerRole[] = [
     role: "Operations → Operational Excellence",
     location: "Newark, NJ → New York, NY",
     whyIWasThere:
-      "First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs — from the brewhouse floor up to HR strategy.",
+      "First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs, from the brewhouse floor up to HR strategy.",
     heroBullet:
       "Reduced people-data error rates 7% → 1% across 20,000 employees by re-engineering the master-data platform used by 125+ HR partners.",
     subBullets: [
@@ -45,11 +45,11 @@ export const careerRoles: CareerRole[] = [
     role: "Product Consultant · Co-Founder",
     location: "Remote · Staples, Unilever",
     whyIWasThere:
-      "Co-founded my own consultancy to work directly with Fortune 500s on execution systems — faster loops, my own call sheet.",
+      "Co-founded my own consultancy to work directly with Fortune 500s on execution systems. Faster loops, my own call sheet.",
     heroBullet:
       "Boosted resource-allocation efficiency +30% at Fortune 500 clients via a value-based project prioritization framework.",
     subBullets: [
-      "Built an execution operating system across 7 departments — translating stakeholder needs into workflows, cadences, and KPI reporting.",
+      "Built an execution operating system across 7 departments, translating stakeholder needs into workflows, cadences, and KPI reporting.",
       "Clients included Staples and Unilever. Remote + on-site hybrid.",
     ],
   },
@@ -73,7 +73,7 @@ export const careerRoles: CareerRole[] = [
       "As the 5th U.S. hire: +22% MoM WAU by redesigning subscription offerings; booking-to-subscription conversion 43% → 73% via A/B testing.",
       "Led cross-functional team of 5 direct / 40+ indirect across 8 markets. Aligned OKRs to revenue and retention goals.",
       "Launched 4 North American markets; +25% onboarding efficiency through market analysis and cross-functional execution.",
-      "Reduced e-bike theft 20% with a new insurance product — 1st of 30 in the global data champions program (COO award).",
+      "Reduced e-bike theft 20% with a new insurance product. Ranked 1st of 30 in the global data champions program (COO award).",
     ],
     roles: [
       { title: "City Operations Mgr & Interim PM, B2B", dates: "Sep 2020 – Aug 2021", loc: "New York, NY" },
@@ -93,9 +93,9 @@ export const careerRoles: CareerRole[] = [
     role: "Manager, Product Management, Global",
     location: "New York, NY · 13 countries",
     whyIWasThere:
-      "Signed three months before WeWork filed for bankruptcy. Friends said don't, headlines said worse — I believed in the people, the brand, and the rare shot at being part of a real turnaround.",
+      "Signed three months before WeWork filed for bankruptcy. Friends said don't, headlines said worse. I believed in the people, the brand, and the rare shot at being part of a real turnaround.",
     heroBullet:
-      "$14M revenue (+60% YoY) owning the global parking vertical across 13 countries — helped deliver WeWork’s first profitable quarter.",
+      "$14M revenue (+60% YoY) owning the global parking vertical across 13 countries. Helped deliver WeWork’s first profitable quarter.",
     subBullets: [
       "Global Stripe payments: $800K MRR across 13 countries. Defined billing architecture for a scalable, compliant payments system.",
       "$12M annual revenue + 10% utilization lift across 315 locations via Gemini-powered pricing & inventory benchmarking.",

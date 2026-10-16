@@ -45,7 +45,7 @@ export function Contact() {
       setState({ kind: "ok" });
       reset();
     } catch {
-      setState({ kind: "err", message: "Network error — please try again." });
+      setState({ kind: "err", message: "Network error. Please try again." });
     }
   });
 
@@ -150,7 +150,7 @@ export function Contact() {
 
             {state.kind === "ok" && (
               <p className="mt-3 text-sm text-emerald-700">
-                Thanks — message sent. I&rsquo;ll reply within 48 hours.
+                Thanks, message sent. I&rsquo;ll reply within 48 hours.
               </p>
             )}
             {state.kind === "err" && (

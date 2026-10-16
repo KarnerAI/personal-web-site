@@ -68,7 +68,7 @@ export function Education() {
                     <p className="text-[15px] font-medium">{c.name}</p>
                     <p className="font-mono text-xs text-muted">{c.issuer}</p>
                   </div>
-                  <span className="font-mono text-xs text-[var(--accent)]">{c.year}</span>
+                  {c.year && <span className="font-mono text-xs text-[var(--accent)]">{c.year}</span>}
                 </div>
               ))}
             </div>
