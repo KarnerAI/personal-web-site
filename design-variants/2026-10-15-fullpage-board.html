@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Full-page redesign, 4 variants: comparison board</title>
+<style>
+  :root { --accent:#E63B1E; --bg:#EFEDE6; --ink:#1A1A1A; --muted:#6B6357; --border:#D9D5C8; --panel:#FAF8F2; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:-apple-system, BlinkMacSystemFont, "Inter", sans-serif; }
+  header { padding:24px 40px 18px; border-bottom:1px solid var(--border); background:var(--panel); position:sticky; top:0; z-index:10; display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  header h1 { margin:0 0 4px; font-size:20px; font-weight:600; letter-spacing:-0.01em; }
+  header p { margin:0; font-size:13px; color:var(--muted); max-width:760px; line-height:1.5; }
+  .jump { display:flex; gap:8px; flex-wrap:wrap; }
+  .jump a { font-size:12px; font-weight:600; color:var(--ink); text-decoration:none; padding:8px 12px; min-height:36px; display:inline-flex; align-items:center; border:1px solid var(--border); border-radius:6px; background:#fff; }
+  .jump a:hover, .jump a:focus-visible { border-color:var(--accent); color:var(--accent); outline:none; }
+  .grid { display:grid; grid-template-columns:1fr; gap:40px; padding:32px 40px 80px; }
+  .variant { background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.03); scroll-margin-top:110px; }
+  .variant-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:16px 22px; border-bottom:1px solid var(--border); background:var(--panel); flex-wrap:wrap; }
+  .variant-head .tag { font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-family:ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .variant-head .name { font-size:15px; font-weight:600; letter-spacing:-0.01em; margin-top:2px; }
+  .variant-head .desc { font-size:12.5px; color:var(--muted); margin-top:4px; max-width:820px; line-height:1.5; }
+  .variant-head .open { font-size:12px; color:var(--muted); text-decoration:none; padding:8px 12px; border:1px solid var(--border); border-radius:6px; background:#fff; white-space:nowrap; min-height:36px; display:inline-flex; align-items:center; }
+  .variant-head .open:hover, .variant-head .open:focus-visible { color:var(--accent); border-color:var(--accent); outline:none; }
+  iframe { width:100%; height:900px; border:0; display:block; background:#F8F7F2; }
+  .note { padding:0 40px 40px; font-size:12.5px; color:var(--muted); line-height:1.6; max-width:820px; }
+  @media (max-width:720px) { header, .grid, .note { padding-left:16px; padding-right:16px; } iframe { height:720px; } }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Full-page redesign: 4 directions</h1>
+      <p>Same content and sections in every variant: Hero, Career, Entrepreneurship, Beyond Work, Education. Each uses a different type system, palette and layout on purpose. Scroll inside each frame to see the Career animation fire; open standalone for the real thing at full width and on a phone.</p>
+    </div>
+    <nav class="jump" aria-label="Jump to variant">
+      <a href="#a">A Broadsheet</a><a href="#b">B Transit Authority</a><a href="#c">C Gallery Print</a><a href="#d">D Departure Board</a>
+    </nav>
+  </header>
+
+  <div class="grid">
+    <section class="variant" id="a">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant A</div>
+          <div class="name">Broadsheet: magazine profile, Fraunces + Instrument Sans, warm paper</div>
+          <div class="desc">Editorial spreads with pull quotes and hairlines, no cards. The only transit element is the Career line, which draws itself on scroll with a marker riding it. Ventures as four equal tear sheets; hobbies as a contact-sheet strip.</div>
+        </div>
+        <a class="open" href="2026-10-15-fullpage-broadsheet.html" target="_blank" rel="noopener">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-10-15-fullpage-broadsheet.html" title="Variant A: Broadsheet" loading="lazy"></iframe>
+    </section>
+
+    <section class="variant" id="b">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant B</div>
+          <div class="name">Transit Authority: full wayfinding system, Manrope + JetBrains Mono, one line color per section</div>
+          <div class="desc">A sticky route-map rail shows where you are on the page. Career is the main line with interchange rings; ventures are a cobalt branch line; hobbies are exit signs; education is the amber terminus. The route draws itself when Career enters view.</div>
+        </div>
+        <a class="open" href="2026-10-15-fullpage-transit.html" target="_blank" rel="noopener">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-10-15-fullpage-transit.html" title="Variant B: Transit Authority" loading="lazy"></iframe>
+    </section>
+
+    <section class="variant" id="c">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant C</div>
+          <div class="name">Gallery Print: Swiss poster grid, Archivo, black on white with red for the numbers</div>
+          <div class="desc">Numbered sections on a strict modular grid; the big outcomes ($14M, 10x, 6,500) set at poster size and counting up once. Career is a Vignelli-style vertical strip map; ventures are a dense index table that expands row by row.</div>
+        </div>
+        <a class="open" href="2026-10-15-fullpage-galleryprint.html" target="_blank" rel="noopener">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-10-15-fullpage-galleryprint.html" title="Variant C: Gallery Print" loading="lazy"></iframe>
+    </section>
+
+    <section class="variant" id="d">
+      <div class="variant-head">
+        <div>
+          <div class="tag">Variant D</div>
+          <div class="name">Departure Board: dark concourse, IBM Plex, amber and vermillion signals (the wildcard)</div>
+          <div class="desc">Every section is a board. Career is a split-flap departure board whose characters flip into place as it scrolls into view; ventures are an arrivals board with SHIPPED / ACTIVE flags; hobbies are platform tiles.</div>
+        </div>
+        <a class="open" href="2026-10-15-fullpage-departure.html" target="_blank" rel="noopener">Open standalone ↗</a>
+      </div>
+      <iframe src="2026-10-15-fullpage-departure.html" title="Variant D: Departure Board" loading="lazy"></iframe>
+    </section>
+  </div>
+
+  <p class="note">Hobby photos are Unsplash stand-ins until real ones arrive. The portrait and the two venture images load from the project's <code>public/</code> folder; everything else is self-contained. Built 2026-10-15 from <code>design-variants/</code> per DESIGN-VARIANTS.md.</p>
+</body>
+</html>
