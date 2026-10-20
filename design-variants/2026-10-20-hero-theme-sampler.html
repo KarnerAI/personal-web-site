@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!--
+  Hero theme sampler (2026-10-20)
+  One hero, seven visual themes, side by side. Same content and the same layout
+  in every theme (the Departure Board hero layout Hussain picked: info strip,
+  name, bio, quote, contact ticket with LinkedIn / Email / GitHub, framed
+  portrait). Bento is the exception: it is partly a layout style, so the same
+  pieces are rearranged into tiles.
+  Colors in every theme are adapted from Tokyo Transit: ink navy #0F1E3D,
+  vermillion #E63B1E (deep #CF3418 wherever white text sits on it, for
+  contrast), off-white #FAFAF7.
+  Themes: 1 Neo-brutalism (Archivo), 2 Bento grid (Plus Jakarta Sans),
+  3 Muji minimal (Zen Kaku Gothic New), 4 Risograph print (Big Shoulders
+  Display + Karla), 5 Light product UI (Geist + Geist Mono), 6 Soft tactile
+  (Nunito), 7 Glassmorphism (Outfit).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hero theme sampler: 7 themes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Big+Shoulders+Display:wght@700;800;900&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&family=Karla:wght@400;500;700&family=Nunito:wght@400;600;700;800;900&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ---------- Page chrome (neutral, not part of any theme) ---------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:#E7E5E0;color:#1A1A1A;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+.top{position:sticky;top:0;z-index:50;background:rgba(244,243,239,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid #D6D3CB}
+.top-in{max-width:1264px;margin:0 auto;padding:16px 32px;display:flex;gap:16px 32px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.top h1{margin:0;font-size:17px;font-weight:650;letter-spacing:-.01em}
+.top p{margin:2px 0 0;font-size:12.5px;color:#5E5A52;max-width:640px;line-height:1.45}
+.jump{display:flex;gap:6px;flex-wrap:wrap}
+.jump a{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border:1px solid #D6D3CB;border-radius:8px;background:#fff;color:#1A1A1A;text-decoration:none;font-size:12.5px;font-weight:600}
+.jump a b{font-weight:700;color:#CF3418}
+.jump a:hover,.jump a:focus-visible{border-color:#CF3418;outline:none}
+.theme{scroll-margin-top:100px}
+@media (max-width:860px){.top{position:static}.theme{scroll-margin-top:0}}
+.tl{max-width:1264px;margin:0 auto;padding:40px 32px 16px;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:baseline}
+.tl .num{grid-row:span 2;width:40px;height:40px;border-radius:50%;background:#1A1A1A;color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+.tl h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.015em}
+.tl p{margin:0;font-size:13.5px;color:#5E5A52;line-height:1.5;max-width:900px}
+.tl p em{font-style:normal;color:#1A1A1A;font-weight:600}
+.canvas{position:relative;overflow:hidden;border-top:1px solid #D6D3CB;border-bottom:1px solid #D6D3CB}
+.foot{max-width:1264px;margin:0 auto;padding:40px 32px 64px;font-size:12.5px;color:#5E5A52;line-height:1.6}
+
+/* ---------- Shared hero skeleton (themes restyle it) ---------- */
+.hero{position:relative;z-index:1;max-width:1264px;margin:0 auto;padding:56px 32px 72px}
+.strip{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-bottom:56px}
+.s-city{text-align:right}
+.clk{font-variant-numeric:tabular-nums;margin-left:10px}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"a p" "t p";gap:40px 64px;align-items:start}
+.intro{grid-area:a}
+.name{margin:0}
+.bio{margin:0;max-width:31em}
+.quote{margin:0}
+.quote cite{display:block;font-style:normal}
+.port{grid-area:p;margin:0}
+.pin{position:relative;aspect-ratio:1;overflow:hidden}
+.pin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.pf{position:absolute;inset:0;display:grid;place-items:center;font-size:48px;font-weight:700;opacity:.5}
+.ticket{grid-area:t;display:grid;grid-template-columns:minmax(0,1fr) 220px}
+.tk{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:16px;align-items:center;min-height:52px;padding:0 20px;color:inherit;text-decoration:none;transition:background .15s,box-shadow .15s}
+.tk i{font-style:normal;overflow-wrap:anywhere}
+.tk s{text-decoration:none}
+.tk:focus-visible,.btn:focus-visible{outline:2px solid #CF3418;outline-offset:2px}
+.stub{display:grid;place-items:center;padding:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s,background .15s,color .15s}
+
+@media (max-width:860px){
+  .top-in,.tl,.hero{padding-left:16px;padding-right:16px}
+  .hero{padding-top:36px;padding-bottom:48px}
+  .strip{grid-template-columns:1fr;gap:4px;margin-bottom:36px}
+  .s-city{text-align:left}
+  .hgrid{grid-template-columns:1fr;grid-template-areas:"a" "p" "t";gap:32px}
+  .port{max-width:300px}
+  .ticket{grid-template-columns:1fr}
+  .tk{grid-template-columns:72px minmax(0,1fr) auto;padding:0 16px}
+}
+
+/* =========================================================
+   1  NEO-BRUTALISM
+   ========================================================= */
+.t-brut .canvas{background:#FAFAF7;color:#0F1E3D;font-family:"Archivo",sans-serif}
+.t-brut .strip{border:3px solid #0F1E3D;background:#fff;box-shadow:6px 6px 0 #0F1E3D;gap:0;font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+.t-brut .strip span{padding:12px 18px}
+.t-brut .s-name{background:#CF3418;color:#fff;border-right:3px solid #0F1E3D}
+.t-brut .s-role{text-align:center}
+.t-brut .s-city{border-left:3px solid #0F1E3D}
+.t-brut .clk{background:#0F1E3D;color:#fff;padding:2px 8px}
+.t-brut .name{font-weight:900;font-size:clamp(52px,7.4vw,104px);line-height:.95;letter-spacing:-.035em;margin-bottom:28px;text-decoration:underline;text-decoration-color:#E63B1E;text-decoration-thickness:.12em;text-underline-offset:.1em;text-decoration-skip-ink:none}
+.t-brut .bio{font-size:20px;font-weight:500;line-height:1.45;margin-bottom:28px}
+.t-brut .quote{display:inline-block;border:3px solid #0F1E3D;background:#FFE3DB;padding:14px 20px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 #0F1E3D}
+.t-brut .quote cite{font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+.t-brut .pin{border:3px solid #0F1E3D;box-shadow:10px 10px 0 #E63B1E;background:#FFE3DB;overflow:visible}
+.t-brut .pin img{position:absolute}
+.t-brut .ticket{border:3px solid #0F1E3D;background:#fff;box-shadow:6px 6px 0 #0F1E3D}
+.t-brut .tk{font-weight:600;font-size:15px}
+.t-brut .tk+.tk{border-top:3px solid #0F1E3D}
+.t-brut .tk b{font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.t-brut .tk s{font-weight:900}
+.t-brut .tk:hover{background:#FFE3DB}
+.t-brut .stub{border-left:3px solid #0F1E3D;background:#FFE3DB}
+.t-brut .btn{background:#CF3418;color:#fff;font-weight:800;font-size:17px;border:3px solid #0F1E3D;box-shadow:5px 5px 0 #0F1E3D}
+.t-brut .btn:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 #0F1E3D}
+@media (max-width:860px){.t-brut .strip span{padding:8px 14px}.t-brut .s-name,.t-brut .s-city{border:0}.t-brut .s-role{text-align:left;border-top:3px solid #0F1E3D;border-bottom:3px solid #0F1E3D}.t-brut .stub{border-left:0;border-top:3px solid #0F1E3D}}
+
+/* =========================================================
+   2  BENTO GRID  (same pieces, rearranged into tiles)
+   ========================================================= */
+.t-bento .canvas{background:#F1F0EC;color:#0F1E3D;font-family:"Plus Jakarta Sans",sans-serif}
+.t-bento .hero{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"n n n p" "b b q p" "r c t s";gap:16px}
+.t-bento .strip,.t-bento .hgrid,.t-bento .intro,.t-bento .ticket{display:contents}
+.t-bento .s-name{display:none}
+.t-bento .s-role,.t-bento .s-city,.t-bento .name,.t-bento .bio,.t-bento .quote,.t-bento .port,.t-bento .rows,.t-bento .stub{background:#fff;border:1px solid #E4E2DC;border-radius:24px;padding:24px;margin:0;max-width:none}
+.t-bento .name{grid-area:n;display:flex;align-items:flex-end;min-height:220px;font-weight:800;font-size:clamp(44px,5.8vw,84px);letter-spacing:-.045em;line-height:.95}
+.t-bento .bio{grid-area:b;font-size:19px;line-height:1.5;font-weight:500}
+.t-bento .quote{grid-area:q;display:flex;flex-direction:column;justify-content:space-between;background:#CF3418;border-color:#CF3418;color:#fff;font-size:19px;font-weight:700;line-height:1.3}
+.t-bento .quote cite{margin-top:16px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.t-bento .port{grid-area:p;padding:0;overflow:hidden;position:relative;min-height:320px}
+.t-bento .pin{position:absolute;inset:0;aspect-ratio:auto}
+.t-bento .s-role,.t-bento .s-city{display:flex;flex-direction:column;justify-content:space-between;gap:20px;font-weight:700;font-size:18px;line-height:1.25;text-align:left}
+.t-bento .s-role::before,.t-bento .s-city::before{font-size:11.5px;font-weight:700;color:#5F6472;text-transform:uppercase;letter-spacing:.1em}
+.t-bento .s-role{grid-area:r}.t-bento .s-role::before{content:"Role"}
+.t-bento .s-city{grid-area:c}.t-bento .s-city::before{content:"Local time"}
+.t-bento .clk{display:block;margin:6px 0 0;font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.t-bento .rows{grid-area:t;padding:8px 0}
+.t-bento .tk{grid-template-columns:68px minmax(0,1fr) auto;min-height:48px;font-size:14px;font-weight:600}
+.t-bento .tk+.tk{border-top:1px solid #EEECE6}
+.t-bento .tk b{font-size:11.5px;font-weight:700;color:#5F6472;text-transform:uppercase;letter-spacing:.08em}
+.t-bento .tk:hover{background:#F7F6F2}
+.t-bento .stub{grid-area:s;padding:0;background:#0F1E3D;border-color:#0F1E3D;overflow:hidden}
+.t-bento .btn{width:100%;height:100%;min-height:150px;align-items:flex-end;justify-content:space-between;padding:24px;color:#fff;font-weight:800;font-size:22px;letter-spacing:-.01em}
+.t-bento .btn::after{content:"\2197";font-size:26px}
+.t-bento .btn:hover{background:#1B2D55}
+@media (max-width:860px){.t-bento .hero{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"n n" "p p" "b b" "q q" "r c" "t t" "s s";gap:12px}.t-bento .name{min-height:150px}.t-bento .port{min-height:0;aspect-ratio:1}.t-bento .btn{min-height:90px}.t-bento .clk{font-size:34px}}
+
+/* =========================================================
+   3  MUJI MINIMAL
+   ========================================================= */
+.t-muji .canvas{background:#F7F6F2;color:#0F1E3D;font-family:"Zen Kaku Gothic New",sans-serif}
+.t-muji .strip{padding:12px 0;border-top:1px solid #0F1E3D;border-bottom:1px solid #D9D6CE;margin-bottom:80px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.t-muji .s-role{color:#4B5670}
+.t-muji .hgrid{grid-template-columns:minmax(0,1fr) 300px;gap:48px 96px}
+.t-muji .name{font-weight:500;font-size:clamp(40px,5vw,64px);letter-spacing:.02em;line-height:1.15;margin-bottom:32px}
+.t-muji .name::after{content:"";display:inline-block;width:.3em;height:.3em;border-radius:50%;background:#E63B1E;margin-left:.35em;vertical-align:.5em}
+.t-muji .bio{font-size:16px;line-height:2;color:#2A3550}
+.t-muji .quote{margin-top:32px;padding-left:16px;border-left:1px solid #E63B1E;font-size:14px;line-height:1.8;color:#4B5670}
+.t-muji .quote cite{font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:4px}
+.t-muji .pin{border:1px solid #D9D6CE;background:#ECE9E1}
+.t-muji .pin img{filter:saturate(.8)}
+.t-muji .ticket{border-top:1px solid #0F1E3D;border-bottom:1px solid #0F1E3D}
+.t-muji .tk{padding:0 4px;font-size:14px}
+.t-muji .tk+.tk{border-top:1px solid #E2DFD7}
+.t-muji .tk b{font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#4B5670}
+.t-muji .tk s{color:#CF3418}
+.t-muji .tk:hover{background:#EFEDE7}
+.t-muji .stub{border-left:1px solid #E2DFD7}
+.t-muji .btn{gap:12px;border:1px solid #0F1E3D;min-height:46px;padding:0 22px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.t-muji .btn::before{content:"";width:8px;height:8px;background:#E63B1E}
+.t-muji .btn:hover{background:#0F1E3D;color:#fff}
+@media (max-width:860px){.t-muji .strip{margin-bottom:48px}.t-muji .stub{border-left:0;border-top:1px solid #E2DFD7}}
+
+/* =========================================================
+   4  RISOGRAPH PRINT
+   ========================================================= */
+.t-riso .canvas{background:#F2ECDF;color:#0F1E3D;font-family:"Karla",sans-serif}
+.t-riso .canvas::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.45;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.06  0 0 0 0 0.12  0 0 0 0 0.24  0 0 0 .5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+.t-riso .strip{border:2px solid #0F1E3D;padding:8px 16px;transform:rotate(-.6deg);font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:19px;letter-spacing:.06em;text-transform:uppercase}
+.t-riso .s-role{color:#2E4B8F}
+.t-riso .clk{background:#0F1E3D;color:#F2ECDF;padding:0 6px}
+.t-riso .name{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:clamp(64px,10vw,144px);line-height:.85;text-transform:uppercase;letter-spacing:.01em;color:#1F3A7A;text-shadow:5px 4px 0 rgba(230,59,30,.85);margin-bottom:28px}
+.t-riso .bio{font-size:19px;line-height:1.55;font-weight:500}
+.t-riso .quote{margin-top:24px;max-width:15em;font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:30px;line-height:1.02;text-transform:uppercase;color:#C23516}
+.t-riso .quote cite{font-family:"Karla",sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;color:#0F1E3D;margin-top:8px}
+.t-riso .port{transform:rotate(1.4deg)}
+.t-riso .pin{background:#E63B1E;border:2px solid #0F1E3D}
+.t-riso .pin img{filter:grayscale(1) contrast(1.3) brightness(1.08);mix-blend-mode:multiply}
+.t-riso .pin::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(31,58,122,.7) 1px,transparent 1.7px);background-size:6px 6px;mix-blend-mode:multiply;transform:translate(3px,2px);opacity:.55}
+.t-riso .ticket{border:2px solid #0F1E3D;background:rgba(255,255,255,.28)}
+.t-riso .tk{font-size:15px;font-weight:500}
+.t-riso .tk+.tk{border-top:2px dashed #0F1E3D}
+.t-riso .tk b{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:17px;letter-spacing:.06em;text-transform:uppercase}
+.t-riso .tk s{color:#C23516;font-weight:700}
+.t-riso .tk:hover{background:rgba(230,59,30,.12)}
+.t-riso .stub{border-left:2px dashed #0F1E3D}
+.t-riso .btn{background:#1F3A7A;color:#F2ECDF;font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:23px;letter-spacing:.04em;text-transform:uppercase;box-shadow:4px 3px 0 #E63B1E}
+.t-riso .btn:hover{transform:translate(2px,2px);box-shadow:2px 1px 0 #E63B1E}
+@media (max-width:860px){.t-riso .stub{border-left:0;border-top:2px dashed #0F1E3D}}
+
+/* =========================================================
+   5  LIGHT PRODUCT UI
+   ========================================================= */
+.t-prod .canvas{color:#0F1E3D;font-family:"Geist",sans-serif;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(230,59,30,.09),transparent 70%),linear-gradient(rgba(15,30,61,.045) 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,rgba(15,30,61,.045) 1px,transparent 1px) 0 0/40px 40px,#FBFBFA}
+.t-prod .strip{max-width:780px;margin:0 auto 64px;padding:8px 8px 8px 20px;border:1px solid #E5E7EB;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:0 1px 2px rgba(15,30,61,.06);font-size:13.5px}
+.t-prod .s-name{font-weight:600}
+.t-prod .s-role{font-family:"Geist Mono",monospace;font-size:12px;color:#6B7280}
+.t-prod .clk{display:inline-flex;align-items:center;gap:6px;font-family:"Geist Mono",monospace;font-size:12px;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:999px;padding:4px 10px}
+.t-prod .clk::before{content:"";width:6px;height:6px;border-radius:50%;background:#1F9D62;box-shadow:0 0 0 3px rgba(31,157,98,.16)}
+.t-prod .name{font-weight:600;font-size:clamp(48px,6.4vw,84px);letter-spacing:-.05em;line-height:1;margin-bottom:22px;background:linear-gradient(180deg,#0F1E3D 35%,#5B6782);-webkit-background-clip:text;background-clip:text;color:transparent}
+.t-prod .bio{font-size:19px;line-height:1.55;color:#3D4760}
+.t-prod .quote{margin-top:22px;font-size:15px;color:#6B7280}
+.t-prod .quote cite{font-family:"Geist Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+.t-prod .port{padding:6px;border-radius:20px;background:#fff;border:1px solid #E5E7EB;box-shadow:0 24px 60px -16px rgba(230,59,30,.32),0 1px 2px rgba(15,30,61,.06)}
+.t-prod .pin{border-radius:14px}
+.t-prod .ticket{background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,30,61,.05),0 10px 30px -14px rgba(15,30,61,.18)}
+.t-prod .tk{font-size:14.5px}
+.t-prod .tk+.tk{border-top:1px solid #F0F1F3}
+.t-prod .tk b{font-family:"Geist Mono",monospace;font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.t-prod .tk s{color:#9CA3AF}
+.t-prod .tk:hover{background:#FAFAFB}
+.t-prod .tk:hover s{color:#CF3418}
+.t-prod .stub{border-left:1px solid #F0F1F3;background:#FAFAFB}
+.t-prod .btn{background:#CF3418;color:#fff;border-radius:10px;font-weight:600;font-size:15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 2px rgba(15,30,61,.2),0 8px 20px -6px rgba(207,52,24,.55)}
+.t-prod .btn::after{content:"\2192"}
+.t-prod .btn:hover{background:#B92D14}
+@media (max-width:860px){.t-prod .strip{border-radius:16px;padding:12px 16px;margin-bottom:40px}.t-prod .stub{border-left:0;border-top:1px solid #F0F1F3}}
+
+/* =========================================================
+   6  SOFT TACTILE
+   ========================================================= */
+.t-soft .canvas{background:#EEECE7;color:#0F1E3D;font-family:"Nunito",sans-serif}
+.t-soft .strip,.t-soft .port,.t-soft .rows{background:#EEECE7;box-shadow:10px 10px 24px rgba(15,30,61,.14),-10px -10px 24px rgba(255,255,255,.95)}
+.t-soft .strip{border-radius:999px;padding:12px 26px;font-weight:800;font-size:14px}
+.t-soft .s-role{color:#4B5670;font-weight:700}
+.t-soft .clk{background:#EEECE7;border-radius:999px;padding:4px 12px;box-shadow:inset 3px 3px 6px rgba(15,30,61,.15),inset -3px -3px 6px #fff}
+.t-soft .name{font-weight:900;font-size:clamp(48px,6.6vw,88px);letter-spacing:-.02em;line-height:1;margin-bottom:22px}
+.t-soft .bio{font-size:19px;line-height:1.55;font-weight:600;color:#2E3A55}
+.t-soft .quote{display:inline-block;margin-top:26px;padding:18px 24px;border-radius:24px;background:#EEECE7;box-shadow:inset 6px 6px 12px rgba(15,30,61,.1),inset -6px -6px 12px rgba(255,255,255,.9);font-weight:700}
+.t-soft .quote cite{font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4B5670;margin-top:6px}
+.t-soft .port{padding:14px;border-radius:44px}
+.t-soft .pin{border-radius:32px}
+.t-soft .ticket{gap:20px}
+.t-soft .rows{border-radius:28px;padding:8px}
+.t-soft .tk{border-radius:20px;font-weight:700;font-size:15px}
+.t-soft .tk b{font-weight:800;font-size:13px;color:#4B5670}
+.t-soft .tk s{color:#CF3418;font-weight:900}
+.t-soft .tk:hover{box-shadow:inset 3px 3px 8px rgba(15,30,61,.12),inset -3px -3px 8px #fff}
+.t-soft .stub{padding:0}
+.t-soft .btn{width:100%;height:100%;min-height:150px;border-radius:28px;background:linear-gradient(180deg,#E8492B,#CF3418);color:#fff;font-weight:900;font-size:21px;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.18),10px 10px 24px rgba(207,52,24,.32),-8px -8px 20px rgba(255,255,255,.9)}
+.t-soft .btn:hover{transform:translateY(-2px)}
+.t-soft .btn:active{transform:translateY(2px)}
+@media (max-width:860px){.t-soft .strip{border-radius:24px}.t-soft .btn{min-height:68px}}
+
+/* =========================================================
+   7  GLASSMORPHISM
+   ========================================================= */
+.t-glass .canvas{color:#0F1E3D;font-family:"Outfit",sans-serif;background:radial-gradient(38% 55% at 10% 18%,rgba(230,59,30,.42),transparent 70%),radial-gradient(40% 55% at 92% 28%,rgba(46,91,186,.38),transparent 70%),radial-gradient(35% 45% at 55% 100%,rgba(255,168,120,.5),transparent 70%),#F6F3EF}
+.t-glass .strip,.t-glass .quote,.t-glass .port,.t-glass .ticket{background:rgba(255,255,255,.45);-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);border:1px solid rgba(255,255,255,.75);box-shadow:0 10px 40px rgba(15,30,61,.1),inset 0 1px 0 rgba(255,255,255,.8)}
+.t-glass .strip{border-radius:16px;padding:12px 20px;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.t-glass .s-role{color:#3D4760}
+.t-glass .name{font-weight:600;font-size:clamp(48px,6.6vw,88px);letter-spacing:-.035em;line-height:1;margin-bottom:22px}
+.t-glass .bio{font-size:19px;line-height:1.55;color:#24304D}
+.t-glass .quote{display:inline-block;margin-top:24px;padding:16px 20px;border-radius:16px;font-weight:500}
+.t-glass .quote cite{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#3D4760;margin-top:6px}
+.t-glass .port{padding:10px;border-radius:28px}
+.t-glass .pin{border-radius:20px}
+.t-glass .ticket{border-radius:22px;overflow:hidden}
+.t-glass .tk{font-size:15px}
+.t-glass .tk+.tk{border-top:1px solid rgba(255,255,255,.75)}
+.t-glass .tk b{font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#3D4760}
+.t-glass .tk s{color:#CF3418}
+.t-glass .tk:hover{background:rgba(255,255,255,.45)}
+.t-glass .stub{border-left:1px solid rgba(255,255,255,.75)}
+.t-glass .btn{background:rgba(207,52,24,.94);color:#fff;border-radius:14px;font-weight:600;font-size:16px;border:1px solid rgba(255,255,255,.35);box-shadow:0 10px 26px rgba(207,52,24,.35),inset 0 1px 0 rgba(255,255,255,.35)}
+.t-glass .btn:hover{background:#B92D14}
+@media (max-width:860px){.t-glass .stub{border-left:0;border-top:1px solid rgba(255,255,255,.75)}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div>
+      <h1>Hero theme sampler: 7 themes</h1>
+      <p>Same hero, same words, same layout (the one you liked from the Departure Board), styled seven ways in your navy, vermillion and off-white. Bento is partly a layout style, so its pieces become tiles. Jump to any theme, or just scroll.</p>
+    </div>
+    <nav class="jump" aria-label="Jump to theme">
+      <a href="#t1"><b>1</b>Neo-brutalism</a>
+      <a href="#t2"><b>2</b>Bento</a>
+      <a href="#t3"><b>3</b>Muji</a>
+      <a href="#t4"><b>4</b>Riso</a>
+      <a href="#t5"><b>5</b>Product UI</a>
+      <a href="#t6"><b>6</b>Soft</a>
+      <a href="#t7"><b>7</b>Glass</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 NEO-BRUTALISM -->
+<section class="theme t-brut" id="t1" aria-labelledby="t1h">
+  <div class="tl">
+    <span class="num">1</span>
+    <h2 id="t1h">Neo-brutalism</h2>
+    <p>Thick outlines, hard flat shadows, blocks of solid color, chunky type, buttons that press in. Confident and a little playful. <em>Font:</em> Archivo. <em>Find references:</em> "neobrutalism portfolio".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 BENTO GRID -->
+<section class="theme t-bento" id="t2" aria-labelledby="t2h">
+  <div class="tl">
+    <span class="num">2</span>
+    <h2 id="t2h">Bento grid</h2>
+    <p>Everything lives in rounded tiles of different sizes, like Apple's product pages. Each tile holds one idea, so it skims fast. Partly a layout style, so the hero pieces are rearranged. <em>Font:</em> Plus Jakarta Sans. <em>Find references:</em> "bento grid portfolio".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 MUJI MINIMAL -->
+<section class="theme t-muji" id="t3" aria-labelledby="t3h">
+  <div class="tl">
+    <span class="num">3</span>
+    <h2 id="t3h">Muji minimal</h2>
+    <p>Where your colors came from. Very calm, generous space, hairline rules, small careful type, and one red used like a stamp. <em>Font:</em> Zen Kaku Gothic New. <em>Find references:</em> "muji web design", "japanese minimal website".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 RISOGRAPH PRINT -->
+<section class="theme t-riso" id="t4" aria-labelledby="t4h">
+  <div class="tl">
+    <span class="num">4</span>
+    <h2 id="t4h">Risograph print</h2>
+    <p>Looks printed: grainy paper, two ink colors that don't quite line up, halftone dots in the photo, slightly crooked elements. Warm and handmade. <em>Fonts:</em> Big Shoulders Display + Karla. <em>Find references:</em> "risograph website", "riso print web design".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 LIGHT PRODUCT UI -->
+<section class="theme t-prod" id="t5" aria-labelledby="t5h">
+  <div class="tl">
+    <span class="num">5</span>
+    <h2 id="t5h">Light product UI</h2>
+    <p>Polished like a top software company's homepage: faint grid, crisp hairlines, soft shadows and glows, tiny interface details like the live dot on the clock. <em>Fonts:</em> Geist + Geist Mono. <em>Find references:</em> "SaaS landing page light", "Linear style website light".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 SOFT TACTILE -->
+<section class="theme t-soft" id="t6" aria-labelledby="t6h">
+  <div class="tl">
+    <span class="num">6</span>
+    <h2 id="t6h">Soft tactile</h2>
+    <p>Rounded, pillowy surfaces lit from the top left, so things look raised or pressed in, like real buttons. Friendly and approachable. <em>Font:</em> Nunito. <em>Find references:</em> "claymorphism website", "soft UI portfolio".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 GLASSMORPHISM -->
+<section class="theme t-glass" id="t7" aria-labelledby="t7h">
+  <div class="tl">
+    <span class="num">7</span>
+    <h2 id="t7h">Glassmorphism</h2>
+    <p>Frosted-glass panels floating over soft blurs of color. Airy and modern. One caution: very common on AI-built sites right now. <em>Font:</em> Outfit. <em>Find references:</em> "glassmorphism portfolio".</p>
+  </div>
+  <div class="canvas">
+    <div class="hero">
+      <div class="strip"><span class="s-name">Hussain Alam</span><span class="s-role">Product Strategist &amp; Builder</span><span class="s-city">New York<time class="clk"></time></span></div>
+      <div class="hgrid">
+        <div class="intro">
+          <p class="name">Hussain Alam</p>
+          <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+          <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+        </div>
+        <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+        <div class="ticket">
+          <div class="rows">
+            <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+            <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+          </div>
+          <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<p class="foot">Built 2026-10-20 for the theme decision. Only the hero is shown; once a theme is picked, the other sections get designed in it. Portrait loads from the project's <code>public/</code> folder; everything else is self-contained.</p>
+
+<script>
+  // Live New York time for every theme's info strip.
+  (function () {
+    var els = document.querySelectorAll('.clk');
+    var fmt;
+    try { fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }); } catch (e) { return; }
+    function tick() { var t = fmt.format(new Date()); els.forEach(function (el) { el.textContent = t; }); }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>
+</body>
+</html>
