@@ -4,6 +4,90 @@ Follow-ups tracked by skill/component, priority-ordered (P0 top → P4 bottom),
 then the Completed section at the bottom. Source of truth for "what's left
 before launch" and "what's acceptable to punt."
 
+## [P0] Redesign build: theme B (light product UI, Karner blue)
+
+Locked 2026-10-20. Visual source of truth:
+`design-variants/2026-10-20-fullpage-productui-v7.html`. Rules and tokens:
+`DESIGN.md` (including the three guardrails). Build it section by section into
+the real Next.js app, verifying each phase in the browser before the next.
+
+### Phase 0: Ship what's already on `polish-things-ive-started`
+Content pass (no em-dashes, placeholder links), venture covers, routing
+rules, the build fix that keeps Tailwind out of `images/` and
+`design-themes/`, new logo assets, and every design-variants mockup. Open
+the PR with `/ship`, merge, then start a fresh verb-first branch from main
+(e.g. `build-theme-b-redesign`, pushed with `-u` before the first commit).
+
+### Phase 1: Foundations
+- Read the Next.js 16 docs in `node_modules/next/dist/docs/` for fonts and
+  metadata before writing code (see AGENTS.md).
+- Swap fonts to Geist + Geist Mono via `next/font/google` (both variable);
+  remove Instrument Serif + Inter.
+- Replace the Tokyo Transit tokens in `src/app/globals.css` with the
+  DESIGN.md tokens and map them in `@theme`.
+- Decide the global `zoom: 0.9` (see the P4 item below); the mockups are
+  designed at 100%.
+- Page title: "Hussain Alam | Operator turned PM".
+
+### Phase 2: Header + Hero
+- Sticky frosted header: brand left, Career / Entrepreneurship / Beyond Work.
+- Board hero: info strip "Operator turned PM · Based in New York" (no repeated
+  name, no clock), name, bio ending at "build things on the side.", contact
+  ticket with one-color LinkedIn / envelope / GitHub icons + handles
+  (GitHub: https://github.com/KarnerAI), framed square portrait.
+- Remove the Notion cover photo, round avatar, emoji and the hero quote.
+- Fixes the P1 hero heading-hierarchy item and FINDING-017 tap targets below.
+
+### Phase 3: Einstein bridge band (new)
+Quote (small, 22 to 34px) + "Albert Einstein" + "Out of college, I went where
+the work happens: the brewhouse floor of a Fortune 100 company. I've learned
+every role since the same way, by doing the job up close before trying to
+improve it." Leads straight into Career.
+
+### Phase 4: Career timeline
+- Four equal segments; cards above (1, 3) and below (2, 4); cards size to
+  their content; pinned segment fills Karner blue; detail panel; arrow keys
+  and Escape; mobile stack.
+- Logos in white tiles with `object-fit: contain`; KarnerBlu uses
+  `public/logos/karnerblu-mark.png`.
+- KarnerBlu clients row (Unilever, Staples) on the card and in the panel; in
+  `src/data/career.ts` drop the location/bullet that repeat the clients.
+- The one animation: blue fill sweeps the bar segment by segment, stems
+  draw, cards fade up 8px; runs once; static design without JS or with
+  reduced motion.
+
+### Phase 5: Things I've started
+Four across at 1024px+ (2×2 tablet, 1 column phone), "Read story" aligned;
+covers: EmojiFriends photo, SpreadTheFacts wordmark on black, Navigate.AI
+score card (`public/ventures/navigate-ai-score.png`), Spots app-style pin icon
+until a real app screenshot arrives; restyled story dialog.
+
+### Phase 6: Beyond Work (not yet reviewed in B)
+Review the map, stat cards, fact rows and hobby mosaic in v7 with Hussain
+first. Real photos: export web-sized copies from `images/Hobbies/` (Riding &
+Driving, Youth Mentor have photos; the other three still need them) into
+`public/images/hobbies/`.
+
+### Phase 7: Education + Footer (not yet reviewed in B)
+Review in v7 first, then build.
+
+### Phase 8: QA and ship
+`/qa` (desktop, tablet, phone, keyboard, reduced motion), `/design-review`
+against DESIGN.md, `npm run build` + lint clean, then `/ship`.
+
+### Open decisions (ask Hussain during the build)
+- Hero name: keep v7's navy-to-gray gradient text, or solid ink (DESIGN.md
+  guidance prefers weight/size over gradient emphasis).
+- Section chips ("• CAREER •") above headings: keep, or let headings stand
+  alone.
+- Guardrail 1: where the stat treatments go (career detail panel, venture
+  cards, a "by the numbers" line). Results on the timeline cards themselves
+  were declined.
+- Guardrail 2: where the single hexagon motif lives (e.g. timeline nodes).
+- Stale content: "Next up: Turkey, September 2026"; Navigate.AI beta dates
+  (April to May 2026); Product School year; hobby stories that are still
+  placeholders; WeWork tenure label (data counts to April 2026).
+
 ## Accessibility
 
 ### [P1] Hero heading hierarchy skips h2
