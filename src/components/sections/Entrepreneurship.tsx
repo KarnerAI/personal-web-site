@@ -34,10 +34,15 @@ function VentureCover({ venture: v }: { venture: Venture }) {
   const [errored, setErrored] = useState(false);
   const showImage = Boolean(v.coverSrc) && !errored;
   const treatment = v.coverTreatment ?? "fill";
+  // onError only fires after hydration. An image that already failed before
+  // then reports complete with no pixels (a lazy image not yet requested is
+  // incomplete with no currentSrc), so catch that case when the ref attaches.
+  const catchEarlyError = (img: HTMLImageElement | null) => {
+    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
+  };
 
   // Always paint the gradient, even under a "fill" photo: it shows while the
-  // lazy image loads, and if the image fails before hydration (so onError never
-  // fires) the band still has a background instead of going blank.
+  // lazy image loads instead of an empty band.
   return (
     <div
       className="relative h-[150px] w-full overflow-hidden"
@@ -50,6 +55,7 @@ function VentureCover({ venture: v }: { venture: Venture }) {
           alt=""
           loading="lazy"
           decoding="async"
+          ref={catchEarlyError}
           onError={() => setErrored(true)}
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -61,6 +67,7 @@ function VentureCover({ venture: v }: { venture: Venture }) {
           alt=""
           loading="lazy"
           decoding="async"
+          ref={catchEarlyError}
           onError={() => setErrored(true)}
           className="absolute inset-0 m-auto max-h-[86%] max-w-[88%] object-contain"
           style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.25))" }}

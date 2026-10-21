@@ -91,7 +91,7 @@ against DESIGN.md, `npm run build` + lint clean, then `/ship`.
   were declined.
 - Guardrail 2: where the single hexagon motif lives (e.g. timeline nodes).
 - Stale content: "Next up: Turkey, September 2026"; Navigate.AI beta dates
-  (April to May 2026); Product School year; hobby stories that are still
+  (April to May 2026); YC Startup School year; hobby stories that are still
   placeholders; WeWork tenure label (data counts to April 2026).
 
 ## Accessibility
