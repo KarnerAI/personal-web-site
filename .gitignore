@@ -53,3 +53,10 @@ next-env.d.ts
 
 # Personal working notes
 travel-notes.md
+
+# Raw personal media and design references: not site source.
+# Tailwind v4 scans every non-ignored file for class names, so binary
+# photos/videos and saved web pages here break the CSS build if tracked.
+# Optimized copies of any photo the site uses go in public/.
+/images/
+/design-themes/

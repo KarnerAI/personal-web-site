@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Keep Tailwind's class scanner out of raw media and design references.
+   Binary photos/videos and saved web pages there produce garbage
+   "classes" that break the CSS build. */
+@source not "../../images";
+@source not "../../design-themes";
+
 /* ------------------------------------------------------------------
    Color palette — Tokyo Transit
    Reference: Muji / Japanese subway wayfinding.
