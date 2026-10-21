@@ -125,7 +125,7 @@ export const travel: TravelData = {
   nationalityFlag: "🇧🇩🇺🇸",
   caption:
     "“The world is a book and those who do not travel read only one page.”",
-  captionCite: "Saint Augustine",
+  captionCite: "Attributed to Saint Augustine",
   visitedCountryCodes: visitedCountries.map((c) => c.code),
   visited: visitedCountries,
   base: "New York, NY",

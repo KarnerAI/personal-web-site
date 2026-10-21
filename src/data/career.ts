@@ -66,7 +66,7 @@ export const careerRoles: CareerRole[] = [
     role: "City Ops → Sr. Manager, Product Strategy & Ops",
     location: "New York, NY · 8 markets",
     whyIWasThere:
-      "Series-B micromobility. Traded consulting decks for real P&L ownership and a team in the trenches.",
+      "Series-A micromobility. Traded consulting decks for real P&L ownership and a team in the trenches.",
     heroBullet:
       "Scaled B2C subscription ARR 10× ($500K → $5M) across 8 markets through pricing strategy, lifecycle optimization, and full P&L ownership.",
     subBullets: [

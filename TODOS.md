@@ -10,6 +10,10 @@ Locked 2026-10-20. Visual source of truth:
 `design-variants/2026-10-20-fullpage-productui-v7.html`. Rules and tokens:
 `DESIGN.md` (including the three guardrails). Build it section by section into
 the real Next.js app, verifying each phase in the browser before the next.
+Take wording from `src/data/`, not from the mockup text: the data has fixes
+made after v7 (Zoomo is Series-A, KarnerBlu is "co-founded", the
+SpreadTheFacts partner is Mass General Brigham, the travel quote is
+"Attributed to Saint Augustine").
 
 ### Phase 0: Ship what's already on `polish-things-ive-started`
 Content pass (no em-dashes, placeholder links), venture covers, routing

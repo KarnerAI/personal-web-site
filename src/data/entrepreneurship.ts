@@ -35,7 +35,7 @@ export const ventures: Venture[] = [
     coverTreatment: "logo",
     coverGradient: "#000000",
     coverEmoji: "🧵",
-    hook: "Won MIT's COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General.",
+    hook: "Won MIT's COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General Brigham.",
     status: "Shipped",
     tags: ["MIT", "Hackathon", "Public Health"],
     caseStudy: {

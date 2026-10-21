@@ -34,12 +34,14 @@ function VentureCover({ venture: v }: { venture: Venture }) {
   const [errored, setErrored] = useState(false);
   const showImage = Boolean(v.coverSrc) && !errored;
   const treatment = v.coverTreatment ?? "fill";
-  const paintBg = !showImage || treatment === "logo";
 
+  // Always paint the gradient, even under a "fill" photo: it shows while the
+  // lazy image loads, and if the image fails before hydration (so onError never
+  // fires) the band still has a background instead of going blank.
   return (
     <div
       className="relative h-[150px] w-full overflow-hidden"
-      style={paintBg ? { background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" } : undefined}
+      style={{ background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" }}
     >
       {showImage && treatment === "fill" && (
         // eslint-disable-next-line @next/next/no-img-element

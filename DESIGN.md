@@ -202,7 +202,7 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 - Do keep exactly one blue doing the interaction work; sky and peach only in washes and gradients.
 - Do show real artifacts (logos, screenshots, photos) and real numbers; mark placeholders honestly until real photos arrive.
 - Do let cards size to their content; never stretch a card to match a taller neighbor.
-- Do write copy with no em-dashes or en-dashes, and no repeated facts (each fact appears once).
+- Do write copy with no em-dashes or en-dashes, and no repeated facts (each fact appears once). The one exception: an en-dash inside a date or number range ("2012 – 2018", "50–100") is fine.
 - Do respect `prefers-reduced-motion`: the static design is the final state of every animation.
 - Don't add a second animated "moment"; the timeline is the only one.
 - Don't use gradient-with-initials covers, emoji as UI, or icons in colored circles above headings.

@@ -230,7 +230,7 @@ export function CareerTimeline() {
           My career, in four chapters.
         </h2>
         <blockquote className="relative mb-10 border-l-[3px] border-[var(--accent)] pl-4 md:pl-5 max-w-3xl text-[17px] md:text-[18px] font-medium leading-relaxed text-[var(--foreground)]">
-          Fortune 100 ops out of college <span aria-hidden className="text-[var(--accent)] font-medium">→</span><span className="sr-only">, then</span> founded a consultancy <span aria-hidden className="text-[var(--accent)] font-medium">→</span><span className="sr-only">, then</span> 5th U.S. hire at a Series-A startup <span aria-hidden className="text-[var(--accent)] font-medium">→</span><span className="sr-only">, then</span> joined WeWork three months before bankruptcy and led products to profitability.
+          Fortune 100 ops out of college <span aria-hidden className="text-[var(--accent)] font-medium">→</span><span className="sr-only">, then</span> co-founded a consultancy <span aria-hidden className="text-[var(--accent)] font-medium">→</span><span className="sr-only">, then</span> 5th U.S. hire at a Series-A startup <span aria-hidden className="text-[var(--accent)] font-medium">→</span><span className="sr-only">, then</span> joined WeWork three months before bankruptcy and led products to profitability.
         </blockquote>
 
         {/* Mobile vertical layout — single column of chapter cards, chronological.
