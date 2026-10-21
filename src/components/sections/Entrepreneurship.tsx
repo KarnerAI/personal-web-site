@@ -46,6 +46,8 @@ function VentureCover({ venture: v }: { venture: Venture }) {
         <img
           src={v.coverSrc}
           alt=""
+          loading="lazy"
+          decoding="async"
           onError={() => setErrored(true)}
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -55,6 +57,8 @@ function VentureCover({ venture: v }: { venture: Venture }) {
         <img
           src={v.coverSrc}
           alt=""
+          loading="lazy"
+          decoding="async"
           onError={() => setErrored(true)}
           className="absolute inset-0 m-auto max-h-[86%] max-w-[88%] object-contain"
           style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.25))" }}

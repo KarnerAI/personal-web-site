@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
-/* Keep Tailwind's class scanner out of raw media and design references.
-   Binary photos/videos and saved web pages there produce garbage
-   "classes" that break the CSS build. */
+/* Keep Tailwind's class scanner out of raw media, design references and
+   standalone HTML mockups. Binary photos/videos and saved web pages there
+   produce garbage "classes" that break the CSS build, and the mockups'
+   classes would only bloat the site CSS. */
 @source not "../../images";
 @source not "../../design-themes";
+@source not "../../design-variants";
 
 /* ------------------------------------------------------------------
    Color palette — Tokyo Transit

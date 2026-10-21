@@ -32,7 +32,6 @@ export const certifications: Certification[] = [
   {
     name: "Product School",
     issuer: "Y Combinator",
-    year: "", // year unknown; hidden until filled in
     icon: "YC",
     logoDomain: "ycombinator.com",
   },

@@ -49,6 +49,7 @@ export type Venture = {
   logoInitials?: string;
   // Cover image for the card banner (variant A — 150px full-bleed).
   // Resolution: coverSrc (real asset) > coverGradient (CSS fallback, with optional coverEmoji).
+  // With coverTreatment "logo", coverGradient is also the backdrop behind coverSrc.
   coverSrc?: string;
   coverGradient?: string; // full CSS `background` value
   coverEmoji?: string;
@@ -175,7 +176,7 @@ export type Degree = {
 export type Certification = {
   name: string;
   issuer: string;
-  year: string; // "'20" / "2020"
+  year?: string; // "'20" / "2020"; omit when unknown and the chip is hidden
   icon: string; // short 2-letter badge — fallback when logo fails to load
   // Logo resolution, same pattern as CareerRole / Venture.
   logoSrc?: string;
