@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shortlist: A, B, D (v2 hero)</title>
+<style>
+  :root { --accent:#CF3418; --bg:#ECEAE4; --ink:#1A1A1A; --muted:#5E5A52; --border:#D6D3CB; --panel:#F7F6F2; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  header { position:sticky; top:0; z-index:10; background:rgba(247,246,242,.95); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); }
+  .hin { max-width:1500px; margin:0 auto; padding:18px 32px; display:flex; gap:14px 32px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  h1 { margin:0; font-size:18px; font-weight:650; letter-spacing:-.01em; }
+  header p { margin:3px 0 0; font-size:12.5px; color:var(--muted); max-width:760px; line-height:1.5; }
+  .jump { display:flex; gap:6px; flex-wrap:wrap; }
+  .jump a { display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:0 12px; border:1px solid var(--border); border-radius:8px; background:#fff; color:var(--ink); text-decoration:none; font-size:12.5px; font-weight:600; }
+  .jump a b { color:var(--accent); }
+  .jump a:hover, .jump a:focus-visible { border-color:var(--accent); outline:none; }
+  .grid { max-width:1500px; margin:0 auto; display:grid; gap:40px; padding:32px 32px 72px; }
+  .v { background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; scroll-margin-top:110px; }
+  .vh { display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; padding:16px 22px; background:var(--panel); border-bottom:1px solid var(--border); }
+  .tag { font:600 10.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
+  .name { font-size:15.5px; font-weight:650; margin-top:5px; letter-spacing:-.01em; }
+  .desc { font-size:12.5px; color:var(--muted); margin-top:4px; max-width:860px; line-height:1.55; }
+  .links { display:flex; gap:8px; flex-wrap:wrap; }
+  .open { flex:none; display:inline-flex; align-items:center; min-height:36px; padding:0 12px; border:1px solid var(--border); border-radius:6px; background:#fff; color:var(--muted); font-size:12px; text-decoration:none; white-space:nowrap; }
+  .open:hover, .open:focus-visible { color:var(--accent); border-color:var(--accent); outline:none; }
+  iframe { display:block; width:100%; height:900px; border:0; background:#fff; }
+  .note { max-width:1500px; margin:0 auto; padding:0 32px 48px; font-size:12.5px; color:var(--muted); line-height:1.6; }
+  @media (max-width:720px) { .hin, .grid, .note { padding-left:16px; padding-right:16px; } iframe { height:720px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="hin">
+    <div>
+      <h1>Shortlist: A, B and D with the cleaner hero</h1>
+      <p>Hero changes in all three: the name appears once (menu bar + big name), the clock is gone, the strip reads "Operator turned PM · Based in New York", the bio no longer repeats the location, and the contact rows lead with LinkedIn, email and GitHub icons. Everything else is unchanged from the 7-theme round.</p>
+    </div>
+    <nav class="jump" aria-label="Jump to variant">
+      <a href="#a"><b>A</b>Neo-brutalism</a>
+      <a href="#b"><b>B</b>Product UI (Karner blue)</a>
+      <a href="#d"><b>D</b>Sculptural</a>
+    </nav>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="v" id="a">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant A · v2</div>
+        <div class="name">Neo-brutalism: thick outlines, hard shadows, flat vermillion blocks (Archivo)</div>
+      </div>
+      <div class="links">
+        <a class="open" href="2026-10-20-fullpage-brutalism-v2.html" target="_blank" rel="noopener">Open full page ↗</a>
+        <a class="open" href="2026-10-20-fullpage-brutalism.html" target="_blank" rel="noopener">Previous version</a>
+      </div>
+    </div>
+    <iframe src="2026-10-20-fullpage-brutalism-v2.html" title="Variant A v2: Neo-brutalism"></iframe>
+  </section>
+
+  <section class="v" id="b">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant B · v2</div>
+        <div class="name">Light product UI in Karner blue, with Product School touches (Geist)</div>
+      </div>
+      <div class="links">
+        <a class="open" href="2026-10-20-fullpage-productui-v2.html" target="_blank" rel="noopener">Open full page ↗</a>
+        <a class="open" href="2026-10-20-fullpage-productui.html" target="_blank" rel="noopener">Previous version</a>
+      </div>
+    </div>
+    <iframe src="2026-10-20-fullpage-productui-v2.html" title="Variant B v2: Light product UI in Karner blue"></iframe>
+  </section>
+
+  <section class="v" id="d">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant D · v2</div>
+        <div class="name">Sculptural minimal: warm off-white, electric blue, "HA." monogram (Poppins)</div>
+      </div>
+      <div class="links">
+        <a class="open" href="2026-10-20-fullpage-sculptural-v2.html" target="_blank" rel="noopener">Open full page ↗</a>
+        <a class="open" href="2026-10-20-fullpage-sculptural.html" target="_blank" rel="noopener">Previous version</a>
+      </div>
+    </div>
+    <iframe src="2026-10-20-fullpage-sculptural-v2.html" title="Variant D v2: Sculptural minimal"></iframe>
+  </section>
+</main>
+
+<p class="note">Built 2026-10-20 in <code>design-variants/</code>. The 7-theme board is still at <code>2026-10-20-fullpage-board.html</code>.</p>
+</body>
+</html>
