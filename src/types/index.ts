@@ -48,8 +48,8 @@ export type Venture = {
   logoDomain?: string;
   logoInitials?: string;
   // Cover image for the card banner (variant A — 150px full-bleed).
-  // Resolution: coverSrc (real asset) > coverGradient (CSS fallback, with optional coverEmoji).
-  // With coverTreatment "logo", coverGradient is also the backdrop behind coverSrc.
+  // coverGradient is always painted as the band background (it shows while a photo loads or
+  // after it fails); coverSrc renders on top. With no image: logoInitials glyph, else coverEmoji.
   coverSrc?: string;
   coverGradient?: string; // full CSS `background` value
   coverEmoji?: string;
