@@ -63,8 +63,9 @@ improve it." Leads straight into Career.
 ### Phase 5: Things I've started
 Four across at 1024px+ (2×2 tablet, 1 column phone), "Read story" aligned;
 covers: EmojiFriends photo, SpreadTheFacts wordmark on black, Navigate.AI
-score card (`public/ventures/navigate-ai-score.png`), Spots app-style pin icon
-until a real app screenshot arrives; restyled story dialog.
+score card (`public/ventures/navigate-ai-score.png`), Spots logo on navy
+(`public/ventures/spots.png`) until real app screenshots arrive (see the P3
+Spots screenshots item); restyled story dialog.
 
 ### Phase 6: Beyond Work (not yet reviewed in B)
 Review the map, stat cards, fact rows and hobby mosaic in v7 with Hussain
@@ -185,6 +186,36 @@ the 72px glyph inside the 150px cover. No length cap in the type, so a
 future 4+ character value would overflow horizontally and be clipped by
 `overflow-hidden`. Low-risk right now; worth a `maxLength` on the type or
 an auto-fit class before the next venture lands.
+
+---
+
+### [P3] Spots: real app screens in the story
+**Files:** `src/data/entrepreneurship.ts` (Spots entry), `src/types/index.ts`
+(Venture type), the story dialog
+**Priority:** P3
+**Noticed on:** plan-eng-review 2026-10-21
+
+Spots shows only its logo today. Hussain picked five screens, one per problem
+the app solves:
+1. Save places you love and want to go: map view + save-to-list picker
+2. Discover new ones from friends: newsfeed
+3. View all your and friends' spots: map view
+4. Collaborate, create lists and trips: list view
+5. Collect spots, make memories, explore the world: profile
+
+Sort out three things before building:
+- The story copy says Spots was a Sketch/InVision prototype that got shelved;
+  the screens are Spots 2.0 (2026). Rewrite Built/Outcome, or label the
+  screens with the year.
+- Source: the Figma page "Option A: clear utility" isn't in the May redesign
+  file (figma.com/design/HDrYuzpaCTKJd9QcDcCEkf), whose map is a placeholder
+  grid and whose tab bar has 3 tabs. Find the right file, or use real
+  screenshots of the older app instead.
+- Build the screen gallery into the Phase 5 restyled dialog, not the current
+  one. Screens 1 and 3 are both maps: show the save picker open on 1 and
+  friends' pins on 3 so they don't read as duplicates.
+
+**Depends on:** Phase 5 (Things I've started).
 
 ---
 
