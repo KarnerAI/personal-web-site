@@ -1,9 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { EditModeProvider } from "@/components/edit-mode/EditModeContext";
 import { EditModeToggle } from "@/components/edit-mode/EditModeToggle";
 
+// Theme B type (DESIGN.md): Geist for everything, Geist Mono for labels,
+// stats and data. Both are variable fonts, so no weight list is needed.
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Old Tokyo Transit type, still used by sections not yet rebuilt in theme B.
+// Remove both (and their tokens in globals.css) when the last section moves.
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -18,7 +34,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Hussain Alam | Product Strategist & Builder",
+  title: "Hussain Alam | Operator turned PM",
   description:
     "13+ years across Fortune 100 growth and early-stage startups. Based in NYC.",
 };
@@ -41,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} ${inter.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <EditModeProvider>

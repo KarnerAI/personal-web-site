@@ -36,6 +36,149 @@
   --font-serif: var(--font-serif);
 }
 
+/* ------------------------------------------------------------------
+   Theme B (DESIGN.md): light product UI in Karner blue.
+   Lives next to Tokyo Transit while sections are rebuilt one by one
+   (TODOS.md P0), so names never collide with the old tokens above.
+   Tailwind name     DESIGN.md token
+   primary           primary            (#0A6EAA, links, buttons, fills)
+   primary-hover     primary-hover
+   on-primary        on-primary
+   sky / peach       sky / peach        (accents, washes)
+   signal            signal             (one vermillion touch per page)
+   ink               text
+   ink-secondary     text-secondary
+   ink-muted         text-muted
+   line              border
+   line-subtle       border-subtle
+   page              page
+   surface           surface            (same #fff as the old token)
+   sunken            surface-sunken
+   tag               tag
+   status-*          status-*
+   When the last section moves over, delete Tokyo Transit and Inter /
+   Instrument Serif.
+   ------------------------------------------------------------------ */
+
+:root {
+  --primary: #0a6eaa;
+  --primary-hover: #085a8c;
+  --on-primary: #ffffff;
+  --sky: #00aeef;
+  --peach: #ffb37a;
+  --signal: #e63b1e;
+  --ink: #0f1e3d;
+  --ink-secondary: #3d4760;
+  --ink-muted: #6b7280;
+  --line: #e5e7eb;
+  --line-subtle: #eef0f3;
+  --page: #fbfbfa;
+  --sunken: #f4f7fa;
+  --tag: #f5f7f9;
+  --status-shipped: #0a6eaa;
+  --status-experimental: #f5a05e;
+  --status-active: #e63b1e;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-sky: var(--sky);
+  --color-peach: var(--peach);
+  --color-signal: var(--signal);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-subtle: var(--line-subtle);
+  --color-page: var(--page);
+  --color-sunken: var(--sunken);
+  --color-tag: var(--tag);
+  --color-status-shipped: var(--status-shipped);
+  --color-status-experimental: var(--status-experimental);
+  --color-status-active: var(--status-active);
+  --font-geist: var(--font-geist);
+  --font-geist-mono: var(--font-geist-mono);
+}
+
+/* Theme B type scale, one class per DESIGN.md typography token. Class
+   selectors beat the old h1/h2 Instrument Serif rule below, so a rebuilt
+   heading can use these on a real h1/h2. */
+.type-display,
+.type-heading,
+.type-quote,
+.type-title,
+.type-body-lg,
+.type-body {
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+}
+
+.type-label,
+.type-stat,
+.type-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.type-display {
+  font-weight: 600;
+  font-size: clamp(48px, 6.4vw, 84px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.type-heading {
+  font-weight: 600;
+  font-size: clamp(34px, 4.6vw, 52px);
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.type-quote {
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 34px);
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+}
+
+.type-title {
+  font-weight: 600;
+  font-size: clamp(21px, 1.6vw, 24px);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.type-body-lg {
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.type-body {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.type-label {
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.type-stat {
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: -0.04em;
+}
+
+.type-mono {
+  font-weight: 400;
+  font-size: 12px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
