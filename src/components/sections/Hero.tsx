@@ -12,9 +12,10 @@ const BIO =
   "13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side.";
 const EMAIL = "hussain@karnerblu.com";
 
-// public/logos/profile-image.png is a full-body shot; position 50/22 frames
-// the face. EditableImage lets edit mode swap or reposition it.
-const PORTRAIT_URL = "/logos/profile-image.png";
+// Pre-cropped square (1024px) with the head centered, so the default 50/50
+// position is right. EditableImage lets edit mode swap or reposition it.
+// The older public/logos/profile-image.png stays for the mockups that use it.
+const PORTRAIT_URL = "/logos/profile-image-nyc.webp";
 
 const CONTACTS = [
   {
@@ -71,7 +72,7 @@ export function Hero() {
                 ariaLabel={`Portrait of ${NAME}`}
                 defaultSrc={PORTRAIT_URL}
                 defaultPositionX={50}
-                defaultPositionY={22}
+                defaultPositionY={50}
                 exportSize={{ w: 1024, h: 1024 }}
                 className="h-full w-full"
               />
