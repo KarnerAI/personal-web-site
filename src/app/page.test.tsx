@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { EditModeProvider } from "@/components/edit-mode/EditModeContext";
+import { worldLandSvg } from "@/components/sections/beyondwork/map-variants/themeBLand";
 import { hobbies, travel } from "@/data/beyondWork";
 import { careerRoles } from "@/data/career";
 import { certifications, degree } from "@/data/education";
@@ -72,10 +73,9 @@ describe("Home page", () => {
   it("plots one map pin per visited country and tints each one", () => {
     renderHome();
     expect(section("beyond-work").querySelectorAll("svg title")).toHaveLength(travel.countryCount);
-    // "v" is the visited tint (a visual variant), one land shape per country.
-    expect(section("beyond-work").querySelectorAll("path.land.v")).toHaveLength(
-      new Set(travel.visitedCountryCodes).size
-    );
+    // The land is a separate file under the pins; "v" is the visited tint, one shape per country.
+    expect(section("beyond-work").querySelector('img[src="/world-land.svg"]')).not.toBeNull();
+    expect(worldLandSvg().match(/<path class="v"/g)).toHaveLength(new Set(travel.visitedCountryCodes).size);
   });
 
   // Added by the /ship test coverage audit, 2026-10-21.

@@ -1972,6 +1972,7 @@ html {
   box-shadow: var(--sh2);
 }
 
+#beyond-work .map > img,
 #beyond-work .map svg {
   display: block;
   width: 100%;
@@ -1985,16 +1986,7 @@ html {
   pointer-events: none;
 }
 
-#beyond-work .land {
-  fill: #e2e6eb;
-  stroke: #fff;
-  stroke-width: 0.6;
-  stroke-linejoin: round;
-}
-
-#beyond-work .land.v {
-  fill: #d2e5f2;
-}
+/* Land colors live in the /world-land.svg file itself (themeBLand.ts). */
 
 #beyond-work .pn {
   pointer-events: auto;
