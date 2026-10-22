@@ -1,9 +1,10 @@
 name: Tests
 
+# Every push, so a branch has a run before its PR opens (the PR shows the
+# same checks on its head commit); manual reruns from the Actions tab.
 on:
   push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   test:

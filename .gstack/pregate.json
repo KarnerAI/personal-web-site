@@ -1,0 +1,94 @@
+{
+  "$schema": "https://github.com/garrytan/gstack/docs/pregate.md#pregate-v1",
+  "runner": null,
+  "empty_lanes": [],
+  "selection": {},
+  "warn": [],
+  "strays": {
+    "allow": [
+      "vitest.setup.ts",
+      "e2e/",
+      ".github/"
+    ]
+  },
+  "dependencies": {
+    "design-variants/**": [],
+    "VERSION": [],
+    "src/components/sections/beyondwork/map-variants/TravelMapLeaflet.tsx": [
+      "e2e/design-pages.spec.ts"
+    ],
+    "package.json": [
+      "src/app/layout.test.tsx",
+      "src/app/page.test.tsx",
+      "src/components/edit-mode/EditModeContext.test.tsx",
+      "src/components/layout/Header.test.tsx",
+      "src/components/sections/CareerTimeline.test.tsx",
+      "src/components/sections/Entrepreneurship.test.tsx",
+      "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
+      "e2e/home.spec.ts",
+      "e2e/design-pages.spec.ts"
+    ],
+    "package-lock.json": [
+      "src/app/layout.test.tsx",
+      "src/app/page.test.tsx",
+      "src/components/edit-mode/EditModeContext.test.tsx",
+      "src/components/layout/Header.test.tsx",
+      "src/components/sections/CareerTimeline.test.tsx",
+      "src/components/sections/Entrepreneurship.test.tsx",
+      "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
+      "e2e/home.spec.ts",
+      "e2e/design-pages.spec.ts"
+    ],
+    "vitest.config.mts": [
+      "src/app/layout.test.tsx",
+      "src/app/page.test.tsx",
+      "src/components/edit-mode/EditModeContext.test.tsx",
+      "src/components/layout/Header.test.tsx",
+      "src/components/sections/CareerTimeline.test.tsx",
+      "src/components/sections/Entrepreneurship.test.tsx",
+      "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
+      "e2e/home.spec.ts",
+      "e2e/design-pages.spec.ts"
+    ],
+    "vitest.setup.ts": [
+      "src/app/layout.test.tsx",
+      "src/app/page.test.tsx",
+      "src/components/edit-mode/EditModeContext.test.tsx",
+      "src/components/layout/Header.test.tsx",
+      "src/components/sections/CareerTimeline.test.tsx",
+      "src/components/sections/Entrepreneurship.test.tsx",
+      "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
+      "e2e/home.spec.ts",
+      "e2e/design-pages.spec.ts"
+    ],
+    "playwright.config.ts": [
+      "src/app/layout.test.tsx",
+      "src/app/page.test.tsx",
+      "src/components/edit-mode/EditModeContext.test.tsx",
+      "src/components/layout/Header.test.tsx",
+      "src/components/sections/CareerTimeline.test.tsx",
+      "src/components/sections/Entrepreneurship.test.tsx",
+      "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
+      "e2e/home.spec.ts",
+      "e2e/design-pages.spec.ts"
+    ],
+    ".github/workflows/test.yml": [
+      "src/app/layout.test.tsx",
+      "src/app/page.test.tsx",
+      "src/components/edit-mode/EditModeContext.test.tsx",
+      "src/components/layout/Header.test.tsx",
+      "src/components/sections/CareerTimeline.test.tsx",
+      "src/components/sections/Entrepreneurship.test.tsx",
+      "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
+      "e2e/home.spec.ts",
+      "e2e/design-pages.spec.ts"
+    ],
+    "src/components/sections/Contact.tsx": [],
+    "src/components/sections/EducationLogo.tsx": [],
+    "src/components/sections/SideProjects.tsx": [],
+    "src/components/sections/beyondwork/HobbyModal.tsx": [],
+    "src/components/sections/beyondwork/HobbyPhoto.tsx": [],
+    "src/components/sections/beyondwork/HobbyTile.tsx": [],
+    "src/data/sideProjects.ts": []
+  }
+}
