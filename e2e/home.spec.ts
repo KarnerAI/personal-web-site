@@ -20,6 +20,19 @@ test("home renders every section with no console errors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+// Value: protects=the hero portrait is the page's only image preload, at high
+//   priority, and below-the-fold logos and the map wait their turn; fails_when=the
+//   portrait loses its preload or priority, or an eager image gets auto-preloaded
+//   ahead of it (as ten logos did before 451544b); why_new=no test reads the head;
+//   seam=none; no_claim=actual load timing (network-dependent)
+test("the hero portrait is the only image fetched ahead of the page", async ({ page }) => {
+  await page.goto("/");
+  const preloads = page.locator('head link[rel="preload"][as="image"]');
+  await expect(preloads).toHaveCount(1);
+  await expect(preloads).toHaveAttribute("href", "/logos/profile-image-nyc.webp");
+  await expect(preloads).toHaveAttribute("fetchpriority", "high");
+});
+
 test("nav highlight follows the section in view and clears on the hero", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");
@@ -53,6 +66,14 @@ test("phone menu jumps to a section and closes", async ({ page }) => {
   await expect
     .poll(() => section.evaluate((el) => Math.round(el.getBoundingClientRect().top)))
     .toBeLessThan(120);
+  // Keyboard focus follows the jump, so the next Tab continues inside the section.
+  await expect(section).toBeFocused();
+
+  // Closing without picking a section (Escape) returns focus to the menu button.
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await expect(menu).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(menu).toBeHidden();
   await expect(page.getByRole("button", { name: "Open menu" })).toBeFocused();
 });
 

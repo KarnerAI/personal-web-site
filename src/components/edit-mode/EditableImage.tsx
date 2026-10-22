@@ -14,6 +14,7 @@ import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { preload } from "react-dom";
 import { useEditMode } from "./EditModeContext";
 
 type Props = {
@@ -41,6 +42,12 @@ type Props = {
    * Hero cover: use something like { w: 1920, h: 680 }. Portrait: { w: 1024, h: 1024 }.
    */
   exportSize?: { w: number; h: number };
+  /**
+   * Fetch the default image at high priority (a <link rel="preload"> in the
+   * page head). Use for the image people see first, like the hero portrait;
+   * as a CSS background it would otherwise wait for the stylesheet.
+   */
+  priority?: boolean;
 };
 
 export function EditableImage({
@@ -53,7 +60,9 @@ export function EditableImage({
   ariaLabel,
   children,
   exportSize = { w: 1600, h: 1600 },
+  priority = false,
 }: Props) {
+  if (priority) preload(defaultSrc, { as: "image", fetchPriority: "high" });
   const { isEditing, overrides, setOverride, resetOverride, hydrated } =
     useEditMode();
   const override = overrides[slotId];

@@ -5,10 +5,11 @@
 // Desktop (≥ md): brand left, section links right; the link for the section
 // in view gets aria-current and a soft blue fill (scrollspy).
 // Mobile (< md): menu button opens a Radix Dialog drawer from the right.
-// Tapping a link closes it (Dialog.Close asChild) and lets the native
-// `#anchor` jump happen. Escape and the scrim also close. Every target is
-// at least 44×44.
-import { useEffect, useState } from "react";
+// Tapping a link closes it (Dialog.Close asChild), lets the native `#anchor`
+// jump happen, and moves keyboard focus to that section so the next Tab
+// continues from there. Escape, the scrim and × also close and return focus
+// to the menu button. Every target is at least 44×44.
+import { useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 
 const NAV = [
@@ -24,6 +25,8 @@ const SPY_MARGIN = "-40% 0px -55% 0px";
 export function Header() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  // The section a drawer link was tapped for, so closing can focus it.
+  const picked = useRef<string | null>(null);
 
   useEffect(() => {
     // Watch every section, not just the linked ones, so the highlight clears
@@ -110,6 +113,14 @@ export function Header() {
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 z-50 bg-[rgba(15,30,61,0.38)] backdrop-blur-[4px] animate-fadeIn" />
             <Dialog.Content
+              onCloseAutoFocus={(e) => {
+                const target = picked.current ? document.querySelector<HTMLElement>(picked.current) : null;
+                picked.current = null;
+                if (!target) return;
+                e.preventDefault();
+                target.tabIndex = -1;
+                target.focus({ preventScroll: true });
+              }}
               className="theme-b fixed inset-y-0 right-0 z-50 flex h-dvh w-[min(320px,85vw)] flex-col border-l border-line bg-white p-6 shadow-[0_2px_6px_rgba(15,30,61,0.06),0_40px_100px_-24px_rgba(15,30,61,0.45)] focus:outline-none animate-slideInRight"
             >
               <Dialog.Description className="sr-only">
@@ -144,6 +155,9 @@ export function Header() {
                     <Dialog.Close asChild>
                       <a
                         href={item.href}
+                        onClick={() => {
+                          picked.current = item.href;
+                        }}
                         className="flex min-h-[48px] items-center justify-between rounded-[10px] px-3 text-base font-medium text-ink transition-colors hover:bg-[#F3F6F9]"
                       >
                         {item.label}

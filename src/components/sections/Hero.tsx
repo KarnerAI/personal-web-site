@@ -75,6 +75,7 @@ export function Hero() {
                 defaultPositionY={50}
                 exportSize={{ w: 1024, h: 1024 }}
                 className="h-full w-full"
+                priority
               />
             </div>
           </figure>

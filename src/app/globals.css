@@ -1291,6 +1291,12 @@ h3 {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
+
+  /* A section the phone menu sends focus to is a reading position, not a
+     control, so it gets no ring. */
+  main section[tabindex="-1"]:focus-visible {
+    outline: none;
+  }
 }
 
 /* ------------------------------------------------------------------
