@@ -26,14 +26,14 @@ export function Header() {
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    const sections = NAV.map((item) => document.querySelector(item.href)).filter(
-      (el): el is Element => el !== null
-    );
+    // Watch every section, not just the linked ones, so the highlight clears
+    // over the hero, the bridge and Education (as in v7).
+    const sections = document.querySelectorAll("main section");
     if (!sections.length || !("IntersectionObserver" in window)) return;
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+          if (entry.isIntersecting) setActive(entry.target.id ? `#${entry.target.id}` : null);
         }
       },
       { rootMargin: SPY_MARGIN }
