@@ -47,7 +47,7 @@ function Logo({ role, className = "" }: { role: CareerRole; className?: string }
       {role.logo}
       {src && !errored && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt="" ref={catchEarlyError} onError={() => setErrored(true)} />
+        <img src={src} alt="" loading="lazy" decoding="async" ref={catchEarlyError} onError={() => setErrored(true)} />
       )}
     </span>
   );
@@ -65,6 +65,8 @@ function Clients({ role, inPanel = false }: { role: CareerRole; inPanel?: boolea
             <img
               src={c.logoSrc}
               alt=""
+              loading="lazy"
+              decoding="async"
               onError={(e) => {
                 (e.currentTarget.parentElement as HTMLElement).hidden = true;
               }}
@@ -287,11 +289,13 @@ export function CareerTimeline() {
   );
 
   // Escape closes the panel (unless a dialog is open), returning focus to the
-  // card when focus was inside Career.
+  // card when focus was inside Career. A Radix dialog handles its Escape first
+  // (capture phase) and marks it handled; in a real browser the dialog is often
+  // already gone from the DOM by the time this listener runs, so check both.
   useEffect(() => {
     if (pinned === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape" || document.querySelector('[role="dialog"]')) return;
+      if (e.key !== "Escape" || e.defaultPrevented || document.querySelector('[role="dialog"]')) return;
       const inside = Boolean(document.activeElement?.closest("#career"));
       close(inside);
     };
