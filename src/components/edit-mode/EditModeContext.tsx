@@ -12,6 +12,7 @@ import {
   useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
 } from "react";
 
 export type ImageOverride = {
@@ -39,24 +40,31 @@ const EditModeContext = createContext<EditModeContextValue | null>(null);
 
 const STORAGE_KEY = "hussain-portfolio-edits-v1";
 
+function readStoredOverrides(): Overrides {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Overrides) : {};
+  } catch {
+    // Corrupt storage — ignore.
+    return {};
+  }
+}
+
+const subscribeNever = () => () => {};
+
 export function EditModeProvider({ children }: { children: React.ReactNode }) {
   const [isEditing, setIsEditing] = useState(false);
   const [overrides, setOverrides] = useState<Overrides>({});
   const [hydrated, setHydrated] = useState(false);
+  // False on the server and during hydration, true once in the browser.
+  const inBrowser = useSyncExternalStore(subscribeNever, () => true, () => false);
 
-  // Hydrate from LocalStorage after mount (SSR-safe).
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as Overrides;
-        setOverrides(parsed);
-      }
-    } catch {
-      // Corrupt storage — ignore.
-    }
+  // Hydrate from LocalStorage on the first browser render after hydration
+  // (SSR-safe). React re-renders straight away with the stored values.
+  if (inBrowser && !hydrated) {
     setHydrated(true);
-  }, []);
+    setOverrides(readStoredOverrides());
+  }
 
   // Persist on change.
   useEffect(() => {
