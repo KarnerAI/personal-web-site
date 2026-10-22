@@ -14,7 +14,7 @@ describe("HobbyMosaic", () => {
     const trigger = tile(h.label);
 
     await user.click(trigger);
-    const dialog = screen.getByRole("dialog");
+    const dialog = screen.getByRole("dialog", { name: h.label });
     expect(within(dialog).getByRole("heading", { name: h.label })).toBeTruthy();
     for (const p of h.story) expect(dialog.textContent).toContain(p);
 

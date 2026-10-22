@@ -2,11 +2,13 @@ import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
-// next/font only works inside the Next compiler; stand in for the CSS variables.
-vi.mock("next/font/google", () => ({
-  Geist: () => ({ variable: "font-geist" }),
-  Geist_Mono: () => ({ variable: "font-geist-mono" }),
-}));
+// next/font only works inside the Next compiler; echo back the variable each
+// font is asked for, so the test sees the real custom-property names.
+const fonts = vi.hoisted(() => [] as string[]);
+vi.mock("next/font/google", () => {
+  const font = (o: { variable: string }) => (fonts.push(o.variable), { variable: o.variable });
+  return { Geist: font, Geist_Mono: font };
+});
 
 const { default: RootLayout, metadata } = await import("./layout");
 const css = readFileSync("src/app/globals.css", "utf8");
@@ -19,12 +21,17 @@ describe("RootLayout", () => {
         <p>page</p>
       </RootLayout>
     );
-    expect(html).toContain('<html lang="en" class="font-geist font-geist-mono');
+    expect(html).toContain('<html lang="en" class="--font-geist --font-geist-mono');
     expect(html).toContain("<p>page</p>");
   });
 });
 
 describe("globals.css", () => {
+  it("reads the font variables layout.tsx defines", () => {
+    expect(fonts).toEqual(["--font-geist", "--font-geist-mono"]);
+    for (const v of fonts) expect(css).toContain(`var(${v})`);
+  });
+
   it("keeps Tailwind from scanning the raw media and mockup folders", () => {
     // Untracked HEIC/MOV files and saved web pages produced garbage CSS and a 500.
     for (const dir of ["images", "design-themes", "design-variants"]) {
