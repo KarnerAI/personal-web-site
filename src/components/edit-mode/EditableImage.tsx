@@ -192,7 +192,7 @@ export function EditableImage({
   const effectivePosY = hydrated ? posY : defaultPositionY;
 
   const editingClass = isEditing
-    ? "outline-dashed outline-2 outline-offset-2 outline-[var(--accent)] cursor-grab active:cursor-grabbing"
+    ? "outline-dashed outline-2 outline-offset-2 outline-[var(--primary)] cursor-grab active:cursor-grabbing"
     : "";
 
   return (
@@ -214,7 +214,7 @@ export function EditableImage({
       {isEditing && hydrated && (
         <div
           data-toolbar
-          className="absolute top-2 right-2 z-20 flex items-center gap-1 rounded-full bg-[var(--foreground)]/95 text-[var(--background)] text-[11px] font-medium px-1 py-1 shadow-xl backdrop-blur-sm"
+          className="absolute top-2 right-2 z-20 flex items-center gap-1 rounded-full bg-[var(--ink)]/95 text-[var(--page)] text-[11px] font-medium px-1 py-1 shadow-xl backdrop-blur-sm"
           onPointerDown={(e) => e.stopPropagation()}
         >
           <ToolbarButton onClick={onPickFile} label="Replace image">

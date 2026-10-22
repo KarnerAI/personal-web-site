@@ -40,18 +40,20 @@ Section order in `src/app/page.tsx`: Hero → Career → Entrepreneurship → Be
 
 ## Color palette
 
-The live site still uses **Tokyo Transit**: cool off-white background, deep ink navy text, vermillion signal-red accent. Reference: Muji / Japanese wayfinding / Tokyo subway. All tokens live as CSS variables in `src/app/globals.css`.
-
-Tokyo Transit is being replaced. The redesign locked a new design system in [DESIGN.md](DESIGN.md) (theme B: light product UI in Karner blue, Geist + Geist Mono), built section by section per the P0 plan in [TODOS.md](TODOS.md). Sections not rebuilt yet keep the tokens below.
+Theme B, a light product UI in Karner blue with Geist + Geist Mono. [DESIGN.md](DESIGN.md) is the source of truth (tokens, type scale, components, guardrails). The tokens live as CSS variables in `src/app/globals.css` and map to Tailwind colors:
 
 | Token | Hex | Purpose |
 |---|---|---|
-| `--background` | `#FAFAF7` | Page background |
-| `--foreground` | `#0F1E3D` | Primary text |
-| `--muted` | `#4B5670` | Secondary text (darkened from `#5F6B85` in v0.1.1.0 for WCAG AA) |
-| `--accent` | `#E63B1E` | CTAs, highlights |
-| `--surface` | `#FFFFFF` | Cards, elevated surfaces |
-| `--border` | `#D9DDE3` | Hairlines |
+| `--page` | `#FBFBFA` | Page background (with a faint 40px grid) |
+| `--ink` | `#0F1E3D` | Headings and primary text |
+| `--ink-secondary` | `#3D4760` | Body text |
+| `--ink-muted` | `#6B7280` | Mono labels and meta |
+| `--primary` | `#0A6EAA` | Links, buttons, the pinned timeline segment, focus rings |
+| `--sky` / `--peach` | `#00AEEF` / `#FFB37A` | Washes and glows only |
+| `--signal` | `#E63B1E` | One signal: the Active status |
+| `--line` | `#E5E7EB` | Hairlines |
+
+The old Tokyo Transit names (`--background`, `--accent`, ...) remain only as aliases so the archived map variants and `/design` pages still render.
 
 ## Deploy
 

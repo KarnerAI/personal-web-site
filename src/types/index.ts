@@ -72,19 +72,6 @@ export type Venture = {
   };
 };
 
-// Tile size within the bento grid (sideprojects Option C).
-export type SideProjectSize = "feature" | "tall" | "wide" | "sq";
-
-export type SideProject = {
-  name: string;
-  screenshot?: string;
-  description: string;
-  techStack: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  size?: SideProjectSize;
-};
-
 // Hero or gallery image for a hobby. `alt` is required — every photo tells a
 // story, so let the data file speak rather than defaulting to the label.
 export type HobbyImage = {

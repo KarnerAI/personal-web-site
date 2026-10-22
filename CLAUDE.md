@@ -6,13 +6,6 @@ All font choices, colors, spacing, and aesthetic direction are defined there.
 Do not deviate without explicit user approval.
 In QA mode, flag any code that doesn't match DESIGN.md.
 
-Migration status: DESIGN.md is the target, built section by section per the
-P0 plan in TODOS.md. A section counts as rebuilt once its phase there is
-marked done; QA rebuilt sections against DESIGN.md. Sections not rebuilt yet
-still use the old Tokyo Transit tokens in `src/app/globals.css`: don't flag
-those, and don't restyle them piecemeal outside the phased build. Remove this
-note when Phase 8 ships.
-
 ## Skill routing
 
 When the user's request matches an available skill, invoke it via the Skill tool. When in doubt, invoke the skill.

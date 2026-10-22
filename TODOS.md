@@ -81,12 +81,16 @@ Driving, Youth Mentor have photos; the other three still need them) into
 Review in v7 first, then build.
 
 ### Phase 8: QA and ship
-Delete the Tokyo Transit tokens, Inter + Instrument Serif and the old
-h1/h2 serif rule once nothing uses them (the /design pages, edit mode and
-the unmounted Contact/SideProjects still do); remove the now-unused old
-components (HobbyTile, HobbyModal, HobbyPhoto, EducationLogo) and the CLAUDE.md
-migration note. Then `/qa` (desktop, tablet, phone, keyboard, reduced motion),
-`/design-review` against DESIGN.md, `npm run build` + lint clean, `/ship`.
+- Done 2026-10-21: Tokyo Transit palette retired (old names are now aliases
+  of theme B, kept only for the archived map variants and /design pages);
+  Inter + Instrument Serif and the h1/h2 serif rule removed; unused
+  components deleted (Contact, SideProjects + its data, EducationLogo,
+  HobbyTile, HobbyModal, HobbyPhoto); edit mode on theme B colors; CLAUDE.md
+  migration note removed; README palette updated.
+- Then QA (desktop, tablet, phone, keyboard, reduced motion), `npm run build`
+  + lint clean, `/ship`.
+- Still open: `src/app/api/contact` (and the Resend dependency) has no UI
+  since the contact form was never mounted; decide keep or remove.
 
 ### Build rule (Hussain, 2026-10-21)
 Implement the remaining sections exactly as in v7; don't stop for design

@@ -9,19 +9,22 @@
 @source not "../../design-variants";
 
 /* ------------------------------------------------------------------
-   Color palette — Tokyo Transit
-   Reference: Muji / Japanese subway wayfinding.
-   Cool off-white, deep ink navy text, vermillion signal-red accent.
+   Legacy aliases. The Tokyo Transit palette and its Inter + Instrument
+   Serif fonts are retired; these old names now point at theme B so the
+   archived map variants and the /design preview pages (never deleted,
+   per DESIGN-VARIANTS.md) still render. New code uses the theme B names
+   below, never these.
    ------------------------------------------------------------------ */
 
 :root {
-  --background: #fafaf7;       /* soft cool off-white */
-  --foreground: #0f1e3d;       /* deep ink navy */
-  --muted: #4b5670;            /* slate gray — darkened from #5f6b85 to pass WCAG AA (≥4.5:1 on cream #fafaf7) */
-  --accent: #e63b1e;           /* vermillion signal-red */
-  --accent-fg: #ffffff;        /* text color on accent */
-  --surface: #ffffff;          /* cards, elevated */
-  --border: #d9dde3;           /* cool hairline */
+  --background: var(--page);
+  --foreground: var(--ink);
+  --muted: var(--ink-secondary);
+  --accent: var(--signal);
+  --surface: #ffffff;
+  --border: var(--line);
+  --font-sans: var(--font-geist);
+  --font-serif: var(--font-geist);
 }
 
 @theme inline {
@@ -29,17 +32,16 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-fg: var(--accent-fg);
   --color-surface: var(--surface);
   --color-border: var(--border);
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 /* ------------------------------------------------------------------
    Theme B (DESIGN.md): light product UI in Karner blue.
-   Lives next to Tokyo Transit while sections are rebuilt one by one
-   (TODOS.md P0), so names never collide with the old tokens above.
+   The site's only palette (the legacy aliases above point here).
    Tailwind name     DESIGN.md token
    primary           primary            (#0A6EAA, links, buttons, fills)
    primary-hover     primary-hover
@@ -56,8 +58,6 @@
    sunken            surface-sunken
    tag               tag
    status-*          status-*
-   When the last section moves over, delete Tokyo Transit and Inter /
-   Instrument Serif.
    ------------------------------------------------------------------ */
 
 :root {
@@ -194,14 +194,6 @@
   font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   color: var(--ink);
   line-height: 1.55;
-}
-
-/* In the base layer (like the global ring below) so per-element utilities
-   such as `focus-visible:outline-offset-[-3px]` can still override it. */
-@layer base {
-  .theme-b :focus-visible {
-    outline-color: var(--primary);
-  }
 }
 
 .theme-b ::selection {
@@ -1267,9 +1259,9 @@ body {
     linear-gradient(rgba(15, 30, 61, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
     linear-gradient(90deg, rgba(15, 30, 61, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
     var(--page);
-  color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  line-height: 1.65;
+  color: var(--ink);
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.55;
 }
 
 /* Headings: let the browser balance line breaks so long titles don't
@@ -1282,43 +1274,14 @@ h3 {
   text-wrap: balance;
 }
 
-/* Display type: Instrument Serif on H1 + H2 — the editorial counterweight
-   to Inter for body. --font-serif is wired in app/layout.tsx via
-   next/font/google. Breaks the site out of Inter-only "tech-template"
-   territory without touching body copy or running into tracking/leading
-   retuning on paragraphs. Weight 400 is intentional — Instrument Serif
-   ships only in regular; bolding it would look forced. Italic is
-   available if we want it later. */
-h1,
-h2 {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-/* Reusable layout helpers (PRD §7.4) */
-.content-width {
-  width: 100%;
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-.section {
-  padding-block: clamp(4rem, 10vw, 8rem);
-}
-
-.section-compact {
-  padding-block: clamp(2rem, 4vw, 3rem);
-}
-
+/* Legacy helper still used by the archived map variants. */
 .text-muted {
   color: var(--muted);
 }
 
 /* Global focus-visible ring — covers every interactive element that doesn't
-   define its own. Uses --accent (vermillion) for strong contrast on both
-   cream body and white surfaces. 2px ring + 2px offset keeps the glyph
+   define its own. Karner blue (DESIGN.md: primary carries interaction).
+   2px ring + 2px offset keeps the glyph
    legible without drowning in the halo. Only applies for keyboard focus
    (focus-visible), so mouse clicks don't get the ring. Outline naturally
    follows each element's own border-radius in modern browsers — don't
@@ -1327,35 +1290,22 @@ h2 {
    element (e.g. `focus-visible:outline-none` + a ring) win over it. */
 @layer base {
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
 }
 
 /* ------------------------------------------------------------------
-   Modal animations (Radix Dialog — Beyond Work hobby modal)
-   Wired via `data-[state=open]:animate-fadeIn` on Dialog.Overlay and
-   `data-[state=open]:animate-slideUp` on Dialog.Content. Tailwind v4
-   picks up utility classes from `animation-name`, so we register the
-   keyframes + animation shorthands here. The reduced-motion block
-   below zeros the duration automatically — no extra work needed.
+   Overlay fade (nav drawer scrim; the story dialogs' .b-scrim). The
+   reduced-motion block below zeros the duration automatically.
    ------------------------------------------------------------------ */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translate(-50%, 12px) scale(0.98); }
-  to   { opacity: 1; transform: translate(-50%, 0) scale(1); }
-}
-
 .animate-fadeIn {
   animation: fadeIn 180ms ease-out;
-}
-
-.animate-slideUp {
-  animation: slideUp 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Mobile nav drawer sliding in from the right (theme B header). */
