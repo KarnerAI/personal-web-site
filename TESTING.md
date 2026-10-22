@@ -13,7 +13,7 @@ CI (`.github/workflows/test.yml`) runs lint and both suites on every push (any b
 
 ## Layers
 
-- **Unit** (`src/**/*.test.tsx`, next to the component): client-component behavior that does not need real layout. Clicks, keyboard, dialogs, focus return, scrollspy state. Examples: `Header.test.tsx`, `CareerTimeline.test.tsx`.
+- **Unit** (`src/**/*.test.{ts,tsx}`, next to the code under test): client-component behavior that does not need real layout. Clicks, keyboard, dialogs, focus return, scrollspy state. Examples: `Header.test.tsx`, `CareerTimeline.test.tsx`.
 - **Smoke / E2E** (`e2e/*.spec.ts`): the real page in a real browser. Page loads with every section and no console errors, scrolling and anchors, phone layout. Use this for anything that depends on CSS, layout, IntersectionObserver timing or async server components.
 
 Vitest renders every current section, server components included (`src/app/page.test.tsx` renders the whole page). It cannot render `async` server components; cover those with Playwright.

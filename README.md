@@ -29,14 +29,14 @@ src/
   app/            — routes, layout, global CSS, /api/contact
   components/
     layout/       — Header, Footer
-    sections/     — Hero, CareerTimeline, Entrepreneurship, BeyondWork, Education
+    sections/     — Hero, Bridge, CareerTimeline, Entrepreneurship, BeyondWork, Education
     ui/           — shared primitives (Button, Card, Drawer, Badge)
-  data/           — content (career, ventures, side projects, books, etc.)
+  data/           — content (career, ventures, education, hobbies, travel, books)
   lib/            — utils, resend client
   types/          — shared TypeScript types
 ```
 
-Section order in `src/app/page.tsx`: Hero → Career → Entrepreneurship → Beyond Work → Education. Contact lives inside Hero as a right-column sidebar; the separate Contact + Side Projects sections in the original PRD were folded in during the design-review pass (see CHANGELOG v0.1.1.0).
+Section order in `src/app/page.tsx`: Hero → Einstein bridge → Career → Entrepreneurship → Beyond Work → Education. Contact lives inside Hero as a contact ticket under the bio, with the portrait on the right; the separate Contact + Side Projects sections in the original PRD were folded in during the design-review pass (see CHANGELOG v0.1.1.0).
 
 ## Color palette
 
