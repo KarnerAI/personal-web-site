@@ -29,7 +29,7 @@ behind it.
 - Education: the degree card and a certifications table with school logos.
 - Keyboard friendly: picking a section from the phone menu moves focus to
   that section, and Escape over a story closes just the story.
-- Automated tests for the first time: 50 unit tests and 9 browser tests
+- Automated tests for the first time: 50 unit tests and 10 browser tests
   covering the header, the career timeline, every dialog, image fallbacks,
   the map and reduced motion. Lint and both suites run on every push.
 
@@ -46,6 +46,9 @@ behind it.
 - The Tokyo Transit palette, the Inter and Instrument Serif fonts, the
   unused contact form, side projects and old hobby tile components, and six
   unused packages.
+- The contact email API. No page used it, and anyone could script emails to
+  your inbox through it. Visitors reach you through the email link in the
+  hero. The Resend and Zod packages went with it.
 
 ## [0.1.4.0] - 2026-10-21
 

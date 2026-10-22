@@ -31,6 +31,17 @@ test("/world-land.svg is served as an SVG image in the map's 800x400 frame", asy
   expect((await res.text()).startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"')).toBe(true);
 });
 
+// Value: protects=the site exposes no email-sending endpoint (the old contact API
+//   relayed scripted mail to the owner's inbox); fails_when=/api/contact or a route
+//   like it comes back unguarded; why_new=no test touches /api; seam=none;
+//   no_claim=other future API routes
+test("the removed contact API stays gone", async ({ request }) => {
+  const res = await request.post("/api/contact", {
+    data: { name: "x", email: "x@example.com", message: "x" },
+  });
+  expect(res.status()).toBe(404);
+});
+
 // Value: protects=the hero portrait is the page's only image preload, at high
 //   priority, and below-the-fold logos and the map wait their turn; fails_when=the
 //   portrait loses its preload or priority, or an eager image gets auto-preloaded

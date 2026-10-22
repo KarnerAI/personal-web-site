@@ -171,10 +171,3 @@ export type Certification = {
   logoSrc?: string;
   logoDomain?: string;
 };
-
-export type ContactFormInput = {
-  name: string;
-  email: string;
-  companyOrRole?: string;
-  message: string;
-};

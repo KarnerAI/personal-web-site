@@ -8,7 +8,6 @@ Single-page Next.js site built as a professional showcase for Hussain Alam's job
 - TypeScript + Tailwind CSS
 - Radix UI (accessible dialogs)
 - d3-geo + world-atlas (the travel map, rendered at build time)
-- Zod + Resend (the contact API route; no form is mounted yet)
 - Vitest + Playwright (tests; see TESTING.md)
 - Vercel (hosting)
 
@@ -16,7 +15,6 @@ Single-page Next.js site built as a professional showcase for Hussain Alam's job
 
 ```bash
 npm install
-cp .env.local.example .env.local   # fill in Resend keys
 npm run dev
 ```
 
@@ -26,13 +24,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```
 src/
-  app/            — routes, layout, global CSS, /api/contact
+  app/            — routes, layout, global CSS, /world-land.svg
   components/
     layout/       — Header, Footer
     sections/     — Hero, Bridge, CareerTimeline, Entrepreneurship, BeyondWork, Education
     ui/           — shared primitives (Button, Card, Drawer, Badge)
   data/           — content (career, ventures, education, hobbies, travel, books)
-  lib/            — utils, resend client
+  lib/            — utils
   types/          — shared TypeScript types
 ```
 
@@ -58,6 +56,5 @@ The old Tokyo Transit names (`--background`, `--accent`, ...) remain only as ali
 ## Deploy
 
 ```bash
-# Push to GitHub, then import the repo at vercel.com/new
-# Add env vars (RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL) in Vercel project settings.
+# Push to GitHub, then import the repo at vercel.com/new. No env vars are needed.
 ```

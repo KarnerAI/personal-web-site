@@ -167,13 +167,13 @@ Sort out three things before building:
 
 ## From the v0.2.0.0 ship (2026-10-22)
 
-### [P1] Decide the orphaned contact API: delete or protect
-**Files:** `src/app/api/contact/route.ts`, `src/lib/contact-schema.ts`, `resend`
-**Priority:** P1
-No form uses it, but it is live with only a honeypot: anyone can script
-emails (their own reply-to and subject) to your inbox from your verified
-domain if the Resend keys are set in Vercel. Delete it, or add rate limiting
-and an origin check if a form is coming back.
+### [P2] Remove the Resend key from Vercel and revoke it
+**Where:** Vercel project settings > Environment Variables, then resend.com/api-keys
+**Priority:** P2
+The contact API is gone, so `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and
+`CONTACT_TO_EMAIL` have no use. If they are set in Vercel, delete them there,
+then revoke the key in Resend so a leaked copy can't send mail from your
+domain. Skip if they were never set. Only you can do this (dashboard access).
 
 ### [P1] Bump Next.js past the published advisory
 **Files:** `package.json` (next, eslint-config-next 16.2.4)
@@ -215,6 +215,7 @@ visited country list as text for screen readers and a keyboard/touch path.
 
 ## Completed
 
+- **Orphaned contact API** · deleted with its helpers, Resend and Zod; an e2e check keeps it gone — **Completed:** v0.2.0.0 (2026-10-22)
 - **Pre-existing lint: setState-in-effect** · both files moved to useSyncExternalStore — **Completed:** v0.2.0.0 (2026-10-22)
 - **Bootstrap a test framework** · Vitest + RTL + Playwright, CI on push — **Completed:** v0.2.0.0 (2026-10-22)
 - **Instrument Serif fake-bold** · the serif is retired; Geist ships every weight — **Completed:** v0.2.0.0 (2026-10-22)
