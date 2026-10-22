@@ -170,10 +170,13 @@ Sort out three things before building:
 ### [P3] Dev-only audit advisories left after the Next.js bump
 **Files:** `package.json` (vitest, @types/node)
 **Priority:** P3
-None of these ship to the site. vitest 3 (plus its tinypool and
-@vitest/mocker) clears with vitest 5, which needs @types/node 22+.
-braces via eslint-config-next's fast-glob has no fix yet: npm's only offer
-is a downgrade to eslint-config-next 14, so wait for an upstream release.
+None of these ship to the site (`npm audit --omit=dev` is clean), but npm
+rates vitest and tinypool critical, braces high and @vitest/mocker moderate.
+vitest 4.1.12 clears all three vitest ones: it drops tinypool and still
+accepts @types/node 20. (npm suggests vitest 5, which also needs
+@types/node 22+ and Node 22.12+.) braces via eslint-config-next's fast-glob
+has no fix yet: npm's only offer is a downgrade to eslint-config-next 14, so
+wait for an upstream release.
 
 ### [P2] Career, venture and hobby story text in the page HTML
 **Files:** `src/components/sections/CareerTimeline.tsx`, `Entrepreneurship.tsx`, `HobbyMosaic.tsx`

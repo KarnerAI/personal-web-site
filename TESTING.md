@@ -11,6 +11,10 @@
 
 CI (`.github/workflows/test.yml`) runs lint and both suites on every push (any branch, so a pull request shows the checks on its head commit) and on manual dispatch.
 
+### When a build stops with `SecurityFatalError`
+
+Next.js 16.4 checks for security advisories against itself when an AI agent runs `next build` or `next dev` (`experimental.agentUpgrade`, default `security`, kept on purpose). If one applies, the command exits 1 with `SecurityFatalError` and a `next upgrade --agent=security` suggestion. That is not a test failure. Re-run the same command within 5 minutes to let it through once, then plan the Next.js upgrade on its own branch. `npm run test:e2e` builds first, so it can stop this way too. Vercel deploys are not agent runs and are not blocked.
+
 ## Layers
 
 - **Unit** (`src/**/*.test.{ts,tsx}`, next to the code under test): client-component behavior that does not need real layout. Clicks, keyboard, dialogs, focus return, scrollspy state. Examples: `Header.test.tsx`, `CareerTimeline.test.tsx`.
