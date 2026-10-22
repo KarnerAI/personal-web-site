@@ -167,16 +167,6 @@ Sort out three things before building:
 
 ## From the v0.2.0.0 ship (2026-10-22)
 
-### [P1] Revoke the Resend key before merging PR #8, then remove the Vercel vars
-**Where:** resend.com/api-keys first, then Vercel project settings > Environment Variables
-**Priority:** P1 (owner, before merging #8)
-The contact API is deleted in this release, but older Vercel deployments keep
-it at their own URLs, along with the env values they were built with. Merging
-and deleting the vars don't touch those. Revoking the key in Resend is the
-only step that shuts the route off everywhere. Then delete `RESEND_API_KEY`,
-`CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` in Vercel. Skip both if they were
-never set. Only you can do this (dashboard access).
-
 ### [P1] Bump Next.js past the published advisory
 **Files:** `package.json` (next, eslint-config-next 16.2.4)
 **Priority:** P1
@@ -218,6 +208,7 @@ visited country list as text for screen readers and a keyboard/touch path.
 ## Completed
 
 - **Orphaned contact API** · deleted with its helpers, Resend and Zod; an e2e check keeps it gone — **Completed:** v0.2.0.0 (2026-10-22)
+- **Resend key** · revoked in Resend; neither Vercel project (`hussainalam`, `personal-web-site`) ever had the contact env vars, so the old route could not send mail — **Completed:** 2026-10-22
 - **Pre-existing lint: setState-in-effect** · both files moved to useSyncExternalStore — **Completed:** v0.2.0.0 (2026-10-22)
 - **Bootstrap a test framework** · Vitest + RTL + Playwright, CI on push — **Completed:** v0.2.0.0 (2026-10-22)
 - **Instrument Serif fake-bold** · the serif is retired; Geist ships every weight — **Completed:** v0.2.0.0 (2026-10-22)
