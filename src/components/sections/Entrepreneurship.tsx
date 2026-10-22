@@ -9,6 +9,7 @@
 // an image is missing or fails, the venture's name shows instead.
 
 import { useRef, useState, type RefObject } from "react";
+import { useImageFallback } from "./useImageFallback";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ventures } from "@/data/entrepreneurship";
 import type { Venture, VentureStatus } from "@/types";
@@ -32,13 +33,9 @@ function StatusPill({ status, className = "" }: { status: VentureStatus; classNa
 }
 
 function VentureCover({ venture: v }: { venture: Venture }) {
-  const [errored, setErrored] = useState(false);
+  const { failed, imgProps } = useImageFallback();
   const treatment = v.coverTreatment ?? "fill";
-  const showImage = Boolean(v.coverSrc) && !errored;
-  // onError only fires after hydration; catch an image that already failed.
-  const catchEarlyError = (img: HTMLImageElement | null) => {
-    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
-  };
+  const showImage = Boolean(v.coverSrc) && !failed;
 
   return (
     <span
@@ -57,8 +54,7 @@ function VentureCover({ venture: v }: { venture: Venture }) {
           alt=""
           loading="lazy"
           decoding="async"
-          ref={catchEarlyError}
-          onError={() => setErrored(true)}
+          {...imgProps}
         />
       )}
       <StatusPill status={v.status} />
@@ -67,13 +63,13 @@ function VentureCover({ venture: v }: { venture: Venture }) {
 }
 
 function StoryMark({ venture: v }: { venture: Venture }) {
-  const [errored, setErrored] = useState(false);
+  const { failed, imgProps } = useImageFallback();
   return (
     <span aria-hidden className="mark">
       {v.logoInitials}
-      {v.logoSrc && !errored && (
+      {v.logoSrc && !failed && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={v.logoSrc} alt="" onError={() => setErrored(true)} />
+        <img src={v.logoSrc} alt="" {...imgProps} />
       )}
     </span>
   );

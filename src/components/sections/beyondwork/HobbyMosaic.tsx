@@ -5,6 +5,7 @@
 // 1 on phones). A tile shows the hobby's real photo when `hero` is set;
 // otherwise an honest "Photo · {hobby}" placeholder wash, per DESIGN.md.
 import { useRef, useState, type RefObject } from "react";
+import { useImageFallback } from "../useImageFallback";
 import * as Dialog from "@radix-ui/react-dialog";
 import { hobbies } from "@/data/beyondWork";
 import type { Hobby } from "@/types";
@@ -20,12 +21,8 @@ function PhotoIcon() {
 }
 
 function HobbyPhoto({ hobby: h }: { hobby: Hobby }) {
-  const [errored, setErrored] = useState(false);
-  // onError only fires after hydration; catch an image that already failed.
-  const catchEarlyError = (img: HTMLImageElement | null) => {
-    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
-  };
-  if (h.hero && !errored) {
+  const { failed, imgProps } = useImageFallback();
+  if (h.hero && !failed) {
     return (
       <span aria-hidden className="ph">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -34,8 +31,7 @@ function HobbyPhoto({ hobby: h }: { hobby: Hobby }) {
           alt=""
           loading="lazy"
           decoding="async"
-          ref={catchEarlyError}
-          onError={() => setErrored(true)}
+          {...imgProps}
           style={{ objectPosition: h.hero.position ?? "50% 25%" }}
         />
       </span>

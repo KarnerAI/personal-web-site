@@ -12,6 +12,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { careerRoles } from "@/data/career";
 import type { CareerRole } from "@/types";
+import { LogoTile } from "./LogoTile";
+import { useImageFallback } from "./useImageFallback";
 
 const DESKTOP_TOP = [0, 2];
 const DESKTOP_BOTTOM = [1, 3];
@@ -30,25 +32,14 @@ function tenure(r: CareerRole): string {
   return years > 0 ? `${years}y` : `${months}mo`;
 }
 
-function logoSrc(r: CareerRole): string | undefined {
-  return r.logoSrc ?? (r.logoDomain ? `https://www.google.com/s2/favicons?domain=${r.logoDomain}&sz=128` : undefined);
-}
-
-// White tile with the initials underneath; the image covers them when it loads.
-function Logo({ role, className = "" }: { role: CareerRole; className?: string }) {
-  const [errored, setErrored] = useState(false);
-  const src = logoSrc(role);
-  // onError only fires after hydration; catch an image that already failed.
-  const catchEarlyError = (img: HTMLImageElement | null) => {
-    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
-  };
+// A client's logo beside its name; the slot drops out if the image fails.
+function ClientLogo({ src }: { src: string }) {
+  const { failed, imgProps } = useImageFallback();
+  if (failed) return null;
   return (
-    <span aria-hidden className={`logo-tile ${className}`}>
-      {role.logo}
-      {src && !errored && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt="" loading="lazy" decoding="async" ref={catchEarlyError} onError={() => setErrored(true)} />
-      )}
+    <span aria-hidden className="cl-lg">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt="" loading="lazy" decoding="async" {...imgProps} />
     </span>
   );
 }
@@ -60,18 +51,7 @@ function Clients({ role, inPanel = false }: { role: CareerRole; inPanel?: boolea
       <span className="cl-k">Clients</span>
       {role.clients.map((c) => (
         <span key={c.name} className="cl-b">
-          <span aria-hidden className="cl-lg">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={c.logoSrc}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              onError={(e) => {
-                (e.currentTarget.parentElement as HTMLElement).hidden = true;
-              }}
-            />
-          </span>
+          <ClientLogo src={c.logoSrc} />
           {c.name}
         </span>
       ))}
@@ -100,7 +80,7 @@ function Detail({
           </svg>
         </button>
       </div>
-      {!compact && <Logo role={role} className="dp-logo" />}
+      {!compact && <LogoTile src={role.logoSrc} domain={role.logoDomain} badge={role.logo ?? ""} className="dp-logo" />}
       <div className="dp-main">
         {!compact && <h3 className="dp-co">{role.company}</h3>}
         <p className="dp-role">{role.role}</p>
@@ -347,7 +327,7 @@ export function CareerTimeline() {
       >
         <span className="cd">
           <span className="co">
-            <Logo role={r} />
+            <LogoTile src={r.logoSrc} domain={r.logoDomain} badge={r.logo ?? ""} />
             <span className="co-n">{r.company}</span>
           </span>
           <span className="tag">{r.tagline}</span>
@@ -418,7 +398,7 @@ export function CareerTimeline() {
                   </svg>
                 </span>
                 <span className="co">
-                  <Logo role={r} />
+                  <LogoTile src={r.logoSrc} domain={r.logoDomain} badge={r.logo ?? ""} />
                   <span className="co-n">{r.company}</span>
                 </span>
                 <span className="tag">{r.tagline}</span>
