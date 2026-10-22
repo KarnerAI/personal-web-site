@@ -211,7 +211,7 @@ visited country list as text for screen readers and a keyboard/touch path.
 
 ## Completed
 
-- **Next.js advisory** · next and eslint-config-next 16.2.4 → 16.4.2, plus non-breaking audit fixes for build tooling; lint, unit, e2e and build pass — **Completed:** 2026-10-22
+- **Next.js advisory** · next and eslint-config-next 16.2.4 → 16.4.2, plus non-breaking audit fixes for build tooling; lint, unit, e2e and build pass — **Completed:** v0.2.1.0 (2026-10-22)
 - **Orphaned contact API** · deleted with its helpers, Resend and Zod; an e2e check keeps it gone — **Completed:** v0.2.0.0 (2026-10-22)
 - **Resend key** · revoked in Resend; neither Vercel project (`hussainalam`, `personal-web-site`) ever had the contact env vars, so the old route could not send mail — **Completed:** 2026-10-22
 - **Pre-existing lint: setState-in-effect** · both files moved to useSyncExternalStore — **Completed:** v0.2.0.0 (2026-10-22)
