@@ -27,7 +27,7 @@ export function LogoTile({
       {badge}
       {resolved && !errored && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={resolved} alt="" ref={catchEarlyError} onError={() => setErrored(true)} />
+        <img src={resolved} alt="" loading="lazy" decoding="async" ref={catchEarlyError} onError={() => setErrored(true)} />
       )}
     </span>
   );

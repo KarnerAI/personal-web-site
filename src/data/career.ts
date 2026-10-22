@@ -7,7 +7,7 @@ export const careerRoles: CareerRole[] = [
   {
     company: "Anheuser-Busch InBev",
     logo: "AB",
-    logoSrc: "/logos/ab-inbev.png",
+    logoSrc: "/logos/ab-inbev-tile.webp", // 176px copy; ab-inbev.png stays for the mockups
     startDate: "Jul 2012",
     endDate: "Jul 2018",
     startMonth: "2012-07",
@@ -35,7 +35,7 @@ export const careerRoles: CareerRole[] = [
   {
     company: "KarnerBlu",
     logo: "KB",
-    logoSrc: "/logos/karnerblu-mark.png", // hexagon + butterfly mark; the full wordmark is unreadable at tile size
+    logoSrc: "/logos/karnerblu-mark-tile.webp", // hexagon + butterfly mark; the full wordmark is unreadable at tile size (176px copy of karnerblu-mark.png)
     startDate: "Jul 2018",
     endDate: "Sep 2020",
     startMonth: "2018-07",
