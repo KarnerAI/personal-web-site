@@ -87,8 +87,10 @@ Review in v7 first, then build.
   components deleted (Contact, SideProjects + its data, EducationLogo,
   HobbyTile, HobbyModal, HobbyPhoto); edit mode on theme B colors; CLAUDE.md
   migration note removed; README palette updated.
-- Then QA (desktop, tablet, phone, keyboard, reduced motion), `npm run build`
-  + lint clean, `/ship`.
+- QA done 2026-10-21 (/qa at 1280, 820 and 375; keyboard, dialogs, links,
+  console; reduced motion by static read). One bug found and fixed: the
+  header highlight never cleared over the hero or Education (Fixed by /qa on
+  build-theme-b-redesign, 2026-10-21). Health 99.5 → 100. Then `/ship`.
 - Still open: `src/app/api/contact` (and the Resend dependency) has no UI
   since the contact form was never mounted; decide keep or remove.
 
