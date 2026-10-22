@@ -56,7 +56,8 @@ export type Venture = {
   coverEmoji?: string;
   // "fill" (default): coverSrc stretched edge-to-edge via object-cover (good for photos).
   // "logo": coverGradient paints the background, coverSrc rendered as a contained logo centered on top (good for wordmarks/marks).
-  coverTreatment?: "fill" | "logo";
+  // "shot": a product screenshot floating on a soft blue grid wash.
+  coverTreatment?: "fill" | "logo" | "shot";
   hook: string;
   status: VentureStatus;
   tags?: string[];

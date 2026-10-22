@@ -7,7 +7,7 @@ export const degree: Degree = {
   crest: "UM",
   degree: "B.S. Mechanical Engineering · Cum Laude",
   years: "2008 – 2012",
-  location: "AMHERST, MA",
+  location: "Amherst, MA",
   detail:
     "Graduated cum laude. Built a foundation in systems thinking that still shapes how I approach product problems.",
   logoDomain: "umass.edu",
@@ -18,14 +18,14 @@ export const certifications: Certification[] = [
   {
     name: "Mastering Design Thinking",
     issuer: "MIT Sloan Executive Education",
-    year: "'20",
+    year: "2020",
     icon: "MIT",
     logoDomain: "mitsloan.mit.edu",
   },
   {
     name: "Credential of Readiness (CORe)",
     issuer: "Harvard Business School Online",
-    year: "'15",
+    year: "2015",
     icon: "HBS",
     logoDomain: "hbs.edu",
   },

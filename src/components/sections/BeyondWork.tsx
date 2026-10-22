@@ -1,100 +1,86 @@
-// Beyond Work — Magazine spread with featured travel map + H-A Magazine Mosaic hobbies.
-// Featured travel map + stats band above; full-width 5-tile hobby mosaic below.
-// Reading & Listening is deferred (see notes/reading-page-v2.md) — removed for MVP.
-// `books` and `podcasts` remain exported from the data module for the future /reading page.
-// Server component shell that embeds the client TravelMap + client HobbyTile(s).
+// Beyond Work (theme B, DESIGN.md; v7 mockup).
+// Travel map on the left; the travel quote, two stat cards (countries,
+// cities) and three fact rows on the right; then the hobby mosaic.
+// Server component: the map's land is drawn here, and only the pins and
+// the hobby mosaic/dialog run in the browser.
+// Reading & Listening is deferred (see notes/reading-page-v2.md); `books` and
+// `podcasts` stay exported from the data module for a future /reading page.
 
-import { hobbies, travel } from "@/data/beyondWork";
-import { TravelMapGeo as TravelMap } from "./beyondwork/map-variants/TravelMapGeo";
-import { HobbyTile } from "./beyondwork/HobbyTile";
+import { travel } from "@/data/beyondWork";
+import { TravelMapThemeB } from "./beyondwork/map-variants/TravelMapThemeB";
+import { HobbyMosaic } from "./beyondwork/HobbyMosaic";
+
+const FACT_ICONS = {
+  pin: <path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z" />,
+  home: <path d="M4 10.5L12 4l8 6.5V20h-5.5v-5.5h-5V20H4z" />,
+  plane: <path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" />,
+};
 
 export function BeyondWork() {
+  const facts = [
+    { icon: FACT_ICONS.pin, k: "Favorite city to visit", v: travel.favoriteCity },
+    { icon: FACT_ICONS.home, k: "Current base", v: travel.base },
+    { icon: FACT_ICONS.plane, k: "Next up", v: travel.nextUp },
+  ].filter((f) => f.v);
+
   return (
-    <section id="beyond-work" className="section">
-      <div className="content-width">
-        <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">
-          Beyond Work
-        </p>
-        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-12">
+    <section id="beyond-work" aria-labelledby="bw-h" className="theme-b relative py-[112px] max-md:py-20">
+      <div className="wrap">
+        <p className="chip">Beyond Work</p>
+        <h2 id="bw-h" className="type-heading m-0 mb-12 text-ink">
           Get to know me outside of work.
         </h2>
 
-        {/* Featured travel map */}
-        <div className="grid gap-10 md:grid-cols-[1fr_380px] items-start mb-16">
-          <TravelMap />
-          <div>
-            <blockquote className="border-l-2 border-[var(--accent)] pl-4 text-base italic text-[var(--foreground)] mb-5 max-w-[340px]">
+        <div className="bw-row">
+          <TravelMapThemeB />
+          <div className="aside">
+            <blockquote className="aq bar-quote">
               {travel.caption}
-              {travel.captionCite && (
-                <cite className="block mt-1 not-italic text-sm font-medium">{travel.captionCite}</cite>
-              )}
+              {travel.captionCite && <cite>{travel.captionCite}</cite>}
             </blockquote>
-            <h3 className="text-2xl md:text-3xl font-semibold leading-[1.15] tracking-tight mb-6">
-              <span className="text-[var(--accent)]">{travel.countryCount}</span> countries
-              {typeof travel.cityCount === "number" && (
+            <h3 className="stats">
+              <span className="stat">
+                <b>{travel.countryCount}</b> <span>countries</span>
+              </span>
+              {travel.cityCount && (
                 <>
-                  {" "}and{" "}
-                  <span className="text-[var(--accent)]">{travel.cityCount}</span> cities
+                  <span className="sr-only"> and </span>
+                  <span className="stat">
+                    <b>{travel.cityCount}</b> <span>cities explored.</span>
+                  </span>
                 </>
-              )}{" "}
-              explored.
+              )}
             </h3>
-            <ul className="flex flex-col gap-2.5">
-              <li className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5">
-                <span className="text-lg leading-none">
-                  {travel.favoriteCityFlag ?? "🏙️"}
-                </span>
-                <span className="text-sm">
-                  <span className="font-medium text-[var(--foreground)]">Favorite city to visit</span>{" "}
-                  <span className="text-muted">· {travel.favoriteCity ?? "—"}</span>
-                </span>
-              </li>
-              {travel.base && (
-                <li className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5">
-                  <span className="text-lg leading-none">🗽</span>
-                  <span className="text-sm">
-                    <span className="font-medium text-[var(--foreground)]">Current base</span>{" "}
-                    <span className="text-muted">· {travel.base}</span>
+            <ul className="facts">
+              {facts.map((f) => (
+                <li key={f.k}>
+                  <span aria-hidden className="fi">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    >
+                      {f.icon}
+                    </svg>
+                  </span>
+                  <span>
+                    <span className="k">{f.k}</span> <span className="v">· {f.v}</span>
                   </span>
                 </li>
-              )}
-              {travel.nextUp && (
-                <li className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5">
-                  <span className="text-lg leading-none">✈️</span>
-                  <span className="text-sm">
-                    <span className="font-medium text-[var(--foreground)]">Next up</span>{" "}
-                    <span className="text-muted">· {travel.nextUp}</span>
-                  </span>
-                </li>
-              )}
+              ))}
             </ul>
           </div>
         </div>
 
-        {/* Hobbies — H-A Magazine Mosaic (5 tiles) */}
-        <div>
-          <p className="font-mono uppercase tracking-widest text-[11px] text-[var(--accent)] mb-5 pb-3 border-b border-[var(--border)]">
-            Hobbies
-          </p>
-          {/* Mobile: 1-col stack. Tablet (sm): 2-col (hero spans full width).
-              Desktop (md): 4-col (hero spans 2×2, 4 smalls fill cols 3-4).
-              Row height is driven by `auto-rows` explicitly — NOT `grid-rows-2`.
-              Tailwind's `grid-rows-2` sets 1fr rows which collapse to 0 here
-              because the tiles are absolutely-positioned inside and contribute
-              no intrinsic height. `auto-rows-[Npx]` applies to every row (there
-              are no explicit rows defined), so both the implicit rows get the
-              fixed height we want. */}
-          <div className="grid grid-cols-1 gap-4 auto-rows-[260px] sm:grid-cols-2 sm:auto-rows-[240px] md:grid-cols-4 md:auto-rows-[280px]">
-            {hobbies.map((hobby, i) => (
-              <HobbyTile
-                key={hobby.slug}
-                hobby={hobby}
-                index={i}
-                isHero={i === 0}
-              />
-            ))}
-          </div>
+        <div className="chiprow">
+          <p className="chip">Hobbies</p>
         </div>
+        <HobbyMosaic />
       </div>
     </section>
   );

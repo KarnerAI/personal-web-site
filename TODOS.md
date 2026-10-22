@@ -64,26 +64,28 @@ improve it." Leads straight into Career.
   draw, cards fade up 8px; runs once; static design without JS or with
   reduced motion.
 
-### Phase 5: Things I've started
+### Phase 5: Things I've started (done 2026-10-21)
 Four across at 1024px+ (2×2 tablet, 1 column phone), "Read story" aligned;
 covers: EmojiFriends photo, SpreadTheFacts wordmark on black, Navigate.AI
 score card (`public/ventures/navigate-ai-score.png`), Spots logo on navy
 (`public/ventures/spots.png`) until real app screenshots arrive (see the P3
 Spots screenshots item); restyled story dialog.
 
-### Phase 6: Beyond Work (not yet reviewed in B)
+### Phase 6: Beyond Work (done 2026-10-21, built as in v7)
 Review the map, stat cards, fact rows and hobby mosaic in v7 with Hussain
 first. Real photos: export web-sized copies from `images/Hobbies/` (Riding &
 Driving, Youth Mentor have photos; the other three still need them) into
 `public/images/hobbies/`.
 
-### Phase 7: Education + Footer (not yet reviewed in B)
+### Phase 7: Education + Footer (done 2026-10-21, built as in v7)
 Review in v7 first, then build.
 
 ### Phase 8: QA and ship
 Delete the Tokyo Transit tokens, Inter + Instrument Serif and the old
-h1/h2 serif rule once no section uses them; remove the CLAUDE.md migration
-note. Then `/qa` (desktop, tablet, phone, keyboard, reduced motion),
+h1/h2 serif rule once nothing uses them (the /design pages, edit mode and
+the unmounted Contact/SideProjects still do); remove the now-unused old
+components (HobbyTile, HobbyModal, HobbyPhoto, EducationLogo) and the CLAUDE.md
+migration note. Then `/qa` (desktop, tablet, phone, keyboard, reduced motion),
 `/design-review` against DESIGN.md, `npm run build` + lint clean, `/ship`.
 
 ### Build rule (Hussain, 2026-10-21)
