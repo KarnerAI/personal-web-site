@@ -82,9 +82,9 @@ export function Hero() {
           <div>
             <h3 className="text-lg font-semibold tracking-tight mb-5">About</h3>
             <blockquote className="border-l-[3px] border-[var(--accent)] pl-4 max-w-2xl text-[15px] text-muted leading-relaxed">
-              &ldquo;{QUOTE}&rdquo;{" "}
-              <cite className="not-italic font-medium text-[var(--foreground)]">
-                — {QUOTE_CITE}
+              &ldquo;{QUOTE}&rdquo;
+              <cite className="block mt-1 not-italic font-medium text-[var(--foreground)]">
+                {QUOTE_CITE}
               </cite>
             </blockquote>
             <div

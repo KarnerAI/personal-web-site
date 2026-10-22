@@ -48,15 +48,20 @@ export type Venture = {
   logoDomain?: string;
   logoInitials?: string;
   // Cover image for the card banner (variant A — 150px full-bleed).
-  // Resolution: coverSrc (real asset) > coverGradient (CSS fallback, with optional coverEmoji).
+  // coverGradient is always painted as the band background (it shows while a photo loads or
+  // after it fails); coverSrc renders on top. With no image: logoInitials glyph, else coverEmoji.
   coverSrc?: string;
   coverGradient?: string; // full CSS `background` value
   coverEmoji?: string;
+  // "fill" (default): coverSrc stretched edge-to-edge via object-cover (good for photos).
+  // "logo": coverGradient paints the background, coverSrc rendered as a contained logo centered on top (good for wordmarks/marks).
+  coverTreatment?: "fill" | "logo";
   hook: string;
   status: VentureStatus;
   tags?: string[];
   awards?: string[];
   externalUrl?: string;
+  externalLabel?: string; // link text in the modal; defaults to "Visit"
   caseStudy: {
     problem: string;
     whatIBuilt: string;
@@ -147,6 +152,7 @@ export type TravelData = {
   nationalityFlag?: string; // emoji flag pair, e.g. "🇧🇩🇺🇸"
   favoriteFlag?: string; // emoji flag for favoriteCountry, e.g. "🇨🇴"
   caption: string;
+  captionCite?: string; // attribution shown on its own line under the caption
   // Either an ISO list (for future real map lib) or the plotted coordinates used today.
   visitedCountryCodes: string[];
   visited?: VisitedCountry[];
@@ -170,7 +176,7 @@ export type Degree = {
 export type Certification = {
   name: string;
   issuer: string;
-  year: string; // "'20" / "2020"
+  year?: string; // "'20" / "2020"; omit when unknown and the chip is hidden
   icon: string; // short 2-letter badge — fallback when logo fails to load
   // Logo resolution, same pattern as CareerRole / Venture.
   logoSrc?: string;

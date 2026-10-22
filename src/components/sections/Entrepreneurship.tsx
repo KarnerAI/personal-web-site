@@ -33,19 +33,44 @@ const STATUS_PILL: Record<VentureStatus, string> = {
 function VentureCover({ venture: v }: { venture: Venture }) {
   const [errored, setErrored] = useState(false);
   const showImage = Boolean(v.coverSrc) && !errored;
+  const treatment = v.coverTreatment ?? "fill";
+  // onError only fires after hydration. An image that already failed before
+  // then reports complete with no pixels (a lazy image not yet requested is
+  // incomplete with no currentSrc), so catch that case when the ref attaches.
+  const catchEarlyError = (img: HTMLImageElement | null) => {
+    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
+  };
 
+  // Always paint the gradient, even under a "fill" photo: it shows while the
+  // lazy image loads instead of an empty band.
   return (
     <div
       className="relative h-[150px] w-full overflow-hidden"
-      style={showImage ? undefined : { background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" }}
+      style={{ background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" }}
     >
-      {showImage && (
+      {showImage && treatment === "fill" && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={v.coverSrc}
           alt=""
+          loading="lazy"
+          decoding="async"
+          ref={catchEarlyError}
           onError={() => setErrored(true)}
           className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+      {showImage && treatment === "logo" && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={v.coverSrc}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          ref={catchEarlyError}
+          onError={() => setErrored(true)}
+          className="absolute inset-0 m-auto max-h-[86%] max-w-[88%] object-contain"
+          style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.25))" }}
         />
       )}
       {/* FINDING-012 — initial-as-glyph instead of emoji. Falls back to coverEmoji
@@ -289,7 +314,7 @@ function CaseStudyModal({ venture: v, onClose }: { venture: Venture; onClose: ()
             rel="noreferrer"
             className="mt-8 inline-block text-sm font-medium text-[var(--accent)]"
           >
-            Visit ↗
+            {v.externalLabel ?? "Visit"} ↗
           </a>
         )}
       </motion.div>

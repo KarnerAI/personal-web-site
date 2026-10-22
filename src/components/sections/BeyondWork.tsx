@@ -25,6 +25,9 @@ export function BeyondWork() {
           <div>
             <blockquote className="border-l-2 border-[var(--accent)] pl-4 text-base italic text-[var(--foreground)] mb-5 max-w-[340px]">
               {travel.caption}
+              {travel.captionCite && (
+                <cite className="block mt-1 not-italic text-sm font-medium">{travel.captionCite}</cite>
+              )}
             </blockquote>
             <h3 className="text-2xl md:text-3xl font-semibold leading-[1.15] tracking-tight mb-6">
               <span className="text-[var(--accent)]">{travel.countryCount}</span> countries

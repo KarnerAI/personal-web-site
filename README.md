@@ -40,7 +40,9 @@ Section order in `src/app/page.tsx`: Hero → Career → Entrepreneurship → Be
 
 ## Color palette
 
-Locked to **Tokyo Transit** — cool off-white background, deep ink navy text, vermillion signal-red accent. Reference: Muji / Japanese wayfinding / Tokyo subway. All tokens live as CSS variables in `src/app/globals.css`.
+The live site still uses **Tokyo Transit**: cool off-white background, deep ink navy text, vermillion signal-red accent. Reference: Muji / Japanese wayfinding / Tokyo subway. All tokens live as CSS variables in `src/app/globals.css`.
+
+Tokyo Transit is being replaced. The redesign locked a new design system in [DESIGN.md](DESIGN.md) (theme B: light product UI in Karner blue, Geist + Geist Mono), built section by section per the P0 plan in [TODOS.md](TODOS.md). Sections not rebuilt yet keep the tokens below.
 
 | Token | Hex | Purpose |
 |---|---|---|

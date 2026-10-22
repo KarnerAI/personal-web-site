@@ -1,0 +1,947 @@
+<!--
+  Theme G: Clean white with colorful case cards (full-site mockup, 2026-10-20)
+  Reference: Jonny Czar's Behance portfolio (refs/czar-p01..07): floating pill nav,
+  big bold geometric headlines, B&W portrait, light-gray bands, an achievements grid,
+  and case-study cards that each wear their product's own brand color.
+  Font: Urbanist 400 to 800 (Google Fonts). Headlines 800 with tight tracking.
+  Palette: page #FFFFFF, band #F5F5F5, ink #111111, gray #6B6B6B (text on white and
+  on #F5F5F5 passes AA), hairline #E8E8E8.
+  Venture brand colors: EmojiFriends sunshine #FFE58F (ink text, #4D4325 small text),
+  SpreadTheFacts black #0B0B0B (white text, #BDBDBD small text), Spots beige #F1E6DA
+  (deep purple #3B1F8C text, #4E3A93 small text), Navigate.AI cobalt #1F45E0 (white
+  text, #DCE3FF small text). Cobalt doubles as the focus ring.
+  What makes it this theme: everything is a soft, very rounded white or gray surface
+  (28 to 40px radii), the only loud color lives inside the venture cards and their
+  modals, buttons are black pills, links are small "See more" arrows, and type does
+  the heavy lifting. Layout follows the current site section by section; the hero
+  uses the board layout (info strip, big name, bio, quote, framed portrait, ticket).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hussain Alam · Product Strategist &amp; Builder</title>
+<meta name="description" content="Hussain Alam, Product Strategist and Builder in New York." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#FFFFFF;--band:#F5F5F5;--ink:#111111;--gray:#6B6B6B;--soft:#404040;--line:#E8E8E8;
+  --ef:#FFE58F;--stf:#0B0B0B;--sp:#F1E6DA;--sp-ink:#3B1F8C;--na:#1F45E0;
+  --r-sm:14px;--r-md:20px;--r-lg:28px;--r-xl:32px;--r-band:40px;
+  --sh-1:0 1px 2px rgba(17,17,17,.05),0 10px 28px -14px rgba(17,17,17,.16);
+  --sh-2:0 2px 6px rgba(17,17,17,.05),0 30px 60px -26px rgba(17,17,17,.34);
+  --ease:cubic-bezier(.2,.75,.2,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Urbanist",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.55;font-weight:500;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html.lock{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+:focus-visible{outline:3px solid var(--na);outline-offset:3px}
+.tnum,time{font-variant-numeric:tabular-nums}
+/* Urbanist ships no tnum feature, so digits that must align get fixed-width boxes (see tabular() in the script) */
+.dg{display:inline-block;width:.58em;text-align:center}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;text-decoration:none}
+.skip:focus{top:16px}
+
+/* ---------- Layout scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 112 ---------- */
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.sec{padding:112px 0;scroll-margin-top:84px}
+.band{background:var(--band);border-radius:var(--r-band);margin:0 16px}
+.band .wrap{max-width:1168px;padding:0 16px}
+@media (max-width:640px){
+  .wrap,.band .wrap{padding:0 20px}
+  .band{margin:0;border-radius:var(--r-lg)}
+  .sec{padding:80px 0}
+}
+
+/* Shared type */
+.label{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:0 13px 0 11px;margin-bottom:20px;border-radius:999px;background:var(--band);font-size:13px;font-weight:700;letter-spacing:.01em}
+.band .label{background:#fff}
+.label::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.h{font-size:clamp(38px,5.4vw,64px);font-weight:800;letter-spacing:-.045em;line-height:1.02;max-width:16em}
+.rule-label{display:flex;align-items:center;gap:16px;font-size:13px;font-weight:800;letter-spacing:.01em}
+.rule-label::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink);flex:none;margin-right:-8px}
+.rule-label::after{content:"";flex:1;height:1px;background:#DADADA}
+.pillbtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:16px;text-decoration:none;transition:transform .2s var(--ease),box-shadow .2s,background .2s}
+.pillbtn:hover{background:#2A2A2A;box-shadow:0 14px 28px -14px rgba(17,17,17,.6);transform:translateY(-2px)}
+.pillbtn:active{transform:translateY(0) scale(.98)}
+.pillbtn s{text-decoration:none;transition:transform .2s var(--ease)}
+.pillbtn:hover s{transform:translate(2px,-2px)}
+.xbtn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:0;background:var(--band);color:var(--ink);cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.xbtn:hover{background:var(--ink);color:#fff}
+.xbtn:active{transform:scale(.94)}
+.lg{position:relative;display:grid;place-items:center;overflow:hidden;background:#fff;font-weight:800;font-size:12px;letter-spacing:.02em;color:var(--soft);flex:none}
+.lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+
+/* ---------- Floating pill nav ---------- */
+.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;padding:0 12px;pointer-events:none}
+.pill{pointer-events:auto;display:flex;align-items:center;height:58px;padding:0 7px 0 24px;background:rgba(255,255,255,.94);border-radius:999px;box-shadow:0 0 0 1px rgba(17,17,17,.05),0 2px 4px rgba(17,17,17,.04),0 16px 36px -14px rgba(17,17,17,.26);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px)}
+.brand{display:inline-flex;align-items:center;min-height:44px;font-weight:800;font-size:16.5px;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.sep{width:1px;height:24px;background:var(--line);margin:0 14px 0 20px}
+.links{display:flex;gap:2px}
+.links a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;font-size:15px;font-weight:600;color:#3F3F3F;text-decoration:none;transition:background .2s,color .2s}
+.links a:hover{background:var(--band);color:var(--ink)}
+.links a.on{background:var(--ink);color:#fff}
+.menu-btn{display:none;place-items:center;width:44px;height:44px;margin-left:16px;border:0;border-radius:50%;background:var(--ink);color:#fff;cursor:pointer;transition:transform .2s}
+.menu-btn:active{transform:scale(.94)}
+.menu-btn .i-x{display:none}
+.menu-btn[aria-expanded="true"] .i-x{display:block}
+.menu-btn[aria-expanded="true"] .i-m{display:none}
+.mmenu{pointer-events:auto;margin-top:10px;width:min(340px,calc(100vw - 24px));padding:8px;background:#fff;border-radius:var(--r-lg);box-shadow:0 0 0 1px rgba(17,17,17,.05),0 24px 48px -18px rgba(17,17,17,.3)}
+.mmenu[hidden]{display:none}
+.mmenu a{display:flex;align-items:center;justify-content:space-between;min-height:54px;padding:0 20px;border-radius:var(--r-md);font-size:18px;font-weight:700;letter-spacing:-.01em;text-decoration:none}
+.mmenu a::after{content:"\2192";color:var(--gray);font-weight:600}
+.mmenu a:hover{background:var(--band)}
+@media (prefers-reduced-motion:no-preference){.mmenu:not([hidden]){animation:drop .22s var(--ease)}}
+@keyframes drop{from{opacity:0;transform:translateY(-6px) scale(.98)}}
+@media (max-width:767px){
+  .links,.sep{display:none}
+  .menu-btn{display:inline-grid}
+  .pill{height:56px;padding:0 6px 0 20px}
+}
+
+/* ---------- Hero (board layout) ---------- */
+.hero{padding:136px 0 104px;scroll-margin-top:0}
+.strip{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;min-height:56px;padding:6px 6px 6px 24px;margin-bottom:64px;border-radius:999px;background:var(--band);font-size:14.5px;font-weight:600}
+.s-name{font-weight:800;letter-spacing:-.01em}
+.s-role{color:var(--gray);text-align:center}
+.s-city{display:flex;align-items:center;justify-content:flex-end;gap:12px}
+.clk{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;background:#fff;font-weight:800;box-shadow:0 1px 2px rgba(17,17,17,.06)}
+.clk::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"a p" "t p";gap:48px 72px;align-items:start}
+.intro{grid-area:a}
+.name{font-size:clamp(56px,8.6vw,124px);font-weight:800;letter-spacing:-.055em;line-height:.9;margin-bottom:32px}
+.bio{font-size:21px;font-weight:500;line-height:1.5;max-width:30em;color:#262626}
+.quote{display:inline-block;margin-top:28px;padding:18px 24px 18px 22px;border-radius:24px;background:var(--band);font-size:17px;font-weight:600;line-height:1.45}
+.quote cite{display:block;margin-top:6px;font-style:normal;font-size:13.5px;font-weight:600;color:var(--gray)}
+.port{grid-area:p;padding:12px;border-radius:36px;background:var(--band)}
+.pin{position:relative;aspect-ratio:1;overflow:hidden;border-radius:26px;background:#E4E4E4}
+.pin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(1.08) brightness(1.06)}
+.pf{position:absolute;inset:0;display:grid;place-items:center;font-size:56px;font-weight:800;letter-spacing:-.04em;color:#BDBDBD}
+.ticket{grid-area:t;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:8px;padding:8px;border-radius:var(--r-xl);background:var(--band)}
+.rows{padding:6px;border-radius:26px;background:#fff}
+.tk{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:16px;align-items:center;min-height:56px;padding:0 10px 0 18px;border-radius:var(--r-md);text-decoration:none;transition:background .2s}
+.tk+.tk{box-shadow:0 -1px 0 #F0F0F0}
+.tk b{font-size:13.5px;font-weight:700;color:var(--gray)}
+.tk i{font-style:normal;font-size:16px;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere}
+.tk s{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--band);text-decoration:none;font-size:15px;font-weight:700;transition:background .2s,color .2s,transform .2s var(--ease)}
+.tk:hover{background:#FAFAFA}
+.tk:hover s{background:var(--ink);color:#fff;transform:rotate(45deg)}
+.stub{display:grid;place-items:center;padding:16px;border-radius:26px}
+.stub .pillbtn{width:100%}
+@media (max-width:1024px){.hgrid{grid-template-columns:minmax(0,1fr) 300px;gap:40px 48px}}
+@media (max-width:860px){
+  .hero{padding:112px 0 72px}
+  .strip{grid-template-columns:1fr;gap:6px;padding:16px 18px;border-radius:24px;margin-bottom:40px}
+  .s-role{text-align:left}
+  .s-city{justify-content:space-between}
+  .hgrid{grid-template-columns:1fr;grid-template-areas:"a" "p" "t";gap:32px}
+  .port{max-width:340px}
+  .ticket{grid-template-columns:1fr}
+  .stub{padding:8px}
+}
+@media (max-width:480px){
+  .bio{font-size:19px}
+  .ticket{padding:6px}
+  .rows{padding:4px}
+  .tk{grid-template-columns:60px minmax(0,1fr) auto;gap:10px;padding:0 6px 0 12px}
+  .tk i{font-size:15px}
+  .tk s{width:30px;height:30px}
+}
+
+/* ---------- Career ---------- */
+.pull{max-width:860px;margin:36px 0 64px;padding-left:22px;border-left:4px solid var(--ink);font-size:clamp(19px,2vw,23px);font-weight:600;line-height:1.6;letter-spacing:-.01em}
+.arw{display:inline-grid;place-items:center;width:28px;height:28px;margin:0 3px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:700;line-height:1;vertical-align:3px}
+.ccard{display:flex;flex-direction:column;align-items:flex-start;width:100%;text-align:left;border:0;padding:22px 22px 20px;border-radius:var(--r-lg);background:#fff;box-shadow:var(--sh-1);cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s,background .25s,color .25s}
+.ccard:hover{transform:translateY(-4px);box-shadow:var(--sh-2)}
+.ccard:active{transform:translateY(-1px) scale(.99)}
+.ccard .lg{width:44px;height:44px;border-radius:var(--r-sm);box-shadow:0 0 0 1px var(--line)}
+.ccard .lg img{padding:5px;filter:grayscale(1) contrast(1.1);transition:filter .25s}
+.ccard:hover .lg img,.ccard.on .lg img{filter:none}
+.cname{display:block;margin-top:18px;font-size:19px;font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.ccap{display:block;margin-top:6px;font-size:14.5px;font-weight:500;color:var(--gray);line-height:1.35}
+.more{display:inline-flex;align-items:center;gap:5px;margin-top:16px;font-size:13px;font-weight:700}
+.more s{text-decoration:none;display:inline-block;transition:transform .25s var(--ease)}
+.ccard.on{background:var(--ink);color:#fff;box-shadow:0 30px 60px -26px rgba(17,17,17,.55)}
+.ccard.on .ccap{color:#B5B5B5}
+.ccard.on .more s{transform:rotate(135deg)}
+.tl{position:relative;border-radius:var(--r-lg)}
+.tl:focus-visible{outline-offset:10px}
+.tl-row,.stems{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:0 5px}
+.tl-row{align-items:stretch}
+.cell{display:flex;padding:0 6px}
+.stems{height:26px}
+.stems span{justify-self:center;width:2px;border-radius:2px;background:#D2D2D2;transition:background .25s}
+.stems span.on{background:var(--ink)}
+.track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:5px;border-radius:999px;background:#fff;box-shadow:var(--sh-1)}
+.seg{min-height:50px;border:0;border-radius:999px;background:transparent;color:var(--soft);font-size:14.5px;font-weight:700;letter-spacing:.01em;font-variant-numeric:tabular-nums;cursor:pointer;transition:background .2s,color .2s}
+.seg:hover{background:var(--band);color:var(--ink)}
+.seg.on{background:var(--ink);color:#fff}
+.cdetail{position:relative;margin-top:40px;display:grid;grid-template-columns:96px minmax(0,1fr);gap:32px;padding:40px;border-radius:var(--r-xl);background:#fff;box-shadow:var(--sh-1)}
+.cdetail[hidden],.m-detail[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){.cdetail:not([hidden]),.m-detail:not([hidden]){animation:rise .3s var(--ease)}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.d-x{position:absolute;top:20px;right:20px}
+.dlogo{width:96px;height:96px;border-radius:24px;box-shadow:0 0 0 1px var(--line);font-size:22px}
+.dlogo img{padding:10px}
+.dco{font-size:clamp(28px,3vw,38px);font-weight:800;letter-spacing:-.04em;line-height:1.05;padding-right:56px}
+.drole{margin-top:8px;font-size:17px;font-weight:700}
+.dmeta{display:inline-block;margin-top:14px;padding:7px 14px;border-radius:16px;background:var(--band);font-size:13.5px;font-weight:600;color:var(--soft)}
+.dwhy{max-width:44em;margin-top:24px;padding-left:18px;border-left:4px solid var(--ink);font-style:italic;font-size:17px;line-height:1.6;color:#3A3A3A}
+.dhero{max-width:44em;margin-top:24px;font-size:18px;font-weight:700;line-height:1.5;letter-spacing:-.01em}
+.dsubs{max-width:44em;margin-top:14px;display:grid;gap:10px}
+.dsubs li{position:relative;padding-left:20px;font-size:15.5px;line-height:1.6;color:var(--soft)}
+.dsubs li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.roles{margin-top:28px;padding:8px 24px;border-radius:24px;background:var(--band)}
+.roles h4{padding:16px 0 8px;font-size:13px;font-weight:800;letter-spacing:.01em}
+.roles li{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 16px;padding:12px 0;border-top:1px solid #E6E6E6;font-size:15px}
+.roles li b{font-weight:700}
+.roles li small{margin-left:8px;font-size:13px;font-weight:500;color:var(--gray)}
+.roles .dt{font-size:13.5px;font-weight:600;color:var(--gray);white-space:nowrap}
+.m-list{display:none}
+@media (max-width:767px){
+  .tl,.cdetail{display:none!important}
+  .pull{margin:28px 0 40px;padding-left:16px}
+  .m-list{display:grid;gap:12px}
+  .ccard.m{padding:18px 18px 18px}
+  .yr{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+  .ccard.on .yr{background:#fff;color:var(--ink)}
+  .mrow{display:flex;align-items:center;gap:14px;margin-top:16px;width:100%}
+  .mrow .cname{margin-top:0}
+  .mrow .ccap{margin-top:3px}
+  .ccard.m .more{margin-top:14px}
+  .m-detail{position:relative;margin-top:8px;display:grid;gap:20px;padding:24px 20px;border-radius:var(--r-lg);background:#fff;box-shadow:var(--sh-1)}
+  .m-detail .d-x{top:14px;right:14px}
+  .m-detail .dlogo{width:64px;height:64px;border-radius:18px}
+  .m-detail .roles{padding:4px 16px}
+  .dwhy{font-size:16px}
+  .dhero{font-size:17px}
+}
+
+/* ---------- Entrepreneurship ---------- */
+.lede{max-width:40em;margin-top:24px;font-size:19px;line-height:1.6;color:var(--soft)}
+.vgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:56px}
+.vcard{container-type:inline-size;display:flex;flex-direction:column;min-height:440px;padding:0;border:0;border-radius:var(--r-xl);overflow:hidden;text-align:left;cursor:pointer;background:var(--c);color:var(--t);box-shadow:0 1px 2px rgba(17,17,17,.06);transition:transform .3s var(--ease),box-shadow .3s}
+.vcard:hover{transform:translateY(-6px);box-shadow:0 34px 64px -30px rgba(17,17,17,.5)}
+.vcard:active{transform:translateY(-2px) scale(.995)}
+.v-ef{--c:var(--ef);--t:#111;--m:#4D4325;--chip:rgba(17,17,17,.22);--div:rgba(17,17,17,.14);--pb:#111;--pt:#fff}
+.v-stf{--c:var(--stf);--t:#fff;--m:#BDBDBD;--chip:rgba(255,255,255,.28);--div:rgba(255,255,255,.16);--pb:#fff;--pt:#111}
+.v-sp{--c:var(--sp);--t:var(--sp-ink);--m:#4E3A93;--chip:rgba(59,31,140,.3);--div:rgba(59,31,140,.16);--pb:var(--sp-ink);--pt:#fff}
+.v-na{--c:var(--na);--t:#fff;--m:#DCE3FF;--chip:rgba(255,255,255,.38);--div:rgba(255,255,255,.22);--pb:#fff;--pt:var(--na)}
+.vcover{position:relative;display:block;height:150px;margin:10px 10px 0;border-radius:24px;overflow:hidden;background:var(--c)}
+.vcover img.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.vcard:hover .vcover img.fill{transform:scale(1.04)}
+.vcover img.mark{position:absolute;inset:0;margin:auto;max-height:100%;max-width:88%;object-fit:contain;mix-blend-mode:lighten}
+.vfb{position:absolute;inset:0;display:grid;place-items:center;font-size:44px;font-weight:800;letter-spacing:-.04em;color:var(--t);opacity:.85}
+.vcover:has(img) .vfb,.lg:has(img)>span{visibility:hidden}
+.status{position:absolute;top:14px;left:14px;z-index:2;display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:0 13px 0 11px;border-radius:999px;background:#fff;color:#111;font-size:12.5px;font-weight:700;box-shadow:0 2px 8px rgba(17,17,17,.12)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.st-ship .dot{background:#1F45E0}
+.st-exp .dot{background:#E39A00}
+.st-act .dot{background:#12A150}
+.bigtype{position:absolute;left:22px;bottom:12px;font-weight:800;letter-spacing:-.055em;line-height:.9;color:var(--t);transition:transform .4s var(--ease)}
+.v-sp .bigtype{font-size:clamp(48px,15cqi,92px)}
+.v-na .bigtype{font-size:clamp(38px,12cqi,74px)}
+.vcard:hover .bigtype{transform:translateX(4px)}
+.deco{position:absolute;right:18px;top:16px;height:118px;width:auto;pointer-events:none}
+@container (max-width:460px){.deco{height:82px;right:12px;top:12px}}
+.vbody{display:flex;flex-direction:column;flex:1;padding:26px 30px 28px}
+.vname{font-size:30px;font-weight:800;letter-spacing:-.035em;line-height:1.1}
+.vhook{margin-top:10px;margin-bottom:auto;max-width:28em;font-size:16.5px;line-height:1.55;color:var(--m)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tags span{display:inline-flex;align-items:center;min-height:30px;padding:0 13px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--chip);font-size:13px;font-weight:600}
+.vfoot{display:flex;align-items:center;margin-top:22px;padding-top:20px;border-top:1px solid var(--div)}
+.vcta{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 20px;border-radius:999px;background:var(--pb);color:var(--pt);font-size:15px;font-weight:700}
+.vcta s{text-decoration:none;transition:transform .25s var(--ease)}
+.vcard:hover .vcta s{transform:translateX(4px)}
+@media (max-width:700px){.vgrid{grid-template-columns:1fr;gap:16px;margin-top:40px}.vcard{min-height:0}.vbody{padding:22px 22px 24px}.vname{font-size:27px}.lede{font-size:17.5px}}
+
+/* ---------- Dialogs ---------- */
+dialog.dlg{width:min(760px,calc(100vw - 32px));max-width:none;max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);padding:0;border:0;border-radius:var(--r-xl);background:#fff;color:var(--ink);overflow:auto;overscroll-behavior:contain;box-shadow:0 40px 100px -30px rgba(17,17,17,.55)}
+dialog.dlg::backdrop{background:rgba(17,17,17,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+@media (prefers-reduced-motion:no-preference){
+  dialog.dlg[open]{animation:pop .32s var(--ease)}
+  dialog.dlg[open]::backdrop{animation:fade .25s ease-out}
+}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}}
+@keyframes fade{from{opacity:0}}
+.dlg .top-x{position:absolute;top:20px;right:20px;z-index:3;background:#fff;box-shadow:0 4px 14px rgba(17,17,17,.16)}
+.dlg .top-x:hover{background:var(--ink)}
+.vband{position:relative;padding:36px 40px 36px;background:var(--c);color:var(--t)}
+.vmeta{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.vmark{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#fff;color:#111;font-size:14px;font-weight:800;letter-spacing:-.01em}
+.vmeta .status{position:static;box-shadow:none}
+.vband h3{font-size:clamp(38px,6vw,56px);font-weight:800;letter-spacing:-.05em;line-height:1;padding-right:48px}
+.vband p{max-width:34em;margin-top:14px;font-size:19px;line-height:1.5;color:var(--m)}
+.v-stf .top-x:focus-visible,.v-na .top-x:focus-visible{outline-color:#fff}
+.vbody2{padding:36px 40px 40px}
+.cs{display:grid;grid-template-columns:104px minmax(0,1fr);gap:22px 28px}
+.cs dt{padding-top:3px;font-size:12.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.cs dd{font-size:16px;line-height:1.68;color:#262626}
+.cs dd.it{font-style:italic;color:var(--soft)}
+.vbody2 .pillbtn{margin-top:32px}
+@media (max-width:560px){
+  .vband{padding:28px 22px 26px}
+  .vbody2{padding:26px 22px 30px}
+  .cs{grid-template-columns:1fr;gap:6px}
+  .cs dd{margin-bottom:16px}
+  .dlg .top-x{top:14px;right:14px}
+}
+.hphoto{position:relative;height:320px;margin:10px;border-radius:24px;overflow:hidden;background:radial-gradient(120% 100% at 25% 10%,#FFFFFF 0%,#EFEFEF 45%,#E2E2E2 100%)}
+.hbody{padding:20px 40px 40px}
+.kick{font-size:13px;font-weight:700;color:var(--gray);font-variant-numeric:tabular-nums}
+.hbody h3{margin-top:10px;font-size:clamp(34px,5vw,46px);font-weight:800;letter-spacing:-.045em;line-height:1.02}
+.htag{margin-top:10px;font-size:18px;line-height:1.5;color:var(--soft)}
+.hmeta{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:24px;padding:16px 24px;border-radius:24px;background:var(--band)}
+.hmeta dt{font-size:12.5px;font-weight:700;color:var(--gray)}
+.hmeta dd{margin-top:2px;font-size:16px;font-weight:700;letter-spacing:-.01em}
+.story{display:grid;gap:16px;margin-top:28px;font-size:16.5px;line-height:1.72;color:#262626}
+.embed{margin-top:28px}
+.ifr{aspect-ratio:4/3;border-radius:24px;overflow:hidden;background:var(--band)}
+.ifr iframe{display:block;width:100%;height:100%;border:0}
+.embed figcaption{margin-top:10px;font-size:13.5px;font-weight:600;color:var(--gray)}
+@media (max-width:560px){.hphoto{height:220px;margin:8px}.hbody{padding:16px 22px 30px}.hmeta{padding:14px 18px;gap:12px 24px}}
+
+/* ---------- Beyond Work ---------- */
+.travel{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:40px;align-items:start;margin-top:48px}
+.map{position:relative;padding:14px;border-radius:var(--r-xl);background:#fff;box-shadow:var(--sh-1)}
+.map svg{display:block;width:100%;height:auto;aspect-ratio:2/1}
+.map .land{fill:#E7E7E7;stroke:#fff;stroke-width:.6;stroke-linejoin:round}
+.map .land.v{fill:#D5D5D5}
+.map .gdot{fill:#DCDCDC}
+.mk{cursor:default}
+.mk circle.d{fill:#111;stroke:#fff;stroke-width:1.6;transition:r .2s}
+.mk:hover circle.d{r:6.5}
+.ring{fill:var(--ef);stroke:#111;stroke-width:1.6}
+.pulse{fill:none;stroke:#111;stroke-width:1.2;transform-box:fill-box;transform-origin:center;opacity:0}
+@media (prefers-reduced-motion:no-preference){.pulse{animation:ping 2.6s ease-out infinite}}
+@keyframes ping{0%{transform:scale(.7);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+.legend{position:absolute;left:26px;bottom:24px;display:flex;align-items:center;gap:12px;min-height:32px;padding:0 14px;border-radius:999px;background:var(--band);font-size:13px;font-weight:700}
+.legend i{display:inline-block;width:9px;height:9px;margin-right:6px;border-radius:50%;background:#111;vertical-align:0}
+.legend .hov{padding-left:12px;border-left:1px solid #DADADA;font-weight:600;color:var(--soft)}
+.legend .hov:empty{display:none}
+.tq{font-size:19px;font-weight:600;line-height:1.5;letter-spacing:-.01em;max-width:22em}
+.tq cite{display:block;margin-top:8px;font-style:normal;font-size:14px;font-weight:600;color:var(--gray)}
+.count{margin-top:32px;font-size:clamp(30px,3.2vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1.15}
+.count mark{padding:0 .16em;border-radius:12px;background:var(--ef);color:var(--ink);font-variant-numeric:tabular-nums}
+.facts{display:grid;gap:10px;margin-top:28px}
+.facts li{display:flex;align-items:center;gap:14px;min-height:56px;padding:10px 18px 10px 10px;border-radius:var(--r-md);background:#fff;font-size:15.5px;line-height:1.4}
+.facts b{font-weight:700}
+.facts span.v{color:var(--gray);font-weight:500}
+.fi{display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff}
+.hob{margin-top:96px}
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:280px;gap:16px;margin-top:28px}
+.tile{position:relative;display:block;padding:0;border:0;border-radius:var(--r-lg);overflow:hidden;text-align:left;cursor:pointer;color:var(--ink);background:radial-gradient(120% 95% at 25% 8%,#FFFFFF 0%,#EFEFEF 48%,#E3E3E3 100%);box-shadow:inset 0 0 0 1px rgba(17,17,17,.04);transition:transform .3s var(--ease),box-shadow .3s}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--sh-2)}
+.tile:active{transform:translateY(-1px) scale(.99)}
+.tile.hero-t{grid-column:span 2;grid-row:span 2}
+.ph{position:absolute;top:16px;left:16px;z-index:1;display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:0 13px 0 10px;border-radius:999px;background:#fff;font-size:12.5px;font-weight:700;color:#111;box-shadow:0 1px 2px rgba(17,17,17,.06)}
+.glyph{position:absolute;left:50%;top:44%;width:64px;height:64px;transform:translate(-50%,-50%);color:#CFCFCF}
+.hero-t .glyph{width:104px;height:104px}
+.plus{position:absolute;top:14px;right:14px;z-index:1;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;transition:transform .35s var(--ease)}
+.hero-t .plus{width:48px;height:48px}
+.tile:hover .plus{transform:rotate(90deg)}
+.tx{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;padding:22px}
+.hero-t .tx{padding:30px}
+.t1{font-size:20px;font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.hero-t .t1{font-size:clamp(28px,3vw,38px);letter-spacing:-.04em}
+.t2{margin-top:6px;font-size:14px;line-height:1.45;color:var(--soft)}
+.hero-t .t2{font-size:16.5px}
+@media (max-width:900px){
+  .travel{grid-template-columns:1fr;gap:36px}
+  .mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:240px}
+  .tile.hero-t{grid-row:span 1}
+  .hero-t .glyph{width:64px;height:64px}
+  .hero-t .tx{padding:22px}
+  .hero-t .t1{font-size:26px}
+  .hero-t .t2{font-size:15px}
+  .hero-t .plus{width:40px;height:40px}
+}
+@media (max-width:600px){
+  .mosaic{grid-template-columns:1fr;grid-auto-rows:240px;gap:12px}
+  .tile.hero-t{grid-column:auto}
+  .hob{margin-top:72px}
+  .map{padding:8px;border-radius:24px}
+  .legend{position:static;display:inline-flex;margin:10px 0 4px 6px;min-height:28px;font-size:12px}
+  .mk circle.d{r:8}
+  .mk:hover circle.d{r:9}
+  .ring,.pulse{r:17}
+}
+
+/* ---------- Education ---------- */
+.edu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:start;margin-top:48px}
+.deg{display:grid;grid-template-columns:88px minmax(0,1fr);gap:24px;align-items:start;margin-top:24px}
+.deg .lg{width:88px;height:88px;border-radius:24px;background:var(--band);font-size:18px}
+.deg .lg img{padding:16px;background:var(--band);mix-blend-mode:multiply}
+.deg h3{font-size:clamp(26px,2.6vw,32px);font-weight:800;letter-spacing:-.04em;line-height:1.1}
+.dmeta2{margin-top:6px;font-size:14px;font-weight:600;color:var(--gray)}
+.dline{margin-top:14px;font-size:16.5px;font-weight:700}
+.ddet{margin-top:8px;font-size:15.5px;line-height:1.6;color:var(--soft);max-width:30em}
+.certs{display:grid;gap:10px;margin-top:24px}
+.certs li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:center;min-height:72px;padding:12px 20px 12px 14px;border-radius:var(--r-md);background:var(--band);transition:transform .25s var(--ease),background .25s}
+.certs li:hover{background:#EFEFEF}
+.certs .lg{width:44px;height:44px;border-radius:var(--r-sm);font-size:11px}
+.certs .lg img{padding:8px}
+.certs b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.certs small{display:block;margin-top:2px;font-size:13.5px;font-weight:500;color:var(--gray)}
+.certs .yr2{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+@media (max-width:767px){.edu{grid-template-columns:1fr;gap:48px;margin-top:36px}}
+@media (max-width:480px){.deg{grid-template-columns:64px minmax(0,1fr);gap:18px}.deg .lg{width:64px;height:64px;border-radius:18px}.deg .lg img{padding:11px}}
+
+/* ---------- Footer ---------- */
+.foot{margin:0 16px 16px;padding:36px 0;border-radius:var(--r-band);background:var(--ink);color:#fff;font-size:15px;font-weight:600}
+.foot .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;max-width:1168px;padding:0 16px}
+.foot p+p{color:#A3A3A3}
+@media (max-width:640px){.foot{margin:0;border-radius:var(--r-lg) var(--r-lg) 0 0}.foot .wrap{padding:0 20px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <nav class="pill" aria-label="Primary">
+    <a class="brand" href="#hero">Hussain Alam</a>
+    <span class="sep" aria-hidden="true"></span>
+    <div class="links">
+      <a href="#career" data-spy="career">Career</a>
+      <a href="#entrepreneurship" data-spy="entrepreneurship">Entrepreneurship</a>
+      <a href="#beyond-work" data-spy="beyond-work">Beyond Work</a>
+    </div>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Open menu">
+      <svg class="i-m" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/></svg>
+      <svg class="i-x" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+    </button>
+  </nav>
+  <div class="mmenu" id="mmenu" hidden>
+    <a href="#career">Career</a>
+    <a href="#entrepreneurship">Entrepreneurship</a>
+    <a href="#beyond-work">Beyond Work</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO (board layout) ============ -->
+<section id="hero" class="hero" aria-label="Introduction">
+  <div class="wrap">
+    <div class="strip">
+      <span class="s-name">Hussain Alam</span>
+      <span class="s-role">Product Strategist &amp; Builder</span>
+      <span class="s-city">New York<time class="clk" aria-label="Local time in New York">--:--</time></span>
+    </div>
+    <div class="hgrid">
+      <div class="intro">
+        <h1 class="name">Hussain Alam</h1>
+        <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+        <blockquote class="quote">&ldquo;The only source of knowledge is experience.&rdquo;<cite>Albert Einstein</cite></blockquote>
+      </div>
+      <figure class="port"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></figure>
+      <div class="ticket">
+        <div class="rows">
+          <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener"><b>LinkedIn</b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+          <a class="tk" href="mailto:hussain@karnerblu.com"><b>Email</b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+          <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener"><b>GitHub</b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+        </div>
+        <div class="stub"><a class="pillbtn" href="mailto:hussain@karnerblu.com">Get in touch <s aria-hidden="true">&#8599;</s></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAREER ============ -->
+<section id="career" class="sec band">
+  <div class="wrap">
+    <p class="label">Career</p>
+    <h2 class="h">My career, in four chapters.</h2>
+    <blockquote class="pull">Fortune 100 ops out of college <span class="arw" aria-hidden="true">&rarr;</span> founded a consultancy <span class="arw" aria-hidden="true">&rarr;</span> 5th U.S. hire at a Series-A startup <span class="arw" aria-hidden="true">&rarr;</span> joined WeWork three months before bankruptcy and led products to profitability.</blockquote>
+
+    <!-- Phones: vertical stack, detail expands in place -->
+    <div class="m-list">
+      <div class="m-item"><button class="ccard m" type="button" data-i="0" aria-expanded="false" aria-controls="md0"><span class="yr">2012 - 2018</span><span class="mrow"><span class="lg"><span>AB</span><img src="../public/logos/ab-inbev.png" alt="" onerror="this.remove()"></span><span><span class="cname">Anheuser-Busch InBev</span><span class="ccap">Operational Excellence</span></span></span><span class="more">See more <s aria-hidden="true">&#8599;</s></span></button><div class="m-detail" id="md0" hidden></div></div>
+      <div class="m-item"><button class="ccard m" type="button" data-i="1" aria-expanded="false" aria-controls="md1"><span class="yr">2018 - 2020</span><span class="mrow"><span class="lg"><span>KB</span><img src="../public/logos/karnerblu.png" alt="" onerror="this.remove()"></span><span><span class="cname">KarnerBlu</span><span class="ccap">Founder Mode</span></span></span><span class="more">See more <s aria-hidden="true">&#8599;</s></span></button><div class="m-detail" id="md1" hidden></div></div>
+      <div class="m-item"><button class="ccard m" type="button" data-i="2" aria-expanded="false" aria-controls="md2"><span class="yr">2020 - 2022</span><span class="mrow"><span class="lg"><span>ZM</span><img src="https://www.google.com/s2/favicons?domain=ridezoomo.com&amp;sz=128" alt="" onerror="this.remove()"></span><span><span class="cname">Zoomo</span><span class="ccap">Startup Operator</span></span></span><span class="more">See more <s aria-hidden="true">&#8599;</s></span></button><div class="m-detail" id="md2" hidden></div></div>
+      <div class="m-item"><button class="ccard m" type="button" data-i="3" aria-expanded="false" aria-controls="md3"><span class="yr">2023 - Present</span><span class="mrow"><span class="lg"><span>WW</span><img src="https://www.google.com/s2/favicons?domain=wework.com&amp;sz=128" alt="" onerror="this.remove()"></span><span><span class="cname">WeWork</span><span class="ccap">Turnaround at Scale</span></span></span><span class="more">See more <s aria-hidden="true">&#8599;</s></span></button><div class="m-detail" id="md3" hidden></div></div>
+    </div>
+
+    <!-- Desktop: four equal segments, cards above (1, 3) and below (2, 4) -->
+    <div class="tl" role="group" aria-label="Career timeline. Use left and right arrows to move between chapters." tabindex="0">
+      <div class="tl-row">
+        <div class="cell"><button class="ccard" type="button" data-i="0" aria-expanded="false" aria-controls="cdetail"><span class="lg"><span>AB</span><img src="../public/logos/ab-inbev.png" alt="" onerror="this.remove()"></span><span class="cname">Anheuser-Busch InBev</span><span class="ccap">Operational Excellence</span><span class="more">See more <s aria-hidden="true">&#8599;</s></span><span class="sr-only">, 2012 - 2018</span></button></div>
+        <div class="cell"></div>
+        <div class="cell"><button class="ccard" type="button" data-i="2" aria-expanded="false" aria-controls="cdetail"><span class="lg"><span>ZM</span><img src="https://www.google.com/s2/favicons?domain=ridezoomo.com&amp;sz=128" alt="" onerror="this.remove()"></span><span class="cname">Zoomo</span><span class="ccap">Startup Operator</span><span class="more">See more <s aria-hidden="true">&#8599;</s></span><span class="sr-only">, 2020 - 2022</span></button></div>
+        <div class="cell"></div>
+      </div>
+      <div class="stems" aria-hidden="true"><span data-i="0"></span><i></i><span data-i="2"></span><i></i></div>
+      <div class="track">
+        <button class="seg" type="button" data-i="0" aria-expanded="false" aria-controls="cdetail" aria-label="Anheuser-Busch InBev, 2012 - 2018">2012 - 2018</button>
+        <button class="seg" type="button" data-i="1" aria-expanded="false" aria-controls="cdetail" aria-label="KarnerBlu, 2018 - 2020">2018 - 2020</button>
+        <button class="seg" type="button" data-i="2" aria-expanded="false" aria-controls="cdetail" aria-label="Zoomo, 2020 - 2022">2020 - 2022</button>
+        <button class="seg" type="button" data-i="3" aria-expanded="false" aria-controls="cdetail" aria-label="WeWork, 2023 - Present">2023 - Present</button>
+      </div>
+      <div class="stems" aria-hidden="true"><i></i><span data-i="1"></span><i></i><span data-i="3"></span></div>
+      <div class="tl-row">
+        <div class="cell"></div>
+        <div class="cell"><button class="ccard" type="button" data-i="1" aria-expanded="false" aria-controls="cdetail"><span class="lg"><span>KB</span><img src="../public/logos/karnerblu.png" alt="" onerror="this.remove()"></span><span class="cname">KarnerBlu</span><span class="ccap">Founder Mode</span><span class="more">See more <s aria-hidden="true">&#8599;</s></span><span class="sr-only">, 2018 - 2020</span></button></div>
+        <div class="cell"></div>
+        <div class="cell"><button class="ccard" type="button" data-i="3" aria-expanded="false" aria-controls="cdetail"><span class="lg"><span>WW</span><img src="https://www.google.com/s2/favicons?domain=wework.com&amp;sz=128" alt="" onerror="this.remove()"></span><span class="cname">WeWork</span><span class="ccap">Turnaround at Scale</span><span class="more">See more <s aria-hidden="true">&#8599;</s></span><span class="sr-only">, 2023 - Present</span></button></div>
+      </div>
+    </div>
+    <div class="cdetail" id="cdetail" hidden></div>
+  </div>
+</section>
+
+<!-- ============ ENTREPRENEURSHIP ============ -->
+<section id="entrepreneurship" class="sec">
+  <div class="wrap">
+    <h2 class="h">Things I&rsquo;ve started.</h2>
+    <p class="lede">I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some worked, some taught me more than any growth role. Click any card to read the full story.</p>
+    <div class="vgrid">
+      <button class="vcard v-ef" type="button" data-v="0" aria-haspopup="dialog">
+        <span class="vcover"><span class="vfb" aria-hidden="true">EF</span><img class="fill" src="../public/ventures/emojifriends.avif" alt="" onerror="this.remove()"><span class="status st-ship"><span class="dot"></span>Shipped</span></span>
+        <span class="vbody">
+          <span class="vname">EmojiFriends</span>
+          <span class="vhook">A Kickstarter-funded project for the festival kandi trading crowd. $6K raised, featured on Insomniac.com.</span>
+          <span class="tags"><span>Kickstarter</span><span>EDM</span><span>Consumer Hardware</span></span>
+          <span class="vfoot"><span class="vcta">Read story <s aria-hidden="true">&rarr;</s></span></span>
+        </span>
+      </button>
+      <button class="vcard v-stf" type="button" data-v="1" aria-haspopup="dialog">
+        <span class="vcover"><span class="vfb" aria-hidden="true">STF</span><img class="mark" src="../public/ventures/spreadthefacts.png" alt="" onerror="this.remove()"><span class="status st-ship"><span class="dot"></span>Shipped</span></span>
+        <span class="vbody">
+          <span class="vname">SpreadTheFacts</span>
+          <span class="vhook">Won MIT&rsquo;s COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General.</span>
+          <span class="tags"><span>MIT</span><span>Hackathon</span><span>Public Health</span></span>
+          <span class="vfoot"><span class="vcta">Read story <s aria-hidden="true">&rarr;</s></span></span>
+        </span>
+      </button>
+      <button class="vcard v-sp" type="button" data-v="2" aria-haspopup="dialog">
+        <span class="vcover">
+          <svg class="deco" viewBox="0 0 150 118" fill="none" aria-hidden="true"><path d="M30 92c18-4 30-22 52-24s30-20 34-40" stroke="#3B1F8C" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1 8" opacity=".55"/><path d="M116 44s-17-16-17-29a17 17 0 0 1 34 0c0 13-17 29-17 29z" fill="#3B1F8C"/><circle cx="116" cy="15" r="6" fill="#F1E6DA"/><path d="M30 104s-12-11-12-20a12 12 0 0 1 24 0c0 9-12 20-12 20z" stroke="#3B1F8C" stroke-width="2.5"/><circle cx="30" cy="84" r="4" fill="#3B1F8C"/></svg>
+          <span class="bigtype" aria-hidden="true">Spots</span>
+          <span class="status st-exp"><span class="dot"></span>Experimental</span>
+        </span>
+        <span class="vbody">
+          <span class="vname">Spots</span>
+          <span class="vhook">Social discovery for the places you love and want to return to.</span>
+          <span class="tags"><span>Co-founder</span><span>Consumer</span><span>Social</span></span>
+          <span class="vfoot"><span class="vcta">Read story <s aria-hidden="true">&rarr;</s></span></span>
+        </span>
+      </button>
+      <button class="vcard v-na" type="button" data-v="3" aria-haspopup="dialog">
+        <span class="vcover">
+          <svg class="deco" viewBox="0 0 150 118" fill="none" aria-hidden="true"><path d="M10 104c24-2 30-34 54-36s28 18 46 10 22-38 28-64" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 9" opacity=".6"/><path d="M124 16l15-4 3 15" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="104" r="6" fill="#fff"/></svg>
+          <span class="bigtype" aria-hidden="true">Navigate.AI</span>
+          <span class="status st-act"><span class="dot"></span>Active</span>
+        </span>
+        <span class="vbody">
+          <span class="vname">Navigate.AI</span>
+          <span class="vhook">Your career pivot, backed by real data. No AI guesswork.</span>
+          <span class="tags"><span>Founder</span><span>AI</span><span>2025&rarr;</span></span>
+          <span class="vfoot"><span class="vcta">Read story <s aria-hidden="true">&rarr;</s></span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEYOND WORK ============ -->
+<section id="beyond-work" class="sec band">
+  <div class="wrap">
+    <p class="label">Beyond Work</p>
+    <h2 class="h">Get to know me outside of work.</h2>
+    <div class="travel">
+      <figure class="map">
+        <svg id="wmap" viewBox="0 0 800 400" role="img" aria-label="World map with 16 visited countries marked. Colombia, the favorite, is ringed."></svg>
+        <figcaption class="legend"><span><i></i>Visited</span><span class="hov" aria-live="polite"></span></figcaption>
+      </figure>
+      <div class="tside">
+        <blockquote class="tq">&ldquo;The world is a book and those who do not travel read only one page.&rdquo;<cite>Saint Augustine</cite></blockquote>
+        <p class="count"><mark>16</mark> countries and <mark>32</mark> cities explored.</p>
+        <ul class="facts">
+          <li><span class="fi" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.5s-7.5-4.6-7.5-10.4A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.4-7.5 10.4z"/></svg></span><span><b>Favorite city to visit</b> <span class="v">&middot; Mexico City</span></span></li>
+          <li><span class="fi" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 11 12 3.8l8.5 7.2V20a1 1 0 0 1-1 1H15v-6.2H9V21H4.5a1 1 0 0 1-1-1z"/></svg></span><span><b>Current base</b> <span class="v">&middot; New York, NY</span></span></li>
+          <li><span class="fi" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 15.6 13.6 11V5.4a1.6 1.6 0 0 0-3.2 0V11l-7.9 4.6v1.7l7.9-2.5v4.6l-2 1.5V22l3.6-1 3.6 1v-1.1l-2-1.5v-4.6l7.9 2.5z"/></svg></span><span><b>Next up</b> <span class="v">&middot; Turkey, September 2026</span></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hob">
+      <p class="rule-label">Hobbies</p>
+      <div class="mosaic">
+        <button class="tile hero-t" type="button" data-h="0" aria-haspopup="dialog"><span class="ph"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2.5h4L15.5 6"/></svg>Photo &middot; Riding &amp; driving</span><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="7"/><circle cx="17" cy="20" r="3.5"/><path d="M7 35l11-10 8 7 6-5 10 8"/></svg><span class="plus" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg></span><span class="tx"><span class="t1">Riding &amp; driving</span><span class="t2">Three days disconnected through the hills of Colombia.</span></span></button>
+        <button class="tile" type="button" data-h="1" aria-haspopup="dialog"><span class="ph"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2.5h4L15.5 6"/></svg>Photo &middot; Building with AI</span><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="7"/><circle cx="17" cy="20" r="3.5"/><path d="M7 35l11-10 8 7 6-5 10 8"/></svg><span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg></span><span class="tx"><span class="t1">Building with AI</span><span class="t2">Products, agents, automation. Always shipping.</span></span></button>
+        <button class="tile" type="button" data-h="2" aria-haspopup="dialog"><span class="ph"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2.5h4L15.5 6"/></svg>Photo &middot; Martial arts</span><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="7"/><circle cx="17" cy="20" r="3.5"/><path d="M7 35l11-10 8 7 6-5 10 8"/></svg><span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg></span><span class="tx"><span class="t1">Martial arts</span><span class="t2">BJJ, 4x/week. Purple belt.</span></span></button>
+        <button class="tile" type="button" data-h="3" aria-haspopup="dialog"><span class="ph"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2.5h4L15.5 6"/></svg>Photo &middot; Youth mentor</span><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="7"/><circle cx="17" cy="20" r="3.5"/><path d="M7 35l11-10 8 7 6-5 10 8"/></svg><span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg></span><span class="tx"><span class="t1">Youth mentor</span><span class="t2">8 years in NYC. Mentee just graduated college.</span></span></button>
+        <button class="tile" type="button" data-h="4" aria-haspopup="dialog"><span class="ph"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2.5h4L15.5 6"/></svg>Photo &middot; Festivals &amp; salsa</span><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="7"/><circle cx="17" cy="20" r="3.5"/><path d="M7 35l11-10 8 7 6-5 10 8"/></svg><span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg></span><span class="tx"><span class="t1">Festivals &amp; salsa</span><span class="t2">Coachella, Afropunk. Salsa Saturdays in Bushwick.</span></span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section id="education" class="sec">
+  <div class="wrap">
+    <p class="label">Education</p>
+    <h2 class="h">Degree, and the things I added after.</h2>
+    <div class="edu">
+      <div>
+        <p class="rule-label">Degree</p>
+        <div class="deg">
+          <span class="lg"><span>UM</span><img src="https://www.google.com/s2/favicons?domain=umass.edu&amp;sz=128" alt="UMass Amherst logo" onerror="this.remove()"></span>
+          <div>
+            <h3>UMass Amherst</h3>
+            <p class="dmeta2 tnum">2008 - 2012 &middot; Amherst, MA</p>
+            <p class="dline">B.S. Mechanical Engineering &middot; Cum Laude</p>
+            <p class="ddet">Graduated cum laude. Built a foundation in systems thinking that still shapes how I approach product problems.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="rule-label">Certifications</p>
+        <ul class="certs">
+          <li><span class="lg"><span>MIT</span><img src="https://www.google.com/s2/favicons?domain=mitsloan.mit.edu&amp;sz=128" alt="MIT Sloan logo" onerror="this.remove()"></span><span><b>Mastering Design Thinking</b><small>MIT Sloan Executive Education</small></span><span class="yr2">&rsquo;20</span></li>
+          <li><span class="lg"><span>HBS</span><img src="https://www.google.com/s2/favicons?domain=hbs.edu&amp;sz=128" alt="Harvard Business School logo" onerror="this.remove()"></span><span><b>Credential of Readiness (CORe)</b><small>Harvard Business School Online</small></span><span class="yr2">&rsquo;15</span></li>
+          <li><span class="lg"><span>YC</span><img src="https://www.google.com/s2/favicons?domain=ycombinator.com&amp;sz=128" alt="Y Combinator logo" onerror="this.remove()"></span><span><b>Product School</b><small>Y Combinator</small></span><span class="yr2"></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap"><p>&copy; 2026 Hussain Alam</p><p>Built with Next.js</p></div>
+</footer>
+
+<dialog class="dlg vdlg" id="vdlg" aria-labelledby="vdlg-t"></dialog>
+<dialog class="dlg hdlg" id="hdlg" aria-labelledby="hdlg-t"></dialog>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var X = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  /* Fixed-width digit boxes: true tabular figures for Urbanist, which has no tnum feature */
+  function tabular(el) { el.innerHTML = '<span>' + esc(el.textContent).replace(/[0-9]/g, '<span class="dg">$&</span>') + '</span>'; }
+  var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  $$('.seg, .yr, .yr2, .dmeta2').forEach(tabular);
+
+  /* ---------- Live New York clock ---------- */
+  (function () {
+    var el = $('.clk'), fmt;
+    try { fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }); } catch (e) { return; }
+    function tick() { el.textContent = fmt.format(new Date()); tabular(el); }
+    tick(); setInterval(tick, 30000);
+  })();
+
+  /* ---------- Mobile menu ---------- */
+  var mBtn = $('.menu-btn'), mMenu = $('#mmenu');
+  function setMenu(open, refocus) {
+    mBtn.setAttribute('aria-expanded', String(open));
+    mBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    mMenu.hidden = !open;
+    if (open) { var f = mMenu.querySelector('a'); if (f) f.focus(); }
+    else if (refocus) mBtn.focus();
+  }
+  mBtn.addEventListener('click', function () { setMenu(mBtn.getAttribute('aria-expanded') !== 'true', true); });
+  $$('a', mMenu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false, false); }); });
+  document.addEventListener('click', function (e) {
+    if (!mMenu.hidden && !mMenu.contains(e.target) && !mBtn.contains(e.target)) setMenu(false, false);
+  });
+  window.matchMedia('(min-width: 768px)').addEventListener('change', function (e) { if (e.matches) setMenu(false, false); });
+
+  /* ---------- Scroll spy for the pill nav ---------- */
+  if ('IntersectionObserver' in window) {
+    var spy = $$('.links a');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) spy.forEach(function (a) { a.classList.toggle('on', a.dataset.spy === en.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['hero', 'career', 'entrepreneurship', 'beyond-work', 'education'].forEach(function (id) { io.observe(document.getElementById(id)); });
+  }
+
+  /* ---------- Career data ---------- */
+  var CAREER = [
+    { co: 'Anheuser-Busch InBev', ini: 'AB', logo: '../public/logos/ab-inbev.png', yrs: '2012 - 2018', ten: '6y',
+      role: 'Operations → Operational Excellence', loc: 'Newark, NJ → New York, NY',
+      why: 'First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs, from the brewhouse floor up to HR strategy.',
+      hero: 'Reduced people-data error rates 7% → 1% across 20,000 employees by re-engineering the master-data platform used by 125+ HR partners.',
+      subs: ['Led 45+ executive workshops that converted pain points into a unified 1-year strategy roadmap aligned to corporate KPIs.',
+        'Earlier brewhouse ops: #1 of 12 breweries on KPI leaderboard; $800K/year savings; led 22-operator team brewing 2.5M cans daily.',
+        'Logistics & warehouse ops: +9% pallet moves/hour across a 450K-case warehouse and 33 union operators on 3 shifts.'],
+      roles: [['Group Manager, Brewhouse Operations', 'Newark, NJ', 'Jul 2012 - Aug 2013'],
+        ['Group Manager, Logistics & Warehouse Ops', 'Newark, NJ', 'Aug 2013 - Sep 2014'],
+        ['Process Improvement Engineer, North America', 'New York, NY', 'Sep 2014 - May 2016'],
+        ['Operational Excellence Manager, People COE', 'New York, NY', 'May 2016 - Jul 2018']] },
+    { co: 'KarnerBlu', ini: 'KB', logo: '../public/logos/karnerblu.png', yrs: '2018 - 2020', ten: '2y',
+      role: 'Product Consultant · Co-Founder', loc: 'Remote · Staples, Unilever',
+      why: 'Co-founded my own consultancy to work directly with Fortune 500s on execution systems. Faster loops, my own call sheet.',
+      hero: 'Boosted resource-allocation efficiency +30% at Fortune 500 clients via a value-based project prioritization framework.',
+      subs: ['Built an execution operating system across 7 departments, translating stakeholder needs into workflows, cadences, and KPI reporting.',
+        'Clients included Staples and Unilever. Remote + on-site hybrid.'] },
+    { co: 'Zoomo', ini: 'ZM', logo: 'https://www.google.com/s2/favicons?domain=ridezoomo.com&sz=128', yrs: '2020 - 2022', ten: '2y',
+      role: 'City Ops → Sr. Manager, Product Strategy & Ops', loc: 'New York, NY · 8 markets',
+      why: 'Series-B micromobility. Traded consulting decks for real P&L ownership and a team in the trenches.',
+      hero: 'Scaled B2C subscription ARR 10× ($500K → $5M) across 8 markets through pricing strategy, lifecycle optimization, and full P&L ownership.',
+      subs: ['As the 5th U.S. hire: +22% MoM WAU by redesigning subscription offerings; booking-to-subscription conversion 43% → 73% via A/B testing.',
+        'Led cross-functional team of 5 direct / 40+ indirect across 8 markets. Aligned OKRs to revenue and retention goals.',
+        'Launched 4 North American markets; +25% onboarding efficiency through market analysis and cross-functional execution.',
+        'Reduced e-bike theft 20% with a new insurance product. Ranked 1st of 30 in the global data champions program (COO award).'],
+      roles: [['City Operations Mgr & Interim PM, B2B', 'New York, NY', 'Sep 2020 - Aug 2021'],
+        ['Sr. Manager, Product Strategy & Operations', 'New York, NY', 'Aug 2021 - Nov 2022']] },
+    { co: 'WeWork', ini: 'WW', logo: 'https://www.google.com/s2/favicons?domain=wework.com&sz=128', yrs: '2023 - Present', ten: '2y',
+      role: 'Manager, Product Management, Global', loc: 'New York, NY · 13 countries',
+      why: 'Signed three months before WeWork filed for bankruptcy. Friends said don’t, headlines said worse. I believed in the people, the brand, and the rare shot at being part of a real turnaround.',
+      hero: '$14M revenue (+60% YoY) owning the global parking vertical across 13 countries. Helped deliver WeWork’s first profitable quarter.',
+      subs: ['Global Stripe payments: $800K MRR across 13 countries. Defined billing architecture for a scalable, compliant payments system.',
+        '$12M annual revenue + 10% utilization lift across 315 locations via Gemini-powered pricing & inventory benchmarking.',
+        'On-demand office workflows: 37% YoY booking growth (50K vs 36K), +66% YoY credit spend through funnel optimization.',
+        'LATAM on-demand private offices: identified unmet demand, secured COO buy-in, piloted in Mexico, scaled to 150 offices and 900 incremental Q4 2025 bookings.'] }
+  ];
+
+  function detailHTML(r) {
+    var h = '<button class="xbtn d-x" type="button" data-unpin aria-label="Close details">' + X + '</button>' +
+      '<span class="lg dlogo"><span>' + r.ini + '</span><img src="' + esc(r.logo) + '" alt="" onerror="this.remove()"></span>' +
+      '<div class="dmain"><h3 class="dco">' + esc(r.co) + '</h3>' +
+      '<p class="drole">' + esc(r.role) + '</p>' +
+      '<p class="dmeta tnum">' + esc(r.yrs) + ' · ' + r.ten + ' · ' + esc(r.loc) + '</p>' +
+      '<p class="dwhy">' + esc(r.why) + '</p>' +
+      '<p class="dhero">' + esc(r.hero) + '</p>' +
+      '<ul class="dsubs">' + r.subs.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>';
+    if (r.roles) {
+      h += '<div class="roles"><h4>Roles held</h4><ol>' + r.roles.map(function (x) {
+        return '<li><span><b>' + esc(x[0]) + '</b><small>' + esc(x[1]) + '</small></span><span class="dt tnum">' + esc(x[2]) + '</span></li>';
+      }).join('') + '</ol></div>';
+    }
+    return h + '</div>';
+  }
+
+  var pinned = null, panel = $('#cdetail'), desk = window.matchMedia('(min-width: 768px)');
+  function setPin(i) {
+    pinned = i;
+    $$('#career [data-i]').forEach(function (el) {
+      var on = +el.dataset.i === pinned;
+      el.classList.toggle('on', on);
+      if (el.tagName === 'BUTTON') el.setAttribute('aria-expanded', String(on));
+    });
+    $$('.m-detail').forEach(function (d) { d.hidden = true; d.innerHTML = ''; });
+    if (pinned === null) { panel.hidden = true; panel.innerHTML = ''; return; }
+    var html = detailHTML(CAREER[pinned]);
+    panel.innerHTML = html; panel.hidden = false;
+    var md = $('#md' + pinned); md.innerHTML = html; md.hidden = false;
+    $$('.dt, .dmeta', panel).concat($$('.dt, .dmeta', md)).forEach(tabular);
+  }
+  function focusCard(i) {
+    var c = desk.matches ? $('.tl .ccard[data-i="' + i + '"]') : $('.m-list .ccard[data-i="' + i + '"]');
+    if (c) c.focus();
+  }
+  $$('#career .ccard, #career .seg').forEach(function (b) {
+    b.addEventListener('click', function () { var i = +b.dataset.i; setPin(pinned === i ? null : i); });
+  });
+  $('#career').addEventListener('click', function (e) {
+    if (e.target.closest('[data-unpin]')) { var i = pinned; setPin(null); focusCard(i); }
+  });
+  $('.tl').addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    var n = pinned === null ? (e.key === 'ArrowRight' ? 0 : 3) : Math.max(0, Math.min(3, pinned + (e.key === 'ArrowRight' ? 1 : -1)));
+    setPin(n);
+    var seg = $('.seg[data-i="' + n + '"]'); if (seg && e.target.classList.contains('seg')) seg.focus();
+  });
+
+  /* ---------- Escape: menu first, then career detail (dialogs handle their own) ---------- */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (document.querySelector('dialog[open]')) return;
+    if (!mMenu.hidden) { setMenu(false, true); return; }
+    if (pinned !== null) { var i = pinned; setPin(null); focusCard(i); }
+  });
+
+  /* ---------- Dialog helpers ---------- */
+  var lastTrigger = null;
+  function openDlg(d, trigger) {
+    lastTrigger = trigger;
+    d.showModal();
+    document.documentElement.classList.add('lock');
+    d.scrollTop = 0;
+  }
+  $$('dialog.dlg').forEach(function (d) {
+    d.addEventListener('click', function (e) {
+      if (e.target === d || e.target.closest('[data-close]')) d.close();
+    });
+    d.addEventListener('close', function () {
+      document.documentElement.classList.remove('lock');
+      d.innerHTML = '';
+      if (lastTrigger) { lastTrigger.focus(); lastTrigger = null; }
+    });
+  });
+
+  /* ---------- Ventures ---------- */
+  var VENTURES = [
+    { cls: 'v-ef', name: 'EmojiFriends', ini: 'EF', status: 'Shipped', st: 'st-ship',
+      hook: 'A Kickstarter-funded project for the festival kandi trading crowd. $6K raised, featured on Insomniac.com.',
+      p: 'By 2015, emoji had become a second language for anyone under 30, but the physical world hadn’t caught up. The EDM festival scene had a decade-old tradition of trading kandi beads with strangers as a form of connection. The bracelets were still stuck in 2005 visual language: smiley faces, peace signs, block letters. No one had brought the emoji vocabulary into the thing people were actually wearing on their wrists.',
+      b: 'A line of collectible emoji-face beads designed for the kandi-trading culture, manufactured overseas and sold direct-to-consumer. I ran the Kickstarter from concept to fulfillment: product design, factory sourcing, campaign video, reward tiers, pricing, and the post-funding logistics of getting thousands of beads into envelopes. Built the brand on Instagram with zero paid spend. The product photographed well enough that the community did the distribution.',
+      o: 'Raised just over $6,000 on Kickstarter from a cold-start audience. Featured on Insomniac.com, the largest EDM publication at the time. Grew past 1,200 organic Instagram followers and shipped to customers across the US, UK, and Australia. The brand built a small but real community of repeat buyers who would message photos from festivals months later.',
+      l: 'Hardware margins are brutal once you factor in shipping envelopes one at a time. The smart next move would have been a subscription drop model or a licensing deal with a festival brand instead of another SKU. I also learned how much of “going viral” is really just a product that’s photogenic enough to survive compression on someone else’s feed.',
+      url: 'https://www.insomniac.com/magazine/meet-the-kickstarter-thats-funding-emoji-kandi-beads/', link: 'Read the Insomniac feature' },
+    { cls: 'v-stf', name: 'SpreadTheFacts', ini: 'STF', status: 'Shipped', st: 'st-ship',
+      hook: 'Won MIT’s COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General.',
+      p: '48 hours into the pandemic lockdown, MIT ran a hackathon focused on improving access to information for vulnerable populations. My team’s first instinct was to build a “better CDC website”: cleaner UI on top of the same firehose of advisories. I disagreed. The real problem wasn’t that the information was ugly; it was that the people who needed it most weren’t going to a website at all.',
+      b: 'I was the minority voice in the room, and when I spoke up I wasn’t being heard. So I scheduled a session with the hackathon moderators to pressure-test the direction. Judge feedback came back aligned with my read. I led the team through a design-thinking exercise to redefine the problem around a specific audience (essential workers who needed PPE, not pamphlets), and we pivoted hard. The output was a pitch to crowdfund and distribute reusable cotton masks directly to frontline staff, paired with plain-language CDC-sourced hygiene guidance.',
+      o: 'Won the hackathon after a grueling 48 hours. Raised $5,500 in follow-on funding and partnered with Mass General Brigham to distribute 6,500 reusable masks to healthcare workers, grocery employees, and transit staff across the Boston area. The project kept going after the weekend ended, which is the only outcome that really matters from a hackathon.',
+      l: 'Being the dissenting voice in a team room is useless unless you have a mechanism to force the conversation. Scheduling the moderator session was the whole ballgame. Without it, we would have shipped a nicer-looking CDC website and lost. Also: in a crisis, the fastest path from idea to impact is physical goods, not software.' },
+    { cls: 'v-sp', name: 'Spots', ini: 'SP', status: 'Experimental', st: 'st-exp',
+      hook: 'Social discovery for the places you love and want to return to.',
+      p: 'Google Maps is a utility. Yelp is a review directory. Neither of them answers the question you actually ask your friends: “Where should I take someone tonight?” The best place recommendations happen inside group chats and disappear there: unindexed, unsearchable, and lost the second the conversation scrolls. Repeat-visit behavior had no product surface at all.',
+      b: 'Co-founded Spots as a social discovery app. Think Pinterest for places, with a social graph layered on top of Google Maps. Prototyped the full experience in Sketch and InVision, ran early user-testing sessions through Instabug’s user groups, and iterated through three rounds of wireframes before any code shipped. The wedge was collections: let people save, tag, and share the places that were already living in their Notes app.',
+      o: 'Landed the spotsapp.io domain and shipped a working prototype to a small test group. Got useful signal on the save-and-share loop but never cracked the cold-start problem of social graphs. Without a graph, you can’t really test whether a social-discovery app is fun. Shelved it when Navigate.AI started demanding full attention.',
+      l: 'Location-based social is a graveyard of well-designed apps. The product wasn’t the hard part; seeding the graph was. If I ran this back, I’d start with a single city, a single use case (date night, probably), and a closed invite list instead of a general-purpose map overlay.' },
+    { cls: 'v-na', name: 'Navigate.AI', ini: 'NA', status: 'Active', st: 'st-act',
+      hook: 'Your career pivot, backed by real data. No AI guesswork.',
+      p: 'LLMs made resume writing worse, not better. Every “AI resume tool” on the market spits out the same bland, impact-free bullets because the model has no idea whether the claim is true, whether the metric is defensible, or whether the phrasing actually lands with a recruiter. Career-changers, the people who need the most help, get the least signal. They don’t know which of their experiences translate, and generic AI can’t tell them.',
+      b: 'Navigate.AI scores every resume bullet on three dimensions (Impact, Context, and Structure) against a corpus of real, outcomes-graded writing. Instead of hallucinating new accomplishments, the product surfaces the weak spots in what you already wrote and guides you through placeholder-based enhancement: the user fills in the specifics, the tool tightens the craft. Co-founded with Laurenz; shipping the closed beta under navigate.ai and gonavigate.app.',
+      o: 'Closed beta running April 19 to May 3, 2026, targeting 50 to 100 signups with an activation-rate north star of ≥50%. Built on top of a framework that started life as a 2025 hackathon win (Resume Optimizer, ideation score 11/15). Early tester feedback is clustering around the same insight: “I didn’t realize how vague my own bullets were.”',
+      l: 'Still learning this one in real time. The biggest thing so far: people don’t want an AI that writes for them. They want one that calls them out. Honest feedback is a scarcer resource than generated text, and the product-market fit question is whether people will pay to be told their resume is weaker than they think.',
+      url: 'https://gonavigate.app', link: 'Visit' }
+  ];
+  var vdlg = $('#vdlg');
+  $$('.vcard').forEach(function (card) {
+    card.addEventListener('click', function () {
+      var v = VENTURES[+card.dataset.v];
+      vdlg.className = 'dlg vdlg ' + v.cls;
+      vdlg.innerHTML =
+        '<div class="vband">' +
+          '<button class="xbtn top-x" type="button" data-close aria-label="Close story">' + X + '</button>' +
+          '<div class="vmeta"><span class="vmark" aria-hidden="true">' + v.ini + '</span><span class="status ' + v.st + '"><span class="dot"></span>' + v.status + '</span></div>' +
+          '<h3 id="vdlg-t">' + esc(v.name) + '</h3><p>' + esc(v.hook) + '</p>' +
+        '</div>' +
+        '<div class="vbody2"><dl class="cs">' +
+          '<dt>Problem</dt><dd>' + esc(v.p) + '</dd>' +
+          '<dt>Built</dt><dd>' + esc(v.b) + '</dd>' +
+          '<dt>Outcome</dt><dd>' + esc(v.o) + '</dd>' +
+          '<dt>Lesson</dt><dd class="it">' + esc(v.l) + '</dd>' +
+        '</dl>' +
+        (v.url ? '<a class="pillbtn" href="' + v.url + '" target="_blank" rel="noopener">' + esc(v.link) + ' <s aria-hidden="true">&#8599;</s></a>' : '') +
+        '</div>';
+      openDlg(vdlg, card);
+    });
+  });
+
+  /* ---------- Hobbies ---------- */
+  var HOBBIES = [
+    { label: 'Riding & driving', tag: 'Three days disconnected through the hills of Colombia.',
+      meta: [['Route', 'Medellín → Jericó → Fredonia'], ['Days', '3'], ['Rode with', 'Friend since age 14']],
+      story: ['Three days on a motorcycle through the mountains outside Medellín. Went with a friend I’ve known since I was fourteen, the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.',
+        'No cell service for most of it. You don’t realize how much of your attention the phone quietly costs you until you spend three days without one. I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I’ve found.',
+        'The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft (fermentation, aging, a thousand small choices) mapped onto coffee instead. Different product, same instinct.'],
+      embed: { src: 'https://www.google.com/maps/d/embed?mid=1OyXj6bPJXS677fD6peBqAic3mLXtM-E&ehbc=2E312F', title: 'Colombia motorcycle route: Medellín → Salgar → Jericó → Fredonia', caption: 'The actual route: 2-Day Colonial Cruisin’ with Adrenaline Addicts.' } },
+    { label: 'Building with AI', tag: 'Products, agents, automation. Always shipping.',
+      meta: [['Stack', 'Claude, Cursor, v0'], ['Cadence', 'Weekly shipping'], ['Latest', 'This site']],
+      story: ['I use AI to collapse the distance between “I wonder if...” and “here’s a working thing.” Most of what I build now starts in a CLI session with Claude and ends as a prototype I can show a real user the same week.', 'This site is one of them.'] },
+    { label: 'Martial arts', tag: 'BJJ, 4x/week. Purple belt.',
+      meta: [['Belt', 'Purple'], ['Frequency', '4x / week'], ['Focus', 'Leg entanglements']],
+      story: ['BJJ teaches you that composure is a muscle. Four nights a week I go get outclassed by blue belts half my age, and every time I leave the mat sharper than I arrived.'] },
+    { label: 'Youth mentor', tag: '8 years in NYC. Mentee just graduated college.',
+      meta: [['Years', '8'], ['City', 'New York'], ['Cadence', 'Bi-weekly']],
+      story: ['Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running.'] },
+    { label: 'Festivals & salsa', tag: 'Coachella, Afropunk. Salsa Saturdays in Bushwick.',
+      meta: [['Regular', 'Coachella · Afropunk'], ['Weekly', 'Bushwick salsa']],
+      story: ['Live music is how I reset. Coachella and Afropunk every year, smaller festivals whenever the lineup earns the flight.', 'Saturday nights I’m at salsa socials in Bushwick. You don’t need to be good. You need to show up.'] }
+  ];
+  var hdlg = $('#hdlg');
+  var CAM = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2.5h4L15.5 6"/></svg>';
+  var GLYPH = '<svg class="glyph" style="width:104px;height:104px" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="7"/><circle cx="17" cy="20" r="3.5"/><path d="M7 35l11-10 8 7 6-5 10 8"/></svg>';
+  $$('.tile').forEach(function (tile) {
+    tile.addEventListener('click', function () {
+      var i = +tile.dataset.h, h = HOBBIES[i];
+      var kick = String(i + 1).padStart(2, '0') + ' · ' + h.label;
+      var html =
+        '<button class="xbtn top-x" type="button" data-close aria-label="Close">' + X + '</button>' +
+        '<div class="hphoto" aria-hidden="true"><span class="ph">' + CAM + 'Photo · ' + esc(h.label) + '</span>' + GLYPH + '</div>' +
+        '<div class="hbody"><p class="kick">' + esc(kick) + '</p>' +
+        '<h3 id="hdlg-t">' + esc(h.label) + '</h3><p class="htag">' + esc(h.tag) + '</p>' +
+        '<dl class="hmeta">' + h.meta.slice(0, 3).map(function (m) { return '<div><dt>' + esc(m[0]) + '</dt><dd>' + esc(m[1]) + '</dd></div>'; }).join('') + '</dl>' +
+        '<div class="story">' + h.story.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+      if (h.embed) {
+        html += '<figure class="embed"><div class="ifr"><iframe src="' + esc(h.embed.src) + '" title="' + esc(h.embed.title) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><figcaption>' + esc(h.embed.caption) + '</figcaption></figure>';
+      }
+      hdlg.innerHTML = html + '</div>';
+      openDlg(hdlg, tile);
+    });
+  });
+
+  /* ---------- World map: d3-geo + topojson, dot-grid fallback ---------- */
+  var VISITED = [
+    ['US', 'United States', 39.8, -98.5, 840, 92, 66], ['CA', 'Canada', 56.1, -106.3, 124, 88, 46], ['MX', 'Mexico', 23.6, -102.5, 484, 86, 88],
+    ['CO', 'Colombia', 4.6, -74.1, 170, 116, 118, 1], ['BR', 'Brazil', -14.2, -51.9, 76, 130, 144], ['GB', 'United Kingdom', 54.0, -2.0, 826, 232, 62],
+    ['FR', 'France', 46.2, 2.2, 250, 238, 74], ['ES', 'Spain', 40.0, -3.7, 724, 228, 84], ['IT', 'Italy', 41.9, 12.5, 380, 254, 82],
+    ['NL', 'Netherlands', 52.1, 5.3, 528, 244, 64], ['DE', 'Germany', 51.1, 10.4, 276, 252, 68], ['BD', 'Bangladesh', 23.7, 90.4, 50, 328, 108],
+    ['IN', 'India', 20.6, 78.9, 356, 316, 108], ['JP', 'Japan', 36.2, 138.3, 392, 392, 86], ['TH', 'Thailand', 15.9, 101.0, 764, 344, 118],
+    ['AE', 'UAE', 23.4, 53.8, 784, 292, 104]
+  ];
+  var svg = $('#wmap'), hov = $('.legend .hov');
+  function markers(pt) {
+    var fav = '', rest = '';
+    VISITED.forEach(function (c) {
+      var p = pt(c), x = p[0].toFixed(1), y = p[1].toFixed(1);
+      if (c[7]) {
+        fav = '<g class="mk" data-n="' + c[1] + ' (favorite)"><circle class="pulse" cx="' + x + '" cy="' + y + '" r="11"/><circle class="ring" cx="' + x + '" cy="' + y + '" r="11"/><circle class="d" cx="' + x + '" cy="' + y + '" r="5"/><title>' + c[1] + ', favorite</title></g>';
+      } else {
+        rest += '<g class="mk" data-n="' + c[1] + '"><circle class="d" cx="' + x + '" cy="' + y + '" r="4.6"/><title>' + c[1] + '</title></g>';
+      }
+    });
+    return '<g>' + rest + fav + '</g>';
+  }
+  function wireHover() {
+    $$('.mk', svg).forEach(function (g) {
+      g.addEventListener('mouseenter', function () { hov.textContent = g.dataset.n; });
+      g.addEventListener('mouseleave', function () { hov.textContent = ''; });
+    });
+  }
+  function drawFallback() {
+    var DOTS = [[60,50],[72,50],[84,50],[96,50],[108,55],[68,62],[80,62],[92,62],[104,62],[116,68],[76,74],[88,74],[100,74],[112,80],[96,86],[118,110],[124,120],[128,132],[130,144],[132,156],[134,168],[130,180],[230,62],[240,62],[250,62],[236,70],[246,70],[256,70],[242,78],[252,78],[240,100],[250,100],[260,110],[248,118],[258,126],[264,136],[254,146],[260,158],[252,168],[276,92],[282,100],[288,108],[300,70],[312,70],[324,70],[336,72],[348,74],[360,78],[304,82],[316,82],[328,84],[340,86],[352,90],[316,96],[330,98],[342,102],[352,106],[340,114],[350,120],[392,166],[402,166],[412,170],[398,176],[408,178]];
+    var k = 800 / 480;
+    svg.innerHTML = '<g>' + DOTS.map(function (d) { return '<circle class="gdot" cx="' + (d[0] * k).toFixed(1) + '" cy="' + (d[1] * k).toFixed(1) + '" r="5"/>'; }).join('') + '</g>' +
+      markers(function (c) { return [c[5] * k, c[6] * k]; });
+    wireHover();
+  }
+  function load(src) {
+    return new Promise(function (res, rej) { var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+  }
+  var CDN = 'https://cdn.jsdelivr.net/npm/';
+  var real = load(CDN + 'd3-array@3.2.4/dist/d3-array.min.js')
+    .then(function () { return load(CDN + 'd3-geo@3.1.1/dist/d3-geo.min.js'); })
+    .then(function () { return load(CDN + 'topojson-client@3.1.0/dist/topojson-client.min.js'); })
+    .then(function () { return fetch(CDN + 'world-atlas@2/countries-110m.json'); })
+    .then(function (r) { if (!r.ok) throw new Error('atlas'); return r.json(); });
+  var timeout = new Promise(function (_, rej) { setTimeout(function () { rej(new Error('timeout')); }, 9000); });
+  Promise.race([real, timeout]).then(function (topo) {
+    var proj = d3.geoMercator().scale(125).translate([400, 400 / 1.55]).center([10, 20]);
+    var path = d3.geoPath(proj);
+    var vis = {}; VISITED.forEach(function (c) { vis[c[4]] = 1; });
+    var fc = topojson.feature(topo, topo.objects.countries);
+    var land = fc.features.filter(function (f) { return f.id !== '010'; }).map(function (f) {
+      var d = path(f); return d ? '<path class="land' + (vis[+f.id] ? ' v' : '') + '" d="' + d + '"/>' : '';
+    }).join('');
+    svg.innerHTML = '<g>' + land + '</g>' + markers(function (c) { return proj([c[3], c[2]]); });
+    wireHover();
+  }).catch(drawFallback);
+})();
+</script>
+</body>
+</html>

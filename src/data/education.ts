@@ -1,7 +1,7 @@
 import type { Certification, Degree } from "@/types";
 
 // From Hussain's 2026 resume. Verify exact years + any missing credentials
-// (e.g. YC Product School reference in the old Education stub) before ship.
+// before ship. The YC entry is Startup School (confirmed 2026-10-21; year unknown).
 export const degree: Degree = {
   school: "UMass Amherst",
   crest: "UM",
@@ -30,9 +30,8 @@ export const certifications: Certification[] = [
     logoDomain: "hbs.edu",
   },
   {
-    name: "Product School",
+    name: "Startup School",
     issuer: "Y Combinator",
-    year: "—",
     icon: "YC",
     logoDomain: "ycombinator.com",
   },

@@ -1,0 +1,726 @@
+<!--
+Variant B: Transit Authority
+One route, five stations. The whole page is a transit line drawn with the clarity of Tokyo Metro signage: circle badges with a line letter and number, thick colored strokes with rounded caps, a sticky route-map rail that doubles as the nav, and calm type.
+Fonts: Manrope (400 to 800) for all text; JetBrains Mono for station codes, years and metrics.
+Palette: page #FAFAF7, ink #0F1E3D, muted #4B5670, hairline #D9DDE3. Lines: Career vermillion #E63B1E, Entrepreneurship cobalt #1F4FD8, Beyond Work green #138A5E, Education amber #D9900B.
+Signature moment: when Career enters view the vermillion line draws itself left to right and its four stations light up in order; the route map in the left rail draws at the same time. A small marker then rides the career line with scroll progress. Honors prefers-reduced-motion.
+Hobby photos are Unsplash placeholders, marked inline.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hussain Alam · Product Strategist &amp; Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF7;--ink:#0F1E3D;--mut:#4B5670;--hair:#D9DDE3;--c:#E63B1E;--e:#1F4FD8;--b:#138A5E;--d:#D9900B;--tc:#FCE8E3;--te:#E6ECFB;--tb:#E1F2EA;--td:#FBEFD8;--rail:220px;--top:56px;--strip:56px;--lc:var(--ink);--sans:"Manrope",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:calc(var(--top) + 32px);overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--sans);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+ul,ol{list-style:none}
+h1,h2,h3{line-height:1.12;font-weight:800;letter-spacing:-.015em}
+h2{font-size:32px}
+.mono{font-family:var(--mono);letter-spacing:.01em}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:3px}
+.skip{position:absolute;left:16px;top:-60px;z-index:60;background:var(--ink);color:#fff;padding:12px 16px;font-weight:700;text-decoration:none}
+.skip:focus{top:8px}
+
+/* badges */
+.bdg{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#fff;border:3px solid var(--lc);color:var(--ink);font:700 13px/1 var(--mono);flex:none;letter-spacing:0}
+.bdg.sm{width:36px;height:36px;font-size:12px}
+.bdg.xc{background:var(--ink);color:#fff;box-shadow:inset 0 0 0 3px #fff}
+.bdg.fill{background:var(--lc);color:var(--ink)}
+.chip{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:3px;background:var(--te);color:var(--ink);font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:4px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:14px;transition:background .2s}
+.btn:hover{background:#23356A}
+
+/* top bar */
+.top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:40;background:rgba(250,250,247,.96);border-bottom:1px solid var(--hair);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:800;font-size:15px;text-decoration:none;letter-spacing:-.01em}
+.brand i{width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--c)}
+
+/* left rail route map */
+.rail{position:fixed;top:var(--top);left:0;bottom:0;width:var(--rail);border-right:1px solid var(--hair);padding:28px 0 24px;z-index:30;background:var(--bg);overflow:auto}
+.rail .lbl{display:block;padding-left:88px;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:20px}
+.rmap{position:relative}
+.rmap::before{content:"";position:absolute;left:55px;top:36px;bottom:36px;width:2px;background:var(--hair)}
+.rs{position:relative;display:flex;flex-direction:column;justify-content:center;height:72px;padding-left:88px;text-decoration:none;color:var(--mut)}
+.rs::before{content:"";position:absolute;left:51px;top:-36px;height:72px;width:10px;background:var(--lc);border-radius:5px}
+.rs.s0::before{display:none}
+.rs .bdg{position:absolute;left:38px;top:18px;z-index:2}
+.rl{font-size:14px;font-weight:600;line-height:1.2;transition:color .2s}
+.rn{font:500 10px/1.4 var(--mono);margin-top:3px}
+.rs:hover .rl,.rs[aria-current] .rl{color:var(--ink)}
+.rs[aria-current] .rl{font-weight:800}
+.here{position:absolute;left:47px;top:36px;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px #fff,0 0 0 4px var(--ink);z-index:3;pointer-events:none}
+.here span{position:absolute;right:28px;top:50%;translate:0 -50%;rotate:180deg;writing-mode:vertical-rl;font:700 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+
+/* mobile strip */
+.strip{display:none;position:fixed;top:var(--top);left:0;right:0;height:var(--strip);z-index:30;background:var(--bg);border-bottom:1px solid var(--hair)}
+.strip ol{display:flex;position:relative;height:100%}
+.strip li{flex:1;position:relative}
+.strip li::before{content:"";position:absolute;left:-50%;width:100%;top:17px;height:6px;border-radius:3px;background:var(--lc)}
+.strip li:first-child::before{display:none}
+.ss{display:flex;flex-direction:column;align-items:center;height:100%;padding-top:12px;text-decoration:none;color:var(--mut);font:600 10px/1 var(--sans);white-space:nowrap}
+.ss i{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--lc);margin-bottom:7px;position:relative;z-index:1}
+.ss[aria-current]{color:var(--ink);font-weight:800}
+.smk{position:absolute;left:10%;top:20px;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px #fff;z-index:2;pointer-events:none}
+
+/* page frame */
+main{padding-top:var(--top);min-width:0}
+@media (min-width:900px){main,footer{margin-left:var(--rail)}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 48px}
+.sec{padding:88px 0;border-bottom:1px solid var(--hair)}
+.lsign{display:flex;align-items:flex-end;gap:20px;padding-bottom:20px;border-bottom:3px solid var(--lc)}
+.lsign .bdg{margin-bottom:4px}
+.ln{font:600 11px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.lsign .rt{margin-left:auto;font:500 12px var(--mono);color:var(--mut);padding-bottom:6px;white-space:nowrap}
+.lede{max-width:720px;margin-top:24px;font-size:17px;line-height:1.6;color:var(--mut)}
+.lede b{color:var(--ink);font-weight:700}
+
+/* sign panels */
+.sign{background:#fff;border:1px solid var(--hair)}
+.band{height:8px;background:var(--lc)}
+.k{display:flex;align-items:center;gap:12px;font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+
+/* hero */
+.hgrid{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:stretch}
+.sin{padding:32px 40px 28px}
+h1{font-size:64px;margin:20px 0 12px;letter-spacing:-.03em}
+.sub{font-size:18px;font-weight:600}
+.bio{max-width:560px;margin-top:20px;font-size:17px;line-height:1.6;color:var(--mut)}
+.sft{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 40px;min-height:52px;border-top:1px solid var(--hair);font:600 12px var(--mono);color:var(--mut)}
+.sft a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:none;transition:color .2s}
+.sft a:hover{color:var(--c)}
+.pf{position:relative;aspect-ratio:1;background:var(--ink);border:1px solid var(--hair);overflow:hidden}
+.pf span{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;color:#fff;font:800 56px var(--sans)}
+.pf img{position:relative;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.ticket{display:grid;grid-template-columns:1fr 1fr 1fr auto;background:#fff;border:1px solid var(--hair);margin-top:32px}
+.ticket li+li{border-left:2px dashed var(--hair)}
+.ticket a.tk{display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:72px;padding:12px 20px;text-decoration:none;transition:background .2s}
+.ticket a.tk:hover{background:var(--tc)}
+.ticket .v{font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--hair)}
+.ticket .stub{display:flex;align-items:center;padding:12px 20px}
+.quote{margin-top:24px;font-size:14px;color:var(--mut)}
+.quote .mono{font-size:11px;margin-left:8px;letter-spacing:.06em;text-transform:uppercase}
+
+/* career line */
+.cline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto 56px auto;margin-top:48px}
+.st{position:relative;grid-row:2;height:56px}
+.st .bdg{position:absolute;left:0;top:8px;z-index:2}
+.st::after{content:"";position:absolute;left:20px;top:23px;height:10px;width:100%;background:var(--lc);border-radius:5px}
+.st.c4::after{width:calc(100% - 20px)}
+.st.c1{grid-column:1}.st.c2{grid-column:2}.st.c3{grid-column:3}.st.c4{grid-column:4}
+.ch{position:relative;padding:0 24px 0 0;font-size:14px}
+.ch.c1{grid-area:1/1}.ch.c2{grid-area:3/2}.ch.c3{grid-area:1/3}.ch.c4{grid-area:3/4}
+.ch.c1,.ch.c3{align-self:end;padding-bottom:28px}
+.ch.c2,.ch.c4{padding-top:28px}
+.ch::before{content:"";position:absolute;left:19px;width:2px;height:24px;background:var(--lc)}
+.ch.c1::before,.ch.c3::before{bottom:0}
+.ch.c2::before,.ch.c4::before{top:0}
+.ch h3{display:flex;align-items:center;gap:8px;font-size:17px}
+.lg{width:20px;height:20px;object-fit:contain;border-radius:2px;flex:none}
+.yrs{font:500 12px/1.5 var(--mono);color:var(--mut);margin-top:6px}
+.tag{display:inline-block;margin-top:12px;padding:3px 8px;background:var(--tc);font-weight:700;font-size:12px;letter-spacing:.02em}
+.role{font:500 11px/1.5 var(--mono);color:var(--mut);margin-top:8px}
+.why{margin-top:12px;color:var(--mut);line-height:1.55}
+.hb{position:relative;margin-top:12px;padding-left:14px;font-weight:600;line-height:1.55}
+.hb::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:var(--lc)}
+.cm{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px #fff;z-index:1;pointer-events:none;will-change:transform}
+
+/* expanders */
+.x{margin-top:14px;border-top:1px solid var(--hair)}
+.x summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;cursor:pointer;font:700 13px var(--sans);color:var(--ink)}
+.x summary::-webkit-details-marker{display:none}
+.x summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--lc);border-bottom:2px solid var(--lc);rotate:45deg;margin:-4px 6px 0 0;transition:rotate .2s}
+.x[open] summary::after{rotate:225deg;margin-top:4px}
+.x summary:hover{color:var(--lc)}
+.stops li{padding:8px 0;border-bottom:1px dashed var(--hair);font-size:13px;font-weight:600}
+.stops li span{display:block;font:500 11px/1.5 var(--mono);color:var(--mut);margin-top:2px}
+.subs{margin-top:12px;padding-left:14px;color:var(--mut);font-size:13px;line-height:1.55}
+.subs li{margin-top:6px;list-style:square}
+.subs li::marker{color:var(--lc)}
+
+/* entrepreneurship rows */
+.eline{position:relative;margin-top:16px}
+.eline::before{content:"";position:absolute;left:15px;top:48px;bottom:48px;width:10px;border-radius:5px;background:var(--lc)}
+.row{display:grid;grid-template-columns:40px 144px 1fr;gap:28px;padding:36px 0;border-top:1px solid var(--hair)}
+.row:first-child{border-top:0}
+.rst{position:relative;z-index:1}
+.thumb{position:relative;width:144px;height:108px;background:var(--te);border-radius:2px;overflow:hidden}
+.thumb span{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;font:800 18px/1.1 var(--sans);letter-spacing:-.02em}
+.thumb img{position:relative;width:100%;height:100%;object-fit:cover}
+.thumb img+span,.pf img+span{display:none}
+.thumb.dark{background:#000}
+.thumb.dark img{object-fit:contain;padding:14px}
+.rh{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.rh h3{font-size:24px}
+.hook{margin-top:10px;font-size:17px;line-height:1.5;max-width:640px}
+.tags{font:500 12px var(--mono);color:var(--mut);margin-top:10px}
+.ext{display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:14px;color:var(--e);text-decoration:underline;text-underline-offset:3px}
+.ext:hover{color:var(--ink)}
+.pbol{display:grid;grid-template-columns:96px 1fr;gap:16px 20px;padding:16px 0 8px;font-size:15px;line-height:1.6;max-width:760px}
+.pbol dt{font:700 11px/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lc);padding-top:3px}
+
+/* beyond work */
+.board{display:grid;grid-template-columns:1fr 1fr;background:#fff;border:1px solid var(--hair);margin-top:32px}
+.board .band{grid-column:1/-1}
+.bh{grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;padding:12px 24px;border-bottom:1px solid var(--hair);font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.dep{width:100%;border-collapse:collapse}
+.dep th{text-align:left;padding:14px 24px;width:46%;font:600 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);vertical-align:middle}
+.dep td{padding:14px 24px 14px 0;font-weight:700;font-size:16px;vertical-align:middle}
+.dep tr+tr th,.dep tr+tr td{border-top:1px solid var(--hair)}
+.dep .big{font-size:30px;font-weight:800;line-height:1;font-family:var(--mono);letter-spacing:-.02em}
+.dep .note{font:500 12px var(--mono);color:var(--mut);text-align:right;padding-right:24px;white-space:nowrap}
+.bside{border-left:1px solid var(--hair);padding:24px}
+.vis{font:500 12px/1.9 var(--mono);color:var(--mut)}
+.vis b{display:block;color:var(--ink);letter-spacing:.1em;text-transform:uppercase;font-size:11px;margin-bottom:4px}
+.bq{margin-top:24px;padding-top:20px;border-top:1px solid var(--hair);font-size:17px;line-height:1.5;font-weight:600}
+.bq cite{display:block;margin-top:8px;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-style:normal}
+.exh{display:flex;align-items:baseline;justify-content:space-between;margin-top:56px;padding-bottom:12px;border-bottom:1px solid var(--hair)}
+.exh h3{font-size:18px}
+.exits{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:24px}
+.tile{display:flex;flex-direction:column;background:#fff;border:1px solid var(--hair)}
+.tile.lead{grid-column:1/3;grid-row:1/3}
+.ph{position:relative;aspect-ratio:4/3;background:var(--tb);overflow:hidden}
+.tile.lead .ph{aspect-ratio:auto;flex:1;min-height:320px}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.exit{position:absolute;left:12px;top:12px;z-index:1;display:inline-flex;align-items:center;height:30px;padding:0 10px;background:var(--b);color:#fff;font:800 19px/1 var(--mono);border-radius:3px;box-shadow:0 0 0 2px #fff}
+.cap{padding:16px 20px 12px}
+.cap .k{margin-bottom:6px}
+.cap h3{font-size:16px}
+.tile.lead .cap h3{font-size:22px}
+.tl{margin-top:6px;font-size:14px;color:var(--mut)}
+.story{padding:8px 0 4px;font-size:14px;line-height:1.6}
+.story p+p{margin-top:10px}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin-top:14px;font:500 12px/1.5 var(--mono)}
+.meta dt{color:var(--mut)}
+
+/* education */
+.term{position:relative;display:grid;grid-template-columns:56px 1fr;column-gap:24px;margin-top:32px}
+.term::before{content:"";position:absolute;left:23px;top:48px;bottom:32px;width:10px;border-radius:5px;background:var(--lc)}
+.term::after{content:"";position:absolute;left:12px;bottom:29px;width:32px;height:6px;background:var(--lc)}
+.term>.bdg{align-self:start;margin:28px 0 0 8px;position:relative;z-index:1}
+.deg{grid-column:2}
+.din{display:flex;gap:28px;padding:28px 32px}
+.din img{width:48px;height:48px;object-fit:contain;flex:none;background:#fff;border:1px solid var(--hair);padding:6px;border-radius:2px}
+.deg h3{font-size:24px;margin-top:10px}
+.dg{margin-top:6px;font-weight:700}
+.deg p.b{margin-top:12px;color:var(--mut);max-width:560px;font-size:15px}
+.certs{grid-column:1/-1;display:grid;grid-template-columns:56px 1fr;column-gap:24px;margin-top:16px}
+.cert{display:contents}
+.cert .bdg{justify-self:center;align-self:center;position:relative;z-index:1}
+.cert .cr{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;min-height:64px;padding:8px 0;border-top:1px solid var(--hair)}
+.cert:first-child .cr{border-top:0}
+.cr b{display:block;font-size:15px}
+.cr span.i{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);margin-top:2px}
+.cr span.i img{width:16px;height:16px;object-fit:contain}
+.cr .yr{font:600 13px var(--mono);color:var(--mut)}
+.eor{grid-column:2;font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:24px}
+footer{padding:28px 48px;font:500 12px var(--mono);color:var(--mut);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* motion: only when allowed */
+@media (prefers-reduced-motion:no-preference){
+ html{scroll-behavior:smooth}
+ .cline:not(.on) .st::after{clip-path:inset(0 100% 0 0)}
+ .cline:not(.on) .st .bdg{opacity:.2;scale:.6}
+ .cline:not(.on) .ch{opacity:0;translate:0 10px}
+ .st::after{transition:clip-path .42s linear}
+ .st .bdg{transition:opacity .3s,scale .35s cubic-bezier(.2,.9,.3,1.3)}
+ .ch{transition:opacity .4s,translate .4s}
+ .st.c2::after{transition-delay:.42s}.st.c3::after{transition-delay:.84s}.st.c4::after{transition-delay:1.26s}
+ .st.c2 .bdg{transition-delay:.42s}.st.c3 .bdg{transition-delay:.84s}.st.c4 .bdg{transition-delay:1.26s}
+ .ch.c1{transition-delay:.1s}.ch.c2{transition-delay:.52s}.ch.c3{transition-delay:.94s}.ch.c4{transition-delay:1.36s}
+ .rail:not(.on) .rs::before{clip-path:inset(0 0 100% 0)}
+ .rs::before{transition:clip-path .4s linear}
+ .rs.s2::before{transition-delay:.4s}.rs.s3::before{transition-delay:.8s}.rs.s4::before{transition-delay:1.2s}
+ .here{transition:top .12s linear}
+ .smk{transition:left .12s linear}
+}
+
+@media (max-width:1100px){.wrap{padding:0 32px}h1{font-size:52px}.hgrid{grid-template-columns:1fr 260px}}
+@media (max-width:899px){
+ :root{--top:52px}
+ html{scroll-padding-top:calc(var(--top) + var(--strip) + 20px)}
+ .rail{display:none}.strip{display:block}
+ main{padding-top:calc(var(--top) + var(--strip))}
+ .wrap{padding:0 20px}
+ .sec{padding:56px 0}
+ h2{font-size:26px}
+ .lsign{gap:14px}.lsign .rt{display:none}
+ .hgrid{grid-template-columns:1fr;gap:20px}
+ .pf{order:-1;width:144px}
+ .sin{padding:24px 20px 20px}
+ h1{font-size:40px;margin-top:14px}
+ .sub{font-size:16px}.bio{font-size:15px}
+ .sft{padding:0 20px;flex-wrap:wrap}
+ .ticket{grid-template-columns:1fr}
+ .ticket li+li{border-left:0;border-top:2px dashed var(--hair)}
+ .ticket .stub{padding:16px 20px}
+ .ticket .stub .btn{width:100%}
+ .cline{grid-template-columns:56px 1fr;grid-template-rows:none;row-gap:40px;margin-top:40px}
+ .st{grid-row:auto;height:auto}
+ .st .bdg{left:8px;top:0}
+ .st::after{left:23px;top:20px;width:10px;height:calc(100% + 40px)}
+ .st.c4::after{height:48px;width:10px}
+ .st.c1{grid-area:1/1}.st.c2{grid-area:2/1}.st.c3{grid-area:3/1}.st.c4{grid-area:4/1}
+ .ch.c1{grid-area:1/2}.ch.c2{grid-area:2/2}.ch.c3{grid-area:3/2}.ch.c4{grid-area:4/2}
+ .ch,.ch.c1,.ch.c3{align-self:start;padding:0}
+ .ch::before{display:none}
+ .ch h3{min-height:40px}
+ .row{grid-template-columns:40px 1fr;gap:16px 20px;padding:28px 0}
+ .thumb{grid-column:2;width:100%;max-width:280px;height:150px}
+ .rb{grid-column:2}
+ .rh h3{font-size:21px}.hook{font-size:16px}
+ .pbol{grid-template-columns:1fr;gap:4px 0}
+ .pbol dd{margin-bottom:12px}
+ .board{grid-template-columns:1fr}
+ .bside{border-left:0;border-top:1px solid var(--hair)}
+ .dep th{padding:12px 16px;width:34%;letter-spacing:.06em}.dep td{font-size:15px;padding-right:12px}.dep .note{padding-right:16px;font-size:11px}.dep .big{font-size:26px}
+ .exits{grid-template-columns:1fr 1fr;gap:16px}
+ .tile.lead{grid-column:1/-1;grid-row:auto}
+ .tile.lead .ph{aspect-ratio:16/10;min-height:0;flex:none}
+ .term{grid-template-columns:48px 1fr;column-gap:16px}
+ .term::before{left:19px}.term::after{left:8px}
+ .term>.bdg{margin-left:4px}
+ .certs{grid-template-columns:48px 1fr;column-gap:16px}
+ .din{flex-direction:column;gap:16px;padding:24px 20px}
+ footer{padding:24px 20px}
+ @media (prefers-reduced-motion:no-preference){.cline:not(.on) .st::after{clip-path:inset(0 0 100% 0)}}
+}
+@media (max-width:520px){.exits{grid-template-columns:1fr}.row{grid-template-columns:36px 1fr}.rst .bdg{width:36px;height:36px;font-size:12px}.eline::before{left:13px;top:44px;bottom:44px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#career">Skip to content</a>
+
+<header class="top">
+ <a class="brand" href="#hero"><i aria-hidden="true"></i>Hussain Alam</a>
+ <a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a>
+</header>
+
+<nav class="rail" aria-label="Route map">
+ <span class="lbl">Route map</span>
+ <ol class="rmap">
+  <li><a class="rs s0" href="#hero" style="--lc:var(--ink)"><span class="bdg sm" aria-hidden="true">S</span><span class="rl">Start</span><span class="rn">Hussain Alam</span></a></li>
+  <li><a class="rs s1" href="#career" style="--lc:var(--c)"><span class="bdg sm" aria-hidden="true">C</span><span class="rl">Career</span><span class="rn">Line C · 4 stations</span></a></li>
+  <li><a class="rs s2" href="#entrepreneurship" style="--lc:var(--e)"><span class="bdg sm" aria-hidden="true">E</span><span class="rl">Entrepreneurship</span><span class="rn">Line E · 4 stops</span></a></li>
+  <li><a class="rs s3" href="#beyond-work" style="--lc:var(--b)"><span class="bdg sm" aria-hidden="true">B</span><span class="rl">Beyond Work</span><span class="rn">Line B · 5 exits</span></a></li>
+  <li><a class="rs s4" href="#education" style="--lc:var(--d)"><span class="bdg sm" aria-hidden="true">D</span><span class="rl">Education</span><span class="rn">Line D · terminus</span></a></li>
+  <span class="here" aria-hidden="true"><span>You are here</span></span>
+ </ol>
+</nav>
+
+<nav class="strip" aria-label="Sections">
+ <ol>
+  <li style="--lc:var(--ink)"><a class="ss" href="#hero"><i></i>Start</a></li>
+  <li style="--lc:var(--c)"><a class="ss" href="#career"><i></i>Career</a></li>
+  <li style="--lc:var(--e)"><a class="ss" href="#entrepreneurship" aria-label="Entrepreneurship"><i></i>Ventures</a></li>
+  <li style="--lc:var(--b)"><a class="ss" href="#beyond-work"><i></i>Beyond Work</a></li>
+  <li style="--lc:var(--d)"><a class="ss" href="#education"><i></i>Education</a></li>
+  <span class="smk" aria-hidden="true"></span>
+ </ol>
+</nav>
+
+<main>
+
+<section id="hero" class="sec" style="--lc:var(--c)">
+ <div class="wrap">
+  <div class="hgrid">
+   <div class="sign">
+    <div class="band"></div>
+    <div class="sin">
+     <p class="k"><span class="bdg sm" style="--lc:var(--ink)" aria-hidden="true">S</span>Start of route</p>
+     <h1>Hussain Alam</h1>
+     <p class="sub">Product Strategist &amp; Builder · New York</p>
+     <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side. Based in New York.</p>
+    </div>
+    <div class="sft"><span>5 stations on this route</span><a href="#career">Next: C1 Career →</a></div>
+   </div>
+   <div class="pf"><img src="../public/logos/profile-image.png" alt="Hussain Alam" onerror="this.remove()"><span aria-hidden="true">HA</span></div>
+  </div>
+  <ul class="ticket">
+   <li><a class="tk" href="https://www.linkedin.com/in/hussainalam"><span class="k">LinkedIn</span><span class="v">/in/hussainalam</span></a></li>
+   <li><a class="tk" href="mailto:hussain@karnerblu.com"><span class="k">Email</span><span class="v">hussain@karnerblu.com</span></a></li>
+   <li><a class="tk" href="https://www.linkedin.com/in/hussainalam/recent-activity/all/"><span class="k">Writing</span><span class="v">LinkedIn posts</span></a></li>
+   <li class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></li>
+  </ul>
+  <p class="quote">“The only source of knowledge is experience.”<span class="mono">Albert Einstein</span></p>
+ </div>
+</section>
+
+<section id="career" class="sec" style="--lc:var(--c)">
+ <div class="wrap">
+  <header class="lsign">
+   <span class="bdg" aria-hidden="true">C</span>
+   <div><p class="ln">Line C · Career · 4 stations</p><h2>My career, in four chapters.</h2></div>
+   <span class="rt">2012 → present</span>
+  </header>
+  <p class="lede">Fortune 100 ops out of college → founded a consultancy → 5th U.S. hire at a Series-A startup → joined WeWork three months before bankruptcy and led products to profitability.</p>
+
+  <div class="cline" id="cline">
+   <div class="st c1"><span class="bdg" aria-hidden="true">C1</span></div>
+   <div class="st c2"><span class="bdg" aria-hidden="true">C2</span></div>
+   <div class="st c3"><span class="bdg" aria-hidden="true">C3</span></div>
+   <div class="st c4"><span class="bdg xc" aria-hidden="true">C4</span></div>
+
+   <article class="ch c1">
+    <h3><img class="lg" src="../public/logos/ab-inbev.png" alt="" onerror="this.remove()">Anheuser-Busch InBev</h3>
+    <p class="yrs">Jul 2012 to Jul 2018 · Newark, NJ → New York, NY</p>
+    <span class="tag">Operational Excellence</span>
+    <p class="role">Operations → Operational Excellence</p>
+    <p class="why">First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs, from the brewhouse floor up to HR strategy.</p>
+    <p class="hb">Reduced people-data error rates 7% → 1% across 20,000 employees by re-engineering the master-data platform used by 125+ HR partners.</p>
+    <details class="x"><summary>Stops on this line</summary>
+     <ul class="stops">
+      <li>Group Manager, Brewhouse Operations<span>Jul 2012 to Aug 2013 · Newark</span></li>
+      <li>Group Manager, Logistics &amp; Warehouse Ops<span>Aug 2013 to Sep 2014 · Newark</span></li>
+      <li>Process Improvement Engineer, North America<span>Sep 2014 to May 2016 · NYC</span></li>
+      <li>Operational Excellence Manager, People COE<span>May 2016 to Jul 2018 · NYC</span></li>
+     </ul>
+     <ul class="subs">
+      <li>Led 45+ executive workshops that converted pain points into a unified 1-year strategy roadmap aligned to corporate KPIs.</li>
+      <li>Earlier brewhouse ops: #1 of 12 breweries on KPI leaderboard; $800K/year savings; led 22-operator team brewing 2.5M cans daily.</li>
+      <li>Logistics &amp; warehouse ops: +9% pallet moves/hour across a 450K-case warehouse and 33 union operators on 3 shifts.</li>
+     </ul>
+    </details>
+   </article>
+
+   <article class="ch c2">
+    <h3><img class="lg" src="../public/logos/karnerblu.png" alt="" onerror="this.remove()">KarnerBlu</h3>
+    <p class="yrs">Jul 2018 to Sep 2020 · Remote · Staples, Unilever</p>
+    <span class="tag">Founder Mode</span>
+    <p class="role">Product Consultant · Co-Founder</p>
+    <p class="why">Co-founded my own consultancy to work directly with Fortune 500s on execution systems. Faster loops, my own call sheet.</p>
+    <p class="hb">Boosted resource-allocation efficiency +30% at Fortune 500 clients via a value-based project prioritization framework.</p>
+    <details class="x"><summary>Stops on this line</summary>
+     <ul class="stops"><li>Product Consultant · Co-Founder<span>Jul 2018 to Sep 2020 · Remote</span></li></ul>
+     <ul class="subs">
+      <li>Built an execution operating system across 7 departments, translating stakeholder needs into workflows, cadences, and KPI reporting.</li>
+      <li>Clients included Staples and Unilever. Remote + on-site hybrid.</li>
+     </ul>
+    </details>
+   </article>
+
+   <article class="ch c3">
+    <h3><img class="lg" src="https://www.google.com/s2/favicons?domain=ridezoomo.com&amp;sz=128" alt="" onerror="this.remove()">Zoomo</h3>
+    <p class="yrs">Sep 2020 to Nov 2022 · New York, NY · 8 markets</p>
+    <span class="tag">Startup Operator</span>
+    <p class="role">City Ops → Sr. Manager, Product Strategy &amp; Ops</p>
+    <p class="why">Series-B micromobility. Traded consulting decks for real P&amp;L ownership and a team in the trenches.</p>
+    <p class="hb">Scaled B2C subscription ARR 10× ($500K → $5M) across 8 markets through pricing strategy, lifecycle optimization, and full P&amp;L ownership.</p>
+    <details class="x"><summary>Stops on this line</summary>
+     <ul class="stops">
+      <li>City Operations Mgr &amp; Interim PM, B2B<span>Sep 2020 to Aug 2021</span></li>
+      <li>Sr. Manager, Product Strategy &amp; Operations<span>Aug 2021 to Nov 2022</span></li>
+     </ul>
+     <ul class="subs">
+      <li>As the 5th U.S. hire: +22% MoM WAU by redesigning subscription offerings; booking-to-subscription conversion 43% → 73% via A/B testing.</li>
+      <li>Led cross-functional team of 5 direct / 40+ indirect across 8 markets. Aligned OKRs to revenue and retention goals.</li>
+      <li>Launched 4 North American markets; +25% onboarding efficiency through market analysis and cross-functional execution.</li>
+      <li>Reduced e-bike theft 20% with a new insurance product. Ranked 1st of 30 in the global data champions program (COO award).</li>
+     </ul>
+    </details>
+   </article>
+
+   <article class="ch c4">
+    <h3><img class="lg" src="https://www.google.com/s2/favicons?domain=wework.com&amp;sz=128" alt="" onerror="this.remove()">WeWork</h3>
+    <p class="yrs">Jul 2023 to Present · New York, NY · 13 countries</p>
+    <span class="tag">Turnaround at Scale</span>
+    <p class="role">Manager, Product Management, Global</p>
+    <p class="why">Signed three months before WeWork filed for bankruptcy. Friends said don't, headlines said worse. I believed in the people, the brand, and the rare shot at being part of a real turnaround.</p>
+    <p class="hb">$14M revenue (+60% YoY) owning the global parking vertical across 13 countries. Helped deliver WeWork's first profitable quarter.</p>
+    <details class="x"><summary>Stops on this line</summary>
+     <ul class="stops"><li>Manager, Product Management, Global<span>Jul 2023 to Present · New York, NY</span></li></ul>
+     <ul class="subs">
+      <li>Global Stripe payments: $800K MRR across 13 countries. Defined billing architecture for a scalable, compliant payments system.</li>
+      <li>$12M annual revenue + 10% utilization lift across 315 locations via Gemini-powered pricing &amp; inventory benchmarking.</li>
+      <li>On-demand office workflows: 37% YoY booking growth (50K vs 36K), +66% YoY credit spend through funnel optimization.</li>
+      <li>LATAM on-demand private offices: identified unmet demand, secured COO buy-in, piloted in Mexico, scaled to 150 offices and 900 incremental Q4 2025 bookings.</li>
+     </ul>
+    </details>
+   </article>
+   <span class="cm" aria-hidden="true"></span>
+  </div>
+ </div>
+</section>
+
+<section id="entrepreneurship" class="sec" style="--lc:var(--e)">
+ <div class="wrap">
+  <header class="lsign">
+   <span class="bdg" aria-hidden="true">E</span>
+   <div><p class="ln">Line E · Entrepreneurship · branch · 4 stops</p><h2>Things I've started.</h2></div>
+   <span class="rt">Shipped · Experimental · Active</span>
+  </header>
+  <p class="lede">I've been a founder since before it was called "building in public." Some worked, some taught me more than any growth role.</p>
+
+  <ol class="eline">
+   <li class="row">
+    <div class="rst"><span class="bdg" aria-hidden="true">E1</span></div>
+    <div class="thumb"><img src="../public/ventures/emojifriends.avif" alt="EmojiFriends emoji kandi beads" onerror="this.remove()"><span aria-hidden="true">EmojiFriends</span></div>
+    <div class="rb">
+     <div class="rh"><h3>EmojiFriends</h3><span class="chip">Shipped</span></div>
+     <p class="hook">A Kickstarter-funded project for the festival kandi trading crowd. $6K raised, featured on Insomniac.com.</p>
+     <p class="tags">Kickstarter · EDM · Consumer Hardware</p>
+     <a class="ext" href="https://www.insomniac.com/magazine/meet-the-kickstarter-thats-funding-emoji-kandi-beads/">Read the Insomniac feature ↗</a>
+     <details class="x"><summary>Problem, built, outcome, lesson</summary>
+      <dl class="pbol">
+       <dt>Problem</dt><dd>By 2015, emoji had become a second language for anyone under 30, but the physical world hadn't caught up. The EDM festival scene had a decade-old tradition of trading kandi beads with strangers as a form of connection. The bracelets were still stuck in 2005 visual language: smiley faces, peace signs, block letters. No one had brought the emoji vocabulary into the thing people were actually wearing on their wrists.</dd>
+       <dt>Built</dt><dd>A line of collectible emoji-face beads designed for the kandi-trading culture, manufactured overseas and sold direct-to-consumer. I ran the Kickstarter from concept to fulfillment: product design, factory sourcing, campaign video, reward tiers, pricing, and the post-funding logistics of getting thousands of beads into envelopes. Built the brand on Instagram with zero paid spend. The product photographed well enough that the community did the distribution.</dd>
+       <dt>Outcome</dt><dd>Raised just over $6,000 on Kickstarter from a cold-start audience. Featured on Insomniac.com, the largest EDM publication at the time. Grew past 1,200 organic Instagram followers and shipped to customers across the US, UK, and Australia. The brand built a small but real community of repeat buyers who would message photos from festivals months later.</dd>
+       <dt>Lesson</dt><dd>Hardware margins are brutal once you factor in shipping envelopes one at a time. The smart next move would have been a subscription drop model or a licensing deal with a festival brand instead of another SKU. I also learned how much of "going viral" is really just a product that's photogenic enough to survive compression on someone else's feed.</dd>
+      </dl>
+     </details>
+    </div>
+   </li>
+
+   <li class="row">
+    <div class="rst"><span class="bdg" aria-hidden="true">E2</span></div>
+    <div class="thumb dark"><img src="../public/ventures/spreadthefacts.png" alt="SpreadTheFacts wordmark" onerror="this.remove()"><span aria-hidden="true" style="color:#fff">SpreadTheFacts</span></div>
+    <div class="rb">
+     <div class="rh"><h3>SpreadTheFacts</h3><span class="chip">Shipped</span></div>
+     <p class="hook">Won MIT's COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General.</p>
+     <p class="tags">MIT · Hackathon · Public Health</p>
+     <details class="x"><summary>Problem, built, outcome, lesson</summary>
+      <dl class="pbol">
+       <dt>Problem</dt><dd>48 hours into the pandemic lockdown, MIT ran a hackathon focused on improving access to information for vulnerable populations. My team's first instinct was to build a "better CDC website": cleaner UI on top of the same firehose of advisories. I disagreed. The real problem wasn't that the information was ugly; it was that the people who needed it most weren't going to a website at all.</dd>
+       <dt>Built</dt><dd>I was the minority voice in the room, and when I spoke up I wasn't being heard. So I scheduled a session with the hackathon moderators to pressure-test the direction. Judge feedback came back aligned with my read. I led the team through a design-thinking exercise to redefine the problem around a specific audience (essential workers who needed PPE, not pamphlets), and we pivoted hard. The output was a pitch to crowdfund and distribute reusable cotton masks directly to frontline staff, paired with plain-language CDC-sourced hygiene guidance.</dd>
+       <dt>Outcome</dt><dd>Won the hackathon after a grueling 48 hours. Raised $5,500 in follow-on funding and partnered with Mass General Brigham to distribute 6,500 reusable masks to healthcare workers, grocery employees, and transit staff across the Boston area. The project kept going after the weekend ended, which is the only outcome that really matters from a hackathon.</dd>
+       <dt>Lesson</dt><dd>Being the dissenting voice in a team room is useless unless you have a mechanism to force the conversation. Scheduling the moderator session was the whole ballgame. Without it, we would have shipped a nicer-looking CDC website and lost. Also: in a crisis, the fastest path from idea to impact is physical goods, not software.</dd>
+      </dl>
+     </details>
+    </div>
+   </li>
+
+   <li class="row">
+    <div class="rst"><span class="bdg" aria-hidden="true">E3</span></div>
+    <div class="thumb"><span aria-hidden="true">Spots</span></div>
+    <div class="rb">
+     <div class="rh"><h3>Spots</h3><span class="chip">Experimental</span></div>
+     <p class="hook">Social discovery for the places you love and want to return to.</p>
+     <p class="tags">Co-founder · Consumer · Social</p>
+     <details class="x"><summary>Problem, built, outcome, lesson</summary>
+      <dl class="pbol">
+       <dt>Problem</dt><dd>Google Maps is a utility. Yelp is a review directory. Neither of them answers the question you actually ask your friends: "Where should I take someone tonight?" The best place recommendations happen inside group chats and disappear there: unindexed, unsearchable, and lost the second the conversation scrolls. Repeat-visit behavior had no product surface at all.</dd>
+       <dt>Built</dt><dd>Co-founded Spots as a social discovery app. Think Pinterest for places, with a social graph layered on top of Google Maps. Prototyped the full experience in Sketch and InVision, ran early user-testing sessions through Instabug's user groups, and iterated through three rounds of wireframes before any code shipped. The wedge was collections: let people save, tag, and share the places that were already living in their Notes app.</dd>
+       <dt>Outcome</dt><dd>Landed the spotsapp.io domain and shipped a working prototype to a small test group. Got useful signal on the save-and-share loop but never cracked the cold-start problem of social graphs. Without a graph, you can't really test whether a social-discovery app is fun. Shelved it when Navigate.AI started demanding full attention.</dd>
+       <dt>Lesson</dt><dd>Location-based social is a graveyard of well-designed apps. The product wasn't the hard part; seeding the graph was. If I ran this back, I'd start with a single city, a single use case (date night, probably), and a closed invite list instead of a general-purpose map overlay.</dd>
+      </dl>
+     </details>
+    </div>
+   </li>
+
+   <li class="row">
+    <div class="rst"><span class="bdg" aria-hidden="true">E4</span></div>
+    <div class="thumb"><span aria-hidden="true">Navigate.AI</span></div>
+    <div class="rb">
+     <div class="rh"><h3>Navigate.AI</h3><span class="chip">Active</span></div>
+     <p class="hook">Your career pivot, backed by real data. No AI guesswork.</p>
+     <p class="tags">Founder · AI · 2025→</p>
+     <a class="ext" href="https://gonavigate.app">Visit ↗</a>
+     <details class="x"><summary>Problem, built, outcome, lesson</summary>
+      <dl class="pbol">
+       <dt>Problem</dt><dd>LLMs made resume writing worse, not better. Every "AI resume tool" on the market spits out the same bland, impact-free bullets because the model has no idea whether the claim is true, whether the metric is defensible, or whether the phrasing actually lands with a recruiter. Career-changers, the people who need the most help, get the least signal. They don't know which of their experiences translate, and generic AI can't tell them.</dd>
+       <dt>Built</dt><dd>Navigate.AI scores every resume bullet on three dimensions (Impact, Context, and Structure) against a corpus of real, outcomes-graded writing. Instead of hallucinating new accomplishments, the product surfaces the weak spots in what you already wrote and guides you through placeholder-based enhancement: the user fills in the specifics, the tool tightens the craft. Co-founded with Laurenz; shipping the closed beta under navigate.ai and gonavigate.app.</dd>
+       <dt>Outcome</dt><dd>Closed beta running April 19 to May 3, 2026, targeting 50 to 100 signups with an activation-rate north star of ≥50%. Built on top of a framework that started life as a 2025 hackathon win (Resume Optimizer, ideation score 11/15). Early tester feedback is clustering around the same insight: "I didn't realize how vague my own bullets were."</dd>
+       <dt>Lesson</dt><dd>Still learning this one in real time. The biggest thing so far: people don't want an AI that writes for them. They want one that calls them out. Honest feedback is a scarcer resource than generated text, and the product-market fit question is whether people will pay to be told their resume is weaker than they think.</dd>
+      </dl>
+     </details>
+    </div>
+   </li>
+  </ol>
+ </div>
+</section>
+
+<section id="beyond-work" class="sec" style="--lc:var(--b)">
+ <div class="wrap">
+  <header class="lsign">
+   <span class="bdg" aria-hidden="true">B</span>
+   <div><p class="ln">Line B · Beyond Work · 5 exits</p><h2>Get to know me outside of work.</h2></div>
+   <span class="rt">Base: New York, NY</span>
+  </header>
+
+  <div class="board">
+   <div class="band"></div>
+   <div class="bh"><span>Departures · Travel</span><span>Bangladeshi-American</span></div>
+   <table class="dep">
+    <tbody>
+     <tr><th scope="row">Countries</th><td><span class="big">16</span></td><td class="note">explored</td></tr>
+     <tr><th scope="row">Cities</th><td><span class="big">32</span></td><td class="note">explored</td></tr>
+     <tr><th scope="row">Base</th><td>New York, NY</td><td class="note">current</td></tr>
+     <tr><th scope="row">Next up</th><td>Turkey</td><td class="note">September 2026</td></tr>
+     <tr><th scope="row">Favorite city</th><td>Mexico City</td><td class="note">to visit</td></tr>
+     <tr><th scope="row">Favorite country</th><td>Colombia</td><td class="note"></td></tr>
+    </tbody>
+   </table>
+   <div class="bside">
+    <p class="vis"><b>Visited</b>United States, Canada, Mexico, Colombia, Brazil, United Kingdom, France, Spain, Italy, Netherlands, Germany, Bangladesh, India, Japan, Thailand, UAE.</p>
+    <blockquote class="bq">“The world is a book and those who do not travel read only one page.”<cite>Saint Augustine</cite></blockquote>
+   </div>
+  </div>
+
+  <div class="exh"><h3>Exits</h3><span class="mono" style="font-size:12px;color:var(--mut)">E1 to E5 · hobbies</span></div>
+  <!-- Hobby photos are Unsplash placeholders until real photos exist. -->
+  <div class="exits">
+   <article class="tile lead">
+    <div class="ph"><span class="exit" aria-hidden="true">E1</span><img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=1200&amp;q=80" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="cap">
+     <p class="k">Exit E1</p>
+     <h3>Riding &amp; driving</h3>
+     <p class="tl">Three days disconnected through the hills of Colombia.</p>
+     <details class="x"><summary>Story</summary>
+      <div class="story">
+       <p>Three days on a motorcycle through the mountains outside Medellín. Went with a friend I've known since I was fourteen, the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.</p>
+       <p>No cell service for most of it. You don't realize how much of your attention the phone quietly costs you until you spend three days without one. I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I've found.</p>
+       <p>The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft (fermentation, aging, a thousand small choices) mapped onto coffee instead. Different product, same instinct.</p>
+       <dl class="meta"><dt>Route</dt><dd>Medellín → Jericó → Fredonia</dd><dt>Days</dt><dd>3</dd><dt>Rode with</dt><dd>friend since age 14</dd></dl>
+      </div>
+     </details>
+    </div>
+   </article>
+   <article class="tile">
+    <div class="ph"><span class="exit" aria-hidden="true">E2</span><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&amp;q=80" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="cap">
+     <p class="k">Exit E2</p>
+     <h3>Building with AI</h3>
+     <p class="tl">Products, agents, automation. Always shipping.</p>
+     <details class="x"><summary>Story</summary>
+      <div class="story">
+       <p>I use AI to collapse the distance between "I wonder if..." and "here's a working thing." Most of what I build now starts in a CLI session with Claude and ends as a prototype I can show a real user the same week.</p>
+       <p>This site is one of them.</p>
+       <dl class="meta"><dt>Stack</dt><dd>Claude, Cursor, v0</dd><dt>Cadence</dt><dd>weekly shipping</dd><dt>Latest</dt><dd>this site</dd></dl>
+      </div>
+     </details>
+    </div>
+   </article>
+   <article class="tile">
+    <div class="ph"><span class="exit" aria-hidden="true">E3</span><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&amp;q=80" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="cap">
+     <p class="k">Exit E3</p>
+     <h3>Martial arts</h3>
+     <p class="tl">BJJ, 4x/week. Purple belt.</p>
+     <details class="x"><summary>Story</summary>
+      <div class="story">
+       <p>BJJ teaches you that composure is a muscle. Four nights a week I go get outclassed by blue belts half my age, and every time I leave the mat sharper than I arrived.</p>
+       <dl class="meta"><dt>Belt</dt><dd>Purple</dd><dt>Frequency</dt><dd>4x / week</dd><dt>Focus</dt><dd>leg entanglements</dd></dl>
+      </div>
+     </details>
+    </div>
+   </article>
+   <article class="tile">
+    <div class="ph"><span class="exit" aria-hidden="true">E4</span><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&amp;q=80" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="cap">
+     <p class="k">Exit E4</p>
+     <h3>Youth mentor</h3>
+     <p class="tl">8 years in NYC. Mentee just graduated college.</p>
+     <details class="x"><summary>Story</summary>
+      <div class="story">
+       <p>Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running.</p>
+       <dl class="meta"><dt>Years</dt><dd>8</dd><dt>City</dt><dd>New York</dd><dt>Cadence</dt><dd>bi-weekly</dd></dl>
+      </div>
+     </details>
+    </div>
+   </article>
+   <article class="tile">
+    <div class="ph"><span class="exit" aria-hidden="true">E5</span><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&amp;q=80" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="cap">
+     <p class="k">Exit E5</p>
+     <h3>Festivals &amp; salsa</h3>
+     <p class="tl">Coachella, Afropunk. Salsa Saturdays in Bushwick.</p>
+     <details class="x"><summary>Story</summary>
+      <div class="story">
+       <p>Live music is how I reset. Coachella and Afropunk every year, smaller festivals whenever the lineup earns the flight.</p>
+       <p>Saturday nights I'm at salsa socials in Bushwick. You don't need to be good. You need to show up.</p>
+       <dl class="meta"><dt>Regular</dt><dd>Coachella, Afropunk</dd><dt>Weekly</dt><dd>Bushwick salsa</dd></dl>
+      </div>
+     </details>
+    </div>
+   </article>
+  </div>
+ </div>
+</section>
+
+<section id="education" class="sec" style="--lc:var(--d)">
+ <div class="wrap">
+  <header class="lsign">
+   <span class="bdg" aria-hidden="true">D</span>
+   <div><p class="ln">Line D · Education · terminus</p><h2>Degree, and the things I added after.</h2></div>
+   <span class="rt">1 degree · 3 certifications</span>
+  </header>
+
+  <div class="term">
+   <span class="bdg fill" aria-hidden="true">D1</span>
+   <div class="sign deg">
+    <div class="band"></div>
+    <div class="din">
+     <img src="https://www.google.com/s2/favicons?domain=umass.edu&amp;sz=128" alt="" onerror="this.remove()">
+     <div>
+      <p class="k">Terminus · 2008 to 2012 · Amherst, MA</p>
+      <h3>UMass Amherst</h3>
+      <p class="dg">B.S. Mechanical Engineering · Cum Laude</p>
+      <p class="b">Graduated cum laude. Built a foundation in systems thinking that still shapes how I approach product problems.</p>
+     </div>
+    </div>
+   </div>
+   <ol class="certs">
+    <li class="cert"><span class="bdg" aria-hidden="true">D2</span><div class="cr"><div><b>Mastering Design Thinking</b><span class="i"><img src="https://www.google.com/s2/favicons?domain=mitsloan.mit.edu&amp;sz=128" alt="" onerror="this.remove()">MIT Sloan Executive Education</span></div><span class="yr">2020</span></div></li>
+    <li class="cert"><span class="bdg" aria-hidden="true">D3</span><div class="cr"><div><b>Credential of Readiness (CORe)</b><span class="i"><img src="https://www.google.com/s2/favicons?domain=hbs.edu&amp;sz=128" alt="" onerror="this.remove()">Harvard Business School Online</span></div><span class="yr">2015</span></div></li>
+    <li class="cert"><span class="bdg" aria-hidden="true">D4</span><div class="cr"><div><b>Product School</b><span class="i"><img src="https://www.google.com/s2/favicons?domain=ycombinator.com&amp;sz=128" alt="" onerror="this.remove()">Y Combinator</span></div><span class="yr"></span></div></li>
+   </ol>
+   <p class="eor">End of route</p>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<footer><span>© 2026 Hussain Alam · Built with Next.js</span><span>Route map: S → C → E → B → D</span></footer>
+
+<script>
+(function(){
+ var ids=['hero','career','entrepreneurship','beyond-work','education'];
+ var secs=ids.map(function(i){return document.getElementById(i)});
+ var rail=document.querySelector('.rail'),here=document.querySelector('.here'),sm=document.querySelector('.smk');
+ var rl=[].slice.call(document.querySelectorAll('.rs')),sl=[].slice.call(document.querySelectorAll('.ss'));
+ var cl=document.getElementById('cline'),cm=cl.querySelector('.cm'),b1=cl.querySelector('.st.c1 .bdg'),b4=cl.querySelector('.st.c4 .bdg');
+ var doc=document.documentElement,ticking=false;
+ function clamp(v){return v<0?0:v>1?1:v}
+ function mid(el){var r=el.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2]}
+ function update(){
+  ticking=false;
+  var y=window.scrollY,vh=window.innerHeight,probe=y+vh*0.35,idx=0,p=0,i;
+  for(i=0;i<secs.length;i++){var t=secs[i].offsetTop,h=secs[i].offsetHeight;if(probe>=t){idx=i;p=clamp((probe-t)/h)}}
+  if(y+vh>=doc.scrollHeight-2){idx=secs.length-1;p=1}
+  var last=idx===secs.length-1,q=last?0:p;
+  var a=rl[idx],b=rl[Math.min(idx+1,rl.length-1)];
+  if(a){var y0=a.offsetTop+a.offsetHeight/2,y1=b.offsetTop+b.offsetHeight/2;here.style.top=(y0+(y1-y0)*q)+'px'}
+  sm.style.left=(10+idx*20+q*20)+'%';
+  for(i=0;i<rl.length;i++){if(i===idx){rl[i].setAttribute('aria-current','true');sl[i].setAttribute('aria-current','true')}else{rl[i].removeAttribute('aria-current');sl[i].removeAttribute('aria-current')}}
+  var c=secs[1],cp=clamp((probe-c.offsetTop)/c.offsetHeight);
+  var r=cl.getBoundingClientRect(),m1=mid(b1),m4=mid(b4);
+  var x=m1[0]-r.left+(m4[0]-m1[0])*cp,yy=m1[1]-r.top+(m4[1]-m1[1])*cp;
+  cm.style.transform='translate('+(x-8)+'px,'+(yy-8)+'px)';
+ }
+ function req(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
+ window.addEventListener('scroll',req,{passive:true});
+ window.addEventListener('resize',req);
+ window.addEventListener('load',req);
+ document.addEventListener('toggle',req,true);
+ update();
+ var drawn=false;
+ function draw(){if(drawn)return;drawn=true;cl.classList.add('on');rail.classList.add('on')}
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window)){draw()}
+ else{
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){draw();io.disconnect()}})},{rootMargin:'0px 0px -25% 0px'});
+  io.observe(cl);
+  if(window.scrollY>secs[1].offsetTop)draw();
+ }
+})();
+</script>
+</body>
+</html>

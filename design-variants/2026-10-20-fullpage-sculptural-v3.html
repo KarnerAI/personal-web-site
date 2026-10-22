@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<!--
+  Theme D: Sculptural minimal (full-site mockup, 2026-10-20)
+  Reference: Hussein Akl, "Personal Brand & Digital Ecosystem 2026" (Behance case study).
+  Fonts: Poppins 300 to 700 (Google Fonts) for everything; Georgia for the "HA." serif monogram.
+  Palette: page #F6F6F4, surfaces #FFFFFF, ink #111318, gray #6B6E76 (#55585F on stone),
+  hairline #DADAD6, electric blue #287FFF (large accents only: blue heading words, trailing
+  periods, 4px section dividers, icons, markers), deep blue #1A5FD6 (small blue text, links,
+  buttons, for AA contrast), stone tones #E6E5E0 to #F3F2EE, one dark band #121419.
+  What makes it this theme: a quiet warm off-white gallery, numbered section headers with a
+  hairline running to an "HA." serif monogram, letter-spaced small caps (0.2em), short paragraphs
+  with a thin blue left rule, headings in Poppins 600 with one blue phrase and a blue period,
+  thick blue rules between sections, and sculptural studio props (white spheres with contact
+  shadows, translucent blue glass panels with a bright edge, pale stone plinths and fluted blocks)
+  drawn in SVG as decoration beside content, never behind text.
+  Layout matches the current site section by section; only the hero uses the board layout.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hussain Alam | Operator turned PM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+<script>
+  /* Image fallback: swap a broken logo for its initials. Defined early so onerror always finds it. */
+  function fb(img){var s=document.createElement('span');s.className=img.className+' lg-fb';s.setAttribute('aria-hidden','true');s.textContent=img.getAttribute('data-i')||'';img.replaceWith(s);}
+</script>
+<style>
+:root{
+  --page:#F6F6F4;--white:#FFFFFF;--ink:#111318;--ink2:#2E3138;--gray:#6B6E76;--gray2:#55585F;
+  --line:#DADAD6;--line2:#EAEAE6;--blue:#287FFF;--blue-d:#1A5FD6;--blue-dd:#144CB0;--band:#121419;
+  --wrap:1120px;--r:6px;--ease:cubic-bezier(.2,.7,.2,1);
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;--sp7:48px;--sp8:64px;--sp9:96px;--sp10:136px;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--page);color:var(--ink);font:400 16px/1.6 "Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:rgba(40,127,255,.18)}
+img{max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue-d);outline-offset:3px}
+.wrap{max-width:calc(var(--wrap) + 80px);margin:0 auto;padding:0 40px}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.bl,.pd{color:var(--blue)}
+.cap{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- Header ---------- */
+.hdr{position:sticky;top:0;z-index:40;background:rgba(246,246,244,.88);-webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%);border-bottom:1px solid var(--line)}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:inline-flex;align-items:center;min-height:44px;font-weight:600;font-size:16px;letter-spacing:-.01em;text-decoration:none}
+.nav ul{display:flex;gap:36px;list-style:none;margin:0;padding:0}
+.nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--ink2);transition:color .2s}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav a:hover{color:var(--blue-d)}
+.nav a:hover::after{transform:scaleX(1)}
+.burger{display:none;width:44px;height:44px;margin-right:-10px;border:0;background:none;border-radius:50%;cursor:pointer;align-items:center;justify-content:center}
+.burger:hover{background:rgba(17,19,24,.05)}
+.mnav{position:absolute;left:0;right:0;top:64px;background:var(--white);border-top:2px solid var(--blue);border-bottom:1px solid var(--line);box-shadow:0 30px 50px -30px rgba(17,19,24,.35)}
+.mnav ul{list-style:none;margin:0;padding:8px 16px 16px}
+.mnav li+li{border-top:1px solid var(--line2)}
+.mnav a{display:flex;align-items:center;justify-content:space-between;min-height:52px;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
+.mnav a::after{content:"\2192";color:var(--blue-d);letter-spacing:0}
+@media (max-width:767px){.nav{display:none}.burger{display:inline-flex}}
+
+/* ---------- Sculpture SVG defs + shared scene ---------- */
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.scn{display:block;width:100%;height:100%}
+
+/* ---------- Hero (board layout) ---------- */
+.hero{padding-top:56px;padding-bottom:var(--sp9)}
+.strip{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-bottom:20px;margin-bottom:var(--sp8);border-bottom:1px solid var(--line);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
+.strip>span{display:inline-flex;align-items:center;gap:14px}
+.s-role{justify-content:center}
+.s-role::before,.s-city::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none}
+.s-city{justify-content:flex-end}
+.clk{font-variant-numeric:tabular-nums;letter-spacing:.12em;color:var(--blue-d);padding-left:14px;border-left:1px solid var(--line)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) 440px;grid-template-areas:"a p" "t p";gap:var(--sp7) 72px;align-items:start}
+.intro{grid-area:a}
+.name{margin:0;font-weight:600;font-size:clamp(44px,6vw,86px);line-height:.98;letter-spacing:-.045em}
+.bio{margin:40px 0 0;max-width:30em;border-left:2px solid var(--blue);padding:2px 0 2px 22px;font-size:18px;line-height:1.7;color:var(--ink2)}
+.quote{margin:40px 0 0;max-width:28em}
+.quote p{margin:0;font-weight:300;font-style:italic;font-size:21px;line-height:1.5;letter-spacing:-.01em}
+.quote cite{display:flex;align-items:center;gap:12px;margin-top:12px;font-style:normal;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.quote cite::before{content:"";width:28px;height:2px;background:var(--blue)}
+.port{grid-area:p;margin:0;align-self:end}
+.scene{position:relative;aspect-ratio:440/500;width:100%}
+.scene .scn{position:absolute;inset:0}
+.scene .fr{position:absolute;left:3%;bottom:15.2%;width:68%;padding:10px;background:var(--white);border:1px solid var(--line);box-shadow:0 40px 60px -36px rgba(17,19,24,.45),0 2px 6px rgba(17,19,24,.05);z-index:2}
+.scene .front{z-index:3;pointer-events:none}
+.pin{position:relative;aspect-ratio:1;overflow:hidden;background:#E6E5E0}
+.pin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.pf{position:absolute;inset:0;display:grid;place-items:center;font:400 56px/1 Georgia,"Times New Roman",serif;color:#A9A8A2}
+.ticket{grid-area:t;display:grid;grid-template-columns:minmax(0,1fr) 220px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tk{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:16px;align-items:center;min-height:56px;padding:0 22px;text-decoration:none;transition:background .2s}
+.tk+.tk{border-top:1px solid var(--line2)}
+.tk b{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.tk i{font-style:normal;font-size:15px;overflow-wrap:anywhere}
+.tk s{text-decoration:none;color:var(--blue-d);transition:transform .25s var(--ease)}
+.tk:hover{background:#FAFAF8}
+.tk:hover s{transform:translate(2px,-2px)}
+.tk:focus-visible{outline-offset:-3px}
+.stub{display:grid;place-items:center;padding:24px;border-left:1px solid var(--line2);background:linear-gradient(180deg,#FFFFFF,#F7F7F5)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 26px;border-radius:999px;background:var(--blue-d);color:#fff;font-weight:500;font-size:15px;text-decoration:none;box-shadow:0 14px 28px -14px rgba(26,95,214,.7),inset 0 1px 0 rgba(255,255,255,.22);transition:background .2s,transform .2s,box-shadow .2s}
+.btn::after{content:"\2192";transition:transform .25s var(--ease)}
+.btn:hover{background:var(--blue-dd)}
+.btn:hover::after{transform:translateX(3px)}
+.btn:active{transform:translateY(1px)}
+@media (max-width:1100px){.ticket{grid-template-columns:1fr}.stub{border-left:0;border-top:1px solid var(--line2);justify-items:start;padding:20px 22px}}
+@media (max-width:1000px){.hgrid{grid-template-columns:minmax(0,1fr) 340px;column-gap:48px}}
+@media (max-width:860px){
+  .hero{padding-top:36px;padding-bottom:var(--sp8)}
+  .strip{grid-template-columns:1fr;gap:8px;margin-bottom:40px}
+  .s-role,.s-city{justify-content:flex-start}
+  .hgrid{grid-template-columns:1fr;grid-template-areas:"a" "p" "t";gap:40px}
+  .port{max-width:380px;width:100%;align-self:start}
+  .bio{font-size:17px;margin-top:32px}
+  .quote p{font-size:19px}
+  .tk{grid-template-columns:72px minmax(0,1fr) auto;padding:0 16px}
+}
+
+/* ---------- Dark band ---------- */
+.band{background:var(--band);color:#fff}
+.band-in{display:flex;align-items:center;justify-content:space-between;gap:24px 48px;min-height:92px;padding-top:20px;padding-bottom:20px}
+.band p{margin:0;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;line-height:2}
+.band .sep{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--blue);vertical-align:middle;margin:0 12px 2px}
+.band-r{display:flex;align-items:center;gap:40px;text-align:left}
+.band-r span{display:block}
+.band-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(40,127,255,.18);flex:none}
+.brule{height:4px;background:var(--blue)}
+@media (max-width:980px){.band-in{flex-direction:column;align-items:flex-start}.band-r{gap:20px;width:100%;justify-content:space-between}}
+
+/* ---------- Sections ---------- */
+.sec{padding:40px 0 var(--sp10);scroll-margin-top:64px}
+.sh{display:flex;align-items:center;gap:14px;margin:0 0 var(--sp9)}
+.sh-n{color:var(--blue-d);font-weight:600;font-size:12px;letter-spacing:.14em;font-variant-numeric:tabular-nums}
+.sh-sep{width:4px;height:4px;border-radius:50%;background:var(--blue);flex:none}
+.sh-l{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+.sh-rule{flex:1;height:1px;background:var(--line);margin:0 10px}
+.sh-m{font:400 24px/1 Georgia,"Times New Roman",serif;letter-spacing:-.02em}
+.h2{margin:0;max-width:13em;font-weight:600;font-size:clamp(36px,4.7vw,62px);line-height:1.04;letter-spacing:-.04em}
+.lede{margin:40px 0 0;max-width:44em;border-left:2px solid var(--blue);padding:2px 0 2px 22px;font-size:18px;line-height:1.7;color:var(--ink2)}
+.lede .ar{color:var(--blue-d);font-weight:500;margin:0 .1em}
+.lbl{display:flex;align-items:center;gap:16px;margin:0 0 24px;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+@media (max-width:860px){.sec{padding:28px 0 88px}.sh{margin-bottom:56px}.lede{font-size:17px;margin-top:28px}}
+
+/* ---------- Logos ---------- */
+.lg{display:block;flex:none;object-fit:contain;background:var(--white);border:1px solid var(--line)}
+.lg-fb{display:grid;place-items:center;color:var(--gray2);font-weight:600;letter-spacing:.04em;background:#F1F0EC}
+.lg-c{width:40px;height:40px;border-radius:50%;padding:5px;font-size:11px}
+.lg-p{width:88px;height:88px;border-radius:var(--r);padding:10px;font-size:22px}
+
+/* ---------- Career ---------- */
+.tl-desk{position:relative;margin-top:88px;border-radius:var(--r)}
+.tl-desk:focus-visible{outline-offset:12px}
+.tl-row{position:relative;height:132px}
+.tcard{position:absolute;width:25%;padding:0 6px;border:0;background:none;text-align:left;cursor:pointer}
+.tl-row.top .tcard{bottom:0}
+.tl-row.bot .tcard{top:0}
+.tcard:focus-visible{outline:none}
+.tcard:focus-visible .tc-in{outline:2px solid var(--blue-d);outline-offset:3px}
+.tc-in{display:block;min-height:114px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:20px 18px 20px;transition:transform .3s var(--ease),border-color .2s,box-shadow .3s}
+@media (hover:hover){.tcard:hover .tc-in{transform:translateY(-2px);border-color:#C4C5C0;box-shadow:0 22px 36px -28px rgba(17,19,24,.4)}}
+.tcard.on .tc-in,.mcard.on{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue),0 26px 44px -30px rgba(40,127,255,.75)}
+.tcard.on .tc-in{transform:translateY(-2px)}
+.tc-head{display:flex;align-items:center;gap:10px}
+.tc-co{font-weight:600;font-size:15px;letter-spacing:-.015em;line-height:1.25}
+.tc-tag{display:block;margin-top:14px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-d)}
+.stems{position:relative;height:24px}
+.stem{position:absolute;top:0;bottom:0;width:1px;background:var(--line);transition:background .25s}
+.stem::after{content:"";position:absolute;left:-2px;width:5px;height:5px;border-radius:50%;background:var(--line);transition:background .25s,transform .25s}
+.stems.top .stem::after{bottom:-3px}
+.stems.bot .stem::after{top:-3px}
+.stem.on,.stem.on::after{background:var(--blue)}
+.stem.on::after{transform:scale(1.6)}
+.bar{display:flex;height:56px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:linear-gradient(180deg,#FFFFFF,#F0EFEB);box-shadow:0 24px 30px -28px rgba(17,19,24,.45)}
+.seg{flex:1;min-width:0;border:0;border-right:1px solid var(--line);background:transparent;font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-variant-numeric:tabular-nums;cursor:pointer;transition:background .2s,color .2s}
+.seg:last-child{border-right:0}
+.seg:hover{background:rgba(40,127,255,.07)}
+.seg.on{background:var(--blue-d);color:#fff}
+.seg:focus-visible{outline-offset:-5px;outline-color:var(--blue-d)}
+.seg.on:focus-visible{outline-color:#fff}
+.cdetail{position:relative;margin-top:56px;display:grid;grid-template-columns:88px minmax(0,1fr);gap:40px;padding:52px 64px 56px 56px;background:var(--white);border:1px solid var(--line);border-top:2px solid var(--blue);border-radius:0 0 var(--r) var(--r);box-shadow:0 40px 60px -50px rgba(17,19,24,.4)}
+.x{position:absolute;top:16px;right:16px;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--ink);cursor:pointer;transition:border-color .2s,color .2s,transform .3s var(--ease)}
+.x:hover{border-color:var(--blue);color:var(--blue-d)}
+.cd-co{margin:0;font-size:30px;font-weight:600;letter-spacing:-.025em;line-height:1.15}
+.cd-role{margin:8px 0 0;font-size:15px;font-weight:500}
+.cd-meta{margin:10px 0 0;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);font-variant-numeric:tabular-nums}
+.cd-meta span+span::before{content:"\00B7";margin:0 10px;color:var(--blue-d)}
+.cd-why{margin:28px 0 0;max-width:40em;border-left:2px solid var(--blue);padding:2px 0 2px 20px;font-style:italic;font-weight:300;font-size:17px;line-height:1.7;color:var(--ink2)}
+.cd-hero{margin:28px 0 0;max-width:42em;font-weight:600;font-size:16px;line-height:1.65}
+.cd-subs{list-style:none;margin:14px 0 0;padding:0;max-width:42em}
+.cd-subs li{position:relative;margin-top:10px;padding-left:22px;font-size:14.5px;line-height:1.7;color:#3F424A}
+.cd-subs li::before{content:"";position:absolute;left:2px;top:.68em;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.cd-roles{margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
+.cd-roles h4{margin:0 0 8px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-d)}
+.cd-roles ol{list-style:none;margin:0;padding:0}
+.cd-roles li{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 16px;padding:11px 0;border-bottom:1px solid var(--line2);font-size:14.5px}
+.cd-roles li:last-child{border-bottom:0}
+.cd-roles .rt{font-weight:500}
+.cd-roles .rl{margin-left:10px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.cd-roles .rd{font-size:12.5px;color:var(--gray);font-variant-numeric:tabular-nums;letter-spacing:.03em}
+.tl-mob{display:none;list-style:none;margin:48px 0 0;padding:0}
+.tl-mob li+li{margin-top:12px}
+.mcard{display:block;width:100%;text-align:left;padding:18px 18px 20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);cursor:pointer;transition:border-color .2s,box-shadow .3s}
+.m-yr{display:inline-block;margin-bottom:14px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-variant-numeric:tabular-nums;transition:background .2s,color .2s,border-color .2s}
+.mcard.on .m-yr{background:var(--blue-d);border-color:var(--blue-d);color:#fff}
+.m-detail .cdetail{margin-top:8px;grid-template-columns:1fr;gap:20px;padding:56px 20px 28px;border-radius:0 0 var(--r) var(--r)}
+.m-detail .lg-p{width:56px;height:56px;padding:6px;font-size:15px}
+.m-detail .cd-co{font-size:24px}
+@media (max-width:767px){.tl-desk,#cdetail{display:none!important}.tl-mob{display:block}}
+
+/* ---------- Entrepreneurship ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:72px}
+.vcard{display:flex;flex-direction:column;padding:0;text-align:left;background:var(--white);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s,border-color .2s}
+@media (hover:hover){.vcard:hover{transform:translateY(-3px);border-color:#C4C5C0;box-shadow:0 34px 50px -38px rgba(17,19,24,.5)}}
+.vcover{position:relative;height:150px;overflow:hidden;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#F5F4F0,#E8E7E2)}
+.vcover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vcover.logo{background:#000}
+.vcover.logo img{inset:0;margin:auto;max-width:88%;max-height:86%;width:auto;height:auto;object-fit:contain}
+.vc-name{position:absolute;left:24px;bottom:20px;max-width:52%;font-weight:600;font-size:30px;line-height:1.05;letter-spacing:-.035em}
+.vc-scn{position:absolute;right:0;top:0;bottom:0;width:52%}
+.vc-fb{display:none}
+.vcover.noimg{background:linear-gradient(180deg,#F5F4F0,#E8E7E2)}
+.vcover.noimg .vc-fb{display:block}
+.st{position:absolute;top:14px;left:14px;z-index:1;display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.94);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;line-height:1.2}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue-d);flex:none}
+.st.exp::before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--blue-d)}
+.st.act::before{background:var(--blue);box-shadow:0 0 0 3px rgba(40,127,255,.22)}
+.vbody{display:flex;flex-direction:column;flex:1;padding:28px 28px 24px}
+.v-n{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:1.2}
+.v-h{margin-top:10px;margin-bottom:auto;font-size:15px;line-height:1.65;color:var(--gray)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tag{padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gray2)}
+.v-more{display:flex;align-items:center;gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line2);font-size:14px;font-weight:500;color:var(--blue-d)}
+.v-more i{font-style:normal;transition:transform .25s var(--ease)}
+@media (hover:hover){.vcard:hover .v-more i{transform:translateX(4px)}}
+@media (max-width:640px){.vgrid{grid-template-columns:1fr;gap:20px;margin-top:48px}.vbody{padding:24px 22px 20px}}
+
+/* ---------- Dialogs ---------- */
+.dlg{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:6vh 16px;border:0;background:transparent;overflow-y:auto;overscroll-behavior:contain}
+.dlg[open]{display:flex;align-items:flex-start;justify-content:center}
+.dlg::backdrop{background:rgba(236,233,226,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.sheet{position:relative;width:100%;max-width:760px;margin:0 auto;background:var(--white);border-top:3px solid var(--blue);box-shadow:0 60px 120px -50px rgba(17,19,24,.5),0 0 0 1px rgba(17,19,24,.06)}
+.sheet-v{padding:64px 64px 56px}
+.vm-top{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.vm-mark{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;letter-spacing:.04em;background:radial-gradient(circle at 34% 28%,#FFFFFF 0,#F3F2EE 24%,#DEDDD7 64%,#C7C6C0 100%);box-shadow:0 10px 16px -10px rgba(17,19,24,.45)}
+.vm-st{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.vm-st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue-d)}
+.vm-st.exp::before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--blue-d)}
+.vm-st.act::before{background:var(--blue);box-shadow:0 0 0 3px rgba(40,127,255,.22)}
+.vm-name{margin:0 0 14px;font-size:clamp(34px,5vw,52px);font-weight:600;line-height:1.02;letter-spacing:-.04em}
+.vm-hook{margin:0 0 40px;font-size:18px;font-weight:300;line-height:1.6;color:var(--ink2)}
+.vm-dl{display:grid;grid-template-columns:104px minmax(0,1fr);gap:28px 28px;margin:0;padding-top:36px;border-top:1px solid var(--line)}
+.vm-dl dt{padding-top:5px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-d)}
+.vm-dl dd{margin:0;font-size:15.5px;line-height:1.75}
+.vm-dl dd.it{font-style:italic;color:var(--gray2)}
+.xlink{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:28px;font-size:14.5px;font-weight:500;color:var(--blue-d);text-decoration:none;border-bottom:1px solid rgba(26,95,214,.3);transition:border-color .2s}
+.xlink:hover{border-color:var(--blue-d)}
+.sheet-h{overflow:hidden}
+.hm-photo{position:relative;height:340px;background:radial-gradient(ellipse 70% 60% at 30% 10%,rgba(255,255,255,.75),transparent 70%),var(--tone,#E9E7E1)}
+.hm-photo .scn{position:absolute;left:0;right:0;bottom:0;height:78%}
+.hm-photo .h-cap{position:absolute;left:24px;top:22px}
+.hm-body{padding:44px 64px 56px}
+.kick{margin:0 0 12px;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-d);font-variant-numeric:tabular-nums}
+.hm-t{margin:0 0 10px;font-size:clamp(32px,4.4vw,44px);font-weight:600;line-height:1.05;letter-spacing:-.035em}
+.hm-tag{margin:0 0 28px;font-size:17px;font-weight:300;line-height:1.6;color:var(--ink2)}
+.meta{display:flex;flex-wrap:wrap;gap:16px 44px;margin:0 0 32px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta div{display:flex;flex-direction:column;gap:4px}
+.meta dt{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.meta dd{margin:0;font-size:15px;font-weight:500}
+.story p{margin:0 0 16px;font-size:16px;line-height:1.8;color:var(--ink2)}
+.embed{margin:32px 0 0}
+.embed .ifr{aspect-ratio:4/3;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#F1F0EC}
+.embed iframe{display:block;width:100%;height:100%;border:0}
+.embed figcaption{margin-top:12px;font-size:10.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.sheet-h .x{z-index:2}
+@media (max-width:640px){
+  .dlg{padding:16px 12px}
+  .sheet-v{padding:64px 22px 36px}
+  .vm-dl{grid-template-columns:1fr;gap:6px}
+  .vm-dl dd{margin-bottom:18px}
+  .hm-photo{height:220px}
+  .hm-body{padding:32px 22px 36px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .dlg[open] .sheet{animation:rise .42s var(--ease)}
+  .dlg[open]::backdrop{animation:fade .3s ease}
+  .cdetail{animation:rise .38s var(--ease)}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+}
+
+/* ---------- Beyond Work ---------- */
+.bw-row{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:56px;align-items:start;margin-top:72px}
+.map-card{position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.map-card svg{display:block;width:100%;height:auto}
+.land{fill:#E4E4E0;stroke:#FFFFFF;stroke-width:.6;stroke-linejoin:round}
+.mk{cursor:pointer}
+.mk circle.dot{fill:var(--blue);stroke:#fff;stroke-width:1.6;transition:r .2s}
+.mk:hover circle.dot{r:7}
+.ring{fill:none;stroke:var(--blue);stroke-width:1.5}
+.ring2{fill:none;stroke:var(--blue);stroke-width:.8;opacity:.45}
+.legend{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:12px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.94);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.legend .ld{display:inline-flex;align-items:center;gap:8px}
+.legend .ld::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 2px #fff,0 0 0 3px rgba(40,127,255,.35)}
+.legend .lh{padding-left:12px;border-left:1px solid var(--line);color:var(--gray2);letter-spacing:.14em}
+.bw-q{margin:0;max-width:24em;border-left:2px solid var(--blue);padding:2px 0 2px 20px}
+.bw-q p{margin:0;font-style:italic;font-weight:300;font-size:17px;line-height:1.65}
+.bw-q cite{display:block;margin-top:10px;font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.stat{margin:36px 0 32px;font-size:clamp(28px,2.6vw,36px);font-weight:600;line-height:1.15;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.facts{list-style:none;margin:0;padding:0;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}
+.facts li{display:flex;align-items:center;gap:16px;min-height:60px;padding:12px 18px;font-size:14.5px;line-height:1.45}
+.facts li+li{border-top:1px solid var(--line2)}
+.fi{width:36px;height:36px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--blue)}
+.fi svg{width:18px;height:18px}
+.facts b{font-weight:500}
+.facts .fv{color:var(--gray)}
+.hob{margin-top:var(--sp9)}
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:280px;gap:16px}
+.hobby{position:relative;display:flex;flex-direction:column;padding:0;text-align:left;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;background:radial-gradient(ellipse 80% 60% at 28% 8%,rgba(255,255,255,.8),transparent 70%),var(--tone);transition:transform .35s var(--ease),box-shadow .35s,border-color .2s}
+@media (hover:hover){.hobby:hover{transform:translateY(-3px);border-color:#C4C5C0;box-shadow:0 34px 50px -38px rgba(17,19,24,.5)}}
+.hobby.lead{grid-column:span 2;grid-row:span 2}
+.h-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 16px 0 20px}
+.h-cap{padding-top:13px;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2)}
+.h-plus{width:40px;height:40px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--ink);transition:background .25s,color .25s,border-color .25s,transform .35s var(--ease)}
+.h-plus svg{width:16px;height:16px}
+@media (hover:hover){.hobby:hover .h-plus{background:var(--blue-d);border-color:var(--blue-d);color:#fff}}
+.h-stage{position:relative;flex:1;min-height:0;margin:4px 0 14px}
+.h-stage .scn{position:absolute;inset:0}
+.h-txt{display:block;padding:0 20px 20px}
+.h-l{display:block;font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.25}
+.h-t{display:block;margin-top:4px;font-size:13px;line-height:1.55;color:#45484F}
+.hobby.lead .h-top{padding:20px 20px 0 26px}
+.hobby.lead .h-txt{padding:0 26px 26px}
+.hobby.lead .h-l{font-size:32px;letter-spacing:-.035em}
+.hobby.lead .h-t{font-size:15px;margin-top:6px}
+.hobby.lead .h-plus{width:44px;height:44px}
+@media (prefers-reduced-motion:no-preference) and (hover:hover){.hobby:hover .h-plus{transform:rotate(90deg)}}
+@media (max-width:1000px){.bw-row{grid-template-columns:1fr;gap:40px}.bw-side{max-width:560px}}
+@media (max-width:900px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:250px}.hobby.lead{grid-column:span 2;grid-row:span 1}.hobby.lead .h-l{font-size:26px}}
+@media (max-width:560px){.mosaic{grid-template-columns:1fr;grid-auto-rows:260px}.hobby.lead{grid-column:auto}.hob{margin-top:72px}}
+
+/* ---------- Education ---------- */
+.ed-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:72px;align-items:start;margin-top:72px}
+.deg{display:grid;grid-template-columns:80px minmax(0,1fr);gap:24px;align-items:start}
+.lg-d{width:80px;height:80px;border-radius:var(--r);padding:12px;font-size:20px}
+.d-s{margin:0;font-size:28px;font-weight:600;letter-spacing:-.03em;line-height:1.15}
+.d-y{margin:8px 0 0;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);font-variant-numeric:tabular-nums}
+.d-d{margin:14px 0 0;font-size:15px;font-weight:500}
+.d-x{margin:10px 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:var(--gray)}
+.certs{list-style:none;margin:0;padding:0}
+.certs li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:16px;align-items:center;min-height:72px;padding:14px 18px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}
+.certs li+li{margin-top:12px}
+.lg-s{width:40px;height:40px;border-radius:50%;padding:7px;font-size:10px}
+.c-n{display:block;font-size:15px;font-weight:500;line-height:1.35}
+.c-i{display:block;margin-top:2px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.c-y{font-size:13px;font-weight:600;color:var(--blue-d);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+@media (max-width:860px){.ed-grid{grid-template-columns:1fr;gap:56px;margin-top:48px}}
+@media (max-width:420px){.deg{grid-template-columns:64px minmax(0,1fr);gap:18px}.lg-d{width:64px;height:64px;padding:9px}.d-s{font-size:24px}}
+
+/* ---------- Footer ---------- */
+.foot-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;min-height:96px;font-size:13px;color:var(--gray)}
+.foot-in p{margin:0}
+
+/* ---------- Load motion (hero props settle onto the plinth) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .scene .gl-g{animation:glassIn 1.1s .15s var(--ease) both}
+  .scene .orb-g{animation:orbIn 1s .35s var(--ease) both}
+  @keyframes glassIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes orbIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+  .ring.pulse{animation:pulse 2.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes pulse{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.2)}}
+}
+
+@media (max-width:860px){.wrap{padding-left:24px;padding-right:24px}}
+@media (max-width:600px){.wrap{padding-left:16px;padding-right:16px}.sh-m{font-size:20px}.band p{font-size:10px;letter-spacing:.16em}.band .sep{margin:0 8px 2px}.band-in{gap:14px;padding-top:24px;padding-bottom:24px}.band-r{gap:16px}}
+
+/* ---------- v2 hero: strip = title + location (no repeated name, no clock); icon contact rows ---------- */
+.strip{grid-template-columns:1fr 1fr}
+.s-role{justify-content:flex-start}
+.s-city{justify-content:flex-end}
+.tk{grid-template-columns:28px minmax(0,1fr) auto}
+.tk .ico{display:grid;place-items:center;width:28px;height:28px}
+.tk .ico svg{width:18px;height:18px;fill:var(--blue-d)}
+@media (max-width:860px){.strip{grid-template-columns:1fr}.s-city{justify-content:flex-start}}
+
+/* ---------- v3: ventures in one row (4 across at 1024px+, 2x2 tablet, 1 col phone) + real covers, no repeated names ---------- */
+.vgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.vbody{padding:22px 22px 20px}
+.v-n{font-size:21px}
+.v-h{font-size:14.5px}
+.vcover img.shot{inset:auto;left:15%;top:50px;width:92%;height:auto;object-fit:initial;border:1px solid var(--line);border-radius:10px;box-shadow:0 22px 36px -22px rgba(17,19,24,.45),0 2px 6px rgba(17,19,24,.06);transition:transform .35s var(--ease)}
+@media (hover:hover){.vcard:hover .vcover img.shot{transform:translateY(-4px)}}
+.sp-puck{position:absolute;left:50%;top:50%;width:66px;height:66px;margin:-27px 0 0 -33px;display:grid;place-items:center;border-radius:50%;color:var(--blue);background:radial-gradient(circle at 35% 30%,#fff,#F1F1EE 70%);box-shadow:0 14px 22px -12px rgba(17,19,24,.35),0 0 0 1px rgba(17,19,24,.05),0 10px 30px -6px rgba(40,127,255,.35)}
+.sp-puck svg{width:28px;height:28px}
+@media (max-width:1023px){.vgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.vbody{padding:28px 28px 24px}.v-n{font-size:24px}.v-h{font-size:15px}}
+@media (max-width:640px){.vgrid{grid-template-columns:1fr;gap:20px}.vbody{padding:24px 22px 20px}}
+</style>
+</head>
+<body>
+
+<!-- Shared SVG paint for the sculptural props -->
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="gOrb" cx="34%" cy="28%" r="78%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".2" stop-color="#F5F4F0"/><stop offset=".58" stop-color="#DFDED8"/><stop offset=".86" stop-color="#C6C5BF"/><stop offset="1" stop-color="#B7B6B0"/></radialGradient>
+    <radialGradient id="gOrbB" cx="34%" cy="28%" r="78%"><stop offset="0" stop-color="#CFE2FF"/><stop offset=".22" stop-color="#5C9DFF"/><stop offset=".6" stop-color="#287FFF"/><stop offset="1" stop-color="#1A5FD6"/></radialGradient>
+    <radialGradient id="gSh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#111318" stop-opacity=".34"/><stop offset=".55" stop-color="#111318" stop-opacity=".12"/><stop offset="1" stop-color="#111318" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gGlass" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#287FFF" stop-opacity=".07"/><stop offset=".55" stop-color="#287FFF" stop-opacity=".22"/><stop offset="1" stop-color="#287FFF" stop-opacity=".44"/></linearGradient>
+    <linearGradient id="gEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6E7FF"/><stop offset=".5" stop-color="#5C9DFF"/><stop offset="1" stop-color="#1A5FD6"/></linearGradient>
+    <linearGradient id="gTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEEDE8"/><stop offset="1" stop-color="#FBFBF9"/></linearGradient>
+    <linearGradient id="gFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAE9E4"/><stop offset="1" stop-color="#D8D7D1"/></linearGradient>
+    <linearGradient id="gCyl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ECEBE6"/><stop offset=".35" stop-color="#F6F5F2"/><stop offset="1" stop-color="#CFCEC8"/></linearGradient>
+    <pattern id="pFl" width="9" height="10" patternUnits="userSpaceOnUse"><rect width="9" height="10" fill="#F3F2EE"/><rect x="5" width="4" height="10" fill="#DEDDD7"/><rect x="5" width="1" height="10" fill="#FFFFFF" opacity=".7"/></pattern>
+    <filter id="fGlow" x="-300%" y="-10%" width="700%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+</svg>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="#hero">Hussain Alam<span class="pd" aria-hidden="true">.</span></a>
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        <li><a href="#career">Career</a></li>
+        <li><a href="#entrepreneurship">Entrepreneurship</a></li>
+        <li><a href="#beyond-work">Beyond Work</a></li>
+      </ul>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/></svg>
+    </button>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="Menu" hidden>
+    <ul>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#entrepreneurship">Entrepreneurship</a></li>
+      <li><a href="#beyond-work">Beyond Work</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section id="hero" aria-label="Introduction">
+  <div class="wrap hero">
+    <div class="strip"><span class="s-role">Operator turned PM</span><span class="s-city">Based in New York</span></div>
+    <div class="hgrid">
+      <div class="intro">
+        <h1 class="name">Hussain Alam<span class="pd">.</span></h1>
+        <p class="bio">13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side.</p>
+        <blockquote class="quote"><p>&ldquo;The only source of knowledge is experience.&rdquo;</p><cite>Albert Einstein</cite></blockquote>
+      </div>
+      <figure class="port">
+        <div class="scene">
+          <svg class="scn back" viewBox="0 0 440 500" aria-hidden="true" focusable="false" data-scene="heroBack"></svg>
+          <div class="fr"><div class="pin"><span class="pf" aria-hidden="true">HA</span><img src="../public/logos/profile-image.png" alt="Portrait of Hussain Alam" onerror="this.remove()"></div></div>
+          <svg class="scn front" viewBox="0 0 440 500" aria-hidden="true" focusable="false" data-scene="heroFront"></svg>
+        </div>
+      </figure>
+      <div class="ticket">
+        <div class="rows">
+          <a class="tk" href="https://www.linkedin.com/in/hussainalam" target="_blank" rel="noopener" aria-label="LinkedIn: /in/hussainalam"><b class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></b><i>/in/hussainalam</i><s aria-hidden="true">&#8599;</s></a>
+          <a class="tk" href="mailto:hussain@karnerblu.com" aria-label="Email: hussain@karnerblu.com"><b class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></b><i>hussain@karnerblu.com</i><s aria-hidden="true">&#8599;</s></a>
+          <a class="tk" href="https://github.com/KarnerAI" target="_blank" rel="noopener" aria-label="GitHub: /KarnerAI"><b class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></b><i>/KarnerAI</i><s aria-hidden="true">&#8599;</s></a>
+        </div>
+        <div class="stub"><a class="btn" href="mailto:hussain@karnerblu.com">Get in touch</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="band">
+    <div class="wrap band-in">
+      <p class="band-l">Operator turned PM<i class="sep" aria-hidden="true"></i><span class="vh">, </span>Based in New York</p>
+      <div class="band-r">
+        <p><span>Operational Excellence<i class="sep" aria-hidden="true"></i><span class="vh">, </span>Founder Mode</span><span>Startup Operator<i class="sep" aria-hidden="true"></i><span class="vh">, </span>Turnaround at Scale</span></p>
+        <span class="band-dot" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+  <div class="brule" aria-hidden="true"></div>
+</section>
+
+<!-- ===================== CAREER ===================== -->
+<section id="career" class="sec" aria-labelledby="career-h">
+  <div class="wrap">
+    <p class="sh"><span class="sh-n">02</span><span class="sh-sep" aria-hidden="true"></span><span class="sh-l">Career</span><span class="sh-rule" aria-hidden="true"></span><span class="sh-m" aria-hidden="true">HA.</span></p>
+    <h2 class="h2" id="career-h">My career, in <span class="bl">four chapters</span><span class="pd">.</span></h2>
+    <p class="lede">Fortune 100 ops out of college <span class="ar" aria-hidden="true">&rarr;</span> founded a consultancy <span class="ar" aria-hidden="true">&rarr;</span> 5th U.S. hire at a Series-A startup <span class="ar" aria-hidden="true">&rarr;</span> joined WeWork three months before bankruptcy and led products to profitability.</p>
+
+    <!-- Mobile: vertical chapter stack, tap to expand in place -->
+    <ol class="tl-mob">
+      <li><button class="mcard" type="button" data-ci="0" aria-expanded="false"><span class="m-yr">2012 - 2018</span><span class="tc-head"><img class="lg lg-c" src="../public/logos/ab-inbev.png" alt="" data-i="AB" onerror="fb(this)"><span class="tc-co">Anheuser-Busch InBev</span></span><span class="tc-tag">Operational Excellence</span></button><div class="m-detail" data-mi="0" hidden></div></li>
+      <li><button class="mcard" type="button" data-ci="1" aria-expanded="false"><span class="m-yr">2018 - 2020</span><span class="tc-head"><img class="lg lg-c" src="../public/logos/karnerblu.png" alt="" data-i="KB" onerror="fb(this)"><span class="tc-co">KarnerBlu</span></span><span class="tc-tag">Founder Mode</span></button><div class="m-detail" data-mi="1" hidden></div></li>
+      <li><button class="mcard" type="button" data-ci="2" aria-expanded="false"><span class="m-yr">2020 - 2022</span><span class="tc-head"><img class="lg lg-c" src="https://www.google.com/s2/favicons?domain=ridezoomo.com&amp;sz=128" alt="" data-i="ZM" onerror="fb(this)"><span class="tc-co">Zoomo</span></span><span class="tc-tag">Startup Operator</span></button><div class="m-detail" data-mi="2" hidden></div></li>
+      <li><button class="mcard" type="button" data-ci="3" aria-expanded="false"><span class="m-yr">2023 - Present</span><span class="tc-head"><img class="lg lg-c" src="https://www.google.com/s2/favicons?domain=wework.com&amp;sz=128" alt="" data-i="WW" onerror="fb(this)"><span class="tc-co">WeWork</span></span><span class="tc-tag">Turnaround at Scale</span></button><div class="m-detail" data-mi="3" hidden></div></li>
+    </ol>
+
+    <!-- Desktop: four equal segments, cards alternate above and below -->
+    <div class="tl-desk" id="tl" role="group" aria-label="Career timeline. Use left and right arrow keys to move between chapters." tabindex="0">
+      <div class="tl-row top">
+        <button class="tcard" type="button" data-ci="0" style="left:0" aria-expanded="false"><span class="tc-in"><span class="tc-head"><img class="lg lg-c" src="../public/logos/ab-inbev.png" alt="" data-i="AB" onerror="fb(this)"><span class="tc-co">Anheuser-Busch InBev</span></span><span class="tc-tag">Operational Excellence</span></span></button>
+        <button class="tcard" type="button" data-ci="2" style="left:50%" aria-expanded="false"><span class="tc-in"><span class="tc-head"><img class="lg lg-c" src="https://www.google.com/s2/favicons?domain=ridezoomo.com&amp;sz=128" alt="" data-i="ZM" onerror="fb(this)"><span class="tc-co">Zoomo</span></span><span class="tc-tag">Startup Operator</span></span></button>
+      </div>
+      <div class="stems top" aria-hidden="true"><span class="stem" data-si="0" style="left:12.5%"></span><span class="stem" data-si="2" style="left:62.5%"></span></div>
+      <div class="bar">
+        <button class="seg" type="button" data-ci="0" aria-expanded="false" aria-label="Anheuser-Busch InBev, 2012 - 2018">2012 - 2018</button>
+        <button class="seg" type="button" data-ci="1" aria-expanded="false" aria-label="KarnerBlu, 2018 - 2020">2018 - 2020</button>
+        <button class="seg" type="button" data-ci="2" aria-expanded="false" aria-label="Zoomo, 2020 - 2022">2020 - 2022</button>
+        <button class="seg" type="button" data-ci="3" aria-expanded="false" aria-label="WeWork, 2023 - Present">2023 - Present</button>
+      </div>
+      <div class="stems bot" aria-hidden="true"><span class="stem" data-si="1" style="left:37.5%"></span><span class="stem" data-si="3" style="left:87.5%"></span></div>
+      <div class="tl-row bot">
+        <button class="tcard" type="button" data-ci="1" style="left:25%" aria-expanded="false"><span class="tc-in"><span class="tc-head"><img class="lg lg-c" src="../public/logos/karnerblu.png" alt="" data-i="KB" onerror="fb(this)"><span class="tc-co">KarnerBlu</span></span><span class="tc-tag">Founder Mode</span></span></button>
+        <button class="tcard" type="button" data-ci="3" style="left:75%" aria-expanded="false"><span class="tc-in"><span class="tc-head"><img class="lg lg-c" src="https://www.google.com/s2/favicons?domain=wework.com&amp;sz=128" alt="" data-i="WW" onerror="fb(this)"><span class="tc-co">WeWork</span></span><span class="tc-tag">Turnaround at Scale</span></span></button>
+      </div>
+    </div>
+    <div class="cdetail" id="cdetail" hidden></div>
+  </div>
+</section>
+
+<div class="brule" aria-hidden="true"></div>
+
+<!-- ===================== ENTREPRENEURSHIP ===================== -->
+<section id="entrepreneurship" class="sec" aria-labelledby="ent-h">
+  <div class="wrap">
+    <p class="sh"><span class="sh-n">03</span><span class="sh-sep" aria-hidden="true"></span><span class="sh-l">Entrepreneurship</span><span class="sh-rule" aria-hidden="true"></span><span class="sh-m" aria-hidden="true">HA.</span></p>
+    <h2 class="h2" id="ent-h">Things I&rsquo;ve <span class="bl">started</span><span class="pd">.</span></h2>
+    <p class="lede">I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some worked, some taught me more than any growth role. Click any card to read the full story.</p>
+
+    <div class="vgrid">
+      <button class="vcard" type="button" data-v="0" aria-haspopup="dialog">
+        <span class="vcover"><img src="../public/ventures/emojifriends.avif" alt="" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="vc-name vc-fb" aria-hidden="true">EmojiFriends</span><span class="st">Shipped</span></span>
+        <span class="vbody"><span class="v-n">EmojiFriends</span><span class="v-h">A Kickstarter-funded project for the festival kandi trading crowd. $6K raised, featured on Insomniac.com.</span><span class="tags"><span class="tag">Kickstarter</span><span class="tag">EDM</span><span class="tag">Consumer Hardware</span></span><span class="v-more">Read story <i aria-hidden="true">&rarr;</i></span></span>
+      </button>
+      <button class="vcard" type="button" data-v="1" aria-haspopup="dialog">
+        <span class="vcover logo"><img src="../public/ventures/spreadthefacts.png" alt="" onerror="this.parentNode.classList.remove('logo');this.parentNode.classList.add('noimg');this.remove()"><span class="vc-name vc-fb" aria-hidden="true">SpreadTheFacts</span><span class="st">Shipped</span></span>
+        <span class="vbody"><span class="v-n">SpreadTheFacts</span><span class="v-h">Won MIT&rsquo;s COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General.</span><span class="tags"><span class="tag">MIT</span><span class="tag">Hackathon</span><span class="tag">Public Health</span></span><span class="v-more">Read story <i aria-hidden="true">&rarr;</i></span></span>
+      </button>
+      <button class="vcard" type="button" data-v="2" aria-haspopup="dialog">
+        <span class="vcover"><span class="sp-puck" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span><span class="st exp">Experimental</span></span>
+        <span class="vbody"><span class="v-n">Spots</span><span class="v-h">Social discovery for the places you love and want to return to.</span><span class="tags"><span class="tag">Co-founder</span><span class="tag">Consumer</span><span class="tag">Social</span></span><span class="v-more">Read story <i aria-hidden="true">&rarr;</i></span></span>
+      </button>
+      <button class="vcard" type="button" data-v="3" aria-haspopup="dialog">
+        <span class="vcover"><img class="shot" src="../public/ventures/navigate-ai-score.png" alt="" onerror="this.remove()"><span class="st act">Active</span></span>
+        <span class="vbody"><span class="v-n">Navigate.AI</span><span class="v-h">Your career pivot, backed by real data. No AI guesswork.</span><span class="tags"><span class="tag">Founder</span><span class="tag">AI</span><span class="tag">2025&rarr;</span></span><span class="v-more">Read story <i aria-hidden="true">&rarr;</i></span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="brule" aria-hidden="true"></div>
+
+<!-- ===================== BEYOND WORK ===================== -->
+<section id="beyond-work" class="sec" aria-labelledby="bw-h">
+  <div class="wrap">
+    <p class="sh"><span class="sh-n">04</span><span class="sh-sep" aria-hidden="true"></span><span class="sh-l">Beyond Work</span><span class="sh-rule" aria-hidden="true"></span><span class="sh-m" aria-hidden="true">HA.</span></p>
+    <h2 class="h2" id="bw-h">Get to know me <span class="bl">outside of work</span><span class="pd">.</span></h2>
+
+    <div class="bw-row">
+      <div class="map-card">
+        <svg id="map" viewBox="0 0 800 400" role="img" aria-label="World map with 16 visited countries pinned"><g id="map-land"></g><g id="map-mk"></g></svg>
+        <div class="legend"><span class="ld">Visited</span><span class="lh" id="map-hover" hidden></span></div>
+      </div>
+      <div class="bw-side">
+        <blockquote class="bw-q"><p>&ldquo;The world is a book and those who do not travel read only one page.&rdquo;</p><cite>Saint Augustine</cite></blockquote>
+        <p class="stat"><span class="bl">16</span> countries and <span class="bl">32</span> cities explored<span class="pd">.</span></p>
+        <ul class="facts">
+          <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg></span><span><b>Favorite city to visit</b><span class="fv"> &middot; Mexico City</span></span></li>
+          <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20.5h16"/><path d="M6 20.5V9.5L12 5l6 4.5v11"/><path d="M10 20.5v-5h4v5"/></svg></span><span><b>Current base</b><span class="fv"> &middot; New York, NY</span></span></li>
+          <li><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 3.5L3.5 10.2l6.8 2.9 2.9 6.8z"/><path d="M10.3 13.1l10.2-9.6"/></svg></span><span><b>Next up</b><span class="fv"> &middot; Turkey, September 2026</span></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hob">
+      <p class="lbl">Hobbies</p>
+      <div class="mosaic">
+        <button class="hobby lead" type="button" data-h="0" aria-haspopup="dialog" style="--tone:#E9E7E1">
+          <span class="h-top"><span class="h-cap">Photo &middot; Riding &amp; driving</span><span class="h-plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2.5v11M2.5 8h11"/></svg></span></span>
+          <span class="h-stage"><svg class="scn" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false" data-scene="riding"></svg></span>
+          <span class="h-txt"><span class="h-l">Riding &amp; driving</span><span class="h-t">Three days disconnected through the hills of Colombia.</span></span>
+        </button>
+        <button class="hobby" type="button" data-h="1" aria-haspopup="dialog" style="--tone:#E5E7EA">
+          <span class="h-top"><span class="h-cap">Photo &middot; Building with AI</span><span class="h-plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2.5v11M2.5 8h11"/></svg></span></span>
+          <span class="h-stage"><svg class="scn" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false" data-scene="building"></svg></span>
+          <span class="h-txt"><span class="h-l">Building with AI</span><span class="h-t">Products, agents, automation. Always shipping.</span></span>
+        </button>
+        <button class="hobby" type="button" data-h="2" aria-haspopup="dialog" style="--tone:#ECEAE5">
+          <span class="h-top"><span class="h-cap">Photo &middot; Martial arts</span><span class="h-plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2.5v11M2.5 8h11"/></svg></span></span>
+          <span class="h-stage"><svg class="scn" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false" data-scene="martial"></svg></span>
+          <span class="h-txt"><span class="h-l">Martial arts</span><span class="h-t">BJJ, 4x/week. Purple belt.</span></span>
+        </button>
+        <button class="hobby" type="button" data-h="3" aria-haspopup="dialog" style="--tone:#E6E9E4">
+          <span class="h-top"><span class="h-cap">Photo &middot; Youth mentor</span><span class="h-plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2.5v11M2.5 8h11"/></svg></span></span>
+          <span class="h-stage"><svg class="scn" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false" data-scene="mentor"></svg></span>
+          <span class="h-txt"><span class="h-l">Youth mentor</span><span class="h-t">8 years in NYC. Mentee just graduated college.</span></span>
+        </button>
+        <button class="hobby" type="button" data-h="4" aria-haspopup="dialog" style="--tone:#EDE7E2">
+          <span class="h-top"><span class="h-cap">Photo &middot; Festivals &amp; salsa</span><span class="h-plus" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2.5v11M2.5 8h11"/></svg></span></span>
+          <span class="h-stage"><svg class="scn" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false" data-scene="festivals"></svg></span>
+          <span class="h-txt"><span class="h-l">Festivals &amp; salsa</span><span class="h-t">Coachella, Afropunk. Salsa Saturdays in Bushwick.</span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="brule" aria-hidden="true"></div>
+
+<!-- ===================== EDUCATION ===================== -->
+<section id="education" class="sec" aria-labelledby="ed-h">
+  <div class="wrap">
+    <p class="sh"><span class="sh-n">05</span><span class="sh-sep" aria-hidden="true"></span><span class="sh-l">Education</span><span class="sh-rule" aria-hidden="true"></span><span class="sh-m" aria-hidden="true">HA.</span></p>
+    <h2 class="h2" id="ed-h">Degree, and the things I <span class="bl">added after</span><span class="pd">.</span></h2>
+    <div class="ed-grid">
+      <div>
+        <p class="lbl">Degree</p>
+        <div class="deg">
+          <img class="lg lg-d" src="https://www.google.com/s2/favicons?domain=umass.edu&amp;sz=128" alt="UMass Amherst logo" data-i="UM" onerror="fb(this)">
+          <div>
+            <h3 class="d-s">UMass Amherst</h3>
+            <p class="d-y">2008 - 2012 &middot; Amherst, MA</p>
+            <p class="d-d">B.S. Mechanical Engineering &middot; Cum Laude</p>
+            <p class="d-x">Graduated cum laude. Built a foundation in systems thinking that still shapes how I approach product problems.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="lbl">Certifications</p>
+        <ul class="certs">
+          <li><img class="lg lg-s" src="https://www.google.com/s2/favicons?domain=mitsloan.mit.edu&amp;sz=128" alt="MIT Sloan Executive Education logo" data-i="MIT" onerror="fb(this)"><span><span class="c-n">Mastering Design Thinking</span><span class="c-i">MIT Sloan Executive Education</span></span><span class="c-y">&rsquo;20</span></li>
+          <li><img class="lg lg-s" src="https://www.google.com/s2/favicons?domain=hbs.edu&amp;sz=128" alt="Harvard Business School Online logo" data-i="HBS" onerror="fb(this)"><span><span class="c-n">Credential of Readiness (CORe)</span><span class="c-i">Harvard Business School Online</span></span><span class="c-y">&rsquo;15</span></li>
+          <li><img class="lg lg-s" src="https://www.google.com/s2/favicons?domain=ycombinator.com&amp;sz=128" alt="Y Combinator logo" data-i="YC" onerror="fb(this)"><span><span class="c-n">Product School</span><span class="c-i">Y Combinator</span></span><span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="brule" aria-hidden="true"></div>
+<footer>
+  <div class="wrap foot-in"><p>&copy; 2026 Hussain Alam</p><p>Built with Next.js</p></div>
+</footer>
+
+<!-- Venture story dialog -->
+<dialog class="dlg" id="vdlg" aria-labelledby="vdlg-t">
+  <div class="sheet sheet-v">
+    <button class="x" type="button" data-close aria-label="Close story"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+    <div id="vdlg-b"></div>
+  </div>
+</dialog>
+
+<!-- Hobby dialog -->
+<dialog class="dlg" id="hdlg" aria-labelledby="hdlg-t">
+  <div class="sheet sheet-h">
+    <button class="x" type="button" data-close aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+    <div id="hdlg-b"></div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var X='<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>';
+
+  /* ---------- Live New York clock ---------- */
+  (function(){
+    var el=$('.clk'),fmt; if (!el) return;
+    try{fmt=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});}catch(e){return;}
+    function tick(){el.textContent=fmt.format(new Date());}
+    tick();setInterval(tick,30000);
+  })();
+
+  /* ---------- Sculptural props (SVG) ---------- */
+  function r1(v){return Math.round(v*10)/10}
+  function orb(cx,cy,r,b){
+    return '<ellipse cx="'+r1(cx+r*.32)+'" cy="'+r1(cy+r*.95)+'" rx="'+r1(r*1.12)+'" ry="'+r1(Math.max(3,r*.2))+'" fill="url(#gSh)"/>'+
+      '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="url(#'+(b?'gOrbB':'gOrb')+')"/>';
+  }
+  function slab(x,y,w,d,h){
+    var i=r1(d*.8);
+    return '<ellipse cx="'+r1(x+w/2+4)+'" cy="'+(y+d+h-1)+'" rx="'+r1(w*.5)+'" ry="'+r1(Math.max(4,h*.14))+'" fill="url(#gSh)"/>'+
+      '<polygon points="'+(x+i)+','+y+' '+(x+w-i)+','+y+' '+(x+w)+','+(y+d)+' '+x+','+(y+d)+'" fill="url(#gTop)"/>'+
+      '<rect x="'+x+'" y="'+(y+d)+'" width="'+w+'" height="'+h+'" fill="url(#gFront)"/>'+
+      '<rect x="'+x+'" y="'+(y+d)+'" width="'+w+'" height="1" fill="#FFFFFF" opacity=".85"/>';
+  }
+  function flute(x,y,w,d,h){
+    var i=r1(d*.8);
+    return '<polygon points="'+(x+i)+','+y+' '+(x+w-i)+','+y+' '+(x+w)+','+(y+d)+' '+x+','+(y+d)+'" fill="url(#gTop)"/>'+
+      '<rect x="'+x+'" y="'+(y+d)+'" width="'+w+'" height="'+h+'" fill="url(#pFl)"/>'+
+      '<rect x="'+x+'" y="'+(y+d)+'" width="'+w+'" height="'+h+'" fill="url(#gFront)" opacity=".35"/>';
+  }
+  function glass(x,y,w,h,k){ /* bright near edge on the right */
+    var p=x+','+(y+k)+' '+(x+w)+','+y+' '+(x+w)+','+(y+h)+' '+x+','+r1(y+h-k*.35);
+    return '<g class="gl-g"><polygon points="'+p+'" fill="url(#gGlass)" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="1"/>'+
+      '<rect x="'+(x+w-4)+'" y="'+y+'" width="8" height="'+h+'" fill="#287FFF" opacity=".45" filter="url(#fGlow)"/>'+
+      '<rect x="'+r1(x+w-1.4)+'" y="'+y+'" width="2.8" height="'+h+'" fill="url(#gEdge)"/></g>';
+  }
+  function cyl(cx,y,rx,ry,h){
+    return '<ellipse cx="'+(cx+8)+'" cy="'+(y+h+2)+'" rx="'+r1(rx*1.12)+'" ry="'+r1(ry*1.3)+'" fill="url(#gSh)"/>'+
+      '<path d="M'+(cx-rx)+','+y+' v'+h+' a'+rx+','+ry+' 0 0 0 '+(2*rx)+',0 v'+(-h)+' z" fill="url(#gCyl)"/>'+
+      '<ellipse cx="'+cx+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="url(#gTop)"/>';
+  }
+  var SC={
+    heroBack:function(){return slab(0,404,440,24,72)+flute(316,212,108,14,198)+glass(206,10,198,406,30);},
+    heroFront:function(){return '<g class="orb-g">'+orb(360,366,62)+'</g>';},
+    spots:function(){return slab(36,106,212,14,30)+orb(104,103,9,1)+orb(178,76,36);},
+    navigate:function(){return slab(24,108,224,14,28)+slab(62,56,64,12,50)+glass(146,22,64,94,10)+orb(226,106,9,1);},
+    riding:function(){return slab(18,152,264,14,34)+glass(58,30,84,126,12)+orb(198,116,40)+orb(256,152,8,1);},
+    building:function(){return slab(34,158,232,12,30)+slab(86,98,96,14,52)+slab(112,62,46,10,32)+orb(135,51,12,1)+orb(226,138,22);},
+    martial:function(){return cyl(150,150,76,14,34)+orb(150,104,46);},
+    mentor:function(){return slab(26,158,248,12,30)+orb(124,116,46)+orb(212,147,18);},
+    festivals:function(){return slab(26,158,248,12,30)+glass(56,52,60,108,10)+glass(140,34,60,126,10)+orb(112,140,24)+orb(234,147,17,1);}
+  };
+  $$('[data-scene]').forEach(function(s){var f=SC[s.getAttribute('data-scene')];if(f)s.innerHTML=f();});
+
+  /* ---------- Mobile menu ---------- */
+  var burger=$('#burger'),mnav=$('#mnav');
+  function menu(open,focusBack){
+    mnav.hidden=!open;burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+    if(open){var a=$('a',mnav);a&&a.focus();}else if(focusBack){burger.focus();}
+  }
+  burger.addEventListener('click',function(){menu(mnav.hidden);});
+  $$('a',mnav).forEach(function(a){a.addEventListener('click',function(){menu(false);});});
+  document.addEventListener('click',function(e){if(!mnav.hidden&&!mnav.contains(e.target)&&!burger.contains(e.target))menu(false);});
+  window.addEventListener('resize',function(){if(window.innerWidth>=768&&!mnav.hidden)menu(false);});
+
+  /* ---------- Career ---------- */
+  var CAREER=[
+    {co:"Anheuser-Busch InBev",ini:"AB",logo:"../public/logos/ab-inbev.png",years:"2012 - 2018",ten:"6y",
+     role:"Operations &rarr; Operational Excellence",loc:"Newark, NJ &rarr; New York, NY",
+     why:"First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs, from the brewhouse floor up to HR strategy.",
+     hero:"Reduced people-data error rates 7% &rarr; 1% across 20,000 employees by re-engineering the master-data platform used by 125+ HR partners.",
+     subs:["Led 45+ executive workshops that converted pain points into a unified 1-year strategy roadmap aligned to corporate KPIs.",
+       "Earlier brewhouse ops: #1 of 12 breweries on KPI leaderboard; $800K/year savings; led 22-operator team brewing 2.5M cans daily.",
+       "Logistics &amp; warehouse ops: +9% pallet moves/hour across a 450K-case warehouse and 33 union operators on 3 shifts."],
+     roles:[["Group Manager, Brewhouse Operations","Newark, NJ","Jul 2012 - Aug 2013"],["Group Manager, Logistics &amp; Warehouse Ops","Newark, NJ","Aug 2013 - Sep 2014"],["Process Improvement Engineer, North America","New York, NY","Sep 2014 - May 2016"],["Operational Excellence Manager, People COE","New York, NY","May 2016 - Jul 2018"]]},
+    {co:"KarnerBlu",ini:"KB",logo:"../public/logos/karnerblu.png",years:"2018 - 2020",ten:"2y",
+     role:"Product Consultant &middot; Co-Founder",loc:"Remote &middot; Staples, Unilever",
+     why:"Co-founded my own consultancy to work directly with Fortune 500s on execution systems. Faster loops, my own call sheet.",
+     hero:"Boosted resource-allocation efficiency +30% at Fortune 500 clients via a value-based project prioritization framework.",
+     subs:["Built an execution operating system across 7 departments, translating stakeholder needs into workflows, cadences, and KPI reporting.",
+       "Clients included Staples and Unilever. Remote + on-site hybrid."]},
+    {co:"Zoomo",ini:"ZM",logo:"https://www.google.com/s2/favicons?domain=ridezoomo.com&amp;sz=128",years:"2020 - 2022",ten:"2y",
+     role:"City Ops &rarr; Sr. Manager, Product Strategy &amp; Ops",loc:"New York, NY &middot; 8 markets",
+     why:"Series-B micromobility. Traded consulting decks for real P&amp;L ownership and a team in the trenches.",
+     hero:"Scaled B2C subscription ARR 10&times; ($500K &rarr; $5M) across 8 markets through pricing strategy, lifecycle optimization, and full P&amp;L ownership.",
+     subs:["As the 5th U.S. hire: +22% MoM WAU by redesigning subscription offerings; booking-to-subscription conversion 43% &rarr; 73% via A/B testing.",
+       "Led cross-functional team of 5 direct / 40+ indirect across 8 markets. Aligned OKRs to revenue and retention goals.",
+       "Launched 4 North American markets; +25% onboarding efficiency through market analysis and cross-functional execution.",
+       "Reduced e-bike theft 20% with a new insurance product. Ranked 1st of 30 in the global data champions program (COO award)."],
+     roles:[["City Operations Mgr &amp; Interim PM, B2B","New York, NY","Sep 2020 - Aug 2021"],["Sr. Manager, Product Strategy &amp; Operations","New York, NY","Aug 2021 - Nov 2022"]]},
+    {co:"WeWork",ini:"WW",logo:"https://www.google.com/s2/favicons?domain=wework.com&amp;sz=128",years:"2023 - Present",ten:"2y",
+     role:"Manager, Product Management, Global",loc:"New York, NY &middot; 13 countries",
+     why:"Signed three months before WeWork filed for bankruptcy. Friends said don&rsquo;t, headlines said worse. I believed in the people, the brand, and the rare shot at being part of a real turnaround.",
+     hero:"$14M revenue (+60% YoY) owning the global parking vertical across 13 countries. Helped deliver WeWork&rsquo;s first profitable quarter.",
+     subs:["Global Stripe payments: $800K MRR across 13 countries. Defined billing architecture for a scalable, compliant payments system.",
+       "$12M annual revenue + 10% utilization lift across 315 locations via Gemini-powered pricing &amp; inventory benchmarking.",
+       "On-demand office workflows: 37% YoY booking growth (50K vs 36K), +66% YoY credit spend through funnel optimization.",
+       "LATAM on-demand private offices: identified unmet demand, secured COO buy-in, piloted in Mexico, scaled to 150 offices and 900 incremental Q4 2025 bookings."]}
+  ];
+  function detailHTML(i){
+    var r=CAREER[i],h='';
+    h+='<button class="x cd-x" type="button" aria-label="Close details">'+X+'</button>';
+    h+='<img class="lg lg-p" src="'+r.logo+'" alt="" data-i="'+r.ini+'" onerror="fb(this)">';
+    h+='<div><h3 class="cd-co">'+r.co+'</h3><p class="cd-role">'+r.role+'</p>';
+    h+='<p class="cd-meta"><span>'+r.years+'</span><span>'+r.ten+'</span><span>'+r.loc+'</span></p>';
+    h+='<blockquote class="cd-why">'+r.why+'</blockquote><p class="cd-hero">'+r.hero+'</p><ul class="cd-subs">';
+    r.subs.forEach(function(s){h+='<li>'+s+'</li>';});
+    h+='</ul>';
+    if(r.roles){h+='<div class="cd-roles"><h4>Roles held</h4><ol>';r.roles.forEach(function(x){h+='<li><span><span class="rt">'+x[0]+'</span><span class="rl">'+x[1]+'</span></span><span class="rd">'+x[2]+'</span></li>';});h+='</ol></div>';}
+    return h+'</div>';
+  }
+  var pinned=null,panel=$('#cdetail'),deskMQ=window.matchMedia('(min-width:768px)');
+  function trigger(i){return deskMQ.matches?$('.tcard[data-ci="'+i+'"]'):$('.mcard[data-ci="'+i+'"]');}
+  function setPinned(i){
+    pinned=i;
+    $$('[data-ci]').forEach(function(el){
+      var on=+el.getAttribute('data-ci')===i;
+      el.classList.toggle('on',on);el.setAttribute('aria-expanded',on?'true':'false');
+      if(!el.classList.contains('seg')){var r=CAREER[+el.getAttribute('data-ci')];el.setAttribute('aria-label',r.co+', '+r.years+'. '+(on?'Hide':'Show')+' details.');}
+    });
+    $$('.stem').forEach(function(s){s.classList.toggle('on',+s.getAttribute('data-si')===i);});
+    if(i===null){panel.hidden=true;panel.innerHTML='';}
+    else{panel.innerHTML=detailHTML(i);panel.hidden=false;panel.setAttribute('aria-label',CAREER[i].co+' details');}
+    $$('.m-detail').forEach(function(d){
+      var on=+d.getAttribute('data-mi')===i;
+      d.hidden=!on;d.innerHTML=on?'<div class="cdetail">'+detailHTML(i)+'</div>':'';
+    });
+  }
+  setPinned(null);
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-ci]');
+    if(t){var i=+t.getAttribute('data-ci');setPinned(pinned===i?null:i);return;}
+    if(e.target.closest('.cd-x')){var p=pinned;setPinned(null);var tr=trigger(p);tr&&tr.focus();}
+  });
+  $('#tl').addEventListener('keydown',function(e){
+    if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+    e.preventDefault();
+    var n=pinned===null?(e.key==='ArrowRight'?0:3):Math.max(0,Math.min(3,pinned+(e.key==='ArrowRight'?1:-1)));
+    setPinned(n);var tr=$('.tcard[data-ci="'+n+'"]');tr&&tr.focus();
+  });
+
+  /* ---------- Dialog helpers ---------- */
+  var lastTrigger=null;
+  function openDlg(d,from){
+    lastTrigger=from||document.activeElement;
+    document.documentElement.style.overflow='hidden';
+    d.scrollTop=0;
+    if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','');
+    var x=$('[data-close]',d);x&&x.focus();
+  }
+  $$('.dlg').forEach(function(d){
+    d.addEventListener('click',function(e){if(e.target===d||e.target.closest('[data-close]'))d.close();});
+    d.addEventListener('close',function(){
+      document.documentElement.style.overflow='';
+      if(d.id==='hdlg'){var f=$('iframe',d);if(f)f.src='about:blank';}
+      if(lastTrigger&&lastTrigger.focus)lastTrigger.focus();
+    });
+  });
+
+  /* ---------- Ventures ---------- */
+  var V=[
+    {n:"EmojiFriends",ini:"EF",st:"Shipped",cls:"",hook:"A Kickstarter-funded project for the festival kandi trading crowd. $6K raised, featured on Insomniac.com.",
+     p:"By 2015, emoji had become a second language for anyone under 30, but the physical world hadn&rsquo;t caught up. The EDM festival scene had a decade-old tradition of trading kandi beads with strangers as a form of connection. The bracelets were still stuck in 2005 visual language: smiley faces, peace signs, block letters. No one had brought the emoji vocabulary into the thing people were actually wearing on their wrists.",
+     b:"A line of collectible emoji-face beads designed for the kandi-trading culture, manufactured overseas and sold direct-to-consumer. I ran the Kickstarter from concept to fulfillment: product design, factory sourcing, campaign video, reward tiers, pricing, and the post-funding logistics of getting thousands of beads into envelopes. Built the brand on Instagram with zero paid spend. The product photographed well enough that the community did the distribution.",
+     o:"Raised just over $6,000 on Kickstarter from a cold-start audience. Featured on Insomniac.com, the largest EDM publication at the time. Grew past 1,200 organic Instagram followers and shipped to customers across the US, UK, and Australia. The brand built a small but real community of repeat buyers who would message photos from festivals months later.",
+     l:"Hardware margins are brutal once you factor in shipping envelopes one at a time. The smart next move would have been a subscription drop model or a licensing deal with a festival brand instead of another SKU. I also learned how much of &ldquo;going viral&rdquo; is really just a product that&rsquo;s photogenic enough to survive compression on someone else&rsquo;s feed.",
+     url:"https://www.insomniac.com/magazine/meet-the-kickstarter-thats-funding-emoji-kandi-beads/",lab:"Read the Insomniac feature"},
+    {n:"SpreadTheFacts",ini:"STF",st:"Shipped",cls:"",hook:"Won MIT&rsquo;s COVID-19 Hackathon. Raised $5,500 and then put 6,500 masks on the ground with Mass General.",
+     p:"48 hours into the pandemic lockdown, MIT ran a hackathon focused on improving access to information for vulnerable populations. My team&rsquo;s first instinct was to build a &ldquo;better CDC website&rdquo;: cleaner UI on top of the same firehose of advisories. I disagreed. The real problem wasn&rsquo;t that the information was ugly; it was that the people who needed it most weren&rsquo;t going to a website at all.",
+     b:"I was the minority voice in the room, and when I spoke up I wasn&rsquo;t being heard. So I scheduled a session with the hackathon moderators to pressure-test the direction. Judge feedback came back aligned with my read. I led the team through a design-thinking exercise to redefine the problem around a specific audience (essential workers who needed PPE, not pamphlets), and we pivoted hard. The output was a pitch to crowdfund and distribute reusable cotton masks directly to frontline staff, paired with plain-language CDC-sourced hygiene guidance.",
+     o:"Won the hackathon after a grueling 48 hours. Raised $5,500 in follow-on funding and partnered with Mass General Brigham to distribute 6,500 reusable masks to healthcare workers, grocery employees, and transit staff across the Boston area. The project kept going after the weekend ended, which is the only outcome that really matters from a hackathon.",
+     l:"Being the dissenting voice in a team room is useless unless you have a mechanism to force the conversation. Scheduling the moderator session was the whole ballgame. Without it, we would have shipped a nicer-looking CDC website and lost. Also: in a crisis, the fastest path from idea to impact is physical goods, not software."},
+    {n:"Spots",ini:"SP",st:"Experimental",cls:"exp",hook:"Social discovery for the places you love and want to return to.",
+     p:"Google Maps is a utility. Yelp is a review directory. Neither of them answers the question you actually ask your friends: &ldquo;Where should I take someone tonight?&rdquo; The best place recommendations happen inside group chats and disappear there: unindexed, unsearchable, and lost the second the conversation scrolls. Repeat-visit behavior had no product surface at all.",
+     b:"Co-founded Spots as a social discovery app. Think Pinterest for places, with a social graph layered on top of Google Maps. Prototyped the full experience in Sketch and InVision, ran early user-testing sessions through Instabug&rsquo;s user groups, and iterated through three rounds of wireframes before any code shipped. The wedge was collections: let people save, tag, and share the places that were already living in their Notes app.",
+     o:"Landed the spotsapp.io domain and shipped a working prototype to a small test group. Got useful signal on the save-and-share loop but never cracked the cold-start problem of social graphs. Without a graph, you can&rsquo;t really test whether a social-discovery app is fun. Shelved it when Navigate.AI started demanding full attention.",
+     l:"Location-based social is a graveyard of well-designed apps. The product wasn&rsquo;t the hard part; seeding the graph was. If I ran this back, I&rsquo;d start with a single city, a single use case (date night, probably), and a closed invite list instead of a general-purpose map overlay."},
+    {n:"Navigate.AI",ini:"NA",st:"Active",cls:"act",hook:"Your career pivot, backed by real data. No AI guesswork.",
+     p:"LLMs made resume writing worse, not better. Every &ldquo;AI resume tool&rdquo; on the market spits out the same bland, impact-free bullets because the model has no idea whether the claim is true, whether the metric is defensible, or whether the phrasing actually lands with a recruiter. Career-changers, the people who need the most help, get the least signal. They don&rsquo;t know which of their experiences translate, and generic AI can&rsquo;t tell them.",
+     b:"Navigate.AI scores every resume bullet on three dimensions (Impact, Context, and Structure) against a corpus of real, outcomes-graded writing. Instead of hallucinating new accomplishments, the product surfaces the weak spots in what you already wrote and guides you through placeholder-based enhancement: the user fills in the specifics, the tool tightens the craft. Co-founded with Laurenz; shipping the closed beta under navigate.ai and gonavigate.app.",
+     o:"Closed beta running April 19 to May 3, 2026, targeting 50 to 100 signups with an activation-rate north star of &ge;50%. Built on top of a framework that started life as a 2025 hackathon win (Resume Optimizer, ideation score 11/15). Early tester feedback is clustering around the same insight: &ldquo;I didn&rsquo;t realize how vague my own bullets were.&rdquo;",
+     l:"Still learning this one in real time. The biggest thing so far: people don&rsquo;t want an AI that writes for them. They want one that calls them out. Honest feedback is a scarcer resource than generated text, and the product-market fit question is whether people will pay to be told their resume is weaker than they think.",
+     url:"https://gonavigate.app",lab:"Visit"}
+  ];
+  var vdlg=$('#vdlg'),vb=$('#vdlg-b');
+  $$('.vcard').forEach(function(c){c.addEventListener('click',function(){
+    var v=V[+c.getAttribute('data-v')];
+    vb.innerHTML='<div class="vm-top"><span class="vm-mark" aria-hidden="true">'+v.ini+'</span><span class="vm-st '+v.cls+'">'+v.st+'</span></div>'+
+      '<h3 class="vm-name" id="vdlg-t">'+v.n+'</h3><p class="vm-hook">'+v.hook+'</p>'+
+      '<dl class="vm-dl"><dt>Problem</dt><dd>'+v.p+'</dd><dt>Built</dt><dd>'+v.b+'</dd><dt>Outcome</dt><dd>'+v.o+'</dd><dt>Lesson</dt><dd class="it">'+v.l+'</dd></dl>'+
+      (v.url?'<a class="xlink" href="'+v.url+'" target="_blank" rel="noopener">'+v.lab+' <span aria-hidden="true">&#8599;</span></a>':'');
+    openDlg(vdlg,c);
+  });});
+
+  /* ---------- Hobbies ---------- */
+  var H=[
+    {s:"riding",l:"Riding &amp; driving",tone:"#E9E7E1",t:"Three days disconnected through the hills of Colombia.",
+     m:[["Route","Medell&iacute;n &rarr; Jeric&oacute; &rarr; Fredonia"],["Days","3"],["Rode with","Friend since age 14"]],
+     p:["Three days on a motorcycle through the mountains outside Medell&iacute;n. Went with a friend I&rsquo;ve known since I was fourteen, the same friend who taught me to ride. The loop was Medell&iacute;n &rarr; Salgar &rarr; Jeric&oacute; &rarr; Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.",
+       "No cell service for most of it. You don&rsquo;t realize how much of your attention the phone quietly costs you until you spend three days without one. I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I&rsquo;ve found.",
+       "The coffee farm in Jeric&oacute; was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft (fermentation, aging, a thousand small choices) mapped onto coffee instead. Different product, same instinct."],
+     e:{src:"https://www.google.com/maps/d/embed?mid=1OyXj6bPJXS677fD6peBqAic3mLXtM-E&amp;ehbc=2E312F",title:"Colombia motorcycle route: Medell&iacute;n &rarr; Salgar &rarr; Jeric&oacute; &rarr; Fredonia",cap:"The actual route: 2-Day Colonial Cruisin&rsquo; with Adrenaline Addicts."}},
+    {s:"building",l:"Building with AI",tone:"#E5E7EA",t:"Products, agents, automation. Always shipping.",
+     m:[["Stack","Claude, Cursor, v0"],["Cadence","Weekly shipping"],["Latest","This site"]],
+     p:["I use AI to collapse the distance between &ldquo;I wonder if...&rdquo; and &ldquo;here&rsquo;s a working thing.&rdquo; Most of what I build now starts in a CLI session with Claude and ends as a prototype I can show a real user the same week.","This site is one of them."]},
+    {s:"martial",l:"Martial arts",tone:"#ECEAE5",t:"BJJ, 4x/week. Purple belt.",
+     m:[["Belt","Purple"],["Frequency","4x / week"],["Focus","Leg entanglements"]],
+     p:["BJJ teaches you that composure is a muscle. Four nights a week I go get outclassed by blue belts half my age, and every time I leave the mat sharper than I arrived."]},
+    {s:"mentor",l:"Youth mentor",tone:"#E6E9E4",t:"8 years in NYC. Mentee just graduated college.",
+     m:[["Years","8"],["City","New York"],["Cadence","Bi-weekly"]],
+     p:["Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running."]},
+    {s:"festivals",l:"Festivals &amp; salsa",tone:"#EDE7E2",t:"Coachella, Afropunk. Salsa Saturdays in Bushwick.",
+     m:[["Regular","Coachella &middot; Afropunk"],["Weekly","Bushwick salsa"]],
+     p:["Live music is how I reset. Coachella and Afropunk every year, smaller festivals whenever the lineup earns the flight.","Saturday nights I&rsquo;m at salsa socials in Bushwick. You don&rsquo;t need to be good. You need to show up."]}
+  ];
+  var hdlg=$('#hdlg'),hb=$('#hdlg-b');
+  $$('.hobby').forEach(function(btn){btn.addEventListener('click',function(){
+    var i=+btn.getAttribute('data-h'),h=H[i],x='';
+    x+='<div class="hm-photo" style="--tone:'+h.tone+'" aria-hidden="true"><span class="h-cap">Photo &middot; '+h.l+'</span><svg class="scn" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax meet">'+SC[h.s]()+'</svg></div>';
+    x+='<div class="hm-body"><p class="kick">0'+(i+1)+' &middot; '+h.l+'</p><h3 class="hm-t" id="hdlg-t">'+h.l+'</h3><p class="hm-tag">'+h.t+'</p>';
+    x+='<dl class="meta">';h.m.slice(0,3).forEach(function(m){x+='<div><dt>'+m[0]+'</dt><dd>'+m[1]+'</dd></div>';});x+='</dl><div class="story">';
+    h.p.forEach(function(p){x+='<p>'+p+'</p>';});x+='</div>';
+    if(h.e)x+='<figure class="embed"><div class="ifr"><iframe src="'+h.e.src+'" title="'+h.e.title+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><figcaption>'+h.e.cap+'</figcaption></figure>';
+    hb.innerHTML=x+'</div>';
+    openDlg(hdlg,btn);
+  });});
+
+  /* ---------- Escape: menu, then career detail (dialogs close natively) ---------- */
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape')return;
+    if($('.dlg[open]'))return;
+    if(!mnav.hidden){menu(false,true);return;}
+    if(pinned!==null){var p=pinned;setPinned(null);var tr=trigger(p);tr&&tr.focus();}
+  });
+
+  /* ---------- Map: d3-geo + topojson, dot-grid fallback ---------- */
+  var PTS=[["United States",39.8,-98.5],["Canada",56.1,-106.3],["Mexico",23.6,-102.5],["Colombia",4.6,-74.1,1],["Brazil",-14.2,-51.9],["United Kingdom",54.0,-2.0],["France",46.2,2.2],["Spain",40.0,-3.7],["Italy",41.9,12.5],["Netherlands",52.1,5.3],["Germany",51.1,10.4],["Bangladesh",23.7,90.4],["India",20.6,78.9],["Japan",36.2,138.3],["Thailand",15.9,101.0],["UAE",23.4,53.8]];
+  var W=800,HH=400,S=125,TX=W/2,TY=HH/1.55,C0=[10,20];
+  function my(lat){return Math.log(Math.tan(Math.PI/4+lat*Math.PI/360));}
+  function proj(lng,lat){return [TX+S*(lng-C0[0])*Math.PI/180,TY-S*(my(lat)-my(C0[1]))];}
+  var land=$('#map-land'),mk=$('#map-mk'),hov=$('#map-hover'),NS='http://www.w3.org/2000/svg';
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  function drawFallback(){
+    var g=el('g',{fill:'#E4E4E0'});
+    for(var y=12;y<HH;y+=16)for(var x=12;x<W;x+=16)g.appendChild(el('circle',{cx:x,cy:y,r:1.6}));
+    land.appendChild(g);
+  }
+  function drawMarkers(project){
+    PTS.forEach(function(p){
+      var xy=project(p[2],p[1]);if(!xy)return;
+      var g=el('g',{'class':'mk'});
+      if(p[3]){g.appendChild(el('circle',{'class':'ring pulse',cx:xy[0],cy:xy[1],r:11}));g.appendChild(el('circle',{'class':'ring2',cx:xy[0],cy:xy[1],r:17}));g.appendChild(el('circle',{'class':'ring',cx:xy[0],cy:xy[1],r:11}));}
+      g.appendChild(el('circle',{'class':'dot',cx:xy[0],cy:xy[1],r:p[3]?6.5:5}));
+      var t=el('title',{});t.textContent=p[0]+(p[3]?' (favorite)':'');g.appendChild(t);
+      g.addEventListener('mouseenter',function(){hov.textContent=p[0];hov.hidden=false;});
+      g.addEventListener('mouseleave',function(){hov.hidden=true;});
+      mk.appendChild(g);
+    });
+  }
+  drawFallback();drawMarkers(proj);
+  function load(src){return new Promise(function(res,rej){var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+  var CDN='https://cdn.jsdelivr.net/npm/';
+  load(CDN+'d3-array@3.2.4/dist/d3-array.min.js')
+    .then(function(){return load(CDN+'d3-geo@3.1.1/dist/d3-geo.min.js');})
+    .then(function(){return load(CDN+'topojson-client@3.1.0/dist/topojson-client.min.js');})
+    .then(function(){return fetch(CDN+'world-atlas@2/countries-110m.json');})
+    .then(function(r){if(!r.ok)throw new Error('atlas');return r.json();})
+    .then(function(topo){
+      var projection=d3.geoMercator().scale(S).translate([TX,TY]).center(C0);
+      var path=d3.geoPath(projection);
+      var feats=topojson.feature(topo,topo.objects.countries).features.filter(function(f){return f.id!=='010';});
+      var g=el('g',{});
+      feats.forEach(function(f){var d=path(f);if(d)g.appendChild(el('path',{'class':'land',d:d}));});
+      land.innerHTML='';land.appendChild(g);
+      mk.innerHTML='';drawMarkers(function(lng,lat){return projection([lng,lat]);});
+    })
+    .catch(function(){/* keep the dot-grid fallback */});
+})();
+</script>
+</body>
+</html>

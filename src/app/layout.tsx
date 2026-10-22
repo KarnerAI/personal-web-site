@@ -18,7 +18,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Hussain Alam — Product Strategist & Builder",
+  title: "Hussain Alam | Product Strategist & Builder",
   description:
     "13+ years across Fortune 100 growth and early-stage startups. Based in NYC.",
 };

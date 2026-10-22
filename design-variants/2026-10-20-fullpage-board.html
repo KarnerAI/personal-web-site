@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Full-site themes, 7 variants: comparison board</title>
+<style>
+  :root { --accent:#CF3418; --bg:#ECEAE4; --ink:#1A1A1A; --muted:#5E5A52; --border:#D6D3CB; --panel:#F7F6F2; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  header { position:sticky; top:0; z-index:10; background:rgba(247,246,242,.95); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); }
+  .hin { max-width:1500px; margin:0 auto; padding:18px 32px; display:flex; gap:14px 32px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  h1 { margin:0; font-size:18px; font-weight:650; letter-spacing:-.01em; }
+  header p { margin:3px 0 0; font-size:12.5px; color:var(--muted); max-width:720px; line-height:1.5; }
+  .jump { display:flex; gap:6px; flex-wrap:wrap; }
+  .jump a { display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:0 12px; border:1px solid var(--border); border-radius:8px; background:#fff; color:var(--ink); text-decoration:none; font-size:12.5px; font-weight:600; }
+  .jump a b { color:var(--accent); }
+  .jump a:hover, .jump a:focus-visible { border-color:var(--accent); outline:none; }
+  .grid { max-width:1500px; margin:0 auto; display:grid; gap:40px; padding:32px 32px 72px; }
+  .v { background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; scroll-margin-top:110px; }
+  .vh { display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; padding:16px 22px; background:var(--panel); border-bottom:1px solid var(--border); }
+  .tag { font:600 10.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
+  .name { font-size:15.5px; font-weight:650; margin-top:5px; letter-spacing:-.01em; }
+  .desc { font-size:12.5px; color:var(--muted); margin-top:4px; max-width:860px; line-height:1.55; }
+  .open { flex:none; display:inline-flex; align-items:center; min-height:36px; padding:0 12px; border:1px solid var(--border); border-radius:6px; background:#fff; color:var(--muted); font-size:12px; text-decoration:none; white-space:nowrap; }
+  .open:hover, .open:focus-visible { color:var(--accent); border-color:var(--accent); outline:none; }
+  iframe { display:block; width:100%; height:900px; border:0; background:#fff; }
+  .note { max-width:1500px; margin:0 auto; padding:0 32px 48px; font-size:12.5px; color:var(--muted); line-height:1.6; }
+  @media (max-width:720px) { .hin, .grid, .note { padding-left:16px; padding-right:16px; } iframe { height:720px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="hin">
+    <div>
+      <h1>Your full site in 7 themes</h1>
+      <p>Same words and the same layout in every version: the board-style hero, then Career, Things I've started, Beyond Work and Education exactly as they're laid out today. Only the theme changes. Scroll inside each frame, click a career chapter, a venture card or a hobby tile, and use "Open full page" to see it at full width.</p>
+    </div>
+    <nav class="jump" aria-label="Jump to variant">
+      <a href="#a"><b>A</b>Neo-brutalism</a>
+      <a href="#b"><b>B</b>Product UI (Karner blue)</a>
+      <a href="#c"><b>C</b>Glass</a>
+      <a href="#d"><b>D</b>Sculptural</a>
+      <a href="#e"><b>E</b>Big type</a>
+      <a href="#f"><b>F</b>Bold orange</a>
+      <a href="#g"><b>G</b>Color cards</a>
+    </nav>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="v" id="a">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant A · from the sampler</div>
+        <div class="name">Neo-brutalism: thick outlines, hard shadows, flat vermillion blocks (Archivo)</div>
+        <div class="desc">Navy and vermillion as today. Every box has a heavy border and a hard drop shadow that presses in when you click.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-brutalism.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-brutalism.html" title="Variant A: Neo-brutalism"></iframe>
+  </section>
+
+  <section class="v" id="b">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant B · sampler + Product School</div>
+        <div class="name">Light product UI in Karner blue: crisp software-company polish (Geist)</div>
+        <div class="desc">Karner deep blue and sky blue replace vermillion. Borrowed from Product School: blue-to-peach gradient washes, small blue code-style chips, tidy table rows.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-productui.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-productui.html" title="Variant B: Light product UI in Karner blue"></iframe>
+  </section>
+
+  <section class="v" id="c">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant C · from the sampler</div>
+        <div class="name">Glassmorphism: frosted panels over soft color (Outfit)</div>
+        <div class="desc">Every section floats on blurred fields of vermillion, blue and peach.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-glass.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-glass.html" title="Variant C: Glassmorphism"></iframe>
+  </section>
+
+  <section class="v" id="d">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant D · from Hussein Akl</div>
+        <div class="name">Sculptural minimal: warm off-white, electric blue, "HA." monogram (Poppins)</div>
+        <div class="desc">Numbered section headers, blue divider lines, blue words in headings, and white spheres with blue glass panels drawn in code.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-sculptural.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-sculptural.html" title="Variant D: Sculptural minimal"></iframe>
+  </section>
+
+  <section class="v" id="e">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant E · from Daniil Alekhin</div>
+        <div class="name">Big expressive type: giant cobalt name, orange accents (Clash Display + Manrope)</div>
+        <div class="desc">Alternating warm-white and black bands, big cobalt numbers, and the name set huge across the hero.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-bigtype.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-bigtype.html" title="Variant E: Big expressive type"></iframe>
+  </section>
+
+  <section class="v" id="f">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant F · from the "Michael" Framer site</div>
+        <div class="name">Bold orange: saturated orange hero, uppercase headings, maroon frames (General Sans)</div>
+        <div class="desc">The boldest one: a full orange hero with your name as giant ghost type, progress-bar career timeline, small orange arrow buttons.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-orange.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-orange.html" title="Variant F: Bold orange"></iframe>
+  </section>
+
+  <section class="v" id="g">
+    <div class="vh">
+      <div>
+        <div class="tag">Variant G · from Jonny Czar</div>
+        <div class="name">Clean white with color cards: each venture in its own brand color (Urbanist)</div>
+        <div class="desc">Floating pill nav, black-and-white portrait, very rounded cards, light gray bands.</div>
+      </div>
+      <a class="open" href="2026-10-20-fullpage-cards.html" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <iframe src="2026-10-20-fullpage-cards.html" title="Variant G: Clean white with color cards"></iframe>
+  </section>
+</main>
+
+<p class="note">Hobby photos are placeholders until real ones arrive. Built 2026-10-20 in <code>design-variants/</code> per DESIGN-VARIANTS.md. Shared brief and reference renders live in the gstack design folder for this session.</p>
+</body>
+</html>

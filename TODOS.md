@@ -4,6 +4,96 @@ Follow-ups tracked by skill/component, priority-ordered (P0 top → P4 bottom),
 then the Completed section at the bottom. Source of truth for "what's left
 before launch" and "what's acceptable to punt."
 
+## [P0] Redesign build: theme B (light product UI, Karner blue)
+
+Locked 2026-10-20. Visual source of truth:
+`design-variants/2026-10-20-fullpage-productui-v7.html`. Rules and tokens:
+`DESIGN.md` (including the three guardrails). Build it section by section into
+the real Next.js app, verifying each phase in the browser before the next.
+Take wording from `src/data/` and the current section components (e.g. the
+CareerTimeline intro line), not from the mockup text: they have fixes
+made after v7 (Zoomo is Series-A, KarnerBlu is "co-founded", the
+SpreadTheFacts partner is Mass General Brigham, the travel quote is
+"Attributed to Saint Augustine").
+
+### Phase 0: Ship what's already on `polish-things-ive-started`
+Content pass (no em-dashes, placeholder links), venture covers, routing
+rules, the build fix that keeps Tailwind out of `images/` and
+`design-themes/`, new logo assets, and every design-variants mockup. Open
+the PR with `/ship`, merge, then start a fresh verb-first branch from main
+(e.g. `build-theme-b-redesign`, pushed with `-u` before the first commit).
+
+### Phase 1: Foundations
+- Read the Next.js 16 docs in `node_modules/next/dist/docs/` for fonts and
+  metadata before writing code (see AGENTS.md).
+- Swap fonts to Geist + Geist Mono via `next/font/google` (both variable);
+  remove Instrument Serif + Inter.
+- Replace the Tokyo Transit tokens in `src/app/globals.css` with the
+  DESIGN.md tokens and map them in `@theme`.
+- Decide the global `zoom: 0.9` (see the P4 item below); the mockups are
+  designed at 100%.
+- Page title: "Hussain Alam | Operator turned PM".
+
+### Phase 2: Header + Hero
+- Sticky frosted header: brand left, Career / Entrepreneurship / Beyond Work.
+- Board hero: info strip "Operator turned PM · Based in New York" (no repeated
+  name, no clock), name, bio ending at "build things on the side.", contact
+  ticket with one-color LinkedIn / envelope / GitHub icons + handles
+  (GitHub: https://github.com/KarnerAI), framed square portrait.
+- Remove the Notion cover photo, round avatar, emoji and the hero quote.
+- Fixes the P1 hero heading-hierarchy item and FINDING-017 tap targets below.
+
+### Phase 3: Einstein bridge band (new)
+Quote (small, 22 to 34px) + "Albert Einstein" + "Out of college, I went where
+the work happens: the brewhouse floor of a Fortune 100 company. I've learned
+every role since the same way, by doing the job up close before trying to
+improve it." Leads straight into Career.
+
+### Phase 4: Career timeline
+- Four equal segments; cards above (1, 3) and below (2, 4); cards size to
+  their content; pinned segment fills Karner blue; detail panel; arrow keys
+  and Escape; mobile stack.
+- Logos in white tiles with `object-fit: contain`; KarnerBlu uses
+  `public/logos/karnerblu-mark.png`.
+- KarnerBlu clients row (Unilever, Staples) on the card and in the panel; in
+  `src/data/career.ts` drop the location/bullet that repeat the clients.
+- The one animation: blue fill sweeps the bar segment by segment, stems
+  draw, cards fade up 8px; runs once; static design without JS or with
+  reduced motion.
+
+### Phase 5: Things I've started
+Four across at 1024px+ (2×2 tablet, 1 column phone), "Read story" aligned;
+covers: EmojiFriends photo, SpreadTheFacts wordmark on black, Navigate.AI
+score card (`public/ventures/navigate-ai-score.png`), Spots logo on navy
+(`public/ventures/spots.png`) until real app screenshots arrive (see the P3
+Spots screenshots item); restyled story dialog.
+
+### Phase 6: Beyond Work (not yet reviewed in B)
+Review the map, stat cards, fact rows and hobby mosaic in v7 with Hussain
+first. Real photos: export web-sized copies from `images/Hobbies/` (Riding &
+Driving, Youth Mentor have photos; the other three still need them) into
+`public/images/hobbies/`.
+
+### Phase 7: Education + Footer (not yet reviewed in B)
+Review in v7 first, then build.
+
+### Phase 8: QA and ship
+`/qa` (desktop, tablet, phone, keyboard, reduced motion), `/design-review`
+against DESIGN.md, `npm run build` + lint clean, then `/ship`.
+
+### Open decisions (ask Hussain during the build)
+- Hero name: keep v7's navy-to-gray gradient text, or solid ink (DESIGN.md
+  guidance prefers weight/size over gradient emphasis).
+- Section chips ("• CAREER •") above headings: keep, or let headings stand
+  alone.
+- Guardrail 1: where the stat treatments go (career detail panel, venture
+  cards, a "by the numbers" line). Results on the timeline cards themselves
+  were declined.
+- Guardrail 2: where the single hexagon motif lives (e.g. timeline nodes).
+- Stale content: "Next up: Turkey, September 2026"; Navigate.AI beta dates
+  (April to May 2026); YC Startup School year; hobby stories that are still
+  placeholders; WeWork tenure label (data counts to April 2026).
+
 ## Accessibility
 
 ### [P1] Hero heading hierarchy skips h2
@@ -97,6 +187,36 @@ the 72px glyph inside the 150px cover. No length cap in the type, so a
 future 4+ character value would overflow horizontally and be clipped by
 `overflow-hidden`. Low-risk right now; worth a `maxLength` on the type or
 an auto-fit class before the next venture lands.
+
+---
+
+### [P3] Spots: real app screens in the story
+**Files:** `src/data/entrepreneurship.ts` (Spots entry), `src/types/index.ts`
+(Venture type), the story dialog
+**Priority:** P3
+**Noticed on:** plan-eng-review 2026-10-21
+
+Spots shows only its logo today. Hussain picked five screens, one per problem
+the app solves:
+1. Save places you love and want to go: map view + save-to-list picker
+2. Discover new ones from friends: newsfeed
+3. View all your and friends' spots: map view
+4. Collaborate, create lists and trips: list view
+5. Collect spots, make memories, explore the world: profile
+
+Sort out three things before building:
+- The story copy says Spots was a Sketch/InVision prototype that got shelved;
+  the screens are Spots 2.0 (2026). Rewrite Built/Outcome, or label the
+  screens with the year.
+- Source: the Figma page "Option A: clear utility" isn't in the May redesign
+  file (figma.com/design/HDrYuzpaCTKJd9QcDcCEkf), whose map is a placeholder
+  grid and whose tab bar has 3 tabs. Find the right file, or use real
+  screenshots of the older app instead.
+- Build the screen gallery into the Phase 5 restyled dialog, not the current
+  one. Screens 1 and 3 are both maps: show the save picker open on 1 and
+  friends' pins on 3 so they don't read as duplicates.
+
+**Depends on:** Phase 5 (Things I've started).
 
 ---
 

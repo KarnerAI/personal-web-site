@@ -19,9 +19,9 @@ export const hobbies: Hobby[] = [
     label: "Riding & driving",
     tagline: "Three days disconnected through the hills of Colombia.",
     story: [
-      "Three days on a motorcycle through the mountains outside Medellín. Went with a friend I've known since I was fourteen — the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.",
-      "No cell service for most of it. You don't realize how much of your attention the phone quietly costs you until you spend three days without one — I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I've found.",
-      "The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft — fermentation, aging, a thousand small choices — mapped onto coffee instead. Different product, same instinct. Our host was also a chef and cooked every meal, which doesn't fit neatly in a motorcycle story but was somehow the best part.",
+      "Three days on a motorcycle through the mountains outside Medellín. Went with a friend I've known since I was fourteen, the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.",
+      "No cell service for most of it. You don't realize how much of your attention the phone quietly costs you until you spend three days without one. I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I've found.",
+      "The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft (fermentation, aging, a thousand small choices) mapped onto coffee instead. Different product, same instinct. Our host was also a chef and cooked every meal, which doesn't fit neatly in a motorcycle story but was somehow the best part.",
     ],
     meta: [
       { label: "Route", value: "Medellín → Jericó → Fredonia" },
@@ -31,7 +31,7 @@ export const hobbies: Hobby[] = [
     embed: {
       src: "https://www.google.com/maps/d/embed?mid=1OyXj6bPJXS677fD6peBqAic3mLXtM-E&ehbc=2E312F",
       title: "Colombia motorcycle route: Medellín → Salgar → Jericó → Fredonia",
-      caption: "The actual route — 2-Day Colonial Cruisin' with Adrenaline Addicts.",
+      caption: "The actual route: 2-Day Colonial Cruisin' with Adrenaline Addicts.",
       aspectRatio: "4 / 3",
     },
   },
@@ -69,7 +69,7 @@ export const hobbies: Hobby[] = [
     tagline: "8 years in NYC. Mentee just graduated college.",
     story: [
       "Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running.",
-      "If you're early-career and on the fence about mentoring a kid — do it. The return on one good afternoon a month is absurd.",
+      "If you're early-career and on the fence about mentoring a kid, do it. The return on one good afternoon a month is absurd.",
     ],
     meta: [
       { label: "Years", value: "8" },
@@ -124,7 +124,8 @@ export const travel: TravelData = {
   nationality: "Bangladeshi-American",
   nationalityFlag: "🇧🇩🇺🇸",
   caption:
-    "“The world is a book and those who do not travel read only one page.” — Saint Augustine",
+    "“The world is a book and those who do not travel read only one page.”",
+  captionCite: "Attributed to Saint Augustine",
   visitedCountryCodes: visitedCountries.map((c) => c.code),
   visited: visitedCountries,
   base: "New York, NY",
