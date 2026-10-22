@@ -20,11 +20,24 @@ function PhotoIcon() {
 }
 
 function HobbyPhoto({ hobby: h }: { hobby: Hobby }) {
-  if (h.hero) {
+  const [errored, setErrored] = useState(false);
+  // onError only fires after hydration; catch an image that already failed.
+  const catchEarlyError = (img: HTMLImageElement | null) => {
+    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
+  };
+  if (h.hero && !errored) {
     return (
       <span aria-hidden className="ph">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={h.hero.src} alt="" loading="lazy" decoding="async" />
+        <img
+          src={h.hero.src}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          ref={catchEarlyError}
+          onError={() => setErrored(true)}
+          style={{ objectPosition: h.hero.position ?? "50% 25%" }}
+        />
       </span>
     );
   }

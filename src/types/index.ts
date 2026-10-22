@@ -90,6 +90,7 @@ export type SideProject = {
 export type HobbyImage = {
   src: string; // e.g. "/images/hobbies/riding-hero.jpg"
   alt: string;
+  position?: string; // CSS object-position focal point; defaults to "50% 25%" (faces sit high)
 };
 
 // A meta row rendered in the hobby modal's stat band (up to 3).

@@ -30,10 +30,11 @@ const NUMERIC: Record<string, string> = {
 
 const visitedIds = new Set(travel.visitedCountryCodes.map((c) => NUMERIC[c]).filter(Boolean));
 
-// Antarctica (010) is dropped, as in v7.
+// Antarctica (010) is dropped, as in v7. A few shapes (N. Cyprus, Somaliland,
+// Kosovo) have no id, so keys use the array position.
 const land = countries
   .filter((f) => String(f.id) !== "010")
-  .map((f) => ({ id: String(f.id), d: pathGen(f) ?? "", visited: visitedIds.has(String(f.id)) }))
+  .map((f, i) => ({ key: `${f.id ?? "x"}-${i}`, d: pathGen(f) ?? "", visited: visitedIds.has(String(f.id)) }))
   .filter((l) => l.d);
 
 const pins: MapPin[] = countryCoords.map((c) => {
@@ -52,7 +53,7 @@ export function TravelMapThemeB() {
         aria-label={`World map with ${travel.countryCount} visited countries marked.${favorite ? ` ${favorite}, the favorite, is ringed.` : ""}`}
       >
         {land.map((l) => (
-          <path key={l.id} d={l.d} className={l.visited ? "land v" : "land"} />
+          <path key={l.key} d={l.d} className={l.visited ? "land v" : "land"} />
         ))}
       </svg>
       <TravelMapThemeBPins pins={pins} width={MAP_WIDTH} height={MAP_HEIGHT} />
