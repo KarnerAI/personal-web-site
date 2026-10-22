@@ -108,9 +108,8 @@
   --font-geist-mono: var(--font-geist-mono);
 }
 
-/* Theme B type scale, one class per DESIGN.md typography token. Class
-   selectors beat the old h1/h2 Instrument Serif rule below, so a rebuilt
-   heading can use these on a real h1/h2. */
+/* Theme B type scale, one class per DESIGN.md typography token. Use them on
+   real h1/h2 elements too; the only global heading rule is text-wrap. */
 .type-display,
 .type-heading,
 .type-quote,
@@ -186,9 +185,8 @@
 }
 
 /* ------------------------------------------------------------------
-   Theme B components (rebuilt sections only). Values come from the
-   locked v7 mockup; `.theme-b` scopes the type, color and focus ring
-   so old sections keep their Tokyo Transit look.
+   Theme B components. Values come from the locked v7 mockup; `.theme-b`
+   sets the base type and color for every section and the dialogs.
    ------------------------------------------------------------------ */
 .theme-b {
   font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;

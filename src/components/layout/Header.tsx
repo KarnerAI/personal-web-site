@@ -110,7 +110,6 @@ export function Header() {
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 z-50 bg-[rgba(15,30,61,0.38)] backdrop-blur-[4px] animate-fadeIn" />
             <Dialog.Content
-              aria-label="Site navigation"
               className="theme-b fixed inset-y-0 right-0 z-50 flex h-dvh w-[min(320px,85vw)] flex-col border-l border-line bg-white p-6 shadow-[0_2px_6px_rgba(15,30,61,0.06),0_40px_100px_-24px_rgba(15,30,61,0.45)] focus:outline-none animate-slideInRight"
             >
               <Dialog.Description className="sr-only">
