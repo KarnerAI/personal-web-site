@@ -45,7 +45,10 @@ describe("globals.css", () => {
   });
 
   it("loads no retired fonts", () => {
-    expect(css).not.toMatch(/--font-(inter|instrument)/i);
+    // The old Inter + Instrument Serif wiring went through --font-sans/--font-serif;
+    // those are now aliases of Geist.
+    expect(css).toMatch(/--font-sans:\s*var\(--font-geist\)/);
+    expect(css).toMatch(/--font-serif:\s*var\(--font-geist\)/);
     expect(css).not.toMatch(/font-family:[^;]*(Inter|Instrument Serif)/);
   });
 });

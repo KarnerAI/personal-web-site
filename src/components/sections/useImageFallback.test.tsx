@@ -14,15 +14,16 @@ describe("useImageFallback", () => {
   afterEach(() => vi.restoreAllMocks());
 
   it.each([
+    { state: "still loading", complete: false, currentSrc: "http://localhost/logos/x.webp", naturalWidth: 0, kept: true },
     { state: "failed before hydration", currentSrc: "http://localhost/logos/x.webp", naturalWidth: 0, kept: false },
     { state: "loaded", currentSrc: "http://localhost/logos/x.webp", naturalWidth: 176, kept: true },
     { state: "complete with nothing fetched yet", currentSrc: "", naturalWidth: 0, kept: true },
-  ])("hydrating a logo that is $state keeps its image: $kept", ({ currentSrc, naturalWidth, kept }) => {
+  ])("hydrating a logo that is $state keeps its image: $kept", ({ complete = true, currentSrc, naturalWidth, kept }) => {
     const ui = <LogoTile src="/logos/x.webp" badge="XY" />;
     const container = document.body.appendChild(document.createElement("div"));
     container.innerHTML = renderToString(ui);
     const proto = HTMLImageElement.prototype;
-    vi.spyOn(proto, "complete", "get").mockReturnValue(true);
+    vi.spyOn(proto, "complete", "get").mockReturnValue(complete);
     vi.spyOn(proto, "currentSrc", "get").mockReturnValue(currentSrc);
     vi.spyOn(proto, "naturalWidth", "get").mockReturnValue(naturalWidth);
 

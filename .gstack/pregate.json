@@ -26,7 +26,10 @@
       "src/components/sections/Entrepreneurship.test.tsx",
       "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
       "e2e/home.spec.ts",
-      "e2e/design-pages.spec.ts"
+      "e2e/design-pages.spec.ts",
+      "src/app/world-land.svg/route.test.ts",
+      "src/components/sections/useImageFallback.test.tsx",
+      "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
     "package-lock.json": [
       "src/app/layout.test.tsx",
@@ -37,7 +40,10 @@
       "src/components/sections/Entrepreneurship.test.tsx",
       "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
       "e2e/home.spec.ts",
-      "e2e/design-pages.spec.ts"
+      "e2e/design-pages.spec.ts",
+      "src/app/world-land.svg/route.test.ts",
+      "src/components/sections/useImageFallback.test.tsx",
+      "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
     "vitest.config.mts": [
       "src/app/layout.test.tsx",
@@ -48,7 +54,10 @@
       "src/components/sections/Entrepreneurship.test.tsx",
       "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
       "e2e/home.spec.ts",
-      "e2e/design-pages.spec.ts"
+      "e2e/design-pages.spec.ts",
+      "src/app/world-land.svg/route.test.ts",
+      "src/components/sections/useImageFallback.test.tsx",
+      "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
     "vitest.setup.ts": [
       "src/app/layout.test.tsx",
@@ -59,7 +68,10 @@
       "src/components/sections/Entrepreneurship.test.tsx",
       "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
       "e2e/home.spec.ts",
-      "e2e/design-pages.spec.ts"
+      "e2e/design-pages.spec.ts",
+      "src/app/world-land.svg/route.test.ts",
+      "src/components/sections/useImageFallback.test.tsx",
+      "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
     "playwright.config.ts": [
       "src/app/layout.test.tsx",
@@ -70,7 +82,10 @@
       "src/components/sections/Entrepreneurship.test.tsx",
       "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
       "e2e/home.spec.ts",
-      "e2e/design-pages.spec.ts"
+      "e2e/design-pages.spec.ts",
+      "src/app/world-land.svg/route.test.ts",
+      "src/components/sections/useImageFallback.test.tsx",
+      "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
     ".github/workflows/test.yml": [
       "src/app/layout.test.tsx",
@@ -81,7 +96,10 @@
       "src/components/sections/Entrepreneurship.test.tsx",
       "src/components/sections/beyondwork/HobbyMosaic.test.tsx",
       "e2e/home.spec.ts",
-      "e2e/design-pages.spec.ts"
+      "e2e/design-pages.spec.ts",
+      "src/app/world-land.svg/route.test.ts",
+      "src/components/sections/useImageFallback.test.tsx",
+      "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
     "src/components/sections/Contact.tsx": [],
     "src/components/sections/EducationLogo.tsx": [],
@@ -89,6 +107,21 @@
     "src/components/sections/beyondwork/HobbyModal.tsx": [],
     "src/components/sections/beyondwork/HobbyPhoto.tsx": [],
     "src/components/sections/beyondwork/HobbyTile.tsx": [],
-    "src/data/sideProjects.ts": []
+    "src/data/sideProjects.ts": [],
+    "src/components/layout/Header.tsx": [
+      "e2e/home.spec.ts"
+    ],
+    "src/components/sections/CareerTimeline.tsx": [
+      "e2e/home.spec.ts"
+    ],
+    "src/components/sections/Entrepreneurship.tsx": [
+      "e2e/home.spec.ts"
+    ],
+    "src/components/edit-mode/EditableImage.tsx": [
+      "e2e/home.spec.ts"
+    ],
+    "src/components/sections/beyondwork/map-variants/TravelMapThemeBLand.tsx": [
+      "e2e/home.spec.ts"
+    ]
   }
 }

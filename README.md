@@ -6,10 +6,10 @@ Single-page Next.js site built as a professional showcase for Hussain Alam's job
 
 - Next.js 16 (App Router, Turbopack)
 - TypeScript + Tailwind CSS
-- Framer Motion (animations)
-- Radix UI (accessible primitives)
-- React Hook Form + Zod (forms + validation)
-- Resend (contact form delivery)
+- Radix UI (accessible dialogs)
+- d3-geo + world-atlas (the travel map, rendered at build time)
+- Zod + Resend (the contact API route; no form is mounted yet)
+- Vitest + Playwright (tests; see TESTING.md)
 - Vercel (hosting)
 
 ## Getting started

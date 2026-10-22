@@ -165,6 +165,7 @@ describe("CareerTimeline tenure", () => {
     { monthsIn: 11, shown: "11mo" },
     { monthsIn: 12, shown: "1y" },
     { monthsIn: 27, shown: "2y" },
+    { monthsIn: 30, shown: "2y" },
   ])("shows $shown for the current chapter $monthsIn months in", async ({ monthsIn, shown }) => {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(new Date(startYear, startMonth - 1 + monthsIn, 15));

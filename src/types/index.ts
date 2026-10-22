@@ -15,7 +15,7 @@ export type CareerRole = {
   // Display-format dates (what the UI renders as "yearsLabel").
   startDate: string; // "Jan 2020"
   endDate: string | "Present";
-  // Machine-format dates used for proportional math on the timeline.
+  // Machine-format dates; they drive the tenure label in the chapter panel.
   // "YYYY-MM" or the string "Present".
   startMonth: string;
   endMonth: string | "Present";
@@ -43,14 +43,13 @@ export type Venture = {
   slug: string;
   name: string;
   icon?: string;
-  // Logo resolution, same pattern as CareerRole:
-  // logoSrc (local asset or URL) > logoDomain (favicon) > logoInitials (badge).
+  // Story-dialog mark: logoSrc (local asset or URL) over the logoInitials badge.
+  // logoDomain is not looked up for ventures.
   logoSrc?: string;
   logoDomain?: string;
   logoInitials?: string;
-  // Cover image for the card banner (variant A — 150px full-bleed).
-  // coverGradient is always painted as the band background (it shows while a photo loads or
-  // after it fails); coverSrc renders on top. With no image: logoInitials glyph, else coverEmoji.
+  // Card cover (see coverTreatment). coverGradient paints only "logo" covers. With no
+  // image, or one that fails, the cover shows the venture name. coverEmoji is unused.
   coverSrc?: string;
   coverGradient?: string; // full CSS `background` value
   coverEmoji?: string;

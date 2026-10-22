@@ -17,7 +17,18 @@ test("home renders every section with no console errors", async ({ page }) => {
   await expect(page).toHaveTitle("Hussain Alam | Operator turned PM");
   await expect(page.getByRole("heading", { level: 1, name: "Hussain Alam" })).toBeVisible();
   for (const id of SECTIONS) await expect(page.locator(`#${id}`)).toBeAttached();
+  // Hydrated (the sweep arms on mount), then scroll to the end so lazy images load too.
+  await expect(page.locator("#career .tl")).toHaveClass(/tl-anim/);
+  await page.locator("#education").scrollIntoViewIfNeeded();
+  await page.waitForLoadState("networkidle");
   expect(errors).toEqual([]);
+});
+
+test("/world-land.svg is served as an SVG image in the map's 800x400 frame", async ({ request }) => {
+  const res = await request.get("/world-land.svg");
+  expect(res.status()).toBe(200);
+  expect(res.headers()["content-type"]).toContain("image/svg+xml");
+  expect((await res.text()).startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"')).toBe(true);
 });
 
 // Value: protects=the hero portrait is the page's only image preload, at high
@@ -153,6 +164,9 @@ test("phone career cards fade in, and reduced motion never hides a chapter", asy
   // Reduced motion: nothing waits to be revealed, on phones or on the desktop timeline.
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  // Hydration sync point away from Career: open and close a venture story.
+  await page.locator("#entrepreneurship").getByRole("button", { name: ventures[0].name }).click();
+  await page.keyboard.press("Escape");
   await expectAllVisible();
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");

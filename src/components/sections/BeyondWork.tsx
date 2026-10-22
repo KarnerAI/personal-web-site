@@ -1,8 +1,9 @@
 // Beyond Work (theme B, DESIGN.md; v7 mockup).
 // Travel map on the left; the travel quote, two stat cards (countries,
 // cities) and three fact rows on the right; then the hobby mosaic.
-// Server component: the map's land is drawn here, and only the pins and
-// the hobby mosaic/dialog run in the browser.
+// Server component: pin positions are computed here. The map's land loads
+// as the cached /world-land.svg image (with a fallback), and the pins and the
+// hobby mosaic/dialog run in the browser.
 // Reading & Listening is deferred (see notes/reading-page-v2.md); `books` and
 // `podcasts` stay exported from the data module for a future /reading page.
 
