@@ -4,6 +4,54 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.1.4.0] - 2026-10-21
+
+Real covers on every venture card, a copy pass that removes the AI-sounding
+dashes and fixes a few facts, and the locked design system for the coming
+redesign.
+
+### Added
+- Real covers on the "Things I've started" cards: the EmojiFriends bead
+  photo, the SpreadTheFacts wordmark on black and the Spots logo on dark
+  teal. Logos sit centered on a solid band; photos fill the band.
+- The EmojiFriends story now links to the Insomniac feature ("Read the
+  Insomniac feature ↗") instead of a dead placeholder link.
+- `DESIGN.md`: the design system for the redesign (light product UI in
+  Karner blue, Geist + Geist Mono, color and type tokens, motion rules and
+  three guardrails: lead with numbers, one KarnerBlu detail, restraint on
+  effects).
+- Standalone HTML mockups under `design-variants/` from the redesign
+  exploration: four full-page directions, a hero sampler in seven themes,
+  the full site in seven themes, and the shortlist rounds ending with the
+  locked theme B (`2026-10-20-fullpage-productui-v7.html`).
+
+### Changed
+- Site copy no longer uses em-dashes; sentences use periods, commas and
+  parentheses instead. Date ranges keep their en-dash.
+- Venture card hooks lead with numbers (EmojiFriends: $6K raised, featured
+  on Insomniac; SpreadTheFacts: $5,500 raised, 6,500 masks with Mass
+  General Brigham).
+- Quote attributions sit on their own line ("Albert Einstein", "Attributed
+  to Saint Augustine") instead of trailing after a dash.
+- The career summary uses arrows between chapters; screen readers hear
+  "then" between them, and copied text stays clean.
+- Career facts agree with each other: Zoomo was Series-A, and the
+  consultancy was co-founded.
+- The YC credential is listed as Startup School, and a certification with
+  no known year no longer shows a dash in place of the year.
+- Page title uses a pipe: "Hussain Alam | Product Strategist & Builder".
+
+### Fixed
+- The site no longer breaks (500 error, garbage CSS) when raw photos,
+  videos or saved web pages are dropped into the repo: Tailwind skips
+  `images/`, `design-themes/` and `design-variants/`, and the first two are
+  gitignored.
+- Venture covers load fast: the site uses card-size copies (25 KB and
+  7 KB instead of 435 KB and 802 KB), loads them lazily, and works in
+  browsers without AVIF support.
+- A cover image that fails to load shows the venture's initials on its
+  color band instead of a blank band or a broken-image icon.
+
 ## [0.1.3.0] - 2026-05-16
 
 Career Timeline redesign with a chapter-tagline card style, a full-width
