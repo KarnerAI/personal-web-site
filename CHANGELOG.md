@@ -4,6 +4,49 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.2.0.0] - 2026-10-22
+
+The redesign. The whole site is rebuilt in theme B, the light product UI
+locked in the v7 mockup: Karner blue, Geist type, a faint grid, and one
+signature motion on the career timeline. Every page now has automated tests
+behind it.
+
+### Added
+- A sticky header with the KarnerBlu hexagon mark. The link for the section
+  you are reading lights up, and phones get a slide-in menu.
+- A new hero: "Operator turned PM", the bio, a contact card with LinkedIn,
+  email and GitHub, a "Get in touch" button, and a new NYC skyline portrait.
+- The Einstein quote now has its own band between the hero and the career
+  story, followed by a short paragraph on learning each role up close.
+- The career timeline: four chapters on a year bar that fills in as you
+  scroll to it. Click a chapter or use the arrow keys to open its details;
+  Escape closes them. KarnerBlu shows its Unilever and Staples client logos.
+  Phones get a stacked list that expands in place.
+- Venture cards open the full story (Problem, Built, Outcome, Lesson) in a
+  dialog. Navigate.AI's card shows a real score card from the product.
+- Beyond Work: a world map with a pin for each of the 16 countries, travel
+  stats, and a hobby mosaic where every tile opens its story.
+- Education: the degree card and a certifications table with school logos.
+- Keyboard friendly: picking a section from the phone menu moves focus to
+  that section, and Escape over a story closes just the story.
+- Automated tests for the first time: 50 unit tests and 9 browser tests
+  covering the header, the career timeline, every dialog, image fallbacks,
+  the map and reduced motion. Lint and both suites run on every push.
+
+### Changed
+- Page title: "Hussain Alam | Operator turned PM".
+- Type is Geist and Geist Mono throughout, and colors come from the theme B
+  tokens. The desktop 90% zoom is gone, so the site renders at true size.
+- Faster first load: the world map's outlines load as a separate cached
+  image instead of filling over half the page, logos are small copies that
+  load as you scroll (the AB InBev logo went from 2.4 MB to 20 KB), and the
+  hero portrait is fetched first.
+
+### Removed
+- The Tokyo Transit palette, the Inter and Instrument Serif fonts, the
+  unused contact form, side projects and old hobby tile components, and six
+  unused packages.
+
 ## [0.1.4.0] - 2026-10-21
 
 Real covers on every venture card, a copy pass that removes the AI-sounding

@@ -91,8 +91,9 @@ Review in v7 first, then build.
   console; reduced motion by static read). One bug found and fixed: the
   header highlight never cleared over the hero or Education (Fixed by /qa on
   build-theme-b-redesign, 2026-10-21). Health 99.5 → 100. Then `/ship`.
-- Still open: `src/app/api/contact` (and the Resend dependency) has no UI
-  since the contact form was never mounted; decide keep or remove.
+- Shipped as v0.2.0.0 (2026-10-22) after /ship: tests and CI added, two
+  reviews and an adversarial review. Follow-ups are under "From the v0.2.0.0
+  ship" below.
 
 ### Build rule (Hussain, 2026-10-21)
 Implement the remaining sections exactly as in v7; don't stop for design
@@ -105,24 +106,6 @@ in v7; the one hexagon is the header brand mark; hero name is solid ink.
   placeholders.
 
 ## Accessibility
-
-### [P1] Pre-existing lint: setState-in-effect (2 files)
-**Files:** `src/components/edit-mode/EditModeContext.tsx:53`,
-`src/components/sections/beyondwork/map-variants/TravelMapLeaflet.tsx:60`
-**Priority:** P1
-**Noticed on:** design-review-4.21.26 (ship /lint pass)
-
-Both files were introduced in commit `a8d43f1` and are unrelated to the
-design-review branch. React 19's `react-hooks/set-state-in-effect` rule
-flags them. Current behavior is correct — the setState calls gate rendering
-until mount (hydration guard) and restore persisted state from
-localStorage — but the lint rule wants the pattern expressed via `useSyncExternalStore`
-or a derived-state approach instead.
-
-Not runtime bugs. Fix before the next feature ships so the lint passes
-clean and new findings don't hide behind the two known failures.
-
----
 
 ### [P2] iOS backdrop-filter stack QA on physical device
 **Files:** `src/components/layout/Header.tsx:124,172`
@@ -137,21 +120,6 @@ sticky header blur to a semi-transparent solid fill if it flickers.
 ---
 
 ## Design
-
-### [P2] Instrument Serif + font-semibold synthesizes fake-bold
-**Files:** `src/app/globals.css:55-60`, all section h2s
-**Priority:** P2
-**Noticed on:** design-review-4.21.26 (adversarial review finding #7)
-
-Section H2s use `font-semibold` (Tailwind → weight 600) but Instrument
-Serif ships only at weight 400. The browser synthesizes fake-bold for the
-600 glyphs, which can look smeared at large sizes. The third-pass audit
-rated the site A on design so the effect isn't catastrophic, but a
-post-launch tuning pass should either (a) drop `font-semibold` on section
-H2s and let the serif hold weight on its own, or (b) switch to a serif
-that ships regular + semibold.
-
----
 
 ### [P3] Venture cards: clamp `logoInitials` length
 **Files:** `src/components/sections/Entrepreneurship.tsx:55-66`,
@@ -197,22 +165,59 @@ Sort out three things before building:
 
 ---
 
-## Testing
+## From the v0.2.0.0 ship (2026-10-22)
 
-### [P2] Bootstrap a test framework
-**Files:** project-wide
+### [P1] Decide the orphaned contact API: delete or protect
+**Files:** `src/app/api/contact/route.ts`, `src/lib/contact-schema.ts`, `resend`
+**Priority:** P1
+No form uses it, but it is live with only a honeypot: anyone can script
+emails (their own reply-to and subject) to your inbox from your verified
+domain if the Resend keys are set in Vercel. Delete it, or add rate limiting
+and an origin check if a form is coming back.
+
+### [P1] Bump Next.js past the published advisory
+**Files:** `package.json` (next, eslint-config-next 16.2.4)
+**Priority:** P1
+Pre-existing on main. npm audit's non-major fix is 16.4.2; read the 16.3/16.4
+docs in node_modules/next/dist/docs, bump both, rerun lint, tests and build.
+The dev-only vitest 3 advisory clears with vitest 5 (needs @types/node 22+).
+
+### [P2] Career, venture and hobby story text in the page HTML
+**Files:** `src/components/sections/CareerTimeline.tsx`, `Entrepreneurship.tsx`, `HobbyMosaic.tsx`
 **Priority:** P2
-**Noticed on:** design-review-4.21.26 (ship step 4)
+Achievements and stories render only after a click, so search engines and AI
+summarizers never see them. Render every panel on the server, hidden until
+opened; keep tenure() hydration-safe.
 
-Declined during ship via `.gstack/no-test-bootstrap` to unblock the
-design-review landing. Next.js 16 + React 19 + Tailwind v4 project has
-no tests. Minimum viable bootstrap: Vitest + React Testing Library +
-Playwright for E2E. Delete `.gstack/no-test-bootstrap` and re-run
-`/ship` in a fresh branch to trigger the bootstrap flow.
+### [P2] Type-scale classes beat Tailwind utilities
+**Files:** `src/app/globals.css` (`.type-*` block), `Bridge.tsx`
+**Priority:** P2
+The unlayered `.type-*` classes override utilities on the same element (the
+bridge paragraph loses its leading and phone size). Wrap them in
+`@layer components`, then compare every section against v7.
+
+### [P2] Map pins for keyboard and screen readers
+**Files:** `src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.tsx`
+**Priority:** P2
+Country names show on mouse hover only; the alt text gives a count. Add the
+visited country list as text for screen readers and a keyboard/touch path.
+
+### [P3] Smaller follow-ups
+**Priority:** P3
+- Career timeline assumes exactly four chapters (`CareerTimeline.tsx` DESKTOP_TOP/BOTTOM, stems, CSS repeat(4)).
+- One source for the map's countries (pins, tint table and count can drift).
+- Self-host the six Google favicon logos (privacy, flake, placeholder icons).
+- Design decisions vs DESIGN.md: press states, timeline breakpoint (768 vs 1024px), the two infinite pulse animations, `.sub-label` margin.
+- Dead code: `src/lib/utils.ts` (+ clsx, tailwind-merge), `Hobby.gallery`, `Venture.coverEmoji`.
+- Coverage tooling (`@vitest/coverage-v8`).
 
 ---
 
 ## Completed
+
+- **Pre-existing lint: setState-in-effect** · both files moved to useSyncExternalStore — **Completed:** v0.2.0.0 (2026-10-22)
+- **Bootstrap a test framework** · Vitest + RTL + Playwright, CI on push — **Completed:** v0.2.0.0 (2026-10-22)
+- **Instrument Serif fake-bold** · the serif is retired; Geist ships every weight — **Completed:** v0.2.0.0 (2026-10-22)
 
 - **Hero heading hierarchy** · hero is one h1 with no h3 labels (theme B rebuild) — **Completed:** `build-theme-b-redesign` (2026-10-21)
 - **FINDING-017** · Hero contact rows are 52px tap targets (theme B rebuild) — **Completed:** `build-theme-b-redesign` (2026-10-21)
