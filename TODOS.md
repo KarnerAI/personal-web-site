@@ -167,12 +167,13 @@ Sort out three things before building:
 
 ## From the v0.2.0.0 ship (2026-10-22)
 
-### [P1] Bump Next.js past the published advisory
-**Files:** `package.json` (next, eslint-config-next 16.2.4)
-**Priority:** P1
-Pre-existing on main. npm audit's non-major fix is 16.4.2; read the 16.3/16.4
-docs in node_modules/next/dist/docs, bump both, rerun lint, tests and build.
-The dev-only vitest 3 advisory clears with vitest 5 (needs @types/node 22+).
+### [P3] Dev-only audit advisories left after the Next.js bump
+**Files:** `package.json` (vitest, @types/node)
+**Priority:** P3
+None of these ship to the site. vitest 3 (plus its tinypool and
+@vitest/mocker) clears with vitest 5, which needs @types/node 22+.
+braces via eslint-config-next's fast-glob has no fix yet: npm's only offer
+is a downgrade to eslint-config-next 14, so wait for an upstream release.
 
 ### [P2] Career, venture and hobby story text in the page HTML
 **Files:** `src/components/sections/CareerTimeline.tsx`, `Entrepreneurship.tsx`, `HobbyMosaic.tsx`
@@ -207,6 +208,7 @@ visited country list as text for screen readers and a keyboard/touch path.
 
 ## Completed
 
+- **Next.js advisory** · next and eslint-config-next 16.2.4 → 16.4.2, plus non-breaking audit fixes for build tooling; lint, unit, e2e and build pass — **Completed:** 2026-10-22
 - **Orphaned contact API** · deleted with its helpers, Resend and Zod; an e2e check keeps it gone — **Completed:** v0.2.0.0 (2026-10-22)
 - **Resend key** · revoked in Resend; neither Vercel project (`hussainalam`, `personal-web-site`) ever had the contact env vars, so the old route could not send mail — **Completed:** 2026-10-22
 - **Pre-existing lint: setState-in-effect** · both files moved to useSyncExternalStore — **Completed:** v0.2.0.0 (2026-10-22)
