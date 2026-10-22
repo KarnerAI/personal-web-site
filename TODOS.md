@@ -36,16 +36,17 @@ the PR with `/ship`, merge, then start a fresh verb-first branch from main
 - Desktop `zoom: 0.9` removed (Hussain, 2026-10-21): build at v7's true size.
 - Page title: "Hussain Alam | Operator turned PM".
 
-### Phase 2: Header + Hero
+### Phase 2: Header + Hero (done 2026-10-21)
 - Sticky frosted header: brand left, Career / Entrepreneurship / Beyond Work.
 - Board hero: info strip "Operator turned PM · Based in New York" (no repeated
   name, no clock), name, bio ending at "build things on the side.", contact
   ticket with one-color LinkedIn / envelope / GitHub icons + handles
   (GitHub: https://github.com/KarnerAI), framed square portrait.
 - Remove the Notion cover photo, round avatar, emoji and the hero quote.
-- Fixes the P1 hero heading-hierarchy item and FINDING-017 tap targets below.
+- Fixed the old hero heading skip (one h1, no h3s) and FINDING-017 (contact
+  rows are 52px tall). Hero name is solid ink; no entrance animation.
 
-### Phase 3: Einstein bridge band (new)
+### Phase 3: Einstein bridge band (done 2026-10-21)
 Quote (small, 22 to 34px) + "Albert Einstein" + "Out of college, I went where
 the work happens: the brewhouse floor of a Fortune 100 company. I've learned
 every role since the same way, by doing the job up close before trying to
@@ -98,27 +99,6 @@ note. Then `/qa` (desktop, tablet, phone, keyboard, reduced motion),
 
 ## Accessibility
 
-### [P1] Hero heading hierarchy skips h2
-**File:** `src/components/sections/Hero.tsx:82,111`
-**Priority:** P1
-**Noticed on:** design-review-4.21.26 (adversarial review finding #9)
-
-The Hero H1 is followed immediately by the demoted `<h3>` "About" and
-`<h3>` "Contact" labels, with no intervening `<h2>`. The next `<h2>` on the
-page is the Career section further down. Axe and Lighthouse flag the level
-skip as WCAG 1.3.1.
-
-The demotion was intentional (design finding FINDING-002 — the 18px label
-shouldn't be styled as a top-level heading). Two acceptable fixes:
-(a) Add a visually-hidden `<h2 class="sr-only">Introduction</h2>` above the
-Hero sub-grid, or
-(b) Keep the markup as-is and add an explicit `aria-level="2"` with
-`role="heading"` if h3 should announce as h2.
-
-Decision needed from Hussain before picking a path.
-
----
-
 ### [P1] Pre-existing lint: setState-in-effect (2 files)
 **Files:** `src/components/edit-mode/EditModeContext.tsx:53`,
 `src/components/sections/beyondwork/map-variants/TravelMapLeaflet.tsx:60`
@@ -163,18 +143,6 @@ rated the site A on design so the effect isn't catastrophic, but a
 post-launch tuning pass should either (a) drop `font-semibold` on section
 H2s and let the serif hold weight on its own, or (b) switch to a serif
 that ships regular + semibold.
-
----
-
-### [P2] FINDING-017 — Hero contact links below 44×44 tap target
-**File:** `src/components/sections/Hero.tsx` (LinkedIn + Email inline anchors)
-**Priority:** P2
-**Noticed on:** design-audit-20260422-followup (third-pass design review)
-
-The inline "LinkedIn /in/hussainalam" and "Email hi@…" rows in the Hero
-contact sidebar render at 18–20px tall, below the 44×44 WCAG minimum.
-One-commit fix: add `min-h-[44px] py-2` to the anchors, or convert to
-styled pills like the nav links already use.
 
 ---
 
@@ -239,6 +207,8 @@ Playwright for E2E. Delete `.gstack/no-test-bootstrap` and re-run
 
 ## Completed
 
+- **Hero heading hierarchy** · hero is one h1 with no h3 labels (theme B rebuild) — **Completed:** `build-theme-b-redesign` (2026-10-21)
+- **FINDING-017** · Hero contact rows are 52px tap targets (theme B rebuild) — **Completed:** `build-theme-b-redesign` (2026-10-21)
 - **FINDING-016** · Desktop `zoom: 0.9` removed (theme B builds at true size) — **Completed:** `build-theme-b-redesign` (2026-10-21)
 - **FINDING-009** · `text-wrap: balance` on h1/h2/h3 — **Completed:** v0.1.1.0 (2026-04-22)
 - **FINDING-011** · Darken `--muted` to pass WCAG AA — **Completed:** v0.1.1.0 (2026-04-22)

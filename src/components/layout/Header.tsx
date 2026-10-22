@@ -1,14 +1,14 @@
 "use client";
 
-// Sticky header with smooth-scroll anchors (PRD §6).
+// Sticky frosted header (theme B, DESIGN.md; v7 mockup).
 //
-// Desktop (≥ md): horizontal nav links, right-aligned.
-// Mobile (< md): hamburger button opens a Radix Dialog drawer slid in from
-// the right. Tapping a link inside the drawer closes it automatically
-// (Dialog.Close asChild on each anchor) and lets the native `#anchor`
-// navigation scroll-to-section. Escape + backdrop tap also close. All tap
-// targets ≥ 44×44 per FINDING-005 / WCAG.
-import { useState } from "react";
+// Desktop (≥ md): brand left, section links right; the link for the section
+// in view gets aria-current and a soft blue fill (scrollspy).
+// Mobile (< md): menu button opens a Radix Dialog drawer from the right.
+// Tapping a link closes it (Dialog.Close asChild) and lets the native
+// `#anchor` jump happen. Escape and the scrim also close. Every target is
+// at least 44×44.
+import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 
 const NAV = [
@@ -17,23 +17,53 @@ const NAV = [
   { href: "#beyond-work", label: "Beyond Work" },
 ];
 
+// Which section counts as "in view": the one crossing a band just above
+// the middle of the screen.
+const SPY_MARGIN = "-40% 0px -55% 0px";
+
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+
+  useEffect(() => {
+    const sections = NAV.map((item) => document.querySelector(item.href)).filter(
+      (el): el is Element => el !== null
+    );
+    if (!sections.length || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: SPY_MARGIN }
+    );
+    sections.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md bg-[color-mix(in_srgb,var(--background)_85%,transparent)] border-b border-[var(--border)]">
-      <nav className="content-width flex items-center justify-between h-14">
-        <a href="#hero" className="font-medium tracking-tight inline-flex items-center min-h-[44px]">
+    <header className="theme-b sticky top-0 z-40 border-b border-line bg-[rgba(251,251,250,0.82)] backdrop-blur-md backdrop-saturate-[1.8]">
+      <nav aria-label="Primary" className="wrap flex h-[60px] items-center justify-between">
+        <a
+          href="#hero"
+          className="inline-flex min-h-[44px] items-center gap-2.5 text-[15px] font-semibold tracking-[-0.01em] text-ink"
+        >
+          <i
+            aria-hidden
+            className="h-2.5 w-2.5 rounded-[3px] bg-[linear-gradient(135deg,var(--primary),var(--sky))] shadow-[0_0_0_3px_rgba(0,174,239,0.14)]"
+          />
           Hussain Alam
         </a>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex gap-6 text-sm text-muted">
+        <ul className="m-0 hidden list-none gap-1 p-0 md:flex">
           {NAV.map((item) => (
             <li key={item.href}>
               <a
                 href={item.href}
-                className="inline-flex items-center min-h-[44px] px-1 hover:text-foreground transition-colors"
+                aria-current={active === item.href ? "true" : undefined}
+                className="inline-flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium text-ink-secondary transition-colors hover:bg-[rgba(15,30,61,0.05)] hover:text-ink aria-[current=true]:bg-[rgba(10,110,170,0.07)] aria-[current=true]:text-primary"
               >
                 {item.label}
               </a>
@@ -41,13 +71,13 @@ export function Header() {
           ))}
         </ul>
 
-        {/* Mobile hamburger */}
+        {/* Mobile menu */}
         <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger asChild>
             <button
               type="button"
               aria-label="Open menu"
-              className="md:hidden inline-flex items-center justify-center h-11 w-11 -mr-2 rounded-md text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--foreground)_6%,transparent)] transition-colors"
+              className="-mr-2.5 grid h-11 w-11 place-items-center rounded-[10px] text-ink transition-colors hover:bg-[rgba(15,30,61,0.05)] md:hidden"
             >
               <svg
                 width="20"
@@ -59,60 +89,55 @@ export function Header() {
                 strokeLinecap="round"
                 aria-hidden="true"
               >
-                <line x1="3" y1="6" x2="17" y2="6" />
-                <line x1="3" y1="10" x2="17" y2="10" />
-                <line x1="3" y1="14" x2="17" y2="14" />
+                <path d="M3 6h14M3 10h14M3 14h14" />
               </svg>
             </button>
           </Dialog.Trigger>
 
           <Dialog.Portal>
-            {/* Scrim — animates via data-state attrs. */}
-            <Dialog.Overlay className="fixed inset-0 z-50 bg-[rgba(15,30,61,0.45)] backdrop-blur-sm" />
+            <Dialog.Overlay className="fixed inset-0 z-50 bg-[rgba(15,30,61,0.38)] backdrop-blur-[4px] animate-fadeIn" />
             <Dialog.Content
               aria-label="Site navigation"
-              className="fixed inset-y-0 right-0 z-50 w-[min(320px,85vw)] bg-[var(--background)] border-l border-[var(--border)] shadow-xl p-6 flex flex-col focus:outline-none"
+              className="theme-b fixed inset-y-0 right-0 z-50 flex h-dvh w-[min(320px,85vw)] flex-col border-l border-line bg-white p-6 shadow-[0_2px_6px_rgba(15,30,61,0.06),0_40px_100px_-24px_rgba(15,30,61,0.45)] focus:outline-none animate-slideInRight"
             >
               <Dialog.Description className="sr-only">
                 Site navigation menu. Use the links below to jump to sections of
                 the page. Press Escape to close.
               </Dialog.Description>
-              <div className="flex items-center justify-between mb-8">
-                <Dialog.Title className="font-medium tracking-tight text-sm text-muted">
+              <div className="-mt-2.5 mb-6 flex items-center justify-between">
+                <Dialog.Title className="type-label text-ink-muted tracking-[0.12em]">
                   Menu
                 </Dialog.Title>
                 <Dialog.Close asChild>
                   <button
                     type="button"
                     aria-label="Close menu"
-                    className="inline-flex items-center justify-center h-11 w-11 -mr-2 rounded-md text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--foreground)_6%,transparent)] transition-colors"
+                    className="-mr-2.5 grid h-11 w-11 place-items-center rounded-[10px] text-ink-muted transition-colors hover:bg-[#F3F4F6] hover:text-ink"
                   >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      aria-hidden="true"
-                    >
-                      <line x1="5" y1="5" x2="15" y2="15" />
-                      <line x1="15" y1="5" x2="5" y2="15" />
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                      <path
+                        d="M1 1l12 12M13 1L1 13"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
                     </svg>
                   </button>
                 </Dialog.Close>
               </div>
 
-              <ul className="flex flex-col gap-1">
+              <ul className="m-0 list-none p-0">
                 {NAV.map((item) => (
                   <li key={item.href}>
                     <Dialog.Close asChild>
                       <a
                         href={item.href}
-                        className="flex items-center min-h-[48px] px-3 rounded-md text-base font-medium text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--foreground)_6%,transparent)] transition-colors"
+                        className="flex min-h-[48px] items-center justify-between rounded-[10px] px-3 text-base font-medium text-ink transition-colors hover:bg-[#F3F6F9]"
                       >
                         {item.label}
+                        <span aria-hidden className="text-ink-muted">
+                          →
+                        </span>
                       </a>
                     </Dialog.Close>
                   </li>

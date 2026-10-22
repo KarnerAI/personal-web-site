@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
+import { Bridge } from "@/components/sections/Bridge";
 import { CareerTimeline } from "@/components/sections/CareerTimeline";
 import { Entrepreneurship } from "@/components/sections/Entrepreneurship";
 import { BeyondWork } from "@/components/sections/BeyondWork";
@@ -12,7 +13,11 @@ export default function Home() {
     <>
       <Header />
       <main className="flex-1">
-        <Hero />
+        {/* Theme B intro: hero + Einstein bridge share the faint grid. */}
+        <div className="intro-band">
+          <Hero />
+          <Bridge />
+        </div>
         <CareerTimeline />
         <Entrepreneurship />
         <BeyondWork />

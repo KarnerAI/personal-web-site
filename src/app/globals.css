@@ -179,6 +179,212 @@
   font-size: 12px;
 }
 
+/* ------------------------------------------------------------------
+   Theme B components (rebuilt sections only). Values come from the
+   locked v7 mockup; `.theme-b` scopes the type, color and focus ring
+   so old sections keep their Tokyo Transit look.
+   ------------------------------------------------------------------ */
+.theme-b {
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+/* In the base layer (like the global ring below) so per-element utilities
+   such as `focus-visible:outline-offset-[-3px]` can still override it. */
+@layer base {
+  .theme-b :focus-visible {
+    outline-color: var(--primary);
+  }
+}
+
+.theme-b ::selection {
+  background: rgba(0, 174, 239, 0.22);
+}
+
+/* 1120px content, 32px gutters (16px on phones). */
+.wrap {
+  width: 100%;
+  max-width: calc(1120px + 64px);
+  margin-inline: auto;
+  padding-inline: 32px;
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    padding-inline: 16px;
+  }
+}
+
+/* Faint 40px grid behind the hero and bridge, fading out before the
+   first old section. Moves to <body> once every section is rebuilt.
+   Guardrail 3: if it's noticeable before the content, it's too strong. */
+.intro-band {
+  position: relative;
+  isolation: isolate;
+}
+
+.intro-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(15, 30, 61, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgba(15, 30, 61, 0.035) 1px, transparent 1px) 0 0 / 40px 40px;
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent);
+  mask-image: linear-gradient(180deg, #000 80%, transparent);
+}
+
+/* Sky and peach washes (the only places those two colors appear). */
+.hero-wash {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero-wash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 62% at 12% 0%, rgba(0, 174, 239, 0.18), transparent 70%),
+    radial-gradient(44% 60% at 94% 20%, rgba(255, 179, 122, 0.36), transparent 70%),
+    radial-gradient(50% 40% at 58% 92%, rgba(0, 174, 239, 0.1), transparent 70%);
+  -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent);
+  mask-image: linear-gradient(180deg, #000 72%, transparent);
+}
+
+.bridge-wash {
+  position: relative;
+  isolation: isolate;
+}
+
+.bridge-wash::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -80px;
+  bottom: -140px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 58% at 8% 46%, rgba(0, 174, 239, 0.16), transparent 70%),
+    radial-gradient(44% 62% at 94% 54%, rgba(255, 179, 122, 0.38), transparent 70%),
+    radial-gradient(36% 40% at 56% 30%, rgba(10, 110, 170, 0.06), transparent 70%);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 32%, #000 64%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 32%, #000 64%, transparent);
+}
+
+/* The bridge (last in the intro band) leads straight into Career, so Career
+   starts tight under it. */
+.intro-band + section {
+  padding-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .intro-band + section {
+    padding-top: 16px;
+  }
+}
+
+/* Short blue rule that runs from the bridge down into Career. */
+.bridge-lead {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 56px;
+  margin: 40px 0 0 11px;
+  background: linear-gradient(180deg, rgba(10, 110, 170, 0), rgba(10, 110, 170, 0.55));
+}
+
+.bridge-lead::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  bottom: -4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 174, 239, 0.18);
+}
+
+@media (max-width: 767px) {
+  .bridge-lead {
+    height: 44px;
+    margin-top: 32px;
+  }
+}
+
+/* Hero board: intro + ticket on the left, square portrait on the right. */
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  grid-template-areas: "intro portrait" "ticket portrait";
+  gap: 48px 64px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "intro" "portrait" "ticket";
+    gap: 32px;
+  }
+}
+
+/* Offset sky and peach shadows: depth with an offset, never a halo. */
+.portrait-frame {
+  box-shadow:
+    -26px 34px 64px -30px rgba(255, 179, 122, 0.6),
+    26px 30px 64px -24px rgba(0, 174, 239, 0.45),
+    0 1px 2px rgba(15, 30, 61, 0.05);
+}
+
+/* The one primary button per view ("Get in touch"). */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 1px 2px rgba(15, 30, 61, 0.2),
+    0 8px 20px -6px rgba(10, 110, 170, 0.55);
+  transition: background-color 150ms ease-out, transform 150ms ease-out;
+}
+
+.btn-primary::after {
+  content: "\2192";
+  transition: transform 150ms ease-out;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:hover::after {
+  transform: translateX(2px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -237,10 +443,13 @@ h2 {
    (focus-visible), so mouse clicks don't get the ring. Outline naturally
    follows each element's own border-radius in modern browsers — don't
    force-override it here or pills/rounded buttons snap to square corners
-   while focused. */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+   while focused. Lives in the base layer so Tailwind utilities on an
+   element (e.g. `focus-visible:outline-none` + a ring) win over it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -269,6 +478,16 @@ h2 {
   animation: slideUp 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Mobile nav drawer sliding in from the right (theme B header). */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 /* Respect reduced motion (PRD §10 accessibility) */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -283,4 +502,7 @@ h2 {
 
 html {
   scroll-behavior: smooth;
+  /* Nav jumps land below the 60px sticky header, not under it. */
+  scroll-padding-top: 76px;
 }
+
