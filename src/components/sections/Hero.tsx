@@ -105,7 +105,7 @@ export function Hero() {
                     <span className="[overflow-wrap:anywhere]">{c.handle}</span>
                     <span
                       aria-hidden
-                      className="text-[#9CA3AF] transition-[color,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
+                      className="glyph text-[#9CA3AF] transition-[color,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
                     >
                       ↗
                     </span>

@@ -49,10 +49,23 @@ export function Header() {
           href="#hero"
           className="inline-flex min-h-[44px] items-center gap-2.5 text-[15px] font-semibold tracking-[-0.01em] text-ink"
         >
-          <i
-            aria-hidden
-            className="h-2.5 w-2.5 rounded-[3px] bg-[linear-gradient(135deg,var(--primary),var(--sky))] shadow-[0_0_0_3px_rgba(0,174,239,0.14)]"
-          />
+          {/* The one KarnerBlu signature detail (DESIGN.md guardrail 2): the
+              logo's pointy-top hexagon, sky on the left, deep blue on the right. */}
+          <svg width="13" height="14" viewBox="0 0 13 14" aria-hidden="true">
+            <defs>
+              <linearGradient id="kb-hex" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0.5" stopColor="var(--sky)" />
+                <stop offset="0.5" stopColor="var(--primary)" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M6.5 1 L12 4.1 V9.9 L6.5 13 L1 9.9 V4.1 Z"
+              fill="url(#kb-hex)"
+              stroke="url(#kb-hex)"
+              strokeWidth="1.2"
+              strokeLinejoin="round"
+            />
+          </svg>
           Hussain Alam
         </a>
 
@@ -135,7 +148,7 @@ export function Header() {
                         className="flex min-h-[48px] items-center justify-between rounded-[10px] px-3 text-base font-medium text-ink transition-colors hover:bg-[#F3F6F9]"
                       >
                         {item.label}
-                        <span aria-hidden className="text-ink-muted">
+                        <span aria-hidden className="glyph text-ink-muted">
                           →
                         </span>
                       </a>

@@ -1,8 +1,8 @@
 import type { CareerRole } from "@/types";
 
-// Pulled from Hussain's 2026 resume. Matches the data used in the approved
-// career-comparison mockup (public/career-comparison.html, Variant C).
-// Verify copy before ship.
+// Pulled from Hussain's 2026 resume; laid out per the theme B v7 mockup
+// (design-variants/2026-10-20-fullpage-productui-v7.html). Wording here wins
+// over the mockup's (Series-A, co-founded). Verify copy before ship.
 export const careerRoles: CareerRole[] = [
   {
     company: "Anheuser-Busch InBev",
@@ -35,7 +35,7 @@ export const careerRoles: CareerRole[] = [
   {
     company: "KarnerBlu",
     logo: "KB",
-    logoSrc: "/logos/karnerblu.png", // drop the file at public/logos/karnerblu.png (icon-only version works best for the small chip)
+    logoSrc: "/logos/karnerblu-mark.png", // hexagon + butterfly mark; the full wordmark is unreadable at tile size
     startDate: "Jul 2018",
     endDate: "Sep 2020",
     startMonth: "2018-07",
@@ -43,14 +43,17 @@ export const careerRoles: CareerRole[] = [
     yearsLabel: "2018 – 2020",
     tagline: "Founder Mode",
     role: "Product Consultant · Co-Founder",
-    location: "Remote · Staples, Unilever",
+    location: "Remote + on-site",
+    clients: [
+      { name: "Unilever", logoSrc: "/logos/unilever.png" },
+      { name: "Staples", logoSrc: "/logos/staples.png" },
+    ],
     whyIWasThere:
       "Co-founded my own consultancy to work directly with Fortune 500s on execution systems. Faster loops, my own call sheet.",
     heroBullet:
       "Boosted resource-allocation efficiency +30% at Fortune 500 clients via a value-based project prioritization framework.",
     subBullets: [
       "Built an execution operating system across 7 departments, translating stakeholder needs into workflows, cadences, and KPI reporting.",
-      "Clients included Staples and Unilever. Remote + on-site hybrid.",
     ],
   },
   {
@@ -104,9 +107,3 @@ export const careerRoles: CareerRole[] = [
     ],
   },
 ];
-
-// Proportional timeline math lives in the component — epoch = first role's startMonth,
-// end = TODAY (2026-04 for this build).
-export const TIMELINE_EPOCH_YEAR = 2012;
-export const TIMELINE_EPOCH_MONTH = 7;
-export const TIMELINE_TODAY = { year: 2026, month: 4 } as const;

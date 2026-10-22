@@ -28,6 +28,7 @@ export type CareerRole = {
   subBullets: string[]; // was fixed-2 tuple; widened so we can carry real resume bullets
   roles?: SubRole[]; // multi-role progression inside a company
   awards?: string[];
+  clients?: { name: string; logoSrc: string }[]; // logo row on the card and detail panel
 };
 
 export type VentureStatus =

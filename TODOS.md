@@ -52,7 +52,7 @@ the work happens: the brewhouse floor of a Fortune 100 company. I've learned
 every role since the same way, by doing the job up close before trying to
 improve it." Leads straight into Career.
 
-### Phase 4: Career timeline
+### Phase 4: Career timeline (done 2026-10-21)
 - Four equal segments; cards above (1, 3) and below (2, 4); cards size to
   their content; pinned segment fills Karner blue; detail panel; arrow keys
   and Escape; mobile stack.
@@ -86,16 +86,15 @@ h1/h2 serif rule once no section uses them; remove the CLAUDE.md migration
 note. Then `/qa` (desktop, tablet, phone, keyboard, reduced motion),
 `/design-review` against DESIGN.md, `npm run build` + lint clean, `/ship`.
 
-### Open decisions (ask Hussain during the build)
-- Section chips ("• CAREER •") above headings: keep, or let headings stand
-  alone.
-- Guardrail 1: where the stat treatments go (career detail panel, venture
-  cards, a "by the numbers" line). Results on the timeline cards themselves
-  were declined.
-- Guardrail 2: where the single hexagon motif lives (e.g. timeline nodes).
+### Build rule (Hussain, 2026-10-21)
+Implement the remaining sections exactly as in v7; don't stop for design
+questions. Decided: section chips stay; numbers stay inside the sentences as
+in v7; the one hexagon is the header brand mark; hero name is solid ink.
+
+### Open content items (not design)
 - Stale content: "Next up: Turkey, September 2026"; Navigate.AI beta dates
   (April to May 2026); YC Startup School year; hobby stories that are still
-  placeholders; WeWork tenure label (data counts to April 2026).
+  placeholders.
 
 ## Accessibility
 

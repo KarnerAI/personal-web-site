@@ -150,8 +150,8 @@ components:
 - One moment of motion: the career timeline filling in.
 
 **The three guardrails (agreed at lock-in, 2026-10-20).** B is the closest of the shortlisted themes to the generic "modern software company" look, so these are hard rules:
-1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. Placement is decided per section during the build (Hussain declined putting results on the timeline cards themselves).
-2. **One KarnerBlu signature detail.** Both logo blues work together (deep #0A6EAA + sky #00AEEF), plus one sparing use of the logo's hexagon motif. One place, not a pattern.
+1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. As built (2026-10-21), the numbers sit inside the sentences exactly as in v7, bolded in the career detail panel's headline bullet; Hussain declined putting results on the timeline cards themselves.
+2. **One KarnerBlu signature detail.** Both logo blues work together (deep #0A6EAA + sky #00AEEF), plus one sparing use of the logo's hexagon motif. One place, not a pattern: the header brand mark (a pointy-top hexagon, sky left, deep blue right).
 3. **Restraint on effects.** The faint grid, sky-to-peach washes and glows stay light and few. If an effect is noticeable before the content, it is too strong.
 
 ## Colors
@@ -188,7 +188,7 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 
 ## Components
 
-- **Section chip:** solid blue mono label. Optional; see open decisions.
+- **Section chip:** solid blue mono label above each section heading (kept, 2026-10-21).
 - **Button (primary):** solid `primary`, white text, 10px radius, darkens to `primary-hover` on hover, 1px press on active, sky focus ring. One primary per view ("Get in touch").
 - **Contact ticket:** rows of one-color icon + handle + arrow, each a full-width link with a 44px minimum target; the accessible name carries the label ("LinkedIn: /in/hussainalam").
 - **Timeline:** white segmented track; segments are buttons; the pinned segment fills `primary` with white years; stems end in small nodes. Keyboard: arrows move between chapters, Escape closes the detail panel.
@@ -230,3 +230,4 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 | 2026-10-20 | Ventures four across; real covers; career cards fit their content; KarnerBlu clients row | Equal billing, no repeated names, no stretched white space, recognizable proof. |
 | 2026-10-21 | Hero name in solid `text` (ink), not v7's navy-to-gray gradient | Emphasis by size and weight (guardrail 3); gradient text is a generic-site tell. |
 | 2026-10-21 | Desktop `zoom: 0.9` removed | The build must match v7 at true size; old sections look larger only until rebuilt. |
+| 2026-10-21 | Build the rest as in v7: chips kept, numbers in sentences, hexagon as the header mark | Hussain approved v7; implement it rather than reopen design questions. |
