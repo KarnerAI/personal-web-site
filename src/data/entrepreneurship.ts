@@ -75,6 +75,8 @@ export const ventures: Venture[] = [
     slug: "navigate-ai",
     name: "Navigate.AI",
     logoInitials: "NA",
+    coverSrc: "/ventures/navigate-ai-score.png",
+    coverTreatment: "shot",
     coverGradient: "linear-gradient(135deg, #0F1E3D 0%, #2E4AA8 55%, #5EC6E5 100%)",
     coverEmoji: "🧭",
     hook: "Your career pivot, backed by real data. No AI guesswork.",

@@ -60,3 +60,9 @@ travel-notes.md
 # Optimized copies of any photo the site uses go in public/.
 /images/
 /design-themes/
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

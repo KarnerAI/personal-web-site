@@ -1,349 +1,201 @@
 "use client";
 
-// Entrepreneurship — v3 · "Things I've started" card grid + modal
-// 4 cards in a row (2x2 on narrower widths). Each card: status dot + label,
-// venture name, 1-2 line hook, tag chips, "Read story →" link.
-// Click opens a modal with the full Problem/Built/Outcome/Lesson case study.
+// Things I've started (theme B, DESIGN.md; v7 mockup).
+// Four cards in one row on desktop (2×2 tablet, 1 column phone): a 150px
+// cover, status pill, name, hook, mono tags and "Read story" pinned to the
+// card bottom. Clicking a card opens the story dialog (Problem / Built /
+// Outcome / Lesson). Covers are real artifacts only: a photo ("fill"), a
+// wordmark on its brand color ("logo") or a product screenshot ("shot"). When
+// an image is missing or fails, the venture's name shows instead.
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useRef, useState, type RefObject } from "react";
+import { useImageFallback } from "./useImageFallback";
+import * as Dialog from "@radix-ui/react-dialog";
 import { ventures } from "@/data/entrepreneurship";
 import type { Venture, VentureStatus } from "@/types";
 
 const STATUS_DOT: Record<VentureStatus, string> = {
-  Active: "bg-emerald-500",
-  Shipped: "bg-blue-500",
-  Live: "bg-emerald-500",
-  Acquired: "bg-[var(--accent)]",
-  Paused: "bg-zinc-400",
-  Experimental: "bg-amber-500",
+  Shipped: "shipped",
+  Acquired: "shipped",
+  Experimental: "experimental",
+  Paused: "experimental",
+  Active: "active",
+  Live: "active",
 };
 
-// Status pill styling for the cover overlay — colored bg + dot, frosted against image.
-const STATUS_PILL: Record<VentureStatus, string> = {
-  Active: "bg-[#E3F5EB] text-[#0F7A45]",
-  Shipped: "bg-[#E6EEFF] text-[#1E4BB8]",
-  Live: "bg-[#E3F5EB] text-[#0F7A45]",
-  Acquired: "bg-[rgba(230,59,30,0.12)] text-[var(--accent)]",
-  Paused: "bg-[#F0EFE9] text-[var(--muted)]",
-  Experimental: "bg-[#F9EFD9] text-[#7A5610]",
-};
-
-// Cover banner for the card top (variant A — 150px full-bleed with status pill overlay).
-function VentureCover({ venture: v }: { venture: Venture }) {
-  const [errored, setErrored] = useState(false);
-  const showImage = Boolean(v.coverSrc) && !errored;
-  const treatment = v.coverTreatment ?? "fill";
-  // onError only fires after hydration. An image that already failed before
-  // then reports complete with no pixels (a lazy image not yet requested is
-  // incomplete with no currentSrc), so catch that case when the ref attaches.
-  const catchEarlyError = (img: HTMLImageElement | null) => {
-    if (img?.complete && img.currentSrc && img.naturalWidth === 0) setErrored(true);
-  };
-
-  // Always paint the gradient, even under a "fill" photo: it shows while the
-  // lazy image loads instead of an empty band.
+function StatusPill({ status, className = "" }: { status: VentureStatus; className?: string }) {
   return (
-    <div
-      className="relative h-[150px] w-full overflow-hidden"
-      style={{ background: v.coverGradient ?? "linear-gradient(135deg,#D9DDE3,#5F6B85)" }}
-    >
-      {showImage && treatment === "fill" && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={v.coverSrc}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          ref={catchEarlyError}
-          onError={() => setErrored(true)}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      )}
-      {showImage && treatment === "logo" && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={v.coverSrc}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          ref={catchEarlyError}
-          onError={() => setErrored(true)}
-          className="absolute inset-0 m-auto max-h-[86%] max-w-[88%] object-contain"
-          style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.25))" }}
-        />
-      )}
-      {/* FINDING-012 — initial-as-glyph instead of emoji. Falls back to coverEmoji
-          only if no initials and no image (non-breaking for future entries).
-          Serif display face (Instrument Serif, inherited via h1/h2 font stack)
-          keeps this feeling editorial, not decorative. */}
-      {!showImage && v.logoInitials && (
-        <span
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center font-[family-name:var(--font-serif)] text-[72px] leading-none tracking-tight text-white/95"
-          style={{
-            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.22))",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {v.logoInitials}
-        </span>
-      )}
-      {!showImage && !v.logoInitials && v.coverEmoji && (
-        <span
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center text-[54px] opacity-85"
-          style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))" }}
-        >
-          {v.coverEmoji}
-        </span>
-      )}
-
-      {/* FINDING-013 — status pill promoted to top-left so it reads first
-          (western eye-path lands top-left before content). Color coding
-          lives in STATUS_PILL and STATUS_DOT; no palette change. */}
-      <span
-        className={[
-          "absolute top-3 left-3 inline-flex items-center gap-1.5",
-          "px-2.5 py-1 rounded-full",
-          "font-mono text-[10px] font-medium uppercase tracking-[0.08em]",
-          "border border-[rgba(217,221,227,0.7)]",
-          "backdrop-blur-[6px]",
-          STATUS_PILL[v.status],
-        ].join(" ")}
-        style={{ backgroundColor: "rgba(250,250,247,0.92)" }}
-      >
-        <span className={["w-[6px] h-[6px] rounded-full", STATUS_DOT[v.status]].join(" ")} aria-hidden />
-        {v.status}
-      </span>
-    </div>
+    <span className={`status-pill ${className}`}>
+      <span aria-hidden className={`status-dot ${STATUS_DOT[status]}`} />
+      {status}
+    </span>
   );
 }
 
-// Venture logo resolver.
-// Priority: explicit src (local asset or URL) > Google's s2 favicon API > initials badge.
-function VentureLogo({
-  venture: v,
-  size,
-}: {
-  venture: Venture;
-  size: "card" | "modal";
-}) {
-  const [errored, setErrored] = useState(false);
-  const resolvedSrc =
-    v.logoSrc ??
-    (v.logoDomain
-      ? `https://www.google.com/s2/favicons?domain=${v.logoDomain}&sz=128`
-      : undefined);
-  const showImage = Boolean(resolvedSrc) && !errored;
-
-  const dims =
-    size === "card"
-      ? "h-11 w-11 rounded-lg text-[13px]"
-      : "h-14 w-14 rounded-xl text-base";
-
-  if (showImage) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={resolvedSrc}
-        alt=""
-        onError={() => setErrored(true)}
-        className={`${dims} object-contain bg-[var(--bg)] border border-[var(--border)] p-1.5`}
-      />
-    );
-  }
+function VentureCover({ venture: v }: { venture: Venture }) {
+  const { failed, imgProps } = useImageFallback();
+  const treatment = v.coverTreatment ?? "fill";
+  const showImage = Boolean(v.coverSrc) && !failed;
 
   return (
-    <div
-      className={`${dims} bg-[var(--bg)] border border-[var(--border)] font-semibold tracking-tight flex items-center justify-center text-[var(--fg)]`}
-      aria-hidden
+    <span
+      className={`cv cv-${treatment}`}
+      style={treatment === "logo" ? { background: v.coverGradient ?? "#0F1E3D" } : undefined}
     >
-      {v.logoInitials ?? v.name.slice(0, 2).toUpperCase()}
-    </div>
+      {!showImage && (
+        <span aria-hidden className="cv-fb">
+          {v.name}
+        </span>
+      )}
+      {showImage && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={v.coverSrc}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          {...imgProps}
+        />
+      )}
+      <StatusPill status={v.status} />
+    </span>
+  );
+}
+
+function StoryMark({ venture: v }: { venture: Venture }) {
+  const { failed, imgProps } = useImageFallback();
+  return (
+    <span aria-hidden className="mark">
+      {v.logoInitials}
+      {v.logoSrc && !failed && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={v.logoSrc} alt="" {...imgProps} />
+      )}
+    </span>
+  );
+}
+
+function StoryDialog({
+  venture: v,
+  onClose,
+  returnFocus,
+}: {
+  venture: Venture | null;
+  onClose: () => void;
+  returnFocus: RefObject<HTMLButtonElement | null>;
+}) {
+  return (
+    <Dialog.Root open={v !== null} onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="b-scrim" />
+        {v && (
+          <Dialog.Content
+            className="theme-b b-sheet"
+            onCloseAutoFocus={(e) => {
+              // The cards open the dialog themselves, so hand focus back to the one clicked.
+              e.preventDefault();
+              returnFocus.current?.focus();
+            }}
+          >
+            <div className="sheet-tools">
+              <span aria-hidden className="kbd">
+                esc
+              </span>
+              <Dialog.Close className="close-x" aria-label="Close story">
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </Dialog.Close>
+            </div>
+            <div className="vm">
+              <div className="vm-hd">
+                <StoryMark venture={v} />
+                <span className="st">
+                  <span aria-hidden className={`status-dot ${STATUS_DOT[v.status]}`} />
+                  {v.status}
+                </span>
+              </div>
+              <Dialog.Title asChild>
+                <h2>{v.name}</h2>
+              </Dialog.Title>
+              <Dialog.Description asChild>
+                <p className="vm-hook">{v.hook}</p>
+              </Dialog.Description>
+              <dl className="cs">
+                <dt>Problem</dt>
+                <dd>{v.caseStudy.problem}</dd>
+                <dt>Built</dt>
+                <dd>{v.caseStudy.whatIBuilt}</dd>
+                <dt>Outcome</dt>
+                <dd>{v.caseStudy.outcome}</dd>
+                <dt>Lesson</dt>
+                <dd className="it">{v.caseStudy.lessons}</dd>
+              </dl>
+              {v.externalUrl && v.externalUrl !== "#" && (
+                <a className="ext" href={v.externalUrl} target="_blank" rel="noreferrer">
+                  {v.externalLabel ?? "Visit"}{" "}
+                  <span aria-hidden className="glyph">
+                    ↗
+                  </span>
+                </a>
+              )}
+            </div>
+          </Dialog.Content>
+        )}
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 
 export function Entrepreneurship() {
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
-  const openVenture = ventures.find((v) => v.slug === openSlug) ?? null;
-
-  // Lock body scroll + close on Escape while modal is open.
-  useEffect(() => {
-    if (!openVenture) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenSlug(null);
-    };
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [openVenture]);
+  const [open, setOpen] = useState<Venture | null>(null);
+  const trigger = useRef<HTMLButtonElement | null>(null);
 
   return (
-    <section id="entrepreneurship" className="section">
-      <div className="content-width max-w-[1200px]">
-        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] mb-6">
+    <section id="entrepreneurship" aria-labelledby="ven-h" className="theme-b relative py-[112px] max-md:py-20">
+      <div className="wrap">
+        <h2 id="ven-h" className="type-heading m-0 mb-6 text-ink">
           Things I&rsquo;ve started.
         </h2>
-        <p className="text-muted text-[17px] max-w-[680px] mb-12">
-          I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some worked,
-          some taught me more than any growth role. Click any card to read the full story.
+        <p className="lede">
+          I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some
+          worked, some taught me more than any growth role. Click any card to read the full story.
         </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="vgrid">
           {ventures.map((v) => (
-            <VentureCard key={v.slug} venture={v} onOpen={() => setOpenSlug(v.slug)} />
+            <button
+              key={v.slug}
+              type="button"
+              className="vc"
+              aria-haspopup="dialog"
+              onClick={(e) => {
+                trigger.current = e.currentTarget;
+                setOpen(v);
+              }}
+            >
+              <VentureCover venture={v} />
+              <span className="vb">
+                <span className="vn">{v.name}</span>
+                <span className="hook">{v.hook}</span>
+                {v.tags && (
+                  <span className="tags">
+                    {v.tags.map((t) => (
+                      <span key={t}>{t}</span>
+                    ))}
+                  </span>
+                )}
+                <span className="rs">
+                  Read story{" "}
+                  <span aria-hidden className="glyph">
+                    →
+                  </span>
+                </span>
+              </span>
+            </button>
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {openVenture && (
-          <CaseStudyModal venture={openVenture} onClose={() => setOpenSlug(null)} />
-        )}
-      </AnimatePresence>
+      <StoryDialog venture={open} onClose={() => setOpen(null)} returnFocus={trigger} />
     </section>
-  );
-}
-
-function VentureCard({ venture: v, onOpen }: { venture: Venture; onOpen: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onOpen}
-      className="group text-left border border-[var(--border)] bg-[var(--surface)] rounded-xl overflow-hidden flex flex-col min-h-[360px] hover:border-[var(--accent)] hover:shadow-sm transition-all"
-    >
-      <VentureCover venture={v} />
-
-      <div className="flex flex-col flex-1 p-6">
-        <h3 className="text-2xl font-semibold tracking-tight mb-2 leading-tight">{v.name}</h3>
-        <p className="text-muted text-[15px] leading-[1.55] mb-auto">{v.hook}</p>
-
-        {v.tags && v.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-4">
-            {v.tags.map((t) => (
-              <span
-                key={t}
-                className="font-mono text-[11px] text-muted bg-[var(--bg)] border border-[var(--border)] px-2 py-[3px] rounded"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div className="border-t border-[var(--border)] mt-5 pt-4">
-          <span className="text-sm font-medium text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
-            Read story →
-          </span>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-function CaseStudyModal({ venture: v, onClose }: { venture: Venture; onClose: () => void }) {
-  return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.15 }}
-    >
-      {/* Backdrop */}
-      <button
-        type="button"
-        aria-label="Close case study"
-        onClick={onClose}
-        className="absolute inset-0 bg-[rgba(15,30,61,0.5)] backdrop-blur-sm"
-      />
-
-      {/* Dialog */}
-      <motion.div
-        role="dialog"
-        aria-modal="true"
-        aria-label={`${v.name} case study`}
-        className="relative bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-xl w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-7 md:p-10"
-        initial={{ opacity: 0, y: 12, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 12, scale: 0.98 }}
-        transition={{ duration: 0.18, ease: "easeOut" }}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close"
-          className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-muted hover:text-[var(--fg)] hover:bg-[var(--bg)] transition-colors"
-        >
-          ✕
-        </button>
-
-        <div className="flex items-center gap-4 mb-4">
-          <VentureLogo venture={v} size="modal" />
-          <div className="flex items-center gap-2">
-            <span className={["w-2 h-2 rounded-full", STATUS_DOT[v.status]].join(" ")} aria-hidden />
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
-              {v.status}
-            </span>
-          </div>
-        </div>
-
-        <h3 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] mb-3">
-          {v.name}
-        </h3>
-        <p className="text-muted text-lg mb-8">{v.hook}</p>
-
-        <dl className="grid grid-cols-[90px_1fr] gap-x-5 gap-y-4 md:gap-y-5">
-          <ModalField label="Problem">{v.caseStudy.problem}</ModalField>
-          <ModalField label="Built">{v.caseStudy.whatIBuilt}</ModalField>
-          <ModalField label="Outcome">{v.caseStudy.outcome}</ModalField>
-          <ModalField label="Lesson" italic>
-            {v.caseStudy.lessons}
-          </ModalField>
-        </dl>
-
-        {v.externalUrl && v.externalUrl !== "#" && (
-          <a
-            href={v.externalUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-block text-sm font-medium text-[var(--accent)]"
-          >
-            {v.externalLabel ?? "Visit"} ↗
-          </a>
-        )}
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function ModalField({
-  label,
-  italic,
-  children,
-}: {
-  label: string;
-  italic?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      <dt className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)] pt-[5px]">
-        {label}
-      </dt>
-      <dd
-        className={[
-          "m-0 text-[15px] leading-[1.6]",
-          italic ? "italic text-muted" : "text-[var(--fg)]",
-        ].join(" ")}
-      >
-        {children}
-      </dd>
-    </>
   );
 }

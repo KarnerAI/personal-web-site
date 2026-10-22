@@ -15,7 +15,7 @@ export type CareerRole = {
   // Display-format dates (what the UI renders as "yearsLabel").
   startDate: string; // "Jan 2020"
   endDate: string | "Present";
-  // Machine-format dates used for proportional math on the timeline.
+  // Machine-format dates; they drive the tenure label in the chapter panel.
   // "YYYY-MM" or the string "Present".
   startMonth: string;
   endMonth: string | "Present";
@@ -28,6 +28,7 @@ export type CareerRole = {
   subBullets: string[]; // was fixed-2 tuple; widened so we can carry real resume bullets
   roles?: SubRole[]; // multi-role progression inside a company
   awards?: string[];
+  clients?: { name: string; logoSrc: string }[]; // logo row on the card and detail panel
 };
 
 export type VentureStatus =
@@ -42,20 +43,20 @@ export type Venture = {
   slug: string;
   name: string;
   icon?: string;
-  // Logo resolution, same pattern as CareerRole:
-  // logoSrc (local asset or URL) > logoDomain (favicon) > logoInitials (badge).
+  // Story-dialog mark: logoSrc (local asset or URL) over the logoInitials badge.
+  // logoDomain is not looked up for ventures.
   logoSrc?: string;
   logoDomain?: string;
   logoInitials?: string;
-  // Cover image for the card banner (variant A — 150px full-bleed).
-  // coverGradient is always painted as the band background (it shows while a photo loads or
-  // after it fails); coverSrc renders on top. With no image: logoInitials glyph, else coverEmoji.
+  // Card cover (see coverTreatment). coverGradient paints only "logo" covers. With no
+  // image, or one that fails, the cover shows the venture name. coverEmoji is unused.
   coverSrc?: string;
   coverGradient?: string; // full CSS `background` value
   coverEmoji?: string;
   // "fill" (default): coverSrc stretched edge-to-edge via object-cover (good for photos).
   // "logo": coverGradient paints the background, coverSrc rendered as a contained logo centered on top (good for wordmarks/marks).
-  coverTreatment?: "fill" | "logo";
+  // "shot": a product screenshot floating on a soft blue grid wash.
+  coverTreatment?: "fill" | "logo" | "shot";
   hook: string;
   status: VentureStatus;
   tags?: string[];
@@ -70,24 +71,12 @@ export type Venture = {
   };
 };
 
-// Tile size within the bento grid (sideprojects Option C).
-export type SideProjectSize = "feature" | "tall" | "wide" | "sq";
-
-export type SideProject = {
-  name: string;
-  screenshot?: string;
-  description: string;
-  techStack: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  size?: SideProjectSize;
-};
-
 // Hero or gallery image for a hobby. `alt` is required — every photo tells a
 // story, so let the data file speak rather than defaulting to the label.
 export type HobbyImage = {
   src: string; // e.g. "/images/hobbies/riding-hero.jpg"
   alt: string;
+  position?: string; // CSS object-position focal point; defaults to "50% 25%" (faces sit high)
 };
 
 // A meta row rendered in the hobby modal's stat band (up to 3).
@@ -181,11 +170,4 @@ export type Certification = {
   // Logo resolution, same pattern as CareerRole / Venture.
   logoSrc?: string;
   logoDomain?: string;
-};
-
-export type ContactFormInput = {
-  name: string;
-  email: string;
-  companyOrRole?: string;
-  message: string;
 };

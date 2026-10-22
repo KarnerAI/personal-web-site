@@ -14,6 +14,7 @@ import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { preload } from "react-dom";
 import { useEditMode } from "./EditModeContext";
 
 type Props = {
@@ -41,6 +42,12 @@ type Props = {
    * Hero cover: use something like { w: 1920, h: 680 }. Portrait: { w: 1024, h: 1024 }.
    */
   exportSize?: { w: number; h: number };
+  /**
+   * Fetch the default image at high priority (a <link rel="preload"> in the
+   * page head). Use for the image people see first, like the hero portrait;
+   * as a CSS background it would otherwise wait for the stylesheet.
+   */
+  priority?: boolean;
 };
 
 export function EditableImage({
@@ -53,7 +60,9 @@ export function EditableImage({
   ariaLabel,
   children,
   exportSize = { w: 1600, h: 1600 },
+  priority = false,
 }: Props) {
+  if (priority) preload(defaultSrc, { as: "image", fetchPriority: "high" });
   const { isEditing, overrides, setOverride, resetOverride, hydrated } =
     useEditMode();
   const override = overrides[slotId];
@@ -192,7 +201,7 @@ export function EditableImage({
   const effectivePosY = hydrated ? posY : defaultPositionY;
 
   const editingClass = isEditing
-    ? "outline-dashed outline-2 outline-offset-2 outline-[var(--accent)] cursor-grab active:cursor-grabbing"
+    ? "outline-dashed outline-2 outline-offset-2 outline-[var(--primary)] cursor-grab active:cursor-grabbing"
     : "";
 
   return (
@@ -214,7 +223,7 @@ export function EditableImage({
       {isEditing && hydrated && (
         <div
           data-toolbar
-          className="absolute top-2 right-2 z-20 flex items-center gap-1 rounded-full bg-[var(--foreground)]/95 text-[var(--background)] text-[11px] font-medium px-1 py-1 shadow-xl backdrop-blur-sm"
+          className="absolute top-2 right-2 z-20 flex items-center gap-1 rounded-full bg-[var(--ink)]/95 text-[var(--page)] text-[11px] font-medium px-1 py-1 shadow-xl backdrop-blur-sm"
           onPointerDown={(e) => e.stopPropagation()}
         >
           <ToolbarButton onClick={onPickFile} label="Replace image">

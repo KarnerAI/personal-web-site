@@ -16,40 +16,43 @@ made after v7 (Zoomo is Series-A, KarnerBlu is "co-founded", the
 SpreadTheFacts partner is Mass General Brigham, the travel quote is
 "Attributed to Saint Augustine").
 
-### Phase 0: Ship what's already on `polish-things-ive-started`
+### Phase 0: Ship what's already on `polish-things-ive-started` (done: PR #7, v0.1.4.0, merged 2026-10-21)
 Content pass (no em-dashes, placeholder links), venture covers, routing
 rules, the build fix that keeps Tailwind out of `images/` and
 `design-themes/`, new logo assets, and every design-variants mockup. Open
 the PR with `/ship`, merge, then start a fresh verb-first branch from main
 (e.g. `build-theme-b-redesign`, pushed with `-u` before the first commit).
 
-### Phase 1: Foundations
-- Read the Next.js 16 docs in `node_modules/next/dist/docs/` for fonts and
-  metadata before writing code (see AGENTS.md).
-- Swap fonts to Geist + Geist Mono via `next/font/google` (both variable);
-  remove Instrument Serif + Inter.
-- Replace the Tokyo Transit tokens in `src/app/globals.css` with the
-  DESIGN.md tokens and map them in `@theme`.
-- Decide the global `zoom: 0.9` (see the P4 item below); the mockups are
-  designed at 100%.
+### Phase 1: Foundations (done 2026-10-21, branch `build-theme-b-redesign`)
+- Geist + Geist Mono load via `next/font/google` (`--font-geist`,
+  `--font-geist-mono`). Inter + Instrument Serif stay until the last old
+  section is rebuilt (removed in Phase 8).
+- DESIGN.md tokens live in `src/app/globals.css` next to Tokyo Transit
+  under non-colliding names (`primary`, `sky`, `peach`, `signal`, `ink`,
+  `ink-secondary`, `ink-muted`, `line`, `line-subtle`, `page`, `surface`,
+  `sunken`, `tag`, `status-*`; mapping table in the CSS comment), plus one
+  class per type token (`.type-display` ... `.type-mono`). Rebuilt sections
+  use only these.
+- Desktop `zoom: 0.9` removed (Hussain, 2026-10-21): build at v7's true size.
 - Page title: "Hussain Alam | Operator turned PM".
 
-### Phase 2: Header + Hero
+### Phase 2: Header + Hero (done 2026-10-21)
 - Sticky frosted header: brand left, Career / Entrepreneurship / Beyond Work.
 - Board hero: info strip "Operator turned PM · Based in New York" (no repeated
   name, no clock), name, bio ending at "build things on the side.", contact
   ticket with one-color LinkedIn / envelope / GitHub icons + handles
   (GitHub: https://github.com/KarnerAI), framed square portrait.
 - Remove the Notion cover photo, round avatar, emoji and the hero quote.
-- Fixes the P1 hero heading-hierarchy item and FINDING-017 tap targets below.
+- Fixed the old hero heading skip (one h1, no h3s) and FINDING-017 (contact
+  rows are 52px tall). Hero name is solid ink; no entrance animation.
 
-### Phase 3: Einstein bridge band (new)
+### Phase 3: Einstein bridge band (done 2026-10-21)
 Quote (small, 22 to 34px) + "Albert Einstein" + "Out of college, I went where
 the work happens: the brewhouse floor of a Fortune 100 company. I've learned
 every role since the same way, by doing the job up close before trying to
 improve it." Leads straight into Career.
 
-### Phase 4: Career timeline
+### Phase 4: Career timeline (done 2026-10-21)
 - Four equal segments; cards above (1, 3) and below (2, 4); cards size to
   their content; pinned segment fills Karner blue; detail panel; arrow keys
   and Escape; mobile stack.
@@ -61,79 +64,48 @@ improve it." Leads straight into Career.
   draw, cards fade up 8px; runs once; static design without JS or with
   reduced motion.
 
-### Phase 5: Things I've started
+### Phase 5: Things I've started (done 2026-10-21)
 Four across at 1024px+ (2×2 tablet, 1 column phone), "Read story" aligned;
 covers: EmojiFriends photo, SpreadTheFacts wordmark on black, Navigate.AI
 score card (`public/ventures/navigate-ai-score.png`), Spots logo on navy
 (`public/ventures/spots.png`) until real app screenshots arrive (see the P3
 Spots screenshots item); restyled story dialog.
 
-### Phase 6: Beyond Work (not yet reviewed in B)
+### Phase 6: Beyond Work (done 2026-10-21, built as in v7)
 Review the map, stat cards, fact rows and hobby mosaic in v7 with Hussain
 first. Real photos: export web-sized copies from `images/Hobbies/` (Riding &
 Driving, Youth Mentor have photos; the other three still need them) into
 `public/images/hobbies/`.
 
-### Phase 7: Education + Footer (not yet reviewed in B)
+### Phase 7: Education + Footer (done 2026-10-21, built as in v7)
 Review in v7 first, then build.
 
 ### Phase 8: QA and ship
-`/qa` (desktop, tablet, phone, keyboard, reduced motion), `/design-review`
-against DESIGN.md, `npm run build` + lint clean, then `/ship`.
+- Done 2026-10-21: Tokyo Transit palette retired (old names are now aliases
+  of theme B, kept only for the archived map variants and /design pages);
+  Inter + Instrument Serif and the h1/h2 serif rule removed; unused
+  components deleted (Contact, SideProjects + its data, EducationLogo,
+  HobbyTile, HobbyModal, HobbyPhoto); edit mode on theme B colors; CLAUDE.md
+  migration note removed; README palette updated.
+- QA done 2026-10-21 (/qa at 1280, 820 and 375; keyboard, dialogs, links,
+  console; reduced motion by static read). One bug found and fixed: the
+  header highlight never cleared over the hero or Education (Fixed by /qa on
+  build-theme-b-redesign, 2026-10-21). Health 99.5 → 100. Then `/ship`.
+- Shipped as v0.2.0.0 (2026-10-22) after /ship: tests and CI added, two
+  reviews and an adversarial review. Follow-ups are under "From the v0.2.0.0
+  ship" below.
 
-### Open decisions (ask Hussain during the build)
-- Hero name: keep v7's navy-to-gray gradient text, or solid ink (DESIGN.md
-  guidance prefers weight/size over gradient emphasis).
-- Section chips ("• CAREER •") above headings: keep, or let headings stand
-  alone.
-- Guardrail 1: where the stat treatments go (career detail panel, venture
-  cards, a "by the numbers" line). Results on the timeline cards themselves
-  were declined.
-- Guardrail 2: where the single hexagon motif lives (e.g. timeline nodes).
+### Build rule (Hussain, 2026-10-21)
+Implement the remaining sections exactly as in v7; don't stop for design
+questions. Decided: section chips stay; numbers stay inside the sentences as
+in v7; the one hexagon is the header brand mark; hero name is solid ink.
+
+### Open content items (not design)
 - Stale content: "Next up: Turkey, September 2026"; Navigate.AI beta dates
   (April to May 2026); YC Startup School year; hobby stories that are still
-  placeholders; WeWork tenure label (data counts to April 2026).
+  placeholders.
 
 ## Accessibility
-
-### [P1] Hero heading hierarchy skips h2
-**File:** `src/components/sections/Hero.tsx:82,111`
-**Priority:** P1
-**Noticed on:** design-review-4.21.26 (adversarial review finding #9)
-
-The Hero H1 is followed immediately by the demoted `<h3>` "About" and
-`<h3>` "Contact" labels, with no intervening `<h2>`. The next `<h2>` on the
-page is the Career section further down. Axe and Lighthouse flag the level
-skip as WCAG 1.3.1.
-
-The demotion was intentional (design finding FINDING-002 — the 18px label
-shouldn't be styled as a top-level heading). Two acceptable fixes:
-(a) Add a visually-hidden `<h2 class="sr-only">Introduction</h2>` above the
-Hero sub-grid, or
-(b) Keep the markup as-is and add an explicit `aria-level="2"` with
-`role="heading"` if h3 should announce as h2.
-
-Decision needed from Hussain before picking a path.
-
----
-
-### [P1] Pre-existing lint: setState-in-effect (2 files)
-**Files:** `src/components/edit-mode/EditModeContext.tsx:53`,
-`src/components/sections/beyondwork/map-variants/TravelMapLeaflet.tsx:60`
-**Priority:** P1
-**Noticed on:** design-review-4.21.26 (ship /lint pass)
-
-Both files were introduced in commit `a8d43f1` and are unrelated to the
-design-review branch. React 19's `react-hooks/set-state-in-effect` rule
-flags them. Current behavior is correct — the setState calls gate rendering
-until mount (hydration guard) and restore persisted state from
-localStorage — but the lint rule wants the pattern expressed via `useSyncExternalStore`
-or a derived-state approach instead.
-
-Not runtime bugs. Fix before the next feature ships so the lint passes
-clean and new findings don't hide behind the two known failures.
-
----
 
 ### [P2] iOS backdrop-filter stack QA on physical device
 **Files:** `src/components/layout/Header.tsx:124,172`
@@ -148,33 +120,6 @@ sticky header blur to a semi-transparent solid fill if it flickers.
 ---
 
 ## Design
-
-### [P2] Instrument Serif + font-semibold synthesizes fake-bold
-**Files:** `src/app/globals.css:55-60`, all section h2s
-**Priority:** P2
-**Noticed on:** design-review-4.21.26 (adversarial review finding #7)
-
-Section H2s use `font-semibold` (Tailwind → weight 600) but Instrument
-Serif ships only at weight 400. The browser synthesizes fake-bold for the
-600 glyphs, which can look smeared at large sizes. The third-pass audit
-rated the site A on design so the effect isn't catastrophic, but a
-post-launch tuning pass should either (a) drop `font-semibold` on section
-H2s and let the serif hold weight on its own, or (b) switch to a serif
-that ships regular + semibold.
-
----
-
-### [P2] FINDING-017 — Hero contact links below 44×44 tap target
-**File:** `src/components/sections/Hero.tsx` (LinkedIn + Email inline anchors)
-**Priority:** P2
-**Noticed on:** design-audit-20260422-followup (third-pass design review)
-
-The inline "LinkedIn /in/hussainalam" and "Email hi@…" rows in the Hero
-contact sidebar render at 18–20px tall, below the 44×44 WCAG minimum.
-One-commit fix: add `min-h-[44px] py-2` to the anchors, or convert to
-styled pills like the nav links already use.
-
----
 
 ### [P3] Venture cards: clamp `logoInitials` length
 **Files:** `src/components/sections/Entrepreneurship.tsx:55-66`,
@@ -220,36 +165,57 @@ Sort out three things before building:
 
 ---
 
-### [P4] FINDING-016 decision — desktop `zoom: 0.9`
-**File:** `src/app/globals.css:113-117`
-**Priority:** P4
-**Noticed on:** design-audit-20260422-followup
+## From the v0.2.0.0 ship (2026-10-22)
 
-The site uses `zoom: 0.9` on `<html>` at ≥768px to render everything at
-~90% default scale (mirrors Cmd+Minus once). Non-standard property,
-interacts unpredictably with sticky header math and hash-anchor
-scrolling in Firefox. Accepted trade-off for the third-pass audit; revisit
-post-launch if sticky-header / smooth-scroll feels off.
+### [P1] Bump Next.js past the published advisory
+**Files:** `package.json` (next, eslint-config-next 16.2.4)
+**Priority:** P1
+Pre-existing on main. npm audit's non-major fix is 16.4.2; read the 16.3/16.4
+docs in node_modules/next/dist/docs, bump both, rerun lint, tests and build.
+The dev-only vitest 3 advisory clears with vitest 5 (needs @types/node 22+).
 
----
-
-## Testing
-
-### [P2] Bootstrap a test framework
-**Files:** project-wide
+### [P2] Career, venture and hobby story text in the page HTML
+**Files:** `src/components/sections/CareerTimeline.tsx`, `Entrepreneurship.tsx`, `HobbyMosaic.tsx`
 **Priority:** P2
-**Noticed on:** design-review-4.21.26 (ship step 4)
+Achievements and stories render only after a click, so search engines and AI
+summarizers never see them. Render every panel on the server, hidden until
+opened; keep tenure() hydration-safe.
 
-Declined during ship via `.gstack/no-test-bootstrap` to unblock the
-design-review landing. Next.js 16 + React 19 + Tailwind v4 project has
-no tests. Minimum viable bootstrap: Vitest + React Testing Library +
-Playwright for E2E. Delete `.gstack/no-test-bootstrap` and re-run
-`/ship` in a fresh branch to trigger the bootstrap flow.
+### [P2] Type-scale classes beat Tailwind utilities
+**Files:** `src/app/globals.css` (`.type-*` block), `Bridge.tsx`
+**Priority:** P2
+The unlayered `.type-*` classes override utilities on the same element (the
+bridge paragraph loses its leading and phone size). Wrap them in
+`@layer components`, then compare every section against v7.
+
+### [P2] Map pins for keyboard and screen readers
+**Files:** `src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.tsx`
+**Priority:** P2
+Country names show on mouse hover only; the alt text gives a count. Add the
+visited country list as text for screen readers and a keyboard/touch path.
+
+### [P3] Smaller follow-ups
+**Priority:** P3
+- Career timeline assumes exactly four chapters (`CareerTimeline.tsx` DESKTOP_TOP/BOTTOM, stems, CSS repeat(4)).
+- One source for the map's countries (pins, tint table and count can drift).
+- Self-host the six Google favicon logos (privacy, flake, placeholder icons).
+- Design decisions vs DESIGN.md: press states, timeline breakpoint (768 vs 1024px), the two infinite pulse animations, `.sub-label` margin.
+- Dead code: `src/lib/utils.ts` (+ clsx, tailwind-merge), `Hobby.gallery`, `Venture.coverEmoji`.
+- Coverage tooling (`@vitest/coverage-v8`).
 
 ---
 
 ## Completed
 
+- **Orphaned contact API** · deleted with its helpers, Resend and Zod; an e2e check keeps it gone — **Completed:** v0.2.0.0 (2026-10-22)
+- **Resend key** · revoked in Resend; neither Vercel project (`hussainalam`, `personal-web-site`) ever had the contact env vars, so the old route could not send mail — **Completed:** 2026-10-22
+- **Pre-existing lint: setState-in-effect** · both files moved to useSyncExternalStore — **Completed:** v0.2.0.0 (2026-10-22)
+- **Bootstrap a test framework** · Vitest + RTL + Playwright, CI on push — **Completed:** v0.2.0.0 (2026-10-22)
+- **Instrument Serif fake-bold** · the serif is retired; Geist ships every weight — **Completed:** v0.2.0.0 (2026-10-22)
+
+- **Hero heading hierarchy** · hero is one h1 with no h3 labels (theme B rebuild) — **Completed:** `build-theme-b-redesign` (2026-10-21)
+- **FINDING-017** · Hero contact rows are 52px tap targets (theme B rebuild) — **Completed:** `build-theme-b-redesign` (2026-10-21)
+- **FINDING-016** · Desktop `zoom: 0.9` removed (theme B builds at true size) — **Completed:** `build-theme-b-redesign` (2026-10-21)
 - **FINDING-009** · `text-wrap: balance` on h1/h2/h3 — **Completed:** v0.1.1.0 (2026-04-22)
 - **FINDING-011** · Darken `--muted` to pass WCAG AA — **Completed:** v0.1.1.0 (2026-04-22)
 - **FINDING-004** · Unify section H2 sizes at 48–60px — **Completed:** v0.1.1.0 (2026-04-22)

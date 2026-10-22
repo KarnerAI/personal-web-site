@@ -150,8 +150,8 @@ components:
 - One moment of motion: the career timeline filling in.
 
 **The three guardrails (agreed at lock-in, 2026-10-20).** B is the closest of the shortlisted themes to the generic "modern software company" look, so these are hard rules:
-1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. Placement is decided per section during the build (Hussain declined putting results on the timeline cards themselves).
-2. **One KarnerBlu signature detail.** Both logo blues work together (deep #0A6EAA + sky #00AEEF), plus one sparing use of the logo's hexagon motif. One place, not a pattern.
+1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. As built (2026-10-21), the numbers sit inside the sentences exactly as in v7, bolded in the career detail panel's headline bullet; Hussain declined putting results on the timeline cards themselves.
+2. **One KarnerBlu signature detail.** Both logo blues work together (deep #0A6EAA + sky #00AEEF), plus one sparing use of the logo's hexagon motif. One place, not a pattern: the header brand mark (a pointy-top hexagon, sky left, deep blue right).
 3. **Restraint on effects.** The faint grid, sky-to-peach washes and glows stay light and few. If an effect is noticeable before the content, it is too strong.
 
 ## Colors
@@ -160,7 +160,7 @@ components:
 
 **Light or dark:** light only. Recruiters read this on laptops in daylight; there is no dark mode in v1.
 
-Interaction and emphasis use `primary` (links, buttons, pinned timeline segment, focus rings in sky). Body text is `text-secondary`, never pure black. `text-muted` is for mono labels and meta only, and is the floor for contrast (about 4.6:1 on the page). White text sits only on `primary` or darker (5.5:1). Sky never carries text.
+Interaction and emphasis use `primary` (links, buttons, pinned timeline segment, and the 2px focus ring; sky fails 3:1 contrast for a ring). Body text is `text-secondary`, never pure black. `text-muted` is for mono labels and meta only, and is the floor for contrast (about 4.6:1 on the page). White text sits only on `primary` or darker (5.5:1). Sky never carries text.
 
 ## Typography
 
@@ -180,7 +180,7 @@ Interaction and emphasis use `primary` (links, buttons, pinned timeline segment,
 
 ## Elevation & Depth
 
-Depth comes from offset, soft-blur shadows and hairline borders, never zero-offset glow halos. Four levels: resting cards (1px, very soft), raised cards and panels (soft 8 to 24px blur), hover lift (stronger, plus a 2 to 3px upward move), and dialogs (largest, over a translucent slate scrim with a light blur). The one sanctioned glow is the sky ring used for focus and the pinned timeline card.
+Depth comes from offset, soft-blur shadows and hairline borders, never zero-offset glow halos. Four levels: resting cards (1px, very soft), raised cards and panels (soft 8 to 24px blur), hover lift (stronger, plus a 2 to 3px upward move), and dialogs (largest, over a translucent slate scrim with a light blur). The one sanctioned glow is the sky ring on the pinned timeline card; keyboard focus uses a 2px primary outline.
 
 ## Shapes
 
@@ -188,14 +188,14 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 
 ## Components
 
-- **Section chip:** solid blue mono label. Optional; see open decisions.
-- **Button (primary):** solid `primary`, white text, 10px radius, darkens to `primary-hover` on hover, 1px press on active, sky focus ring. One primary per view ("Get in touch").
+- **Section chip:** solid blue mono label above each section heading (kept, 2026-10-21).
+- **Button (primary):** solid `primary`, white text, 10px radius, darkens to `primary-hover` on hover, 1px press on active, 2px primary focus ring. One primary per view ("Get in touch").
 - **Contact ticket:** rows of one-color icon + handle + arrow, each a full-width link with a 44px minimum target; the accessible name carries the label ("LinkedIn: /in/hussainalam").
 - **Timeline:** white segmented track; segments are buttons; the pinned segment fills `primary` with white years; stems end in small nodes. Keyboard: arrows move between chapters, Escape closes the detail panel.
 - **Detail panel:** logo frame, role, mono meta chips, why-I-was-there pull quote, hero bullet, sub-bullets, roles table with right-aligned mono dates; a Clients row for KarnerBlu (Unilever, Staples).
 - **Venture card:** 150px cover, status pill (Shipped blue, Experimental amber, Active vermillion), title, hook, mono tags, "Read story" aligned to the card bottom. Opens a dialog with Problem / Built / Outcome / Lesson.
 - **Stat card:** white card with a 3px blue-to-sky-to-peach top edge and a mono stat number.
-- **States:** every interactive element has hover, focus-visible (sky ring), active, and a text fallback when an image fails. Dialogs trap focus, close on Escape, × and backdrop click, and return focus to the trigger.
+- **States:** every interactive element has hover, focus-visible (2px primary ring), active, and a text fallback when an image fails. Dialogs trap focus, close on Escape, × and backdrop click, and return focus to the trigger.
 
 ## Do's and Don'ts
 
@@ -228,3 +228,6 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 | 2026-10-20 | Hero: name once, strip "Operator turned PM · Based in New York", no clock, icon contact rows with GitHub | Removed repetition; kept the PM keyword recruiters scan for. |
 | 2026-10-20 | Einstein quote moved to a bridge band before Career, set small | It is the thesis for the career story, not a hero element; must not compete with headings. |
 | 2026-10-20 | Ventures four across; real covers; career cards fit their content; KarnerBlu clients row | Equal billing, no repeated names, no stretched white space, recognizable proof. |
+| 2026-10-21 | Hero name in solid `text` (ink), not v7's navy-to-gray gradient | Emphasis by size and weight (guardrail 3); gradient text is a generic-site tell. |
+| 2026-10-21 | Desktop `zoom: 0.9` removed | The build must match v7 at true size; old sections look larger only until rebuilt. |
+| 2026-10-21 | Build the rest as in v7: chips kept, numbers in sentences, hexagon as the header mark | Hussain approved v7; implement it rather than reopen design questions. |

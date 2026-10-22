@@ -10,7 +10,7 @@
 //
 // SSR-safe: this file is rendered client-only via next/dynamic in the page.
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useSyncExternalStore } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -52,13 +52,12 @@ function buildPinIcon(options: { fav?: boolean }) {
   });
 }
 
-export function TravelMapLeaflet() {
-  const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+const subscribeNever = () => () => {};
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export function TravelMapLeaflet() {
+  // False on the server and during hydration, true once in the browser.
+  const mounted = useSyncExternalStore(subscribeNever, () => true, () => false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const pinIcon = useMemo(() => buildPinIcon({ fav: false }), []);
   const favIcon = useMemo(() => buildPinIcon({ fav: true }), []);
