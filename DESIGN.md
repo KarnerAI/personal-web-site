@@ -228,3 +228,5 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 | 2026-10-20 | Hero: name once, strip "Operator turned PM · Based in New York", no clock, icon contact rows with GitHub | Removed repetition; kept the PM keyword recruiters scan for. |
 | 2026-10-20 | Einstein quote moved to a bridge band before Career, set small | It is the thesis for the career story, not a hero element; must not compete with headings. |
 | 2026-10-20 | Ventures four across; real covers; career cards fit their content; KarnerBlu clients row | Equal billing, no repeated names, no stretched white space, recognizable proof. |
+| 2026-10-21 | Hero name in solid `text` (ink), not v7's navy-to-gray gradient | Emphasis by size and weight (guardrail 3); gradient text is a generic-site tell. |
+| 2026-10-21 | Desktop `zoom: 0.9` removed | The build must match v7 at true size; old sections look larger only until rebuilt. |

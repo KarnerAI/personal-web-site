@@ -16,22 +16,24 @@ made after v7 (Zoomo is Series-A, KarnerBlu is "co-founded", the
 SpreadTheFacts partner is Mass General Brigham, the travel quote is
 "Attributed to Saint Augustine").
 
-### Phase 0: Ship what's already on `polish-things-ive-started`
+### Phase 0: Ship what's already on `polish-things-ive-started` (done: PR #7, v0.1.4.0, merged 2026-10-21)
 Content pass (no em-dashes, placeholder links), venture covers, routing
 rules, the build fix that keeps Tailwind out of `images/` and
 `design-themes/`, new logo assets, and every design-variants mockup. Open
 the PR with `/ship`, merge, then start a fresh verb-first branch from main
 (e.g. `build-theme-b-redesign`, pushed with `-u` before the first commit).
 
-### Phase 1: Foundations
-- Read the Next.js 16 docs in `node_modules/next/dist/docs/` for fonts and
-  metadata before writing code (see AGENTS.md).
-- Swap fonts to Geist + Geist Mono via `next/font/google` (both variable);
-  remove Instrument Serif + Inter.
-- Replace the Tokyo Transit tokens in `src/app/globals.css` with the
-  DESIGN.md tokens and map them in `@theme`.
-- Decide the global `zoom: 0.9` (see the P4 item below); the mockups are
-  designed at 100%.
+### Phase 1: Foundations (done 2026-10-21, branch `build-theme-b-redesign`)
+- Geist + Geist Mono load via `next/font/google` (`--font-geist`,
+  `--font-geist-mono`). Inter + Instrument Serif stay until the last old
+  section is rebuilt (removed in Phase 8).
+- DESIGN.md tokens live in `src/app/globals.css` next to Tokyo Transit
+  under non-colliding names (`primary`, `sky`, `peach`, `signal`, `ink`,
+  `ink-secondary`, `ink-muted`, `line`, `line-subtle`, `page`, `surface`,
+  `sunken`, `tag`, `status-*`; mapping table in the CSS comment), plus one
+  class per type token (`.type-display` ... `.type-mono`). Rebuilt sections
+  use only these.
+- Desktop `zoom: 0.9` removed (Hussain, 2026-10-21): build at v7's true size.
 - Page title: "Hussain Alam | Operator turned PM".
 
 ### Phase 2: Header + Hero
@@ -78,12 +80,12 @@ Driving, Youth Mentor have photos; the other three still need them) into
 Review in v7 first, then build.
 
 ### Phase 8: QA and ship
-`/qa` (desktop, tablet, phone, keyboard, reduced motion), `/design-review`
-against DESIGN.md, `npm run build` + lint clean, then `/ship`.
+Delete the Tokyo Transit tokens, Inter + Instrument Serif and the old
+h1/h2 serif rule once no section uses them; remove the CLAUDE.md migration
+note. Then `/qa` (desktop, tablet, phone, keyboard, reduced motion),
+`/design-review` against DESIGN.md, `npm run build` + lint clean, `/ship`.
 
 ### Open decisions (ask Hussain during the build)
-- Hero name: keep v7's navy-to-gray gradient text, or solid ink (DESIGN.md
-  guidance prefers weight/size over gradient emphasis).
 - Section chips ("• CAREER •") above headings: keep, or let headings stand
   alone.
 - Guardrail 1: where the stat treatments go (career detail panel, venture
@@ -220,19 +222,6 @@ Sort out three things before building:
 
 ---
 
-### [P4] FINDING-016 decision — desktop `zoom: 0.9`
-**File:** `src/app/globals.css:113-117`
-**Priority:** P4
-**Noticed on:** design-audit-20260422-followup
-
-The site uses `zoom: 0.9` on `<html>` at ≥768px to render everything at
-~90% default scale (mirrors Cmd+Minus once). Non-standard property,
-interacts unpredictably with sticky header math and hash-anchor
-scrolling in Firefox. Accepted trade-off for the third-pass audit; revisit
-post-launch if sticky-header / smooth-scroll feels off.
-
----
-
 ## Testing
 
 ### [P2] Bootstrap a test framework
@@ -250,6 +239,7 @@ Playwright for E2E. Delete `.gstack/no-test-bootstrap` and re-run
 
 ## Completed
 
+- **FINDING-016** · Desktop `zoom: 0.9` removed (theme B builds at true size) — **Completed:** `build-theme-b-redesign` (2026-10-21)
 - **FINDING-009** · `text-wrap: balance` on h1/h2/h3 — **Completed:** v0.1.1.0 (2026-04-22)
 - **FINDING-011** · Darken `--muted` to pass WCAG AA — **Completed:** v0.1.1.0 (2026-04-22)
 - **FINDING-004** · Unify section H2 sizes at 48–60px — **Completed:** v0.1.1.0 (2026-04-22)
