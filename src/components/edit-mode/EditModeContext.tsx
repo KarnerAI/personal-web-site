@@ -43,7 +43,9 @@ const STORAGE_KEY = "hussain-portfolio-edits-v1";
 function readStoredOverrides(): Overrides {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Overrides) : {};
+    const parsed: unknown = raw ? JSON.parse(raw) : null;
+    // Anything but a plain object (e.g. a stored "null") falls back to no edits.
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? (parsed as Overrides) : {};
   } catch {
     // Corrupt storage — ignore.
     return {};

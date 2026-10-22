@@ -33,6 +33,12 @@ describe("EditModeProvider", () => {
     expect(screen.getByRole("status").textContent).toBe('{"hero":{"positionX":40}}');
   });
 
+  it.each(["null", "[]", "42"])("treats stored %s as no saved edits", (stored) => {
+    localStorage.setItem(STORAGE_KEY, stored);
+    renderProbe();
+    expect(screen.getByRole("status").textContent).toBe("{}");
+  });
+
   it("ignores corrupt storage and saves new overrides", async () => {
     localStorage.setItem(STORAGE_KEY, "{not json");
     renderProbe();

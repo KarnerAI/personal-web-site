@@ -43,7 +43,7 @@ export function BeyondWork() {
               <span className="stat">
                 <b>{travel.countryCount}</b> <span>countries</span>
               </span>
-              {travel.cityCount && (
+              {travel.cityCount != null && (
                 <>
                   <span className="sr-only"> and </span>
                   <span className="stat">
