@@ -76,6 +76,40 @@ describe("CareerTimeline", () => {
     expect(panelHeading()).toBe(first.company);
     expect(document.activeElement?.textContent).toContain(first.company);
   });
+
+  // Added by the /ship test coverage audit, 2026-10-22.
+  // Value: protects=an open chapter's panel lists every role held, in order with its
+  //   place and dates, and names its clients, each only when the chapter has them;
+  //   fails_when=the roles table or the panel's clients row is dropped, loses a field,
+  //   or shows on a chapter without that data; why_new=the tests above read the
+  //   heading, tenure and hero bullet only; seam=none; no_claim=the table's layout and
+  //   client logos (jsdom, unit only)
+  it.each(careerRoles.map((r) => [r.company, r] as const))(
+    "shows the roles held and clients in the %s panel only when it has them",
+    async (_company, role) => {
+      const user = userEvent.setup();
+      render(<CareerTimeline />);
+      await user.click(screen.getByRole("button", { name: `${role.company}, ${role.yearsLabel}` }));
+
+      const rolesLabel = within(panel()).queryByText("Roles held");
+      if (role.roles) {
+        const rows = within(rolesLabel!.nextElementSibling as HTMLElement).getAllByRole("listitem");
+        expect(rows).toHaveLength(role.roles.length);
+        role.roles.forEach((r, i) => {
+          for (const text of [r.title, r.loc, r.dates]) expect(rows[i].textContent).toContain(text);
+        });
+      } else {
+        expect(rolesLabel).toBeNull();
+      }
+
+      const clientsLabel = within(panel()).queryByText("Clients");
+      if (role.clients) {
+        for (const c of role.clients) expect(clientsLabel!.parentElement!.textContent).toContain(c.name);
+      } else {
+        expect(clientsLabel).toBeNull();
+      }
+    }
+  );
 });
 
 // Added by the /ship test coverage audit, 2026-10-21.
