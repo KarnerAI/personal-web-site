@@ -4,6 +4,24 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.2.1.0] - 2026-10-22
+
+A security update. The site now runs on Next.js 16.4.2, which closes every
+published Next.js advisory against the version it was on, including the
+image-resizing and server rendering issues. Nothing on the page changes.
+
+### Fixed
+- Next.js 16.2.4 → 16.4.2 (and its lint config to match). This also brings
+  patched versions of sharp, which resizes images, and PostCSS.
+- Safe, non-breaking updates for several build and test tools that npm
+  flagged.
+
+### Changed
+- AGENTS.md carries the current Next.js agent instructions, so running the
+  dev server no longer edits it unexpectedly.
+- TESTING.md explains the new Next.js upgrade check that can stop a build
+  run by an AI agent when an advisory applies, and how to get past it.
+
 ## [0.2.0.0] - 2026-10-22
 
 The redesign. The whole site is rebuilt in theme B, the light product UI
