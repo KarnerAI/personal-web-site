@@ -2,19 +2,38 @@ name: Tests
 
 # Every push, so a branch has a run before its PR opens (the PR shows the
 # same checks on its head commit); manual reruns from the Actions tab.
+# Daily on main for the security audit only, so an advisory published
+# between pushes still turns a run red.
 on:
   push:
   workflow_dispatch:
+  schedule:
+    - cron: '17 13 * * *'
 
 permissions:
   contents: read
 
 concurrency:
-  group: tests-${{ github.ref }}
+  group: tests-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
+  # Fails on a high or critical advisory against anything the site ships.
+  # Dev-only advisories are left out on purpose (tracked in TODOS.md). Its
+  # own job, so an advisory or a registry outage never stops the tests.
+  # npm audit reads package-lock.json, so no install is needed.
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Security audit (production dependencies)
+        run: npm audit --omit=dev --audit-level=high
+
   test:
+    if: ${{ github.event_name != 'schedule' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,10 +42,6 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      # Fails on a high or critical advisory against anything the site ships.
-      # Dev-only advisories are left out on purpose (tracked in TODOS.md).
-      - name: Security audit (production dependencies)
-        run: npm audit --omit=dev --audit-level=high
       - name: Lint
         run: npm run lint
       - name: Unit tests

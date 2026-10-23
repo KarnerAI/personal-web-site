@@ -9,7 +9,20 @@
 | Unit tests | `npm test` | Vitest 3 + React Testing Library in jsdom. `npm run test:watch` re-runs on save. |
 | Browser smoke tests | `npm run test:e2e` | Playwright 1.62 (Chromium). Builds the production bundle and serves it on port 3100, so a running `npm run dev` on 3000 is untouched. |
 
-CI (`.github/workflows/test.yml`) runs a security audit of the shipped dependencies (`npm audit --omit=dev --audit-level=high`, so a high or critical advisory fails the run), lint and both suites on every push (any branch, so a pull request shows the checks on its head commit) and on manual dispatch.
+CI (`.github/workflows/test.yml`) has two jobs that run side by side on every push (any branch, so a pull request shows the checks on its head commit) and on manual dispatch:
+
+- `audit` runs `npm audit --omit=dev --audit-level=high` on the packages the site ships. A high or critical advisory fails it. It also runs on its own every day at 13:17 UTC on `main`, so an advisory published between pushes still shows up.
+- `test` runs lint and both suites. It does not wait for `audit`, so a failed audit never hides test results. It is skipped on the daily run.
+
+### When the `audit` job fails
+
+1. Run `npm audit --omit=dev` locally to see which package is affected and whether a fixed version exists.
+2. If one exists, update that package (`npm update <package>`, or bump it in `package.json`) on its own branch, then check that lint and both suites still pass.
+3. If no fix exists yet, pin a safe version of the vulnerable sub-dependency with `overrides` in `package.json`. If even that is not possible, add a dated TODOS.md entry and wait for the fix. Do not delete the step or lower its threshold.
+
+What it does not check: moderate and low advisories, and advisories against dev and build tools (Tailwind, PostCSS, TypeScript, ESLint, Vitest, Playwright), which never reach visitors. Packages Next.js bundles inside itself only show up once an advisory names `next`.
+
+Who hears about it: a failed push run shows as a red check on the commit and its pull request. For a failed daily run, GitHub emails only the person who last changed the `cron` line in the workflow, if their GitHub notification settings allow Actions emails. GitHub also pauses daily runs after 60 days with no activity in the repository; re-enable them from the Actions tab.
 
 ### When a build stops with `SecurityFatalError`
 
