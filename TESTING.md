@@ -9,7 +9,7 @@
 | Unit tests | `npm test` | Vitest 3 + React Testing Library in jsdom. `npm run test:watch` re-runs on save. |
 | Browser smoke tests | `npm run test:e2e` | Playwright 1.62 (Chromium). Builds the production bundle and serves it on port 3100, so a running `npm run dev` on 3000 is untouched. |
 
-CI (`.github/workflows/test.yml`) runs lint and both suites on every push (any branch, so a pull request shows the checks on its head commit) and on manual dispatch.
+CI (`.github/workflows/test.yml`) runs a security audit of the shipped dependencies (`npm audit --omit=dev --audit-level=high`, so a high or critical advisory fails the run), lint and both suites on every push (any branch, so a pull request shows the checks on its head commit) and on manual dispatch.
 
 ### When a build stops with `SecurityFatalError`
 

@@ -23,6 +23,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Fails on a high or critical advisory against anything the site ships.
+      # Dev-only advisories are left out on purpose (tracked in TODOS.md).
+      - name: Security audit (production dependencies)
+        run: npm audit --omit=dev --audit-level=high
       - name: Lint
         run: npm run lint
       - name: Unit tests
