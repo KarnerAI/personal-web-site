@@ -2,19 +2,17 @@ name: Tests
 
 # Every push, so a branch has a run before its PR opens (the PR shows the
 # same checks on its head commit); manual reruns from the Actions tab.
-# Daily on main for the security audit only, so an advisory published
-# between pushes still turns a run red.
+# The daily audit lives in security-audit.yml: a schedule here would let
+# GitHub's 60-day inactivity rule disable this whole workflow.
 on:
   push:
   workflow_dispatch:
-  schedule:
-    - cron: '17 13 * * *'
 
 permissions:
   contents: read
 
 concurrency:
-  group: tests-${{ github.ref }}-${{ github.event_name }}
+  group: tests-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,6 +22,7 @@ jobs:
   # npm audit reads package-lock.json, so no install is needed.
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,7 +32,6 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
 
   test:
-    if: ${{ github.event_name != 'schedule' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

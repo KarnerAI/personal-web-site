@@ -1,0 +1,26 @@
+name: Security audit
+
+# Daily on main, so an advisory published between pushes still turns a run
+# red. The same check runs on every push as the audit job in test.yml.
+# Kept in its own file: GitHub disables a scheduled workflow after 60 days
+# with no repository activity, and that must never switch off the tests.
+on:
+  schedule:
+    - cron: '17 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Same command as the audit job in test.yml; keep the two in step.
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Security audit (production dependencies)
+        run: npm audit --omit=dev --audit-level=high

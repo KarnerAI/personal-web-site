@@ -11,18 +11,21 @@
 
 CI (`.github/workflows/test.yml`) has two jobs that run side by side on every push (any branch, so a pull request shows the checks on its head commit) and on manual dispatch:
 
-- `audit` runs `npm audit --omit=dev --audit-level=high` on the packages the site ships. A high or critical advisory fails it. It also runs on its own every day at 13:17 UTC on `main`, so an advisory published between pushes still shows up.
-- `test` runs lint and both suites. It does not wait for `audit`, so a failed audit never hides test results. It is skipped on the daily run.
+- `audit` runs `npm audit --omit=dev --audit-level=high` on the packages the site ships. A high or critical advisory fails it.
+- `test` runs lint and both suites. It does not wait for `audit`, so a failed audit never hides test results.
+
+A second workflow, `.github/workflows/security-audit.yml`, runs the same audit once a day on `main`, so an advisory published between pushes still shows up. It is scheduled for 13:17 UTC, but GitHub may start it late on busy days, and it only begins once the file is on `main`.
 
 ### When the `audit` job fails
 
-1. Run `npm audit --omit=dev` locally to see which package is affected and whether a fixed version exists.
-2. If one exists, update that package (`npm update <package>`, or bump it in `package.json`) on its own branch, then check that lint and both suites still pass.
-3. If no fix exists yet, pin a safe version of the vulnerable sub-dependency with `overrides` in `package.json`. If even that is not possible, add a dated TODOS.md entry and wait for the fix. Do not delete the step or lower its threshold.
+1. Open the failed job's log. If it shows a network or registry error instead of a list of vulnerabilities, npm could not reach the advisory service: re-run the job.
+2. Otherwise run `npm audit --omit=dev` locally to see which package is affected and which version fixes it.
+3. If the affected package is one the site lists in `package.json` (such as `next`), bump it to the fixed version there on its own branch. If it sits underneath another package, first update that parent; if the parent does not accept the fixed version yet, force it with `overrides` in `package.json`. Then check that lint and both suites still pass.
+4. If no fixed version exists anywhere yet, the audit stays red until one ships. npm has no way to ignore a single advisory, so add a dated TODOS.md entry naming it, and read the `test` job on its own until then. Do not delete the audit or lower its threshold.
 
-What it does not check: moderate and low advisories, and advisories against dev and build tools (Tailwind, PostCSS, TypeScript, ESLint, Vitest, Playwright), which never reach visitors. Packages Next.js bundles inside itself only show up once an advisory names `next`.
+What it does not check: moderate and low advisories, and advisories against the dev and build tools the site lists for itself (Tailwind, the top-level PostCSS, TypeScript, ESLint, Vitest, Playwright). Packages that Next.js installs alongside itself, such as its own copy of PostCSS, are checked. Code Next.js bundles inside its own files only shows up once an advisory names `next`.
 
-Who hears about it: a failed push run shows as a red check on the commit and its pull request. For a failed daily run, GitHub emails only the person who last changed the `cron` line in the workflow, if their GitHub notification settings allow Actions emails. GitHub also pauses daily runs after 60 days with no activity in the repository; re-enable them from the Actions tab.
+Who hears about it: a failed push run shows as a red check on the commit and its pull request. For a failed daily run, GitHub emails the person who last changed the `cron` line in `security-audit.yml` (or whoever last re-enabled the workflow), if their GitHub notification settings allow Actions emails. In a public repository, GitHub turns the daily workflow off after 60 days with no activity; turn it back on from the Actions tab. Only the daily workflow is affected. The push checks in `test.yml` have no schedule and keep running.
 
 ### When a build stops with `SecurityFatalError`
 
