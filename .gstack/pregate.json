@@ -101,6 +101,7 @@
       "src/components/sections/useImageFallback.test.tsx",
       "src/components/sections/beyondwork/map-variants/TravelMapThemeBPins.test.tsx"
     ],
+    ".github/workflows/security-audit.yml": [],
     "src/components/sections/Contact.tsx": [],
     "src/components/sections/EducationLogo.tsx": [],
     "src/components/sections/SideProjects.tsx": [],
