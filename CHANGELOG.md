@@ -4,6 +4,29 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.2.2.0] - 2026-10-22
+
+A safety net for security updates. A newly published advisory against a
+package the site ships now turns CI red, on the next push and within a day
+even if nobody pushes, instead of going unnoticed. Nothing on the page
+changes.
+
+### Added
+- A security check runs on every push, next to the tests rather than in
+  front of them, so a new advisory or an npm outage never hides test
+  results. It fails on high or critical advisories against packages the
+  site ships, and leaves out most tools used only for development and
+  testing.
+- The same check runs once a day on its own, in a separate workflow, so a
+  quiet stretch can never switch off the regular push checks.
+
+### Changed
+- TESTING.md explains what to do when the security check fails: how to
+  tell an npm outage from a real advisory, list exactly which advisories
+  failed, find the fixed version, and keep watch when no fix exists yet. It
+  also covers what the check does not look at and who GitHub emails when
+  the daily run fails.
+
 ## [0.2.1.0] - 2026-10-22
 
 A security update. The site now runs on Next.js 16.4.2, which closes every
