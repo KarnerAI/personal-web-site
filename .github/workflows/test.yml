@@ -19,7 +19,8 @@ jobs:
   # Fails on a high or critical advisory against anything the site ships.
   # Dev-only advisories are left out on purpose (tracked in TODOS.md). Its
   # own job, so an advisory or a registry outage never stops the tests.
-  # npm audit reads package-lock.json, so no install is needed.
+  # npm audit reads package-lock.json, so no install is needed. The same
+  # command runs daily in security-audit.yml; keep the two in step.
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
