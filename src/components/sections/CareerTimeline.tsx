@@ -447,7 +447,7 @@ export function CareerTimeline() {
         <blockquote className="pull bar-quote">
           <span className="pull-l1">
             Fortune Global 500 ops out of college <span aria-hidden className="ar">→</span>
-            <span className="sr-only select-none">, then</span> co-founded a consultancy{" "}
+            <span className="sr-only select-none">, then</span> founded a consultancy{" "}
             <span aria-hidden className="ar">→</span>
             <span className="sr-only select-none">, then</span> 5th U.S. hire at a Series-A startup{" "}
             <span aria-hidden className="ar">→</span>

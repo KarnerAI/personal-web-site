@@ -14,7 +14,9 @@ started and Beyond Work, `design-variants/2026-10-21-fullpage-productui-v8.html`
 the real Next.js app, verifying each phase in the browser before the next.
 Take wording from `src/data/` and the current section components (e.g. the
 CareerTimeline intro line), not from the mockup text: they have fixes
-made after v7 (Zoomo is Series-A, KarnerBlu is "co-founded", the
+made after v7 (Zoomo is Series-A, the career intro says "founded a
+consultancy" per Hussain on 2026-10-24 while KarnerBlu's own card and story
+keep "Co-Founder" / "Co-founded", the
 SpreadTheFacts partner is Mass General Brigham, the travel quote is
 "Attributed to Saint Augustine").
 
