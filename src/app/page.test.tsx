@@ -82,9 +82,10 @@ describe("Home page", () => {
   // Value: protects=a logo, client logo or venture cover that fails to load leaves its
   //   text showing (initials, badge, venture name) and no broken image; fails_when=an
   //   onError fallback is dropped, or a cover stops naming the venture once its image
-  //   is gone; why_new=no test fires an image error; seam=none; no_claim=hobby photos
-  //   and story marks (no data sets them) and the pre-hydration catch (jsdom loads no
-  //   images; unit only)
+  //   is gone; why_new=no test fires an image error; seam=none; no_claim=story marks
+  //   and hobby story photos (dialogs stay closed here; see Entrepreneurship.test.tsx
+  //   and HobbyMosaic.test.tsx) and the pre-hydration catch (jsdom loads no images;
+  //   unit only)
   it("shows each logo's or cover's text when its image fails to load", () => {
     renderHome();
     const main = screen.getByRole("main");
