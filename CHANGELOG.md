@@ -4,6 +4,21 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.2.3.1] - 2026-10-24
+
+A clearer intro. The headline reads one sentence per line, and the line under
+the Einstein quote now says what the brewhouse floor taught.
+
+### Changed
+- Hero: the bio says Fortune 500 and shows one sentence per line on wide
+  screens. On smaller screens each sentence wraps evenly, with no word left
+  alone on its last line.
+- Under the Einstein quote: a new paragraph about starting on the brewhouse
+  floor at Anheuser-Busch and learning that real knowledge comes from being
+  close to the people doing the work, not from dashboards.
+- The page description, the career intro line and the first career chapter
+  say Fortune 500 too, so every mention matches.
+
 ## [0.2.3.0] - 2026-10-23
 
 Real photos for the ventures and hobbies. Spots now shows screens from the

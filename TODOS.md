@@ -52,7 +52,8 @@ the PR with `/ship`, merge, then start a fresh verb-first branch from main
 Quote (small, 22 to 34px) + "Albert Einstein" + "Out of college, I went where
 the work happens: the brewhouse floor of a Fortune 100 company. I've learned
 every role since the same way, by doing the job up close before trying to
-improve it." Leads straight into Career.
+improve it." Leads straight into Career. (Paragraph rewritten in v0.2.3.1;
+the live copy is in `src/components/sections/Bridge.tsx`.)
 
 ### Phase 4: Career timeline (done 2026-10-21)
 - Four equal segments; cards above (1, 3) and below (2, 4); cards size to

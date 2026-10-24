@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Hussain Alam | Operator turned PM",
   description:
-    "13+ years across Fortune 100 growth and early-stage startups. Based in NYC.",
+    "13+ years across Fortune 500 growth and early-stage startups. Based in NYC.",
 };
 
 // Edit mode is gated behind an env check so the pencil toggle never renders on
