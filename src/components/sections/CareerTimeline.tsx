@@ -361,7 +361,7 @@ export function CareerTimeline() {
           My career, in four chapters.
         </h2>
         <blockquote className="pull bar-quote">
-          Fortune 100 ops out of college <span aria-hidden className="ar">→</span>
+          Fortune 500 ops out of college <span aria-hidden className="ar">→</span>
           <span className="sr-only select-none">, then</span> co-founded a consultancy{" "}
           <span aria-hidden className="ar">→</span>
           <span className="sr-only select-none">, then</span> 5th U.S. hire at a Series-A startup{" "}

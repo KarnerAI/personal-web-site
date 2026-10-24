@@ -17,7 +17,7 @@ export const careerRoles: CareerRole[] = [
     role: "Operations → Operational Excellence",
     location: "Newark, NJ → New York, NY",
     whyIWasThere:
-      "First chapter out of UMass. Wanted to learn how a global Fortune 100 actually runs, from the brewhouse floor up to HR strategy.",
+      "First chapter out of UMass. Wanted to learn how a global Fortune 500 actually runs, from the brewhouse floor up to HR strategy.",
     heroBullet:
       "Reduced people-data error rates 7% → 1% across 20,000 employees by re-engineering the master-data platform used by 125+ HR partners.",
     subBullets: [

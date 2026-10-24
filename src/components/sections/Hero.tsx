@@ -11,7 +11,7 @@ const NAME = "Hussain Alam";
 const ROLE = "Operator turned PM";
 const CITY = "Based in New York";
 const BIO =
-  "13+ years across Fortune 100 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side.";
+  "13+ years across Fortune 500 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side.";
 const EMAIL = "hussain@karnerblu.com";
 
 // Pre-cropped square (1024px) with the head centered, so the default 50/50
