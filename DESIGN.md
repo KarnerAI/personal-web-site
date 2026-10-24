@@ -137,9 +137,9 @@ components:
 
 **Product context:** single-page personal site for a PM job search. Primary readers are recruiters and hiring managers doing a 90-second skim; secondary readers are investors and co-founders who want depth. Sections in order: Hero, Einstein bridge, Career, Things I've started, Beyond Work, Education, Footer.
 
-**Mode per surface:** Persuade (hero, bridge), Read (career detail panel, venture stories, hobby stories), Experience (the career timeline's one animation).
+**Mode per surface:** Persuade (hero, bridge), Read (career detail panel, venture stories, hobby stories), Experience (the career timeline's one animation; the Riding & driving hover loop is the approved exception).
 
-**Source of truth for visuals:** `design-variants/2026-10-20-fullpage-productui-v7.html` (theme B, v7), approved 2026-10-20. Build from it; this file records the rules behind it.
+**Source of truth for visuals:** `design-variants/2026-10-20-fullpage-productui-v7.html` (theme B, v7), approved 2026-10-20. Build from it; this file records the rules behind it. For Things I've started and Beyond Work, build from `design-variants/2026-10-21-fullpage-productui-v8.html`, which is v7 plus the real media approved 2026-10-21.
 
 **Reference sites:** Product School (productschool.com) for the gradient washes, mono chips and table rows; Hussain's own Behance references (in the untracked `design-themes/` folder) informed the blue + warm-accent pairing.
 
@@ -147,7 +147,7 @@ components:
 - Calm off-white page, crisp hairlines, one blue that clearly owns the page.
 - The name is the biggest thing on screen; everything else steps down cleanly.
 - Real artifacts instead of decoration: real logos, a real product screenshot, real numbers.
-- One moment of motion: the career timeline filling in.
+- One moment of motion: the career timeline filling in. (Approved exception: the Riding & driving tile's hover loop; see Motion.)
 
 **The three guardrails (agreed at lock-in, 2026-10-20).** B is the closest of the shortlisted themes to the generic "modern software company" look, so these are hard rules:
 1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. As built (2026-10-21), the numbers sit inside the sentences exactly as in v7, bolded in the career detail panel's headline bullet; Hussain declined putting results on the timeline cards themselves.
@@ -204,7 +204,7 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 - Do let cards size to their content; never stretch a card to match a taller neighbor.
 - Do write copy with no em-dashes or en-dashes, and no repeated facts (each fact appears once). The one exception: an en-dash inside a date or number range ("2012 – 2018", "50–100") is fine.
 - Do respect `prefers-reduced-motion`: the static design is the final state of every animation.
-- Don't add a second animated "moment"; the timeline is the only one.
+- Don't add a second animated "moment"; the timeline is the only one (approved exception: the Riding & driving hover loop, see Motion).
 - Don't use gradient-with-initials covers, emoji as UI, or icons in colored circles above headings.
 - Don't let the grid, washes or glows get stronger than they are in v7.
 - Don't introduce a third typeface or a second accent color.
@@ -215,6 +215,7 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 - **Easing:** enter ease-out, exit ease-in, move ease-in-out.
 - **Duration:** micro 100ms, short 150 to 250ms (hovers, presses), medium 250 to 400ms (dialogs, card fade-ups).
 - **The one authored moment:** when Career scrolls 30% into view, a Karner-blue fill sweeps the timeline one segment at a time (about 1.2s) with a small glowing sky dot at its leading edge; each chapter's stem draws and its card fades up 8px as its segment completes; the fill then fades, leaving the resting track. Runs once. Clicking during it finishes it instantly. Without JavaScript or with reduced motion, nothing is hidden and nothing moves.
+- **Approved exception (2026-10-21):** the Riding & driving hobby tile plays a muted video loop while a mouse hovers it. Mouse pointers only (never touch or pen), never with reduced motion, never autoplays; the still frame is the static design and returns when the pointer leaves.
 
 ## Decisions Log
 
@@ -231,3 +232,5 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 | 2026-10-21 | Hero name in solid `text` (ink), not v7's navy-to-gray gradient | Emphasis by size and weight (guardrail 3); gradient text is a generic-site tell. |
 | 2026-10-21 | Desktop `zoom: 0.9` removed | The build must match v7 at true size; old sections look larger only until rebuilt. |
 | 2026-10-21 | Build the rest as in v7: chips kept, numbers in sentences, hexagon as the header mark | Hussain approved v7; implement it rather than reopen design questions. |
+| 2026-10-21 | v8 media: Spots banner shows real screens from the original app; Spots and SpreadTheFacts stories show their logos; Youth mentor story is two stacked chapters (iMentor, BUILD) with a logo and a photo slot each; mentee photos stay out until each mentee agrees | Real artifacts over placeholders. Chapters instead of tabs so both programs are visible without a click. The repo is public, so no young person's photo goes in without consent. |
+| 2026-10-21 | Riding & driving tile plays a muted 14s loop on hover, mouse only; the still frame stays on touch and with reduced motion | Hussain's call, an approved exception to "one moment of motion": it never autoplays, and the still frame is the static design. |

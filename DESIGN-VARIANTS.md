@@ -41,7 +41,7 @@ Rules for HTML variants:
 2. **Never delete.** Same as TSX variants — HTML variants are a permanent historical record.
 3. **Name with date + descriptor.** Format: `{YYYY-MM-DD}-{section}-{style}.html` — e.g. `2026-04-23-beyondwork-reading-shelf.html`. The date prefix keeps historical runs grouped chronologically when sorted.
 4. **Self-contained.** HTML variants must inline all CSS/JS/assets (or use CDN links). Don't reference local project files — they need to render standalone forever.
-   Exception: the 2026-10-15 and 2026-10-20 redesign mockups (including the locked `2026-10-20-fullpage-productui-v7.html`) load real photos and logos from `../public/` and are viewed through a server at the repo root. Never rename, delete or overwrite a `public/` file those mockups reference; add a new file instead (e.g. the site's smaller `*-card` cover copies).
+   Exception: the 2026-10-15, 2026-10-20 and 2026-10-21 redesign mockups (including the locked `2026-10-20-fullpage-productui-v7.html` and `2026-10-21-fullpage-productui-v8.html`) load real photos and logos from `../public/` and are viewed through a server at the repo root. Never rename, delete or overwrite a `public/` file those mockups reference; add a new file instead (e.g. the site's smaller `*-card` cover copies).
 
 ## Example (TSX variants)
 
