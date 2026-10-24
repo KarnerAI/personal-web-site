@@ -1,7 +1,9 @@
 // Hero: theme B "board" layout (DESIGN.md; v7 mockup).
 // Info strip → name → bio, a contact ticket under them, and a framed square
 // portrait on the right (stacked on tablets and phones). No entrance
-// animation: the career timeline is the page's one moment of motion.
+// animation: the career timeline is the page's one moment of motion (the
+// Riding & driving hover loop is an approved exception, not built yet; see
+// TODOS.md Phase 6).
 // The Einstein quote moved out of the hero into the bridge band below.
 import { EditableImage } from "@/components/edit-mode/EditableImage";
 
