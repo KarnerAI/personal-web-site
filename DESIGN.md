@@ -90,7 +90,7 @@ spacing:
   xl: 32px
   2xl: 48px
   3xl: 64px
-  section: 112px
+  section: 72px
   gutter: 32px
   gutter-phone: 16px
   content-max: 1120px
@@ -150,15 +150,15 @@ components:
 - One moment of motion: the career timeline filling in. (Approved exception: the Riding & driving tile's hover loop; see Motion.)
 
 **The three guardrails (agreed at lock-in, 2026-10-20).** B is the closest of the shortlisted themes to the generic "modern software company" look, so these are hard rules:
-1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. As built (2026-10-21), the numbers sit inside the sentences exactly as in v7, bolded in the career detail panel's headline bullet; Hussain declined putting results on the timeline cards themselves.
-2. **One KarnerBlu signature detail.** Both logo blues work together (deep #0A6EAA + sky #00AEEF), plus one sparing use of the logo's hexagon motif. One place, not a pattern: the header brand mark (a pointy-top hexagon, sky left, deep blue right).
+1. **Lead with the numbers.** The proof ($14M revenue, 10× ARR, 7% → 1% error rate, +30% efficiency, 6,500 masks) is set as standout stat treatments wherever it appears, never buried in body copy. As built (2026-10-21), the numbers sit inside the sentences exactly as in v7. Since the v9 match (2026-10-24), each timeline card ends with one quiet proof line (13px, its number bold, e.g. **45+** strategy workshops) and a "See the story" cue, and every story line bolds exactly one key number (the headline itself is regular weight).
+2. **One KarnerBlu signature detail.** Both logo blues work together (deep #0A6EAA + sky #00AEEF), used together. The header hexagon mark was removed on 2026-10-24 at Hussain's request (it read as decoration with no meaning); the name stands alone.
 3. **Restraint on effects.** The faint grid, sky-to-peach washes and glows stay light and few. If an effect is noticeable before the content, it is too strong.
 
 ## Colors
 
 **Strategy:** Committed. Karner deep blue owns interaction and emphasis; sky and peach only appear inside washes, gradients and glows; neutrals are cool grays derived from the ink navy. Vermillion survives from the old Tokyo Transit palette as a single signal (the Active status), which keeps a thread to the original brand without competing with the blue.
 
-**Light or dark:** light only. Recruiters read this on laptops in daylight; there is no dark mode in v1.
+**Light or dark:** light only. Recruiters read this on laptops in daylight; there is no dark mode in v1. One exception from v9 (2026-10-24): the closing Contact band and the footer sit on solid `ink`, with on-dark text #C8D1E0 (body) and #A3B0C6 (footer), and the band's single button inverts to white with ink text (#E8F4FC on hover).
 
 Interaction and emphasis use `primary` (links, buttons, pinned timeline segment, and the 2px focus ring; sky fails 3:1 contrast for a ring). Body text is `text-secondary`, never pure black. `text-muted` is for mono labels and meta only, and is the floor for contrast (about 4.6:1 on the page). White text sits only on `primary` or darker (5.5:1). Sky never carries text.
 
@@ -172,9 +172,10 @@ Interaction and emphasis use `primary` (links, buttons, pinned timeline segment,
 
 ## Layout
 
-- Content max width 1120px with 32px gutters (16px on phones). Sections breathe at 112px vertical padding; the bridge band is tighter and leads straight into Career.
+- Content max width 1120px with 32px gutters (16px on phones). Sections breathe at 72px vertical padding (56px on phones; tightened from 112px in v9, 2026-10-24); the bridge band is tighter and leads straight into Career.
 - Breakpoints follow the mockup: four-across ventures and the horizontal career timeline at 1024px and up; 2×2 ventures and a stacked timeline on tablets; single column on phones (under 640px).
-- Hero: info strip ("Operator turned PM · Based in New York"), name, bio, contact ticket (LinkedIn, Email, GitHub with one-color icons) and a framed square portrait on the right.
+- Hero: info strip ("Operator turned PM · Based in New York"), name, bio, contact ticket (LinkedIn, GitHub, Email with one-color icons, plus the "Get in touch" button) and a framed square portrait on the right.
+- Contact (v9): a dark `ink` closing band ("Building something?"), one inverted white "Get in touch" button with the email beside it, and LinkedIn/GitHub links; the footer below it is the same ink.
 - Career: four equal segments, cards above (1, 3) and below (2, 4) joined by stems; cards size to their content; the detail panel opens under the timeline.
 - Things I've started: four equal cards in one row on desktop; real covers only (photo, wordmark, product screenshot, app-style icon), never a repeated name or an initials glyph.
 
@@ -204,18 +205,19 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 - Do let cards size to their content; never stretch a card to match a taller neighbor.
 - Do write copy with no em-dashes or en-dashes, and no repeated facts (each fact appears once). The one exception: an en-dash inside a date or number range ("2012 – 2018", "50–100") is fine.
 - Do respect `prefers-reduced-motion`: the static design is the final state of every animation.
-- Don't add a second animated "moment"; the timeline is the only one (approved exception: the Riding & driving hover loop, see Motion).
+- Don't add a second animated "moment"; the timeline is the only one (approved exceptions: the Riding & driving hover loop, and the small v9 hover touches on the hobby tiles: the BJJ belt ends sway, the Mentoring figure bobs, the Travel map scales 1.06; see Motion).
 - Don't use gradient-with-initials covers, emoji as UI, or icons in colored circles above headings.
 - Don't let the grid, washes or glows get stronger than they are in v7.
-- Don't introduce a third typeface or a second accent color.
+- Don't introduce a third typeface or a second accent color. (The BJJ tile's purple belt and lavender wash are illustration content from v9, approved 2026-10-24, not an accent.)
 
 ## Motion
 
 - **Approach:** intentional. Hovers, presses and dialog open/close are quick and functional.
 - **Easing:** enter ease-out, exit ease-in, move ease-in-out.
 - **Duration:** micro 100ms, short 150 to 250ms (hovers, presses), medium 250 to 400ms (dialogs, card fade-ups).
-- **The one authored moment:** when Career scrolls 30% into view, a Karner-blue fill sweeps the timeline one segment at a time (about 1.2s) with a small glowing sky dot at its leading edge; each chapter's stem draws and its card fades up 8px as its segment completes; the fill then fades, leaving the resting track. Runs once. Clicking during it finishes it instantly. Without JavaScript or with reduced motion, nothing is hidden and nothing moves.
+- **The one authored moment:** when Career scrolls 30% into view, a Karner-blue fill reads the career in order, one segment at a time (about 2.2s, 550ms per chapter), with a small solid sky dot at its leading edge (soft drop shadow, no glow). It plays through on its own once started (a scroll-linked version was tried on 2026-10-24 and rejected: it stalled mid-sentence). As the fill completes each segment, that chapter's stem draws and its card pops in (fades up 12px from 97% scale, 700ms ease-out) with its border and stem node lit in Karner blue, then settling (800ms). The fill then fades and settles on the present chapter, which keeps a quiet accent in the static design (tinted "2023 - Present" segment with a blue dot, blue stem node). Phones read it as you scroll: a rail beside the stack with a node per chapter; each card pops in as it scrolls into view, after the rail from the chapter above fills down to it; the present node stays blue at rest. Runs once. Clicking during it finishes it instantly, and landing below Career (a nav link, a reload) shows it as is. Without JavaScript or with reduced motion, nothing is hidden and nothing moves.
 - **Approved exception (2026-10-21):** the Riding & driving hobby tile plays a muted video loop while a mouse hovers it. Mouse pointers only (never touch or pen), never with reduced motion, never autoplays; the still frame is the static design and returns when the pointer leaves.
+- **Approved v9 hover touches (2026-10-24):** on mouse hover only and never with reduced motion, the hobby tiles without photos move a little (BJJ belt ends sway 1.6s, the Mentoring figure bobs 1.4s) and the Travel map scales to 1.06. In the Travel story the favorite pin (Colombia) keeps its slow pulsing ring.
 
 ## Decisions Log
 
@@ -232,5 +234,10 @@ Radius grows with the size of the thing: 4px chips, 6px tags, 8px nav links, 10p
 | 2026-10-21 | Hero name in solid `text` (ink), not v7's navy-to-gray gradient | Emphasis by size and weight (guardrail 3); gradient text is a generic-site tell. |
 | 2026-10-21 | Desktop `zoom: 0.9` removed | The build must match v7 at true size; old sections look larger only until rebuilt. |
 | 2026-10-21 | Build the rest as in v7: chips kept, numbers in sentences, hexagon as the header mark | Hussain approved v7; implement it rather than reopen design questions. |
+| 2026-10-24 | Timeline motion reworked: chapters answer as the fill passes, it settles on the present, calmer dot, phone rail | Once cards became visible from the start (v9), the fill no longer connected to anything and erased itself; the glow dot read as decoration; phones had no motion left. |
+| 2026-10-24 | Timeline slowed to ~2.2s; cards pop in as the fill reaches them; phones pop each card as it scrolls in | Hussain: the 1.2s sweep was over too fast, and the cards should arrive, not just be there. |
+| 2026-10-24 | Tried a scroll-linked desktop fill, then reverted to the timed 2.2s sweep | Hussain preferred the timed version: it plays as one complete moment instead of stalling with the scroll. |
+| 2026-10-24 | Site matched to the v9 mockup | Hussain asked localhost to match v9 in every section: card proof lines, dark Contact band and footer, 72px sections, hobby tiles with drawn art and small hover touches, Travel as a hobby tile. Recorded above so reviews treat them as approved. |
+| 2026-10-24 | Header hexagon mark removed | Hussain: it didn't make sense next to his name. The two logo blues still carry the KarnerBlu tie. |
 | 2026-10-21 | v8 media: Spots banner shows real screens from the original app; Spots and SpreadTheFacts stories show their logos; Youth mentor story is two stacked chapters (iMentor, BUILD) with a logo and a photo slot each; mentee photos stay out until each mentee agrees | Real artifacts over placeholders. Chapters instead of tabs so both programs are visible without a click. The repo is public, so no young person's photo goes in without consent. |
 | 2026-10-21 | Riding & driving tile plays a muted 14s loop on hover, mouse only; the still frame stays on touch and with reduced motion | Hussain's call, an approved exception to "one moment of motion": it never autoplays, and the still frame is the static design. |
