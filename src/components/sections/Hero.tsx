@@ -10,8 +10,20 @@ import { EditableImage } from "@/components/edit-mode/EditableImage";
 const NAME = "Hussain Alam";
 const ROLE = "Operator turned PM";
 const CITY = "Based in New York";
-const BIO =
-  "13+ years across Fortune 500 growth and early-stage startups. I lead cross-functional teams, ship product, and build things on the side.";
+// One sentence per line where the column is wide enough; on narrower screens
+// each sentence wraps on its own, balanced so no word is left alone.
+// "early-stage" stays on one line so the wrap can't split it.
+const BIO = (
+  <>
+    <span className="block [text-wrap:balance]">
+      13+ years across Fortune 500 growth and{" "}
+      <span className="whitespace-nowrap">early-stage</span> startups.
+    </span>{" "}
+    <span className="block [text-wrap:balance]">
+      I lead cross-functional teams, ship product, and build things on the side.
+    </span>
+  </>
+);
 const EMAIL = "hussain@karnerblu.com";
 
 // Pre-cropped square (1024px) with the head centered, so the default 50/50
@@ -56,7 +68,9 @@ export function Hero() {
         <div className="hero-grid">
           <div className="[grid-area:intro]">
             <h1 className="type-display m-0 mb-[22px] text-ink">{NAME}</h1>
-            <p className="type-body-lg m-0 max-w-[31em] text-ink-secondary">{BIO}</p>
+            <p className="type-body-lg m-0 max-w-[34em] text-ink-secondary">
+              {BIO}
+            </p>
           </div>
 
           {/* Framed square portrait. The "HA" monogram sits underneath the
