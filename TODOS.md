@@ -135,7 +135,10 @@ Review in v7 first, then build.
 ### Build rule (Hussain, 2026-10-21)
 Implement the remaining sections exactly as in v7; don't stop for design
 questions. Decided: section chips stay; numbers stay inside the sentences as
-in v7; the one hexagon is the header brand mark; hero name is solid ink.
+in v7; the one hexagon is the header brand mark (removed 2026-10-24 at
+Hussain's request); hero name is solid ink. Since 2026-10-24 the site matches
+the v9 mockup (`design-variants/2026-10-23-fullpage-productui-v9.html`), and
+localhost:3000 is the review surface; wording still comes from `src/data/`.
 
 ### Open content items (not design)
 - Stale content: "Next up: Turkey, September 2026"; Navigate.AI beta dates

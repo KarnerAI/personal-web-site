@@ -1,6 +1,6 @@
 # Testing
 
-100% test coverage is the key to great vibe coding. Tests let you move fast, trust your instincts, and ship with confidence. Without them, vibe coding is just yolo coding. With tests, it's a superpower.
+Tests let you move fast, trust your instincts, and ship with confidence. Test behavior and logic (components, animations, data rules, routes); copy edits and pure styling changes don't need new tests. See CLAUDE.md for the testing and shipping rules.
 
 ## Commands
 
@@ -44,7 +44,7 @@ Next.js 16.4 checks for security advisories against itself when an AI agent runs
 
 Vitest renders every current section, server components included (`src/app/page.test.tsx` renders the whole page). It cannot render `async` server components; cover those with Playwright.
 
-Media paths are checked twice. `src/data/publicAssets.test.ts` fails when any local image or video path in a `src/data` module does not name a file in `public/` with the exact same case (macOS forgives a case mismatch; CI and Vercel do not), and when a new `src/data` module is not listed in its scan. `e2e/home.spec.ts` then checks that every venture cover, story logo and hobby photo actually loads and decodes in the browser, since the image fallbacks would otherwise hide a broken file.
+Media paths are checked twice. `src/data/publicAssets.test.ts` fails when any local image or video path in a `src/data` module does not name a file in `public/` with the exact same case (macOS forgives a case mismatch; CI and Vercel do not), and when a new `src/data` module is not listed in its scan. `e2e/home.spec.ts` then checks that every venture cover, story logo, hobby photo, the Travel tile's map (`/world-travel.svg`) and each hobby story's chapter logos actually load and decode in the browser, since the image fallbacks would otherwise hide a broken file.
 
 ## Conventions
 

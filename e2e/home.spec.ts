@@ -3,7 +3,7 @@ import { hobbies } from "@/data/beyondWork";
 import { careerRoles } from "@/data/career";
 import { ventures } from "@/data/entrepreneurship";
 
-const SECTIONS = ["hero", "career", "entrepreneurship", "beyond-work", "education"];
+const SECTIONS = ["hero", "career", "entrepreneurship", "beyond-work", "education", "contact"];
 
 test("home renders every section with no console errors", async ({ page }) => {
   const errors: string[] = [];
@@ -64,7 +64,7 @@ test("the hero portrait is the only image fetched ahead of the page", async ({ p
 //   error; why_new=the unit asset check only sees files on disk, and jsdom loads
 //   no images, so the unit story-logo test never fetches one; seam=none; no_claim=the crop,
 //   quality or look; Vercel's CDN (local production server)
-test("every venture cover, story logo and hobby photo loads", async ({ page }) => {
+test("every venture cover, story logo, hobby photo, travel map and chapter logo loads", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");
   // A failed image is removed by its fallback, so this also fails if the img is gone.
@@ -89,7 +89,15 @@ test("every venture cover, story logo and hobby photo loads", async ({ page }) =
 
   const mosaic = page.locator("#beyond-work");
   for (const h of hobbies) {
-    if (h.hero) await decoded(mosaic.getByRole("button", { name: h.label }).locator(`img[src="${h.hero.src}"]`));
+    const tile = mosaic.getByRole("button", { name: h.label });
+    if (h.hero) await decoded(tile.locator(`img[src="${h.hero.src}"]`));
+    if (h.map) await decoded(tile.locator('img[src="/world-travel.svg"]'));
+    if (!h.chapters) continue;
+    await tile.click();
+    const story = page.getByRole("dialog", { name: h.label });
+    for (const c of h.chapters) await decoded(story.locator(`img[src="${c.logoSrc}"]`));
+    await page.keyboard.press("Escape");
+    await expect(story).toBeHidden();
   }
 });
 

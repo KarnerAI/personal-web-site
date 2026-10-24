@@ -3,6 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import * as beyondWork from "./beyondWork";
 import * as career from "./career";
+import * as contact from "./contact";
 import * as education from "./education";
 import * as entrepreneurship from "./entrepreneurship";
 
@@ -11,7 +12,7 @@ const PUBLIC = path.join(ROOT, "public");
 const MOCKUPS = path.join(ROOT, "design-variants");
 
 // Every module in src/data; the first test fails when one is added and not listed here.
-const DATA = { beyondWork, career, education, entrepreneurship };
+const DATA = { beyondWork, career, contact, education, entrepreneurship };
 
 const MEDIA = /^\/(?!\/)[^?#\s]+\.(avif|gif|jpe?g|mp4|png|svg|webm|webp)$/i;
 

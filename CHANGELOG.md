@@ -4,6 +4,49 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.3.0.0] - 2026-10-24
+
+The site now matches the v9 design, section by section. The career timeline
+reads your career in order as it scrolls into view, every story leads with its
+numbers, and the page ends with a real way to get in touch.
+
+### Added
+- Contact: a closing band ("Building something?") with a Get in touch button,
+  the email address, and LinkedIn and GitHub links. The nav has a Contact link
+  that lights up when you reach it.
+- Career cards: each card now ends with one proof line (for example "45+
+  strategy workshops") and a "See the story" cue that turns into "Showing
+  below" once the chapter is open.
+- Beyond Work: Travel is now a hobby tile with a white-and-peach world map;
+  its story shows the map with every visited country pinned (also listed for
+  screen readers). BJJ and Mentoring get drawn tiles, and Mentoring's story
+  covers both iMentor and BUILD.
+- The riding tile plays a short muted loop while a mouse moves over it.
+
+### Changed
+- Career timeline animation: a slower sweep (about 2.2 seconds) where each
+  card pops in as the fill reaches its year, then settles on a quiet
+  "2023 - Present" accent. On phones each card pops in as you scroll to it,
+  with a rail running down beside the cards. Landing below the timeline shows
+  it complete; reduced motion never hides anything.
+- Career stories: the headline is regular weight and each line bolds one key
+  number. AB InBev, KarnerBlu, Zoomo and WeWork stories have new headlines and
+  bullets, roles list newest first, and AB InBev reads "Ops & People
+  Excellence".
+- Wording: "Fortune Global 500" for Anheuser-Busch InBev, a new paragraph under
+  the Einstein quote, and the career intro runs on two lines on wide screens
+  in regular weight.
+- The KarnerBlu logo shows the full mark without cropping.
+- Beyond Work is now "Outside of work." and the map-and-stats row is gone;
+  Entrepreneurship reads "Things I've built."
+- The hero's contact card lists LinkedIn, GitHub, then Email. Sections sit a
+  little tighter, education reads as a plain list, and year ranges use plain
+  hyphens.
+
+### Removed
+- The blue hexagon next to the name in the header.
+- The Festivals & salsa hobby tile (Travel took its place).
+
 ## [0.2.3.1] - 2026-10-24
 
 A clearer intro. The headline reads one sentence per line, and the line under

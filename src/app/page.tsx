@@ -6,6 +6,7 @@ import { CareerTimeline } from "@/components/sections/CareerTimeline";
 import { Entrepreneurship } from "@/components/sections/Entrepreneurship";
 import { BeyondWork } from "@/components/sections/BeyondWork";
 import { Education } from "@/components/sections/Education";
+import { Contact } from "@/components/sections/Contact";
 
 // Single scrollable page — order matches PRD §6.
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <Entrepreneurship />
         <BeyondWork />
         <Education />
+        <Contact />
       </main>
       <Footer />
     </>

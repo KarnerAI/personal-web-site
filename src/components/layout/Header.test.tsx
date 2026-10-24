@@ -39,6 +39,7 @@ function Page() {
         <section id="entrepreneurship" />
         <section id="beyond-work" />
         <section id="education" />
+        <section id="contact" />
       </main>
     </>
   );
@@ -88,5 +89,38 @@ describe("Header scrollspy", () => {
     inView("#entrepreneurship");
     inView("#career", false);
     expect(highlighted()).toEqual(["Entrepreneurship"]);
+  });
+
+  // Added by the /ship review, 2026-10-24.
+  // Value: protects=the short closing Contact section is highlighted once the page is
+  //   scrolled to the bottom, even if its top never reaches the band (tall screens);
+  //   fails_when=the bottom-of-page rule is dropped, or fires on a page too short to
+  //   scroll; why_new=the band-crossing tests never reach the last section; seam=none;
+  //   no_claim=real layout heights (jsdom page metrics are stubbed)
+  it("highlights Contact at the bottom of the page, and hands it back on the way up", () => {
+    const metrics = (scrollHeight: number, scrollY: number) => {
+      Object.defineProperty(document.documentElement, "scrollHeight", { configurable: true, value: scrollHeight });
+      Object.defineProperty(window, "scrollY", { configurable: true, value: scrollY });
+      act(() => {
+        window.dispatchEvent(new Event("scroll"));
+      });
+    };
+    try {
+      render(<Page />);
+      inView("#beyond-work");
+      metrics(5000, 1000);
+      expect(highlighted()).toEqual(["Beyond Work"]);
+      metrics(5000, 5000 - window.innerHeight);
+      expect(highlighted()).toEqual(["Contact"]);
+      // A crossing reported while still at the bottom keeps Contact.
+      inView("#beyond-work");
+      expect(highlighted()).toEqual(["Contact"]);
+      // Scrolling back up hands the highlight back to the section in the band.
+      metrics(5000, 1000);
+      expect(highlighted()).toEqual(["Beyond Work"]);
+    } finally {
+      Object.defineProperty(document.documentElement, "scrollHeight", { configurable: true, value: 0 });
+      Object.defineProperty(window, "scrollY", { configurable: true, value: 0 });
+    }
   });
 });

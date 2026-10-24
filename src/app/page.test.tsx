@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { EditModeProvider } from "@/components/edit-mode/EditModeContext";
-import { worldLandSvg } from "@/components/sections/beyondwork/map-variants/themeBLand";
+import { worldTravelSvg } from "@/components/sections/beyondwork/map-variants/themeBLand";
 import { hobbies, travel } from "@/data/beyondWork";
 import { careerRoles } from "@/data/career";
 import { certifications, degree } from "@/data/education";
@@ -31,7 +31,7 @@ describe("Home page", () => {
     const { container } = renderHome();
     expect(
       [...container.querySelectorAll("main section")].map((s) => s.id || s.getAttribute("aria-label"))
-    ).toEqual(["hero", "On experience", "career", "entrepreneurship", "beyond-work", "education"]);
+    ).toEqual(["hero", "On experience", "career", "entrepreneurship", "beyond-work", "education", "contact"]);
     expect(screen.getAllByRole("heading", { level: 1 }).map((h) => h.textContent)).toEqual(["Hussain Alam"]);
     const warnings = errors.mock.calls.map((args) => String(args[0]));
     errors.mockRestore();
@@ -53,6 +53,15 @@ describe("Home page", () => {
     for (const a of within(section("hero")).getAllByRole("link")) {
       if (a.getAttribute("href")?.startsWith("http")) expect(a.getAttribute("rel")).toContain("noreferrer");
     }
+    // Extended by the /ship test coverage audit, 2026-10-24 (the row order).
+    // Value: protects=the contact ticket lists LinkedIn, then GitHub, then Email, the
+    //   order this redesign set; fails_when=the rows are reordered or one is dropped;
+    //   why_new=the check above only asks that each link exists somewhere in the hero;
+    //   seam=none; no_claim=the "Get in touch" button or the closing contact band
+    const rows = within(section("hero"))
+      .getAllByRole("listitem")
+      .map((li) => within(li).getByRole("link").getAttribute("aria-label")?.split(":")[0]);
+    expect(rows).toEqual(["LinkedIn", "GitHub", "Email"]);
   });
 
   it("shows every chapter, venture, hobby and credential from the data files", () => {
@@ -70,12 +79,22 @@ describe("Home page", () => {
   //   (e.g. Turkey, "next up"), or ids lose leading zeros (Brazil 076, Bangladesh
   //   050); why_new=the pin count above comes from countryCoords, not the tint;
   //   seam=none; no_claim=tint color and pin placement (class only; unit)
-  it("plots one map pin per visited country and tints each one", () => {
+  it("shows the travel map on the Travel tile, with each visited country tinted", () => {
     renderHome();
-    expect(section("beyond-work").querySelectorAll("svg title")).toHaveLength(travel.countryCount);
-    // The land is a separate file under the pins; "v" is the visited tint, one shape per country.
-    expect(section("beyond-work").querySelector('img[src="/world-land.svg"]')).not.toBeNull();
-    expect(worldLandSvg().match(/<path class="v"/g)).toHaveLength(new Set(travel.visitedCountryCodes).size);
+    // The land is a separate file; "v" is the visited tint, one shape per country.
+    // The pins live in the Travel dialog (HobbyMosaic.test.tsx).
+    expect(section("beyond-work").querySelector('img[src="/world-travel.svg"]')).not.toBeNull();
+    expect(worldTravelSvg().match(/<path class="v"/g)).toHaveLength(new Set(travel.visitedCountryCodes).size);
+  });
+
+  it("ends with a contact band that emails and links out", () => {
+    renderHome();
+    const contact = within(section("contact"));
+    expect(contact.getByRole("heading", { level: 2, name: "Building something?" })).toBeTruthy();
+    expect(contact.getByRole("link", { name: "Get in touch" }).getAttribute("href")).toBe("mailto:hussain@karnerblu.com");
+    for (const name of ["LinkedIn", "GitHub"]) {
+      expect(contact.getByRole("link", { name }).getAttribute("rel")).toContain("noreferrer");
+    }
   });
 
   // Added by the /ship test coverage audit, 2026-10-21.
@@ -100,6 +119,24 @@ describe("Home page", () => {
       // The cover now names the venture too, above the name in the card body.
       expect(within(card).getAllByText(v.name)).toHaveLength(2);
     }
+  });
+
+  // Added by the /ship test coverage audit, 2026-10-24.
+  // Value: protects=on the real page the Travel story pins one dot per visited
+  //   country, Colombia ringed as the favorite; fails_when=BeyondWork stops passing
+  //   its server-projected pins (HobbyMosaic defaults to none, so the map shows
+  //   empty) or drops the favorite flag; why_new=this diff removed the page-level pin
+  //   count, and HobbyMosaic.test.tsx feeds made-up pins; seam=none; no_claim=pin
+  //   placement on the land (jsdom, unit only)
+  it("pins every visited country in the Travel story, the favorite ringed", () => {
+    renderHome();
+    const h = hobbies.find((x) => x.map)!;
+    fireEvent.click(within(section("beyond-work")).getByRole("button", { name: (n) => n.startsWith(h.label) }));
+    const dialog = screen.getByRole("dialog", { name: h.label });
+    const titles = [...dialog.querySelectorAll("svg title")].map((t) => t.textContent);
+    expect(titles).toHaveLength(travel.countryCount);
+    expect(titles.filter((t) => t?.endsWith("(favorite)"))).toEqual(["Colombia (favorite)"]);
+    expect(within(dialog).getByRole("img", { name: /Colombia, the favorite, is ringed/ })).toBeTruthy();
   });
 
   it("closes with the footer year", () => {

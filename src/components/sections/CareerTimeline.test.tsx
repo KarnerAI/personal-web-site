@@ -1,8 +1,8 @@
-import { render, screen, within } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { careerRoles } from "@/data/career";
-import { CareerTimeline } from "./CareerTimeline";
+import { CareerTimeline, KeyNumbers } from "./CareerTimeline";
 
 // jsdom renders both layouts (CSS hides one), so read the desktop panel the
 // timeline controls rather than any "details" region.
@@ -139,7 +139,7 @@ describe("CareerTimeline on phones", () => {
     await user.click(card);
     expect(card.getAttribute("aria-expanded")).toBe("true");
     expect(details().hidden).toBe(false);
-    expect(details().textContent).toContain(role.heroBullet);
+    expect(details().textContent).toContain(role.heroBullet.replaceAll("**", ""));
     // Compact: the card right above already names the company.
     expect(within(details()).queryByRole("heading")).toBeNull();
 
@@ -174,5 +174,207 @@ describe("CareerTimeline tenure", () => {
 
     await user.click(screen.getByRole("button", { name: `${current.company}, ${current.yearsLabel}` }));
     expect(within(panel()).getByText(shown)).toBeTruthy();
+  });
+});
+
+describe("KeyNumbers", () => {
+  it("bolds the marked number and keeps the rest as plain text", () => {
+    const { container } = render(
+      <p>
+        <KeyNumbers text="Cut errors from **7% to 1%** in a year." />
+      </p>
+    );
+    expect(container.textContent).toBe("Cut errors from 7% to 1% in a year.");
+    expect([...container.querySelectorAll("b")].map((b) => b.textContent)).toEqual(["7% to 1%"]);
+  });
+
+  it("leaves a line with no marker unbolded", () => {
+    const { container } = render(<KeyNumbers text="No numbers here." />);
+    expect(container.querySelector("b")).toBeNull();
+  });
+
+  // The data rule: one bold number per story line, with its markers paired.
+  it.each(careerRoles.map((r) => [r.company, r] as const))("bolds one key number per %s story line", (_c, r) => {
+    for (const line of [r.heroBullet, ...r.subBullets]) {
+      expect(line.split("**")).toHaveLength(3);
+    }
+  });
+});
+
+describe("CareerTimeline present chapter", () => {
+  // The animation settles on the present chapter, so its accent must be in the
+  // static markup (reduced motion and no-JS see the same final state).
+  it("marks only the present chapter as now, on desktop and phones", () => {
+    const { container } = render(<CareerTimeline />);
+    const now = careerRoles.map((r) => r.endMonth === "Present");
+    for (const sel of [".seg", ".mi", ".stem"]) {
+      const marked = [...container.querySelectorAll(sel)]
+        .filter((el) => el.classList.contains("now"))
+        .map((el) => Number(el.getAttribute("data-i")));
+      expect(marked).toEqual(now.flatMap((n, i) => (n ? [i] : [])));
+    }
+  });
+
+  it("draws a phone rail between chapters, none after the last", () => {
+    const { container } = render(<CareerTimeline />);
+    const items = [...container.querySelectorAll(".mi")];
+    expect(items.map((mi) => mi.querySelector(".rail") !== null)).toEqual(
+      careerRoles.map((_, i) => i < careerRoles.length - 1)
+    );
+  });
+});
+
+// jsdom has no IntersectionObserver or motion preference. Keep each observer's
+// callback and targets so a test can say where an element sits on screen, and
+// report motion as allowed so the career reading animation arms.
+type Spot = { isIntersecting: boolean; intersectionRatio: number; top: number };
+const observers: { cb: IntersectionObserverCallback; targets: Set<Element> }[] = [];
+class FakeObserver {
+  targets = new Set<Element>();
+  constructor(cb: IntersectionObserverCallback) {
+    observers.push({ cb, targets: this.targets });
+  }
+  observe(el: Element) {
+    this.targets.add(el);
+  }
+  unobserve(el: Element) {
+    this.targets.delete(el);
+  }
+  disconnect() {
+    this.targets.clear();
+  }
+  takeRecords() {
+    return [];
+  }
+}
+const report = (el: Element, { isIntersecting, intersectionRatio, top }: Spot) => {
+  const o = observers.find((x) => x.targets.has(el));
+  if (!o) return;
+  const entry = { target: el, isIntersecting, intersectionRatio, boundingClientRect: { top } as DOMRectReadOnly };
+  act(() => o.cb([entry as unknown as IntersectionObserverEntry], {} as IntersectionObserver));
+};
+const PAST: Spot = { isIntersecting: false, intersectionRatio: 0, top: -600 };
+const IN_VIEW: Spot = { isIntersecting: true, intersectionRatio: 0.5, top: 100 };
+
+describe("CareerTimeline reading animation", () => {
+  beforeEach(() => {
+    observers.length = 0;
+    vi.stubGlobal("IntersectionObserver", FakeObserver);
+    const base = window.matchMedia("(prefers-reduced-motion: no-preference)");
+    vi.spyOn(window, "matchMedia").mockImplementation((query) => ({
+      ...base,
+      media: query,
+      matches: query === "(prefers-reduced-motion: no-preference)",
+    }));
+  });
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  // Added by the /ship test coverage audit, 2026-10-24.
+  // Value: protects=a visitor who lands below Career (a nav link, a reload mid-page)
+  //   gets the finished timeline at once, and scrolling back up does not replay the
+  //   sweep; fails_when=the "landed below" branch is dropped or inverted, so the
+  //   cards and years stay hidden until Career is scrolled back into view;
+  //   why_new=the e2e sweep test always loads at the top; unit tests ran with motion
+  //   off; seam=none; no_claim=what the CSS shows (class state only; jsdom, unit only)
+  it("shows the desktop timeline as is when the page opens below Career", () => {
+    const { container } = render(<CareerTimeline />);
+    const tl = container.querySelector(".tl")!;
+    expect(tl.classList.contains("tl-anim")).toBe(true);
+
+    report(tl, PAST);
+    expect(tl.classList.contains("tl-anim")).toBe(false);
+    report(tl, IN_VIEW);
+    expect(tl.classList.contains("tl-run")).toBe(false);
+    expect(tl.classList.contains("tl-anim")).toBe(false);
+  });
+
+  // Added by the /ship test coverage audit, 2026-10-24.
+  // Value: protects=on phones a card already scrolled past shows at once without its
+  //   entrance, and once every card is past the animation ends with all of them
+  //   showing; fails_when=the "scrolled past" branch is dropped (cards above the
+  //   screen stay hidden) or its count never reaches finish (the list stays armed);
+  //   why_new=the e2e phone test scrolls down from the top, so no card is ever past;
+  //   seam=none; no_claim=the rail fill and timing (class state only; jsdom, unit only)
+  it("shows phone cards already scrolled past, and ends once every card is past", () => {
+    const { container } = render(<CareerTimeline />);
+    const tlm = container.querySelector(".tl-m")!;
+    const items = [...tlm.querySelectorAll(".mi")];
+    expect(tlm.classList.contains("tl-anim")).toBe(true);
+
+    items.slice(0, -1).forEach((el) => report(el, PAST));
+    expect(items.map((el) => el.classList.contains("in"))).toEqual(items.map((_, i) => i < items.length - 1));
+    expect(tlm.classList.contains("tl-anim")).toBe(true);
+
+    report(items[items.length - 1], PAST);
+    expect(tlm.classList.contains("tl-anim")).toBe(false);
+  });
+
+  // Added by the /ship test coverage audit, 2026-10-24.
+  // Value: protects=on phones, cards that scroll in together arrive one by one in page
+  //   order, the rail from the card above fills before the next card arrives, and the
+  //   animation ends once the last card has answered; fails_when=the queue is not
+  //   sorted (a lower card pops in first), the rail lead or the gap between cards is
+  //   dropped (cards arrive at once with no rail fill), or the end after the last
+  //   arrival never fires (the list stays armed); why_new=the other phone test only
+  //   covers cards already scrolled past, and e2e does not check order or timing;
+  //   seam=none; no_claim=what the CSS draws (class state only; jsdom, unit only)
+  it("brings phone cards in one by one, in page order, each after the rail above fills", () => {
+    vi.useFakeTimers();
+    try {
+      const { container } = render(<CareerTimeline />);
+      const tlm = container.querySelector(".tl-m")!;
+      const items = [...tlm.querySelectorAll(".mi")];
+      const has = (el: Element, c: string) => el.classList.contains(c);
+      const o = observers.find((x) => x.targets.has(items[0]))!;
+      const entry = (el: Element) =>
+        ({ target: el, isIntersecting: true, intersectionRatio: 0.5, boundingClientRect: { top: 100 } }) as unknown as IntersectionObserverEntry;
+
+      // Every card enters in one callback, bottom card first.
+      act(() => o.cb([...items].reverse().map(entry), {} as IntersectionObserver));
+      act(() => vi.advanceTimersByTime(0));
+      expect(items.map((el) => has(el, "in"))).toEqual(items.map((_, i) => i === 0));
+
+      for (let i = 1; i < items.length; i++) {
+        act(() => vi.advanceTimersByTime(180)); // the gap: the rail above starts filling
+        expect(has(items[i - 1], "reach")).toBe(true);
+        expect(has(items[i], "in")).toBe(false);
+        act(() => vi.advanceTimersByTime(350)); // the rail has filled: the card arrives
+        expect(has(items[i], "in")).toBe(true);
+        if (i + 1 < items.length) expect(has(items[i + 1], "in")).toBe(false);
+      }
+
+      expect(has(tlm, "tl-anim")).toBe(true);
+      act(() => vi.advanceTimersByTime(800 + 149));
+      expect(has(tlm, "tl-anim")).toBe(true);
+      act(() => vi.advanceTimersByTime(1));
+      expect(has(tlm, "tl-anim")).toBe(false);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
+
+// Added by the /ship test coverage audit, 2026-10-24.
+// Value: protects=every chapter card, desktop and phone, ends with its proof line
+//   (bold lead, then the rest) and the "See the story" cue; fails_when=CardFoot drops
+//   the kpi or its bold lead, the cue goes, or a chapter loses its kpi data;
+//   why_new=no test reads the card footer; seam=none; no_claim=the CSS swap to
+//   "Showing below" on aria-expanded (jsdom, unit only)
+describe("CareerTimeline card footer", () => {
+  it.each(careerRoles.map((r, i) => [r.company, r, i] as const))("shows the %s proof line on both cards", (_c, r, i) => {
+    const { container } = render(<CareerTimeline />);
+    const cards = [
+      container.querySelector(`.tl-c[data-i="${i}"]`)!,
+      container.querySelector(`[aria-controls="career-md${i}"]`)!,
+    ];
+    for (const card of cards) {
+      const kpi = card.querySelector(".kpi")!;
+      expect(kpi.querySelector("b")?.textContent).toBe(r.kpi!.lead);
+      expect(kpi.textContent).toBe(`${r.kpi!.lead} ${r.kpi!.rest}`);
+      expect(card.querySelector(".more")?.textContent).toBe("See the story");
+    }
   });
 });

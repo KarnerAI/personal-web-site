@@ -24,17 +24,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```
 src/
-  app/            — routes, layout, global CSS, /world-land.svg
+  app/            — routes, layout, global CSS, /world-land.svg, /world-travel.svg
   components/
     layout/       — Header, Footer
-    sections/     — Hero, Bridge, CareerTimeline, Entrepreneurship, BeyondWork, Education
+    sections/     — Hero, Bridge, CareerTimeline, Entrepreneurship, BeyondWork, Education, Contact
     ui/           — shared primitives (Button, Card, Drawer, Badge)
-  data/           — content (career, ventures, education, hobbies, travel, books)
+  data/           — content (career, ventures, education, hobbies, travel, books, contact)
   lib/            — utils
   types/          — shared TypeScript types
 ```
 
-Section order in `src/app/page.tsx`: Hero → Einstein bridge → Career → Entrepreneurship → Beyond Work → Education. Contact lives inside Hero as a contact ticket under the bio, with the portrait on the right; the separate Contact + Side Projects sections in the original PRD were folded in during the design-review pass (see CHANGELOG v0.1.1.0).
+Section order in `src/app/page.tsx`: Hero → Einstein bridge → Career → Entrepreneurship → Beyond Work → Education → Contact. The hero keeps a contact ticket under the bio, with the portrait on the right, and the page ends with a closing Contact band (added in v0.3.0.0). The original PRD's separate Side Projects section was folded in during the design-review pass (see CHANGELOG v0.1.1.0).
 
 ## Color palette
 

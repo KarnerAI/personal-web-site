@@ -28,7 +28,12 @@ Key routing rules:
 ## Testing
 
 - Unit tests: `npm test` (Vitest, `src/**/*.test.{ts,tsx}`). Browser smoke tests: `npm run test:e2e` (Playwright, `e2e/`). Details in TESTING.md.
-- 100% test coverage is the goal; tests make vibe coding safe.
+- Test behavior and logic, not copy or pure styling: tests make vibe coding safe, but copy edits, data text, and CSS-only changes don't need new tests.
 - New function or component behavior: add a test. Bug fix: add a regression test that fails on the old code.
 - New error handling: test that triggers the error. New conditional: test both paths.
 - Never commit code that makes existing tests fail.
+
+## Shipping
+
+- Copy and styling changes take the light path: run `npm test` (and `npm run test:e2e` if layout changed), commit, push, open the PR. No full `/ship` review.
+- Save the full `/ship` review (specialists, coverage audit, adversarial pass) for real logic changes, like the timeline animation or new interactive components.

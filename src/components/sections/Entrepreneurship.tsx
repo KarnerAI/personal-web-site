@@ -1,6 +1,6 @@
 "use client";
 
-// Things I've started (theme B, DESIGN.md; v7 mockup, v8 for media).
+// Things I've built (theme B, DESIGN.md; v7 mockup, v8 for media).
 // Four cards in one row on desktop (2×2 tablet, 1 column phone): a 150px
 // cover, status pill, name, hook, mono tags and "Read story" pinned to the
 // card bottom. Clicking a card opens the story dialog (Problem / Built /
@@ -153,10 +153,10 @@ export function Entrepreneurship() {
   const trigger = useRef<HTMLButtonElement | null>(null);
 
   return (
-    <section id="entrepreneurship" aria-labelledby="ven-h" className="theme-b relative py-[112px] max-md:py-20">
+    <section id="entrepreneurship" aria-labelledby="ven-h" className="theme-b relative py-[72px] max-md:py-14">
       <div className="wrap">
         <h2 id="ven-h" className="type-heading m-0 mb-6 text-ink">
-          Things I&rsquo;ve started.
+          Things I&rsquo;ve built.
         </h2>
         <p className="lede">
           I&rsquo;ve been a founder since before it was called &ldquo;building in public.&rdquo; Some

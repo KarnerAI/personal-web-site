@@ -32,7 +32,16 @@ const NUMERIC: Record<string, string> = {
 // much smaller file than d3's default of three.
 const path = geoPath(projection).digits(1);
 
-export function worldLandSvg(): string {
+// Land and visited fills. v7 is the original gray-and-blue map; travel is the
+// v9 hobby tile's friendlier white-and-peach map (/world-travel.svg).
+const V7_STYLE = "path{fill:#e2e6eb;stroke:#fff;stroke-width:.6;stroke-linejoin:round}.v{fill:#d2e5f2}";
+const TRAVEL_STYLE = "path{fill:#fff;stroke:#eaf4fb;stroke-width:.8;stroke-linejoin:round}.v{fill:#ffd9bc}";
+
+export function worldTravelSvg(): string {
+  return worldLandSvg(TRAVEL_STYLE);
+}
+
+export function worldLandSvg(style: string = V7_STYLE): string {
   const visited = new Set(travel.visitedCountryCodes.map((c) => NUMERIC[c]).filter(Boolean));
   // Antarctica (010) is dropped, as in v7.
   const shapes = countries
@@ -43,7 +52,7 @@ export function worldLandSvg(): string {
     .join("");
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${MAP_WIDTH} ${MAP_HEIGHT}" width="${MAP_WIDTH}" height="${MAP_HEIGHT}">` +
-    `<style>path{fill:#e2e6eb;stroke:#fff;stroke-width:.6;stroke-linejoin:round}.v{fill:#d2e5f2}</style>` +
+    `<style>${style}</style>` +
     shapes +
     `</svg>`
   );

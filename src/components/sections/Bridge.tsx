@@ -20,9 +20,8 @@ export function Bridge() {
         </figure>
         <p className="type-body-lg m-0 mt-6 max-w-[38em] leading-[1.6] text-ink-secondary max-md:mt-5 max-md:text-[17px]">
           Post college, I went straight to a brewhouse floor at Anheuser-Busch. There, I
-          learned that real knowledge doesn&rsquo;t come from dashboards. It comes from being
-          close to the people doing the work and living their reality before trying to improve
-          it. Since then, I&rsquo;ve carried that lesson throughout my career, from production
+          learned that real knowledge doesn&rsquo;t come from dashboards, it comes from being
+          close to the people doing the work. Since then, I&rsquo;ve carried that lesson throughout my career, from production
           lines to high-growth tech and physical spaces.
         </p>
         <span aria-hidden className="bridge-lead" />
