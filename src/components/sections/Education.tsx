@@ -7,7 +7,7 @@ import { LogoTile } from "./LogoTile";
 
 export function Education() {
   return (
-    <section id="education" aria-labelledby="edu-h" className="theme-b relative py-[112px] max-md:py-20">
+    <section id="education" aria-labelledby="edu-h" className="theme-b relative py-[72px] max-md:py-14">
       <div className="wrap">
         <p className="chip">Education</p>
         <h2 id="edu-h" className="type-heading m-0 mb-12 text-ink">

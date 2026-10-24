@@ -16,6 +16,7 @@ const NAV = [
   { href: "#career", label: "Career" },
   { href: "#entrepreneurship", label: "Entrepreneurship" },
   { href: "#beyond-work", label: "Beyond Work" },
+  { href: "#contact", label: "Contact" },
 ];
 
 // Which section counts as "in view": the one crossing a band just above
@@ -33,16 +34,32 @@ export function Header() {
     // over the hero, the bridge and Education (as in v7).
     const sections = document.querySelectorAll("main section");
     if (!sections.length || !("IntersectionObserver" in window)) return;
+    // The last section (Contact) is short, so on tall screens its top never
+    // reaches the band; scrolled to the bottom, it is the one in view.
+    const last = sections[sections.length - 1];
+    const atBottom = () => {
+      const h = document.documentElement.scrollHeight;
+      return h > window.innerHeight && window.innerHeight + window.scrollY >= h - 2;
+    };
+    // The section in the band, so leaving the bottom can hand the highlight back.
+    let inBand: string | null = null;
+    const pick = () => setActive(last.id && atBottom() ? `#${last.id}` : inBand);
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id ? `#${entry.target.id}` : null);
+          if (entry.isIntersecting) inBand = entry.target.id ? `#${entry.target.id}` : null;
         }
+        pick();
       },
       { rootMargin: SPY_MARGIN }
     );
     sections.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    const onScroll = () => pick();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
@@ -50,25 +67,8 @@ export function Header() {
       <nav aria-label="Primary" className="wrap flex h-[60px] items-center justify-between">
         <a
           href="#hero"
-          className="inline-flex min-h-[44px] items-center gap-2.5 text-[15px] font-semibold tracking-[-0.01em] text-ink"
+          className="inline-flex min-h-[44px] items-center text-[15px] font-semibold tracking-[-0.01em] text-ink"
         >
-          {/* The one KarnerBlu signature detail (DESIGN.md guardrail 2): the
-              logo's pointy-top hexagon, sky on the left, deep blue on the right. */}
-          <svg width="13" height="14" viewBox="0 0 13 14" aria-hidden="true">
-            <defs>
-              <linearGradient id="kb-hex" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0.5" stopColor="var(--sky)" />
-                <stop offset="0.5" stopColor="var(--primary)" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M6.5 1 L12 4.1 V9.9 L6.5 13 L1 9.9 V4.1 Z"
-              fill="url(#kb-hex)"
-              stroke="url(#kb-hex)"
-              strokeWidth="1.2"
-              strokeLinejoin="round"
-            />
-          </svg>
           Hussain Alam
         </a>
 

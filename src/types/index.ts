@@ -19,16 +19,19 @@ export type CareerRole = {
   // "YYYY-MM" or the string "Present".
   startMonth: string;
   endMonth: string | "Present";
-  yearsLabel: string; // e.g. "2012 – 2018"
+  yearsLabel: string; // e.g. "2012 - 2018"
   tagline?: string; // 2–4 word chapter theme rendered prominently on the timeline card
   role: string; // short headline role (one line)
   location: string;
   whyIWasThere: string;
+  // Story lines. Wrap the one key number in **double asterisks** to bold it;
+  // one per line, so the numbers stand out when someone scans.
   heroBullet: string;
   subBullets: string[]; // was fixed-2 tuple; widened so we can carry real resume bullets
   roles?: SubRole[]; // multi-role progression inside a company
   awards?: string[];
   clients?: { name: string; logoSrc: string }[]; // logo row on the card and detail panel
+  kpi?: { lead: string; rest: string }; // proof line on the card: bold lead, then the rest
 };
 
 export type VentureStatus =
@@ -106,6 +109,20 @@ export type Hobby = {
   embed?: HobbyEmbed; // optional iframe block (e.g. trip route map)
   story: string[]; // 2–4 paragraphs rendered in the modal body
   meta?: HobbyMeta[]; // 0–3 rows in the modal meta band
+  tileTagline?: string; // tile subtitle when it differs from the modal tagline
+  // Muted loop that plays over the hero on mouse hover only, from `start` seconds.
+  video?: { src: string; start: number };
+  illustration?: "belt" | "pair"; // drawn tile art for a hobby without a photo
+  map?: boolean; // the tile and modal header show the travel map
+  chapters?: HobbyChapter[]; // stacked org sections in place of the story
+};
+
+// One organization inside a hobby's story (e.g. a mentoring program).
+export type HobbyChapter = {
+  org: string;
+  kicker: string; // e.g. "iMentor · New York"
+  logoSrc: string;
+  text: string;
 };
 
 export type Book = {

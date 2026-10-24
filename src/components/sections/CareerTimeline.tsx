@@ -5,9 +5,12 @@
 // below (2, 4), joined by stems. Clicking a card or segment pins it and opens
 // the detail panel under the timeline; arrow keys move between chapters and
 // Escape or × closes. Phones: a stacked list whose details expand in place.
-// The page's one authored animation lives here: a Karner-blue fill sweeps the
-// bar once when Career scrolls into view (see animateDesktop below). Without
-// JS or with reduced motion, the static markup is already the final state.
+// The page's one authored animation lives here: once, when Career scrolls into
+// view, a Karner-blue fill reads the career in order (on desktop it sweeps the
+// year bar, on phones it runs down a rail beside the stack as you scroll). Each chapter
+// answers as the fill reaches it, and the fill settles on the present chapter,
+// which keeps a quiet accent in the static design too. Without JS or with
+// reduced motion, the static markup is already the final state.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { careerRoles } from "@/data/career";
@@ -18,6 +21,9 @@ import { useImageFallback } from "./useImageFallback";
 const DESKTOP_TOP = [0, 2];
 const DESKTOP_BOTTOM = [1, 3];
 const MOBILE_QUERY = "(max-width: 767px)";
+
+// The chapter still running gets the "now" accent the animation settles on.
+const isNow = (r: CareerRole) => r.endMonth === "Present";
 
 // Tenure from start month to end month (or today for "Present"). Only shown in
 // the detail panel, which renders after a click, so a build-time vs visit-time
@@ -59,6 +65,47 @@ function Clients({ role, inPanel = false }: { role: CareerRole; inPanel?: boolea
   );
 }
 
+// Story line with its key number bolded: the data wraps it in **double
+// asterisks** (odd pieces of the split are the bold ones).
+export function KeyNumbers({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("**").map((part, i) => (i % 2 ? <b key={i}>{part}</b> : part))}
+    </>
+  );
+}
+
+// Card footer: the proof line, then "See the story" (or "Showing below" once
+// the chapter is open; CSS swaps them on aria-expanded).
+function CardFoot({ role }: { role: CareerRole }) {
+  return (
+    <>
+      {role.kpi && (
+        <span className="kpi">
+          <b>{role.kpi.lead}</b> {role.kpi.rest}
+        </span>
+      )}
+      <span className="more">
+        See the story
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+          <path
+            d="M2 6h8M7 3l3 3-3 3"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+      <span aria-hidden className="showing">
+        <i />
+        Showing below
+      </span>
+    </>
+  );
+}
+
 function Detail({
   role,
   compact,
@@ -95,10 +142,14 @@ function Detail({
           </p>
         )}
         <p className="dp-why bar-quote">{role.whyIWasThere}</p>
-        <p className="dp-hero">{role.heroBullet}</p>
+        <p className="dp-hero">
+          <KeyNumbers text={role.heroBullet} />
+        </p>
         <ul className="dp-subs">
           {role.subBullets.map((s) => (
-            <li key={s}>{s}</li>
+            <li key={s}>
+              <KeyNumbers text={s} />
+            </li>
           ))}
         </ul>
         {role.roles && (
@@ -124,9 +175,11 @@ function Detail({
 
 // --- The one animation ------------------------------------------------------
 // Desktop: the fill sweeps the bar segment by segment with a sky dot leading
-// it; each finished segment reveals its year, draws its stem and lifts its card;
-// then the fill fades back to the resting track. Any interaction finishes it.
-const SEG_MS = 300;
+// it; each finished segment draws its stem and pops its card in, lit for a
+// moment (chapterPing); then the fill fades and settles on the present
+// chapter's static accent. Any interaction finishes it.
+const SEG_MS = 550; // per chapter: the full sweep takes 4 × 550ms ≈ 2.2s (tlFill)
+const CHAPTER_PING_MS = 800; // matches chapterPing in globals.css
 
 function animateDesktop(tl: HTMLElement): () => void {
   let state = 0; // 0 waiting, 1 running, 2 done
@@ -153,14 +206,12 @@ function animateDesktop(tl: HTMLElement): () => void {
     state = 1;
     tl.classList.add("tl-run");
     [0, 1, 2, 3].forEach((i) => {
-      at((i + 1) * SEG_MS, () => {
-        mark(".seg", i);
-        mark(".stem", i);
-      });
-      at((i + 1) * SEG_MS + 90, () => mark(".tl-c", i));
+      at((i + 1) * SEG_MS, () => mark(".stem", i));
+      at((i + 1) * SEG_MS + 120, () => mark(".tl-c", i));
     });
     at(4 * SEG_MS + 150, () => tl.classList.add("tl-end"));
-    at(4 * SEG_MS + 900, finish);
+    // Late enough for the last chapter's answer (CHAPTER_PING_MS) to play out.
+    at(4 * SEG_MS + 120 + CHAPTER_PING_MS + 150, finish);
   };
 
   tl.classList.add("tl-anim");
@@ -170,6 +221,9 @@ function animateDesktop(tl: HTMLElement): () => void {
         if (state === 0 && en.isIntersecting && en.intersectionRatio >= 0.28) {
           io.disconnect();
           run();
+        } else if (state === 0 && !en.isIntersecting && en.boundingClientRect.top < 0) {
+          // Landed below Career (a nav link, a reload mid-page): show it as is.
+          finish();
         }
       }
     },
@@ -186,63 +240,91 @@ function animateDesktop(tl: HTMLElement): () => void {
   };
 }
 
-// Phones: cards fade up in order as they enter the screen.
+// Phones: the same reading, as you scroll. Each card pops in when it scrolls
+// into view: the rail from the chapter above fills down to it first, then the
+// card arrives and answers. Once every card is in, the fill fades and the
+// present chapter keeps its accent.
+const RAIL_MS = 350; // matches the .rail fill transition in globals.css
+const MOBILE_GAP_MS = 180; // spacing when several cards enter at once
+
 function animateMobile(tlm: HTMLElement): () => void {
   const items = Array.from(tlm.querySelectorAll<HTMLElement>(".mi"));
   const queue: HTMLElement[] = [];
   const seen = new Set<Element>();
   const timers: number[] = [];
+  const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
   let left = items.length;
   let busy = false;
+  let done = false;
 
-  const done = () => {
+  const reset = () => {
     timers.forEach(clearTimeout);
-    mio.disconnect();
     tlm.classList.add("tl-snap");
-    tlm.classList.remove("tl-anim");
-    items.forEach((el) => el.classList.remove("in"));
+    tlm.classList.remove("tl-anim", "tl-end");
+    items.forEach((el) => el.classList.remove("in", "reach"));
     void tlm.offsetWidth;
     tlm.classList.remove("tl-snap");
   };
+  const finish = () => {
+    if (done) return;
+    done = true;
+    mio.disconnect();
+    reset();
+  };
+  const arrive = (it: HTMLElement) => {
+    it.classList.add("in");
+    if (--left === 0) {
+      at(RAIL_MS + 150, () => tlm.classList.add("tl-end"));
+      at(CHAPTER_PING_MS + 150, finish);
+    }
+  };
   const pump = () => {
-    if (busy) return;
+    if (busy || done) return;
     const it = queue.shift();
     if (!it) return;
     busy = true;
-    it.classList.add("in");
-    if (--left === 0) timers.push(window.setTimeout(done, 700));
-    timers.push(
-      window.setTimeout(() => {
-        busy = false;
-        pump();
-      }, 120)
-    );
-  };
-  const interrupt = () => {
-    if (tlm.classList.contains("tl-anim")) done();
+    const above = items[items.indexOf(it) - 1];
+    // The rail from the chapter above runs down first, if that one is in.
+    const lead = above?.classList.contains("in") ? RAIL_MS : 0;
+    if (lead) above.classList.add("reach");
+    at(lead, () => arrive(it));
+    at(lead + MOBILE_GAP_MS, () => {
+      busy = false;
+      pump();
+    });
   };
 
   tlm.classList.add("tl-anim");
   const mio = new IntersectionObserver(
     (entries) => {
       for (const en of entries) {
-        if (en.isIntersecting && en.intersectionRatio >= 0.2 && !seen.has(en.target)) {
-          seen.add(en.target);
-          mio.unobserve(en.target);
-          queue.push(en.target as HTMLElement);
+        if (seen.has(en.target)) continue;
+        const el = en.target as HTMLElement;
+        if (en.isIntersecting && en.intersectionRatio >= 0.2) {
+          seen.add(el);
+          mio.unobserve(el);
+          queue.push(el);
+        } else if (!en.isIntersecting && en.boundingClientRect.top < 0) {
+          // Already scrolled past this card: show it without the entrance.
+          seen.add(el);
+          mio.unobserve(el);
+          el.classList.add("in");
+          if (--left === 0) finish();
         }
       }
+      queue.sort((a, b) => items.indexOf(a) - items.indexOf(b));
       pump();
     },
     { threshold: [0, 0.25] }
   );
   items.forEach((it) => mio.observe(it));
   const events = ["pointerdown", "keydown", "focusin"] as const;
-  events.forEach((t) => tlm.addEventListener(t, interrupt, true));
+  events.forEach((t) => tlm.addEventListener(t, finish, true));
 
   return () => {
-    events.forEach((t) => tlm.removeEventListener(t, interrupt, true));
-    done();
+    events.forEach((t) => tlm.removeEventListener(t, finish, true));
+    mio.disconnect();
+    reset();
   };
 }
 
@@ -332,6 +414,7 @@ export function CareerTimeline() {
           </span>
           <span className="tag">{r.tagline}</span>
           <Clients role={r} />
+          <CardFoot role={r} />
         </span>
       </button>
     );
@@ -342,7 +425,7 @@ export function CareerTimeline() {
       {indices.map((i) => (
         <span
           key={i}
-          className={`stem ${dir}`}
+          className={`stem ${dir}${isNow(careerRoles[i]) ? " now" : ""}`}
           data-i={i}
           data-on={pinned === i ? "" : undefined}
           style={{ left: `${12.5 + 25 * i}%` }}
@@ -354,18 +437,21 @@ export function CareerTimeline() {
   const current = pinned !== null ? careerRoles[pinned] : null;
 
   return (
-    <section id="career" aria-labelledby="career-h" className="theme-b relative py-[112px] max-md:py-20">
+    <section id="career" aria-labelledby="career-h" className="theme-b relative py-[72px] max-md:py-14">
       <div className="wrap">
         <p className="chip">Career</p>
         <h2 id="career-h" className="type-heading m-0 mb-8 text-ink">
           My career, in four chapters.
         </h2>
+        {/* Wide screens: the first three chapters on line one, WeWork on line two. */}
         <blockquote className="pull bar-quote">
-          Fortune 500 ops out of college <span aria-hidden className="ar">→</span>
-          <span className="sr-only select-none">, then</span> co-founded a consultancy{" "}
-          <span aria-hidden className="ar">→</span>
-          <span className="sr-only select-none">, then</span> 5th U.S. hire at a Series-A startup{" "}
-          <span aria-hidden className="ar">→</span>
+          <span className="pull-l1">
+            Fortune Global 500 ops out of college <span aria-hidden className="ar">→</span>
+            <span className="sr-only select-none">, then</span> co-founded a consultancy{" "}
+            <span aria-hidden className="ar">→</span>
+            <span className="sr-only select-none">, then</span> 5th U.S. hire at a Series-A startup{" "}
+            <span aria-hidden className="ar">→</span>
+          </span>
           <span className="sr-only select-none">, then</span> joined WeWork three months before
           bankruptcy and led products to profitability.
         </blockquote>
@@ -373,7 +459,9 @@ export function CareerTimeline() {
         {/* Phones: vertical stack, details expand in place. */}
         <div className="tl-m" ref={tlmRef}>
           {careerRoles.map((r, i) => (
-            <div key={r.company} className="mi" data-i={i}>
+            <div key={r.company} className={isNow(r) ? "mi now" : "mi"} data-i={i}>
+              {/* Rail from this chapter's node down to the next one. */}
+              {i < careerRoles.length - 1 && <span aria-hidden className="rail" />}
               <button
                 ref={(el) => {
                   mobileRefs.current[i] = el;
@@ -403,6 +491,7 @@ export function CareerTimeline() {
                 </span>
                 <span className="tag">{r.tagline}</span>
                 <Clients role={r} />
+                <CardFoot role={r} />
               </button>
               <div
                 key={pinned === i ? "open" : "closed"}
@@ -427,7 +516,7 @@ export function CareerTimeline() {
               <button
                 key={r.company}
                 type="button"
-                className="seg"
+                className={isNow(r) ? "seg now" : "seg"}
                 data-i={i}
                 aria-expanded={pinned === i}
                 aria-controls="career-dp"

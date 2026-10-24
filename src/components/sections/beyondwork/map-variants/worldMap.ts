@@ -7,8 +7,9 @@ import type { FeatureCollection, Geometry } from "geojson";
 import { feature } from "topojson-client";
 import countriesTopo from "world-atlas/countries-110m.json";
 
-export const MAP_WIDTH = 800;
-export const MAP_HEIGHT = 400;
+import { MAP_HEIGHT, MAP_WIDTH } from "./mapSize";
+
+export { MAP_HEIGHT, MAP_WIDTH };
 
 type CountryProps = { name: string };
 

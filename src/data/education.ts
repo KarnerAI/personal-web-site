@@ -6,7 +6,7 @@ export const degree: Degree = {
   school: "UMass Amherst",
   crest: "UM",
   degree: "B.S. Mechanical Engineering · Cum Laude",
-  years: "2008 – 2012",
+  years: "2008 - 2012",
   location: "Amherst, MA",
   detail:
     "Graduated cum laude. Built a foundation in systems thinking that still shapes how I approach product problems.",

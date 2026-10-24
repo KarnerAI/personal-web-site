@@ -15,17 +15,19 @@ import type { Book, Hobby, Podcast, TravelData, VisitedCountry } from "@/types";
 export const hobbies: Hobby[] = [
   {
     slug: "riding",
-    label: "Riding & driving",
+    label: "Two wheels, no signal",
     tagline: "Three days disconnected through the hills of Colombia.",
+    tileTagline: "When I\u2019m not building, I\u2019m out carving mountainsides.",
     hero: {
       src: "/images/hobbies/riding-poster.jpg",
       alt: "A rider on an electric dirt bike on a gravel track",
       position: "50% 12%",
     },
+    video: { src: "/images/hobbies/riding-loop.mp4", start: 9.4 },
     story: [
       "Three days on a motorcycle through the mountains outside Medellín. Went with a friend I've known since I was fourteen, the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.",
       "No cell service for most of it. You don't realize how much of your attention the phone quietly costs you until you spend three days without one. I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I've found.",
-      "The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft (fermentation, aging, a thousand small choices) mapped onto coffee instead. Different product, same instinct. Our host was also a chef and cooked every meal, which doesn't fit neatly in a motorcycle story but was somehow the best part.",
+      "The coffee farm in Jericó was the highlight. I spent six years at Anheuser-Busch watching beer get made at scale, and it was grounding to see the same shape of craft (fermentation, aging, a thousand small choices) mapped onto coffee instead. Different product, same instinct.",
     ],
     meta: [
       { label: "Route", value: "Medellín → Jericó → Fredonia" },
@@ -42,7 +44,7 @@ export const hobbies: Hobby[] = [
   {
     slug: "building-ai",
     label: "Building with AI",
-    tagline: "Products, agents, automation. Always shipping.",
+    tagline: "I built this site with Claude.",
     hero: {
       src: "/images/hobbies/building-with-ai.webp",
       alt: "Three design directions for this site, made with AI, with the chosen one in front",
@@ -50,7 +52,7 @@ export const hobbies: Hobby[] = [
     },
     story: [
       "I use AI to collapse the distance between \u201CI wonder if...\u201D and \u201Chere's a working thing.\u201D Most of what I build now starts in a CLI session with Claude and ends as a prototype I can show a real user the same week.",
-      "This site is one of them. Built live with Claude Code. The mosaic you're looking at right now? AI wrote the scaffolding. I wrote the taglines.",
+      "This site is one of them.",
     ],
     meta: [
       { label: "Stack", value: "Claude, Cursor, v0" },
@@ -60,11 +62,11 @@ export const hobbies: Hobby[] = [
   },
   {
     slug: "martial-arts",
-    label: "Martial arts",
-    tagline: "BJJ, 4x/week. Purple belt.",
+    label: "BJJ",
+    tagline: "Getting humbled four nights a week. Purple belt.",
+    illustration: "belt",
     story: [
       "BJJ teaches you that composure is a muscle. Four nights a week I go get outclassed by blue belts half my age, and every time I leave the mat sharper than I arrived.",
-      "Currently drilling leg entanglements. Next stripe is the long game.",
     ],
     meta: [
       { label: "Belt", value: "Purple" },
@@ -74,11 +76,23 @@ export const hobbies: Hobby[] = [
   },
   {
     slug: "mentor",
-    label: "Youth mentor",
-    tagline: "8 years in NYC. Mentee just graduated college.",
-    story: [
-      "Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running.",
-      "If you're early-career and on the fence about mentoring a kid, do it. The return on one good afternoon a month is absurd.",
+    label: "Mentoring",
+    tagline: "Met my mentee at 12. He just graduated college.",
+    illustration: "pair",
+    story: [],
+    chapters: [
+      {
+        org: "iMentor",
+        kicker: "iMentor · New York",
+        logoSrc: "/images/hobbies/logo-imentor.png",
+        text: "Matched with my mentee when he was 12 through a NYC youth program. He just graduated college. Best meeting on my calendar, every other Saturday, for eight years running.",
+      },
+      {
+        org: "BUILD",
+        kicker: "BUILD · Boston",
+        logoSrc: "/images/hobbies/logo-build.png",
+        text: "Coached a team of Boston high schoolers through BUILD\u2019s startup program. They launched Royalty Lip Scrub, pitched it on stage, and in 2022 I watched my student graduate.",
+      },
     ],
     meta: [
       { label: "Years", value: "8" },
@@ -87,16 +101,18 @@ export const hobbies: Hobby[] = [
     ],
   },
   {
-    slug: "festivals",
-    label: "Festivals & salsa",
-    tagline: "Coachella, Afropunk. Salsa Saturdays in Bushwick.",
+    slug: "travel",
+    label: "Travel",
+    tagline: "16 countries, 32 cities. Turkey is next.",
+    map: true,
     story: [
-      "Live music is how I reset. Coachella and Afropunk every year, smaller festivals whenever the lineup earns the flight.",
-      "Saturday nights I'm at salsa socials in Bushwick. You don't need to be good. You need to show up.",
+      "Sixteen countries and thirty-two cities so far. Colombia is the favorite: it is where I rode three days through the hills outside Medellín.",
+      "Mexico City is my favorite city to visit. Most years the trips include Coachella and Afropunk too.",
     ],
     meta: [
-      { label: "Regular", value: "Coachella · Afropunk" },
-      { label: "Weekly", value: "Bushwick salsa" },
+      { label: "Favorite city", value: "Mexico City" },
+      { label: "Home base", value: "New York, NY" },
+      { label: "Next up", value: "Turkey, Sept 2026" },
     ],
   },
 ];
