@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
+import { hobbies } from "@/data/beyondWork";
 import { careerRoles } from "@/data/career";
 import { ventures } from "@/data/entrepreneurship";
 
@@ -53,6 +54,43 @@ test("the hero portrait is the only image fetched ahead of the page", async ({ p
   await expect(preloads).toHaveCount(1);
   await expect(preloads).toHaveAttribute("href", "/logos/profile-image-nyc.webp");
   await expect(preloads).toHaveAttribute("fetchpriority", "high");
+});
+
+// Added by the /ship test coverage audit, 2026-10-22.
+// Value: protects=every venture cover, story logo and hobby photo the data names is
+//   served and decodes in a real browser; fails_when=a file is missing from the
+//   build, corrupt, or not the format its name claims (an iPhone HEIC saved as .jpg):
+//   the fallbacks would swap in a name, initials or placeholder without a console
+//   error; why_new=the unit asset check only sees files on disk, and jsdom loads
+//   no images, so the unit story-logo test never fetches one; seam=none; no_claim=the crop,
+//   quality or look; Vercel's CDN (local production server)
+test("every venture cover, story logo and hobby photo loads", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/");
+  // A failed image is removed by its fallback, so this also fails if the img is gone.
+  const decoded = async (img: Locator) => {
+    await img.scrollIntoViewIfNeeded({ timeout: 5_000 });
+    await expect
+      .poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0, null, { timeout: 1_000 }))
+      .toBe(true);
+  };
+
+  const ventureSection = page.locator("#entrepreneurship");
+  for (const v of ventures) {
+    const card = ventureSection.getByRole("button", { name: v.name });
+    if (v.coverSrc) await decoded(card.locator(`img[src="${v.coverSrc}"]`));
+    if (!v.logoSrc) continue;
+    await card.click();
+    const story = page.getByRole("dialog", { name: v.name });
+    await decoded(story.locator(`img[src="${v.logoSrc}"]`));
+    await page.keyboard.press("Escape");
+    await expect(story).toBeHidden();
+  }
+
+  const mosaic = page.locator("#beyond-work");
+  for (const h of hobbies) {
+    if (h.hero) await decoded(mosaic.getByRole("button", { name: h.label }).locator(`img[src="${h.hero.src}"]`));
+  }
 });
 
 test("nav highlight follows the section in view and clears on the hero", async ({ page }) => {

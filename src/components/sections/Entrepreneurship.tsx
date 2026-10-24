@@ -1,12 +1,13 @@
 "use client";
 
-// Things I've started (theme B, DESIGN.md; v7 mockup).
+// Things I've started (theme B, DESIGN.md; v7 mockup, v8 for media).
 // Four cards in one row on desktop (2×2 tablet, 1 column phone): a 150px
 // cover, status pill, name, hook, mono tags and "Read story" pinned to the
 // card bottom. Clicking a card opens the story dialog (Problem / Built /
-// Outcome / Lesson). Covers are real artifacts only: a photo ("fill"), a
-// wordmark on its brand color ("logo") or a product screenshot ("shot"). When
-// an image is missing or fails, the venture's name shows instead.
+// Outcome / Lesson). Covers are real artifacts only: an edge-to-edge photo or
+// app-screen banner ("fill"), a wordmark on its brand color ("logo") or a
+// product screenshot floating on a grid wash ("shot"). When an image is
+// missing or fails, the venture's name shows instead.
 
 import { useRef, useState, type RefObject } from "react";
 import { useImageFallback } from "./useImageFallback";

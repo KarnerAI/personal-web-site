@@ -1,9 +1,10 @@
 "use client";
 
-// Hobby mosaic + story dialog (theme B, DESIGN.md; v7 mockup).
+// Hobby mosaic + story dialog (theme B, DESIGN.md; v7 mockup, v8 for media).
 // Four columns with the first hobby as the 2×2 lead tile (2 columns on tablets,
-// 1 on phones). A tile shows the hobby's real photo when `hero` is set;
-// otherwise an honest "Photo · {hobby}" placeholder wash, per DESIGN.md.
+// 1 on phones). A tile shows the hobby's real photo when `hero` is set, over its
+// color wash while it loads; otherwise an honest "Photo · {hobby}" placeholder
+// wash, per DESIGN.md.
 import { useRef, useState, type RefObject } from "react";
 import { useImageFallback } from "../useImageFallback";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -20,19 +21,24 @@ function PhotoIcon() {
   );
 }
 
-function HobbyPhoto({ hobby: h }: { hobby: Hobby }) {
+// Focal point for a hero without its own `position` (faces sit high).
+const DEFAULT_HERO_POSITION = "50% 25%";
+
+// The tile's photo is decorative (the button already names the hobby); the story
+// dialog's photo is `described`, so it carries the data's alt text.
+function HobbyPhoto({ hobby: h, described = false }: { hobby: Hobby; described?: boolean }) {
   const { failed, imgProps } = useImageFallback();
   if (h.hero && !failed) {
     return (
-      <span aria-hidden className="ph">
+      <span aria-hidden={described ? undefined : true} className={`ph ph-${h.slug}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={h.hero.src}
-          alt=""
+          alt={described ? h.hero.alt : ""}
           loading="lazy"
           decoding="async"
           {...imgProps}
-          style={{ objectPosition: h.hero.position ?? "50% 25%" }}
+          style={{ objectPosition: h.hero.position ?? DEFAULT_HERO_POSITION }}
         />
       </span>
     );
@@ -74,7 +80,7 @@ function HobbyDialog({
               </svg>
             </Dialog.Close>
             <div className="hm-ph">
-              <HobbyPhoto hobby={h} />
+              <HobbyPhoto hobby={h} described />
             </div>
             <div className="hm-body">
               <p className="kick">

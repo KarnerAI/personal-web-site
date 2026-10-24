@@ -7,9 +7,8 @@ import type { Book, Hobby, Podcast, TravelData, VisitedCountry } from "@/types";
 
 // Hobbies — Magazine Mosaic (design-shotgun approved 2026-04-22).
 // First entry renders as the 2×2 hero tile; remaining four fill the mosaic.
-// Reorder to promote a different hobby to hero. When real photos land, point
-// each `hero.src` at `/images/hobbies/{slug}-hero.jpg` and drop gallery images
-// into the same folder.
+// Reorder to promote a different hobby to hero. `hero.src` points at any file
+// under `/images/hobbies/`; hobbies without a hero show the branded placeholder.
 //
 // `story` and `meta` are seeded with honest placeholders Hussain can swap for
 // his own copy — they're plausible but not load-bearing claims.
@@ -18,6 +17,11 @@ export const hobbies: Hobby[] = [
     slug: "riding",
     label: "Riding & driving",
     tagline: "Three days disconnected through the hills of Colombia.",
+    hero: {
+      src: "/images/hobbies/riding-poster.jpg",
+      alt: "A rider on an electric dirt bike on a gravel track",
+      position: "50% 12%",
+    },
     story: [
       "Three days on a motorcycle through the mountains outside Medellín. Went with a friend I've known since I was fourteen, the same friend who taught me to ride. The loop was Medellín → Salgar → Jericó → Fredonia and back, two long riding days bookending a day at a coffee farm in the hills.",
       "No cell service for most of it. You don't realize how much of your attention the phone quietly costs you until you spend three days without one. I love technology and build with it for a living, but getting fully off it for a stretch is the cleanest reset I've found.",
@@ -39,6 +43,11 @@ export const hobbies: Hobby[] = [
     slug: "building-ai",
     label: "Building with AI",
     tagline: "Products, agents, automation. Always shipping.",
+    hero: {
+      src: "/images/hobbies/building-with-ai.webp",
+      alt: "Three design directions for this site, made with AI, with the chosen one in front",
+      position: "50% 45%",
+    },
     story: [
       "I use AI to collapse the distance between \u201CI wonder if...\u201D and \u201Chere's a working thing.\u201D Most of what I build now starts in a CLI session with Claude and ends as a prototype I can show a real user the same week.",
       "This site is one of them. Built live with Claude Code. The mosaic you're looking at right now? AI wrote the scaffolding. I wrote the taglines.",

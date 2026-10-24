@@ -74,9 +74,9 @@ export type Venture = {
 // Hero or gallery image for a hobby. `alt` is required — every photo tells a
 // story, so let the data file speak rather than defaulting to the label.
 export type HobbyImage = {
-  src: string; // e.g. "/images/hobbies/riding-hero.jpg"
+  src: string; // any file under /images/hobbies/, e.g. "/images/hobbies/riding-poster.jpg"
   alt: string;
-  position?: string; // CSS object-position focal point; defaults to "50% 25%" (faces sit high)
+  position?: string; // CSS object-position focal point; defaults to "50% 25%" (faces sit high; HobbyMosaic's test pins it)
 };
 
 // A meta row rendered in the hobby modal's stat band (up to 3).
@@ -96,14 +96,13 @@ export type HobbyEmbed = {
 };
 
 export type Hobby = {
-  slug: string; // stable key — also used for image filename convention
+  slug: string; // stable key; also the .ph-{slug} placeholder wash class in globals.css
   label: string; // tile + modal title
   tagline: string; // short tile subtitle, also prose tagline in the modal
-  // Until real photography lands, `hero` can be omitted — the tile renders a
-  // branded color block with the label so layout is stable. When the photo
-  // drops in `public/images/hobbies/{slug}-hero.jpg`, point `hero.src` at it.
+  // Without a `hero`, the tile renders a branded color block with the label so
+  // layout is stable. With one, the photo fills the tile and the dialog header.
   hero?: HobbyImage;
-  gallery?: HobbyImage[]; // 0–3 thumbnails shown in the modal
+  gallery?: HobbyImage[]; // 0–3 thumbnails for the modal; not rendered yet
   embed?: HobbyEmbed; // optional iframe block (e.g. trip route map)
   story: string[]; // 2–4 paragraphs rendered in the modal body
   meta?: HobbyMeta[]; // 0–3 rows in the modal meta band

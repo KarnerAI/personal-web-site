@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { ventures } from "@/data/entrepreneurship";
@@ -62,4 +62,32 @@ describe("Entrepreneurship", () => {
     expect(a.getAttribute("target")).toBe("_blank");
     expect(a.getAttribute("rel")).toContain("noreferrer");
   });
+
+  // Added by the /ship test coverage audit, 2026-10-22.
+  // Value: protects=a story's badge shows the venture's logo when the data sets
+  //   logoSrc (Spots, SpreadTheFacts), its initials alone otherwise, and the initials
+  //   again if the logo fails to load; fails_when=the badge ignores logoSrc, shows an
+  //   image for a venture with none, or keeps a broken image or loses the initials on
+  //   error; why_new=the tests above read the story text only, and page.test.tsx fires
+  //   image errors with every story closed; seam=none; no_claim=the logo covering the
+  //   initials (CSS) and real loading (jsdom loads no images; unit only)
+  it.each(ventures.map((v) => [v.name, v] as const))(
+    "shows the %s story badge as its logo, or its initials",
+    async (_name, v) => {
+      const user = userEvent.setup();
+      render(<Entrepreneurship />);
+      await user.click(card(v.name));
+      const mark = within(screen.getByRole("dialog", { name: v.name })).getByText(v.logoInitials!);
+      const logo = mark.querySelector("img");
+
+      if (!v.logoSrc) {
+        expect(logo).toBeNull();
+        return;
+      }
+      expect(logo?.getAttribute("src")).toBe(v.logoSrc);
+      fireEvent.error(logo!);
+      expect(mark.querySelector("img")).toBeNull();
+      expect(mark.textContent).toBe(v.logoInitials);
+    }
+  );
 });

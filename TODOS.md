@@ -7,7 +7,9 @@ before launch" and "what's acceptable to punt."
 ## [P0] Redesign build: theme B (light product UI, Karner blue)
 
 Locked 2026-10-20. Visual source of truth:
-`design-variants/2026-10-20-fullpage-productui-v7.html`. Rules and tokens:
+`design-variants/2026-10-20-fullpage-productui-v7.html`; for Things I've
+started and Beyond Work, `design-variants/2026-10-21-fullpage-productui-v8.html`
+(v7 plus the real media approved 2026-10-21). Rules and tokens:
 `DESIGN.md` (including the three guardrails). Build it section by section into
 the real Next.js app, verifying each phase in the browser before the next.
 Take wording from `src/data/` and the current section components (e.g. the
@@ -67,15 +69,49 @@ improve it." Leads straight into Career.
 ### Phase 5: Things I've started (done 2026-10-21)
 Four across at 1024px+ (2×2 tablet, 1 column phone), "Read story" aligned;
 covers: EmojiFriends photo, SpreadTheFacts wordmark on black, Navigate.AI
-score card (`public/ventures/navigate-ai-score.png`), Spots logo on navy
-(`public/ventures/spots.png`) until real app screenshots arrive (see the P3
-Spots screenshots item); restyled story dialog.
+score card (`public/ventures/navigate-ai-score.png`), Spots real screens from
+the original app (`public/ventures/spots-app.webp`); restyled story dialog,
+whose badge shows `logoSrc` when set (Spots and SpreadTheFacts have logos).
+The Spots cover and the two logos come from v8
+(`design-variants/2026-10-21-fullpage-productui-v8.html`), added 2026-10-22.
 
-### Phase 6: Beyond Work (done 2026-10-21, built as in v7)
-Review the map, stat cards, fact rows and hobby mosaic in v7 with Hussain
-first. Real photos: export web-sized copies from `images/Hobbies/` (Riding &
-Driving, Youth Mentor have photos; the other three still need them) into
-`public/images/hobbies/`.
+### Phase 6: Beyond Work (v7 built 2026-10-21; v8 hover video and mentor chapters open)
+Built as in v7 in `HobbyMosaic.tsx`. The media approved 2026-10-21 (v8) were
+added 2026-10-22 as `hero` in `src/data/beyondWork.ts`: `riding-poster.jpg`
+(position "50% 12%") and `building-with-ai.webp` ("50% 45%"). The story
+dialog's photo carries `hero.alt`; the tile's stays decorative. Still to build
+in `HobbyMosaic.tsx`, following v8:
+- Riding & driving hover video: `riding-loop.mp4` (14s, 1080x1350 at the
+  phone clip's full width, 6 Mbps H.264, about 10.6 MB, muted, no audio)
+  plays while a mouse hovers, never on touch or pen or with reduced motion
+  (checked on every hover); start on the first real mouse move inside the
+  tile (non-zero movement), not on pointerenter, because scrolling under a
+  still cursor sends synthetic pointer events; load it once; seek to
+  `data-start` (9.4s, the still's frame) only after `loadedmetadata`; the
+  still is `riding-poster.jpg` (1080x1350). Both are SDR from the same frames:
+  the clip is tagged BT.709 and the still sRGB with the same pixel values, so
+  Chrome hands off cleanly. In Safari, check the handoff for a small
+  brightness lift; if it lifts, export a re-tagged clip (sRGB transfer) under
+  a new name such as `riding-loop-srgb.mp4` for the site, since v8 loads
+  `riding-loop.mp4` and DESIGN-VARIANTS.md forbids overwriting it. Seeking
+  needs a server with Range support: Vercel and `next dev` have it, and the
+  local mockup preview server (`.claude/serve-static.mjs`, untracked) does too.
+- Riding & driving crop where the frame is wide: the lead tile at 640-767px
+  (2 columns by one 240px row, about 2.5:1) shows the helmet and sky, and the
+  720x340 story header (768px and up) cuts the bike off below the handlebars.
+  v8 crops the same way; no single focal point fits a 4:5 still there. Needs a
+  landscape still or a per-surface focal point.
+- Youth mentor story as two stacked chapters (iMentor, then BUILD), each with
+  `logo-imentor.png` / `logo-build.png`, a heading and a photo slot. Chapters
+  replace `story` for this hobby (the iMentor chapter is today's first story
+  paragraph), so `story` becomes optional when `chapters` is set and the
+  dialog renders one or the other; decide whether the "If you're
+  early-career..." paragraph survives. Photos of the mentees stay out of the
+  repo (it is public) until each mentee agrees: Hussain to ask his iMentor
+  mentee (photos ready from `images/Hobbies/Youth Mentor/iMentor/IMG_4074.JPG`
+  and `IMG_4064.JPG`, stored sideways, rotate 90°) and to find a BUILD photo.
+  Until then the tile shows its placeholder.
+- Martial arts and Festivals & salsa: folders in `images/Hobbies/` are empty.
 
 ### Phase 7: Education + Footer (done 2026-10-21, built as in v7)
 Review in v7 first, then build.
@@ -141,8 +177,10 @@ an auto-fit class before the next venture lands.
 **Priority:** P3
 **Noticed on:** plan-eng-review 2026-10-21
 
-Spots shows only its logo today. Hussain picked five screens, one per problem
-the app solves:
+The Spots card cover now shows the original app's screens
+(`public/ventures/spots-app.webp`) and the story badge shows the logo. What's
+left is a screen gallery inside the story. Hussain picked five screens, one
+per problem the app solves:
 1. Save places you love and want to go: map view + save-to-list picker
 2. Discover new ones from friends: newsfeed
 3. View all your and friends' spots: map view
@@ -162,6 +200,23 @@ Sort out three things before building:
   friends' pins on 3 so they don't read as duplicates.
 
 **Depends on:** Phase 5 (Things I've started).
+
+---
+
+### [P2] Beyond Work: copy that no longer matches the photos
+**Files:** `src/data/beyondWork.ts`, v8 mockup `HOBBIES`
+**Priority:** P2
+**Noticed on:** hobby media pass 2026-10-21
+
+- Youth mentor says "Mentee just graduated college", but the June 2026
+  photos are a high school graduation. Meta says City:
+  New York only, while BUILD was in Boston.
+- The BUILD chapter text in v8 (Royalty Lip Scrub, pitch night, a 2022
+  graduation) stays as written (Hussain, 2026-10-23). Still needed: a photo
+  of him with his BUILD student.
+- Riding & driving tagline and story are about Colombia; the photo and hover
+  clip are from Portugal (Aug 2026). Kept as is for now (2026-10-21); later,
+  broaden the copy or swap the clip.
 
 ---
 
