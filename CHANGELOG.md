@@ -4,6 +4,27 @@ All notable changes to hussainalam.com are documented here. This site follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions and a
 4-digit version scheme (`MAJOR.MINOR.PATCH.MICRO`) tracked in `VERSION`.
 
+## [0.2.3.0] - 2026-10-23
+
+Real photos for the ventures and hobbies. Spots now shows screens from the
+actual app, two story popups show their logos, and two hobby tiles have real
+photos instead of placeholders.
+
+### Added
+- Spots: a banner of real app screens on its card (friends' names blurred)
+  and the Spots logo in its story.
+- SpreadTheFacts: its logo in its story.
+- Riding & driving: a sharp photo of the ride on its tile and in its story.
+- Building with AI: the three design directions for this site, made with AI,
+  with the chosen one in front.
+- The v8 design mockup with this media, plus the next things to build: a
+  riding video that plays when you hover with a mouse, and the Youth mentor
+  story told as two chapters.
+
+### Changed
+- A hobby's story photo now has a description screen readers can read.
+- Photo tiles keep their color wash under the photo while it loads.
+
 ## [0.2.2.0] - 2026-10-22
 
 A safety net for security updates. A newly published advisory against a
